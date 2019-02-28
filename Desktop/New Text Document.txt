@@ -1,0 +1,6 @@
+{
+	"User":"Andy",
+	"Address":"NY",
+	"ContactPhone":"123231",
+	"Books": ["bab5d157-d600-4810-89e3-4b40a5453fca","97207af1-d6f3-4f87-a56b-01d0097b6713"]
+}

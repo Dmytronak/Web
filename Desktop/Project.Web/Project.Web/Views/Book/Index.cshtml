@@ -1,0 +1,35 @@
+﻿@model Project.ViewModels.BookViews.GetAllBookView
+@{
+    ViewBag.Title = "Все книги";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<table class="table">
+    <tr>
+        <td>Название</td>
+        <td>Автор</td>
+        <td>Цена</td>
+        <td> </td>
+    </tr>
+    @foreach (var item in Model.Books)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Author</td>
+            <td>@item.Price</td>
+            <td>
+                <a asp-action="Update" asp-controller="Book" asp-route-id="@item.Id">Изменить</a> |
+                <a asp-action="ConfirmDelete" asp-controller="Book" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+    }
+</table>
+
+<div>
+    <a asp-action="Create">Добавить книгу</a>
+</div>
+
