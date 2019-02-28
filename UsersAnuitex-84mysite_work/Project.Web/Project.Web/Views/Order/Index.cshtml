@@ -1,0 +1,28 @@
+﻿@model Project.ViewModels.OrderViews.GetAllOrderView
+@{
+    ViewBag.Title = "Все заказы";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+        <td>User</td>
+        <td>Address</td>
+        <td>ContactPhone</td>
+
+    </tr>
+    @foreach (var item in Model.Orders)
+    {
+        <tr>
+            <td>@item.User</td>
+            <td>@item.Address</td>
+            <td>@item.ContactPhone</td>
+
+        </tr>
+    }
+</table>
+
+<div>
+    <a asp-action="Index" asp-controller="Book">Back to Book list</a>
+</div>
