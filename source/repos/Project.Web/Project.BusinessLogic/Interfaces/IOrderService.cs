@@ -8,7 +8,7 @@ namespace Project.BusinessLogic.Interfaces
     {
         Task<GetAllOrderView> GetAll();
         Task<GetByIdOrderView> GetById(Guid id);
-       
+        Task<DetailsBookOrderView> Details(Guid id);
         Task Buy(BuyOrderView model);
         
     }

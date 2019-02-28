@@ -18,7 +18,11 @@
             <td>@item.User</td>
             <td>@item.Address</td>
             <td>@item.ContactPhone</td>
+            <td>
+                <a asp-action="Details" asp-controller="Order" asp-route-id="@item.Id">Details of order</a>
 
+
+            </td>
         </tr>
     }
 </table>

@@ -15,7 +15,11 @@ namespace Project.Web.Controllers
             _orderService = orderService;
 
         }
-
+        [HttpGet]
+        public  IActionResult Buy()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Buy([FromBody]BuyOrderView model)
         {
@@ -23,11 +27,17 @@ namespace Project.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+
+            var result = await _orderService.Details(id);
+            return Ok(result);
+        }
         // GET: /<controller>/
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-
             var result = await _orderService.GetAll();
             return View(result);
         }

@@ -35,7 +35,7 @@ namespace Project.BusinessLogic.Services
 
             if (model.Books == null)
             {
-                throw new ArgumentNullException("Book received a null argument!");
+                 throw new ArgumentNullException("Book received a null argument!");
             }
             
             var booksInOrder = model.Books.Select(x => new BookInOrder()
@@ -43,17 +43,9 @@ namespace Project.BusinessLogic.Services
                 BookId = x,
                 OrderId = order.Id
             }).ToList();
-
-            ////booksInOrder.ForEach(async (x) => await _bookInOrderRepository.Create(x));
-            await _orderRepository.Create(order);
-            await _bookInOrderRepository.AddList(booksInOrder);
-
-        }
             //var bookInOrder = new List<BookInOrder>();
             //foreach (var bid in model.Books)
             //{
-
-
             //    bookInOrder.Add(new BookInOrder()
             //    {
             //        OrderId = order.Id,
@@ -61,6 +53,34 @@ namespace Project.BusinessLogic.Services
             //    });
 
             //}
+            ////booksInOrder.ForEach(async (x) => await _bookInOrderRepository.Create(x));
+            await _orderRepository.Create(order);
+            await _bookInOrderRepository.AddList(booksInOrder);
+
+        }
+
+        public async Task<DetailsBookOrderView> Details(Guid id)
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException("Your ID received a null argument!");
+            }
+
+            var bio = await _bookInOrderRepository.GetByOrderId(id);
+            var order = await _orderRepository.GetById(id);
+
+
+            var model = new DetailsBookOrderView();
+            model.Id = bio.OrderId;
+            model.User = order.User;
+            model.Address = order.Address;
+            model.ContactPhone = order.ContactPhone;
+           
+
+            return model;
+        }
+
+      
 
         public async Task<GetAllOrderView> GetAll()
         {
@@ -69,6 +89,7 @@ namespace Project.BusinessLogic.Services
             var model = new GetAllOrderView();
             model.Orders = orders.Select(x => new OrderGetAllOrderView()
             { 
+                Id = x.Id,
                 User = x.User,
                 Address = x.Address,
                 ContactPhone = x.ContactPhone,
