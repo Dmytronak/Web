@@ -10,8 +10,8 @@ using Project.DataAccess;
 namespace Project.DataAccess.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20190226161933_ManyMany")]
-    partial class ManyMany
+    [Migration("20190301163108_Db_Update")]
+    partial class Db_Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,8 @@ namespace Project.DataAccess.Migrations
 
                     b.Property<string>("Author");
 
+                    b.Property<Guid>("CategoryId");
+
                     b.Property<DateTime>("CreationAt");
 
                     b.Property<string>("Name");
@@ -35,6 +37,8 @@ namespace Project.DataAccess.Migrations
                     b.Property<double>("Price");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
                 });
@@ -59,6 +63,20 @@ namespace Project.DataAccess.Migrations
                     b.ToTable("BoookInOrders");
                 });
 
+            modelBuilder.Entity("Project.DataAccess.Entities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Project.DataAccess.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -75,6 +93,14 @@ namespace Project.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("Project.DataAccess.Entities.Book", b =>
+                {
+                    b.HasOne("Project.DataAccess.Entities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Project.DataAccess.Entities.BookInOrder", b =>

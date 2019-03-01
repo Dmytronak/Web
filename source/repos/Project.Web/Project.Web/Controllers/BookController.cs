@@ -56,7 +56,7 @@ namespace Project.Web.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateBookView model)
+        public async Task<IActionResult> Create([FromBody]CreateBookView model)
         {
             await _bookService.Create(model);
             return RedirectToAction("Index");

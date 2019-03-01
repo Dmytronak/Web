@@ -12,10 +12,12 @@ namespace Project.BusinessLogic.Services
     {
 
         private readonly IBookRepository _bookRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository bookRepository, ICategoryRepository categoryRepository)
         {
             _bookRepository = bookRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task Create(CreateBookView model)
@@ -24,8 +26,10 @@ namespace Project.BusinessLogic.Services
             {
                 Name = model.Name,
                 Author = model.Author,
-                Price = model.Price
-            };
+                Price = model.Price,
+                CategoryId = model.CategoryId
+        };
+
             await _bookRepository.Create(book);
 
         }
@@ -42,7 +46,7 @@ namespace Project.BusinessLogic.Services
             book.Name = model.Name;
             book.Price = model.Price;
             book.Author = model.Author;
-
+           
             await _bookRepository.Update(book);
 
         }

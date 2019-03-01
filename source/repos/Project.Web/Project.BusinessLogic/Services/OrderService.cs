@@ -12,13 +12,13 @@ namespace Project.BusinessLogic.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IBookInOrderRepository _bookInOrderRepository;
-        private readonly IBookRepository _bookRepository;
+        //private readonly IBookRepository _bookRepository;
 
-        public OrderService(IOrderRepository orderRepository,IBookInOrderRepository bookInOrderRepository, IBookRepository bookRepository)
+        public OrderService(IOrderRepository orderRepository,IBookInOrderRepository bookInOrderRepository/*, IBookRepository bookRepository*/)
         {
             _orderRepository = orderRepository;
             _bookInOrderRepository = bookInOrderRepository;
-            _bookRepository = bookRepository;
+            //_bookRepository = bookRepository;
         }
         public async Task Buy(BuyOrderView model)
         {
