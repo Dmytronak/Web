@@ -4,5 +4,6 @@ namespace Project.DataAccess.Interfaces
 {
     public interface IOrderRepository : IBaseRepository<Order>
     {
+
     }
 }

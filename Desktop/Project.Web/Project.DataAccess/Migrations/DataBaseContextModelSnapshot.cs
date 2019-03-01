@@ -37,14 +37,32 @@ namespace Project.DataAccess.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("Project.DataAccess.Entities.BookInOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BookId");
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<Guid>("OrderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("BoookInOrders");
+                });
+
             modelBuilder.Entity("Project.DataAccess.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
-
-                    b.Property<Guid>("BookId");
 
                     b.Property<string>("ContactPhone");
 
@@ -54,16 +72,19 @@ namespace Project.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
-
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Project.DataAccess.Entities.Order", b =>
+            modelBuilder.Entity("Project.DataAccess.Entities.BookInOrder", b =>
                 {
                     b.HasOne("Project.DataAccess.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project.DataAccess.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

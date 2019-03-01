@@ -10,8 +10,8 @@ using Project.DataAccess;
 namespace Project.DataAccess.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20190222104149_AddB")]
-    partial class AddB
+    [Migration("20190226161933_ManyMany")]
+    partial class ManyMany
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace Project.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Project.DataAccess.Book", b =>
+            modelBuilder.Entity("Project.DataAccess.Entities.Book", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -39,14 +39,32 @@ namespace Project.DataAccess.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Project.DataAccess.Order", b =>
+            modelBuilder.Entity("Project.DataAccess.Entities.BookInOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BookId");
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<Guid>("OrderId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("BoookInOrders");
+                });
+
+            modelBuilder.Entity("Project.DataAccess.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
-
-                    b.Property<Guid>("BookId");
 
                     b.Property<string>("ContactPhone");
 
@@ -56,16 +74,19 @@ namespace Project.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BookId");
-
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Project.DataAccess.Order", b =>
+            modelBuilder.Entity("Project.DataAccess.Entities.BookInOrder", b =>
                 {
-                    b.HasOne("Project.DataAccess.Book", "Book")
+                    b.HasOne("Project.DataAccess.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Project.DataAccess.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

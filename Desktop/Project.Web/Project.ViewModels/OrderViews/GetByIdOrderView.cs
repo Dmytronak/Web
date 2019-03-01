@@ -1,11 +1,13 @@
 ﻿using System;
 
-namespace Project.DataAccess.Entities
+namespace Project.ViewModels.OrderViews
 {
-    public class Order : BaseEntity
+    public class GetByIdOrderView
     {
+        public Guid Id { get; set; }
         public string User { get; set; }
         public string Address { get; set; }
         public string ContactPhone { get; set; }
+  
     }
 }

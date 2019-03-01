@@ -1,5 +1,5 @@
-﻿using Project.DataAccess.Interfaces;
-using Project.DataAccess.Entities;
+﻿using Project.DataAccess.Entities;
+using Project.DataAccess.Interfaces;
 
 namespace Project.DataAccess.Repository
 {

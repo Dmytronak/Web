@@ -13,7 +13,6 @@ namespace Project.BusinessLogic.Services
 
         private readonly IBookRepository _bookRepository;
 
-
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
@@ -23,12 +22,10 @@ namespace Project.BusinessLogic.Services
         {
             var book = new Book()
             {
-               
-                Author = model.Author,
                 Name = model.Name,
+                Author = model.Author,
                 Price = model.Price
             };
-
             await _bookRepository.Create(book);
 
         }
@@ -39,9 +36,8 @@ namespace Project.BusinessLogic.Services
 
             if(book==null)
             {
-                
+                throw new ArgumentNullException("Book received a null argument!");
             }
-
 
             book.Name = model.Name;
             book.Price = model.Price;

@@ -12,6 +12,7 @@ namespace Project.DataAccess.Interfaces
         Task Create(TEntity item);
         Task Update(TEntity item);
         Task Delete(TEntity item);
+        Task AddList(IEnumerable<TEntity> item);
     }
 }
 

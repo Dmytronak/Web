@@ -1,5 +1,7 @@
 ﻿using Project.DataAccess.Interfaces;
 using Project.DataAccess.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace Project.DataAccess.Repository
 {
@@ -7,6 +9,9 @@ namespace Project.DataAccess.Repository
     {
         public BookRepository(DataBaseContext context) : base(context)
         {
+
         }
+
+ 
     }
 }

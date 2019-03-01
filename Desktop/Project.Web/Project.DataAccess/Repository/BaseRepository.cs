@@ -16,6 +16,14 @@ namespace Project.DataAccess.Repository
             _context = context;
             _dbSet = _context.Set<TEntity>();
         }
+
+        public async Task AddList(IEnumerable<TEntity> item)
+        {
+            await _dbSet.AddRangeAsync(item);
+            await _context.SaveChangesAsync();
+
+        }
+
         public async Task Create(TEntity item)
         {
            await _dbSet.AddAsync(item);
@@ -46,5 +54,7 @@ namespace Project.DataAccess.Repository
            _context.Entry(item).State = EntityState.Modified;
            await _context.SaveChangesAsync();
         }
+
+
     }
 }
