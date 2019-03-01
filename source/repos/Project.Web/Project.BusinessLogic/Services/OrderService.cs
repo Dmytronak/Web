@@ -12,11 +12,13 @@ namespace Project.BusinessLogic.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IBookInOrderRepository _bookInOrderRepository;
+        private readonly IBookRepository _bookRepository;
 
-        public OrderService(IOrderRepository orderRepository,IBookInOrderRepository bookInOrderRepository)
+        public OrderService(IOrderRepository orderRepository,IBookInOrderRepository bookInOrderRepository, IBookRepository bookRepository)
         {
             _orderRepository = orderRepository;
             _bookInOrderRepository = bookInOrderRepository;
+            _bookRepository = bookRepository;
         }
         public async Task Buy(BuyOrderView model)
         {
@@ -65,17 +67,34 @@ namespace Project.BusinessLogic.Services
             {
                 throw new ArgumentNullException("Your ID received a null argument!");
             }
-
-            var bio = await _bookInOrderRepository.GetByOrderId(id);
+          
+            var booksInOrder = await _bookInOrderRepository.GetByOrderId(id);
             var order = await _orderRepository.GetById(id);
-
+            //var bookall = await _bookRepository.GetAll();
+          
 
             var model = new DetailsBookOrderView();
-            model.Id = bio.OrderId;
+            model.Id = id;
             model.User = order.User;
             model.Address = order.Address;
             model.ContactPhone = order.ContactPhone;
-           
+
+
+            model.BooksDetails = booksInOrder.Select(x => new BookDetailsOrderViewItem()
+            {
+                BookId = x.Book.Id,
+                Name = x.Book.Name
+            }).ToList();
+
+            //model.BooksDetails = bio.Where(o => o.OrderId == id)
+            //    .Select(x => new BookDetailsOrderViewItem()
+            //    {
+            //        BookId = x.BookId,
+            //        Name = bookall.Where(i => i.Id == x.BookId).FirstOrDefault().Name
+
+            //    })
+
+            //    .ToList();
 
             return model;
         }

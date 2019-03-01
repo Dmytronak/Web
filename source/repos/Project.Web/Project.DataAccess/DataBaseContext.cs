@@ -11,6 +11,7 @@ namespace Project.DataAccess
         public DbSet<Book> Books { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<BookInOrder> BoookInOrders { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         public DataBaseContext(DbContextOptions<DataBaseContext> options)
             : base(options)

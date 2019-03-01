@@ -9,11 +9,11 @@ namespace Project.ViewModels.OrderViews
         public string User { get; set; }
         public string Address { get; set; }
         public string ContactPhone { get; set; }
-        public List<BookDetailsOrderViewItem> Books { get; set; }
+        public List<BookDetailsOrderViewItem> BooksDetails { get; set; }
 
         public DetailsBookOrderView()
         {
-            Books = new List<BookDetailsOrderViewItem>();
+            BooksDetails = new List<BookDetailsOrderViewItem>();
         }
 
     }
