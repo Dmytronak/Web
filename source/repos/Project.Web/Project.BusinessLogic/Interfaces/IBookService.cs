@@ -11,5 +11,6 @@ namespace Project.BusinessLogic.Interfaces
         Task Create(CreateBookView model);
         Task Delete(Guid id);
         Task Update(UpdateBookView model);
+        Task<GetBookByCategoryView> GetBookByCategory(Guid id);
     }
 }

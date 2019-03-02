@@ -17,6 +17,13 @@ namespace Project.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> CategoryBooks([FromBody]Guid id)
+        {
+            var result = await _bookService.GetBookByCategory(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Update(Guid id)
         {
             var model = await _bookService.GetById(id);
@@ -31,7 +38,6 @@ namespace Project.Web.Controllers
             await _bookService.Update(model);
             return RedirectToAction("Index");
         }
-
 
         [HttpGet]
         //[ActionName("ConfirmDelete")]
@@ -48,8 +54,7 @@ namespace Project.Web.Controllers
             return RedirectToAction("Index");
 
         }
-     
-       
+    
         [HttpGet]
         public IActionResult Create()
         {

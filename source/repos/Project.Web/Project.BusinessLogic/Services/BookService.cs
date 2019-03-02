@@ -12,12 +12,41 @@ namespace Project.BusinessLogic.Services
     {
 
         private readonly IBookRepository _bookRepository;
-        private readonly ICategoryRepository _categoryRepository;
+     
 
-        public BookService(IBookRepository bookRepository, ICategoryRepository categoryRepository)
+        public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
-            _categoryRepository = categoryRepository;
+          
+        }
+
+        public async Task<GetBookByCategoryView> GetBookByCategory(Guid id)
+        {
+           if(id==null)
+            {
+                throw new  ArgumentNullException("CATEGORY ID is Null");
+            }
+
+            var book = await _bookRepository.GetByCategoryId(id);
+
+            var model = new GetBookByCategoryView();
+           
+            model.Books = book.Select(x => new BookGetByCategoryBookViewItem()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Author = x.Author,
+                Price = x.Price,
+                NameCat = x.Category.Name
+                
+            }).ToList();
+            
+            return model;
+        }
+
+        private Exception ArgumentNullException(string v)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task Create(CreateBookView model)
@@ -96,6 +125,5 @@ namespace Project.BusinessLogic.Services
             }
         }
 
-       
     }
 }

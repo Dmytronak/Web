@@ -30,7 +30,7 @@ namespace Project.Web
             services.AddTransient<IBookRepository, BookRepository>();
             services.AddTransient<IOrderRepository,OrderRepository>();
             services.AddTransient<IBookInOrderRepository, BookInOrderRepository>();
-            services.AddTransient<ICategoryRepository, CategoryRepository>();
+
 
             services.AddTransient<IBookService,BookService>();
             services.AddTransient<IOrderService, OrderService>();
