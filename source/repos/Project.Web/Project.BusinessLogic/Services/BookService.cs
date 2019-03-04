@@ -22,7 +22,7 @@ namespace Project.BusinessLogic.Services
 
         public async Task<GetBookByCategoryView> GetBookByCategory(Guid id)
         {
-           if(id==null)
+           if(id == null)
             {
                 throw new  ArgumentNullException("CATEGORY ID is Null");
             }

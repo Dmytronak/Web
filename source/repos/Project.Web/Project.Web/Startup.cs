@@ -10,6 +10,7 @@ using Project.BusinessLogic.Services;
 using Project.DataAccess;
 using Project.DataAccess.Interfaces;
 using Project.DataAccess.Repository;
+using Project.Web.Filters;
 
 namespace Project.Web
 {
@@ -41,10 +42,18 @@ namespace Project.Web
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
+
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(CustomActionFilter)); // подключение по типу
+
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           
+            
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

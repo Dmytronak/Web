@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Project.BusinessLogic.Interfaces;
 using Project.ViewModels.BookViews;
+using Project.Web.Filters;
 
 namespace Project.Web.Controllers
 {
@@ -60,9 +61,16 @@ namespace Project.Web.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]CreateBookView model)
         {
+
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             await _bookService.Create(model);
             return RedirectToAction("Index");
         }
