@@ -10,6 +10,7 @@ using Project.BusinessLogic.Services;
 using Project.DataAccess;
 using Project.DataAccess.Interfaces;
 using Project.DataAccess.Repository;
+using Project.Web.Extations;
 using Project.Web.Filters;
 
 namespace Project.Web
@@ -49,7 +50,7 @@ namespace Project.Web
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(CustomActionFilter)); // подключение по типу
-
+          
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
            
             
@@ -65,10 +66,10 @@ namespace Project.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+               
                 app.UseHsts();
             }
-
+            app.UseMiddleware(typeof(ExceptionMiddleware));
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
