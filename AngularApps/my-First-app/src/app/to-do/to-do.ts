@@ -1,7 +1,8 @@
 export interface Todo {
     id: number;
     name: string;
-    notes: string;
+    author: string;
     due: Date;
     done: Boolean;
+    price: number;
   }

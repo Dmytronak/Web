@@ -3,21 +3,24 @@ import {Todo} from '../app/to-do/to-do';
 export const TODO_ITEMS: Todo[] = [
  {
    id: 1,
-   name: 'Lunch with Lily',
-   notes: 'sea food',
+   name: 'Myrhorod',
+   author: 'N. Gogol',
    due: new Date(new Date().setDate(new Date().getDate() + 4)),
-   done: false
+   done: false,
+   price: 54
  }, {
    id: 2,
-   name: 'Visit N. Hirano',
-   notes: 'confirm the meeting ahead of time',
+   name: 'C#',
+   author: 'G.Albakhari',
    due: new Date(new Date().setDate(new Date().getDate() + 5)),
-   done: false
+   done: false,
+   price: 222
  }, {
    id: 3,
-   name: 'Do the groceries',
-   notes: '',
+   name: 'Nights near Dykanyka',
+   author: 'N. Gogol',
    due: new Date(new Date().setDate(new Date().getDate() - 1)),
-   done: true
+   done: true,
+   price: 20
  }
 ];

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DatePipe } from '@angular/common';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import {Todo} from './to-do';
 import { TodoService } from './to-do.service';
-import { generate } from 'rxjs';
-
 export enum SaveMode {
   None,
   New,
@@ -22,19 +19,18 @@ export class ToDoComponent implements OnInit {
   todos: Todo[];
   saveMode: SaveMode = SaveMode.None;
   headerText: string;
-  
+
 
   constructor(private _todoService: TodoService, private _formBuilder: FormBuilder) {
    
     this.formGroup = _formBuilder.group({
       'id':'',
-      'name': '',
-      'due': '',
+      'name': ['', Validators.maxLength(10)],
+      'author': ['', Validators.required],
+      'due':'',
       'done': '',
-      'notes': ''});
+      'price':['', Validators.pattern(/^-?(0|[1-9]\d*)?$/)]});
   }
-
- 
 
   ngOnInit() {
     this.getTodos();
