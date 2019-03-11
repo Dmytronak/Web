@@ -7,7 +7,7 @@ import { TODO_ITEMS } from '../../api/to-do-data';
 @Injectable()
 export class TodoService {
   pItems: Todo[] = TODO_ITEMS;
-  
+
   constructor() { }
 
   getTodosFromData(): Todo[] {
@@ -16,11 +16,11 @@ export class TodoService {
   }
   addTodo(todo: Todo) {
 
-    const addWithIdTodo= Object.assign({}, todo, { id: this.generationOfId() });
+    const addWithIdTodo = Object.assign({}, todo, { id: this.generationOfId() });
     this.pItems.push(addWithIdTodo);
   }
   editTodo(todo: Todo) {
-    const index = this.pItems.findIndex(x=> x.id==todo.id);
+    const index = this.pItems.findIndex(x => x.id == todo.id);
     this.pItems[index] = todo;
 
   }
@@ -28,8 +28,6 @@ export class TodoService {
     this.pItems.splice(this.pItems.indexOf(todo), 1);
   }
   generationOfId() {
-   
-
-    return  Math.floor(Math.random() * 1000);
+    return Math.floor(Math.random() * 1000);
   }
 }

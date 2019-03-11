@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import {Todo} from './to-do';
+import { Todo } from './to-do';
 import { TodoService } from './to-do.service';
 export enum SaveMode {
   None,
@@ -20,16 +20,16 @@ export class ToDoComponent implements OnInit {
   saveMode: SaveMode = SaveMode.None;
   headerText: string;
 
-
   constructor(private _todoService: TodoService, private _formBuilder: FormBuilder) {
-   
+    
     this.formGroup = _formBuilder.group({
-      'id':'',
+      'id': '',
       'name': ['', Validators.maxLength(10)],
       'author': ['', Validators.required],
-      'due':'',
+      'due': '',
       'done': '',
-      'price':['', Validators.pattern(/^-?(0|[1-9]\d*)?$/)]});
+      'price': ['', Validators.pattern(/^-?(0|[1-9]\d*)?$/)]
+    });
   }
 
   ngOnInit() {
@@ -59,7 +59,7 @@ export class ToDoComponent implements OnInit {
     this.saveMode = SaveMode.None;
   }
 
-  showEditForm(todo: Todo) { 
+  showEditForm(todo: Todo) {
     if (!todo) {
       return;
     }
@@ -79,5 +79,4 @@ export class ToDoComponent implements OnInit {
     return this.saveMode !== SaveMode.None;
   }
 
- 
 }

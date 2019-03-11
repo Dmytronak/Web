@@ -23,17 +23,17 @@
           <td>{{ todo.price }}</td>
           <td class="text-center">
             <button class="btn btn-info" (click)="showEditForm(todo)">
-              <i class="glyphicon glyphicon-pencil">Edit</i>
+              <i class="fas fa-pencil-alt"></i>
             </button>
             <button class="btn btn-danger" (click)="removeToDo(todo)">
-              <i class="glyphicon glyphicon-remove">Remove</i>
+              <i class="fas fa-trash-alt"></i>
             </button>
           </td>
         </tr>
       </tbody>
     </table>
     <button class="btn btn-success" (click)="showNewForm()">
-      <i class="glyphicon glyphicon-plus">Add</i>
+      <i class="fas fa-plus"></i>
     </button>
     <form *ngIf="showForm()" [formGroup]="formGroup" (ngSubmit)="saveTodo(formGroup.value)">
       <h2>{{headerText}}</h2>
@@ -54,7 +54,6 @@
           Name max lenght required 10
         </div>
       </div>
-
       <div class="form-group">
         <label>Author:</label>
         <input class="form-control" formControlName="author" type="text" required minlength="3">
@@ -78,25 +77,26 @@
         <label>Price:</label>
         <input class="form-control" formControlName="price" type="text" required minlength="2">
       </div>
-      <div
-        *ngIf="formGroup.controls['price'].invalid && (formGroup.controls['price'].dirty || formGroup.controls['price'].touched)"
+      <div *ngIf="formGroup.controls['price'].invalid && (formGroup.controls['price'].dirty || formGroup.controls['price'].touched)"
         class="alert alert-danger">
         <div *ngIf="formGroup.controls['price'].errors.required">
           Price is required.
         </div>
         <div *ngIf="formGroup.controls['price'].errors.minlength">
-            Price min lenght required 2
+          Price min lenght required 2
         </div>
         <div *ngIf="formGroup.controls['price'].errors.pattern">
-            ONLY NUMB ERROR
+          ONLY NUMB ERROR
         </div>
-
       </div>
-
       <p>
-        <input type="submit" class="btn btn-primary" value="Save" [disabled]="formGroup.pristine || formGroup.invalid"
-          class="btn btn-success">
-        <input type="button" class="btn btn-warning" value="Cancel" (click)="cancelEditTodo()">
+      <button type="submit" class="btn btn-success" [disabled]="formGroup.pristine || formGroup.invalid">
+          <i class="far fa-save"></i>
+      </button>
+
+      <button type="submit" class="btn btn-warning" (click)="cancelEditTodo()">
+          <i class="fas fa-backward"></i>
+      </button>
       </p>
     </form>
   </div>
