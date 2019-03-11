@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using CustomIdentity.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -6,16 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Project.BusinessLogic.Interfaces;
-using Project.BusinessLogic.Services;
-using Project.DataAccess;
-using Project.DataAccess.Entities;
-using Project.DataAccess.Interfaces;
-using Project.DataAccess.Repository;
-using Project.Web.Extations;
-using Project.Web.Filters;
 
-namespace Project.Web
+namespace CustomIdentity
 {
     public class Startup
     {
@@ -29,35 +22,19 @@ namespace Project.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DataBaseContext>(options => options.UseSqlServer(connection));
-            services.AddTransient<IBookRepository, BookRepository>();
-            services.AddTransient<IOrderRepository,OrderRepository>();
-            services.AddTransient<IBookInOrderRepository, BookInOrderRepository>();
-
-
-            services.AddTransient<IBookService,BookService>();
-            services.AddTransient<IOrderService, OrderService>();
-   
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-
             });
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DataBaseContext>();
+            services.AddDbContext<ApplicationContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddMvc(options =>
-            {
-                options.Filters.Add(typeof(CustomActionFilter)); // подключение по типу
-          
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           
-            
-          
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationContext>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,20 +46,17 @@ namespace Project.Web
             }
             else
             {
-               
-                app.UseHsts();
+                app.UseExceptionHandler("/Home/Error");
             }
-            app.UseMiddleware(typeof(ExceptionMiddleware));
-            app.UseHttpsRedirection();
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Book}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

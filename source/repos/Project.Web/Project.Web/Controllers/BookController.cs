@@ -58,7 +58,7 @@ namespace Project.Web.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            throw new ApplicationException("asdasdsa");
+            
             return View();
         }
 
