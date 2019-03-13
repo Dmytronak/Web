@@ -47,8 +47,7 @@ namespace Project.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
 
             });
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<DataBaseContext>();
+           
 
             services.AddMvc(options =>
             {
