@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CustomIdentity.Migrations
+namespace CustomIdentity.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class IdentityMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

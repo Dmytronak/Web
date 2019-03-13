@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CustomIdentity.ViewModels
+namespace CustomIdentity.ViewModels.AccountViews
 {
-    public class RegisterViewModel
+    public class RegisterAccountView
     {
         [Required]
         [Display(Name = "Email")]

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,8 +8,7 @@
     <a asp-controller="Users" asp-action="Index">List of users</a>
     <p>@User.Identity.Name</p>
 
-    <form method="post" asp-controller="Account" asp-action="LogOff">
-
+    <form method="post" asp-controller="Account" asp-action="LogOff">s
         <input type="submit" value="Выход" />
     </form>
 }

@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using CustomIdentity.DataAccess.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CustomIdentity.Models
+namespace CustomIdentity.DataAccess
 {
     public class ApplicationContext : IdentityDbContext<User>
     {

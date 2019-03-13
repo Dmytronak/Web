@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace CustomIdentity.Models
+namespace CustomIdentity.DataAccess.Entities
 {
     public class User : IdentityUser
     {
        
         public int Year { get; set; }
+        
     }
 }
