@@ -11,6 +11,7 @@ using System.Text;
 using CustomIdentity.ViewModels.AccountViews;
 using CustomIdentity.DataAccess.Entities;
 using CustomIdentity.BusinessLogic.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CustomIdentity.BusinessLogic.Services
 {
@@ -29,7 +30,7 @@ namespace CustomIdentity.BusinessLogic.Services
         }
 
       
-        public async Task<object> Login(LoginAccountView model)
+        public async Task<string> Login(LoginAccountView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
@@ -43,7 +44,7 @@ namespace CustomIdentity.BusinessLogic.Services
             throw new ApplicationException("INVALID_LOGIN_ATTEMPT");             
         }
    
-        public async Task<object> Register(RegisterAccountView model)
+        public async Task<string> Register(RegisterAccountView model)
         {
             var user = new User
             {
@@ -63,7 +64,7 @@ namespace CustomIdentity.BusinessLogic.Services
             throw new ApplicationException("UNKNOWN_ERROR");
         }
 
-        private async Task<object> GenerateJwtToken(string email, User user)
+        private async Task<string> GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
             {
