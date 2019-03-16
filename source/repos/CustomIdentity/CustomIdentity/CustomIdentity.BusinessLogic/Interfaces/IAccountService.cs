@@ -1,11 +1,12 @@
 ﻿using CustomIdentity.ViewModels.AccountViews;
+using CustomIdentity.ViewModels.JwtProviderView;
 using System.Threading.Tasks;
 
 namespace CustomIdentity.BusinessLogic.Interfaces
 {
     public interface IAccountService
     {
-        Task<string> Login(LoginAccountView model);
-        Task<string> Register(RegisterAccountView model);
+        Task<JwtTokenView> Login(LoginAccountView model);
+        Task<JwtTokenView> Register(RegisterAccountView model);
     }
 }

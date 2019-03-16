@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace CustomIdentity.Extations
+namespace CustomIdentity.Extension
 {
     public class ExceptionMiddleware
     {

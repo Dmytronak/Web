@@ -10,16 +10,17 @@ using System.Text;
 
 namespace CustomIdentity.Configuration
 {
-
+   
     public static class JwtConfiguration
     {
         public static IConfiguration Configuration { get; set; }
+        
 
-        public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
+        public static void AddJwtConfiguration(this IServiceCollection services,IConfiguration configuration)
         {
             Configuration = configuration;
-
-            var jwtoption = Options.Create(configuration.GetSection("JwtConfiguration").Get<JwtConfigurationModel>());
+           
+            var someOptions = Options.Create(configuration.GetSection("JwtConfiguration").Get<JwtConfigurationModel>());
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 
             services
@@ -29,32 +30,37 @@ namespace CustomIdentity.Configuration
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+
                 })
                 .AddJwtBearer(options =>
                 {
+
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         // укзывает, будет ли валидироваться издатель при валидации токена
                         ValidateIssuer = true,
                         // строка, представляющая издателя
-                        ValidIssuer = jwtoption.Value.JwtIssuer,
+                        ValidIssuer = someOptions.Value.JwtIssuer,
 
                         // будет ли валидироваться потребитель токена
                         ValidateAudience = true,
                         // установка потребителя токена
-                        ValidAudience = jwtoption.Value.JwtIssuer,
+                        ValidAudience = someOptions.Value.JwtIssuer,
                         // будет ли валидироваться время существования
                         ValidateLifetime = true,
 
                         // установка ключа безопасности
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoption.Value.JwtKey)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(someOptions.Value.JwtKey)),
                         // валидация ключа безопасности
                         ValidateIssuerSigningKey = true,
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire
                     };
                 });
         }
+
+
 
     }
 
