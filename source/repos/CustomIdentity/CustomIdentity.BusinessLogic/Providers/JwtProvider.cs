@@ -14,14 +14,11 @@ namespace CustomIdentity.BusinessLogic.Providers
 {
     public class JwtProvider : IJwtProvider
     {
-        public JwtConfigurationModel JwtConfigurationModel { get; }
         public JwtProvider(IOptions<JwtConfigurationModel> options)
         {
             JwtConfigurationModel = options.Value;
         }
-
-       
-
+        public JwtConfigurationModel JwtConfigurationModel { get; }
         public async Task<JwtTokenView> GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
@@ -44,7 +41,6 @@ namespace CustomIdentity.BusinessLogic.Providers
             );
 
             var gentok =  new JwtSecurityTokenHandler().WriteToken(token);
-
             var model = new JwtTokenView()
             {
                 Token = gentok
