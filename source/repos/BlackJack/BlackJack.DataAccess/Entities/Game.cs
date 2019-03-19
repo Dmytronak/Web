@@ -14,9 +14,7 @@ namespace BlackJack.DataAccess.Entities
         public Guid PlayerId { get; set; }
         public virtual Player Players { get; set; }
 
-        [ForeignKey("Round")]
-        public Guid RoundId { get; set; }
-        public virtual Round Rounds { get; set; }
+       
 
     }
 }

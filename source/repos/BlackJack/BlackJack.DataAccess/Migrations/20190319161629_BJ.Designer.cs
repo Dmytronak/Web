@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190319160020_BJ")]
+    [Migration("20190319161629_BJ")]
     partial class BJ
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,15 +52,11 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<double>("Rate");
 
-                    b.Property<Guid>("RoundId");
-
                     b.Property<string>("Winner");
 
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
-
-                    b.HasIndex("RoundId");
 
                     b.ToTable("Games");
                 });
@@ -98,9 +94,13 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<double>("CurrentBalance");
 
+                    b.Property<Guid>("GameId");
+
                     b.Property<double>("RoundCount");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("Rounds");
                 });
@@ -300,11 +300,6 @@ namespace BlackJack.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BlackJack.DataAccess.Entities.Round", "Rounds")
-                        .WithMany()
-                        .HasForeignKey("RoundId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Player", b =>
@@ -312,6 +307,14 @@ namespace BlackJack.DataAccess.Migrations
                     b.HasOne("BlackJack.DataAccess.Entities.User", "Users")
                         .WithMany()
                         .HasForeignKey("UsersId");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Round", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Step", b =>

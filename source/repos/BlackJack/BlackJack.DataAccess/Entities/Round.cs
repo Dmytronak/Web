@@ -9,5 +9,9 @@ namespace BlackJack.DataAccess.Entities
         public double CurentRate { get; set; }
         public double CurrentBalance { get; set; }
 
+        [ForeignKey("Game")]
+        public Guid GameId { get; set; }
+        public virtual Game Games { get; set; }
+
     }
 }

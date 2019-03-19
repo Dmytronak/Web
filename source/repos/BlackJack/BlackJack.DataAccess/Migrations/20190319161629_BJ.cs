@@ -64,21 +64,6 @@ namespace BlackJack.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rounds",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreationAt = table.Column<DateTime>(nullable: false),
-                    RoundCount = table.Column<double>(nullable: false),
-                    CurentRate = table.Column<double>(nullable: false),
-                    CurrentBalance = table.Column<double>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rounds", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -207,6 +192,51 @@ namespace BlackJack.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    NumberOfPlayers = table.Column<int>(nullable: false),
+                    Rate = table.Column<double>(nullable: false),
+                    Balance = table.Column<double>(nullable: false),
+                    Winner = table.Column<string>(nullable: true),
+                    PlayerId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Games_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rounds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    RoundCount = table.Column<double>(nullable: false),
+                    CurentRate = table.Column<double>(nullable: false),
+                    CurrentBalance = table.Column<double>(nullable: false),
+                    GameId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rounds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Rounds_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Steps",
                 columns: table => new
                 {
@@ -228,36 +258,6 @@ namespace BlackJack.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Steps_Rounds_RoundId",
-                        column: x => x.RoundId,
-                        principalTable: "Rounds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Games",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    CreationAt = table.Column<DateTime>(nullable: false),
-                    NumberOfPlayers = table.Column<int>(nullable: false),
-                    Rate = table.Column<double>(nullable: false),
-                    Balance = table.Column<double>(nullable: false),
-                    Winner = table.Column<string>(nullable: true),
-                    PlayerId = table.Column<Guid>(nullable: false),
-                    RoundId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Games", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Games_Players_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "Players",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Games_Rounds_RoundId",
                         column: x => x.RoundId,
                         principalTable: "Rounds",
                         principalColumn: "Id",
@@ -309,14 +309,14 @@ namespace BlackJack.DataAccess.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Games_RoundId",
-                table: "Games",
-                column: "RoundId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Players_UsersId",
                 table: "Players",
                 column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rounds_GameId",
+                table: "Rounds",
+                column: "GameId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Steps_CardId",
@@ -347,22 +347,22 @@ namespace BlackJack.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Games");
-
-            migrationBuilder.DropTable(
                 name: "Steps");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Players");
-
-            migrationBuilder.DropTable(
                 name: "Cards");
 
             migrationBuilder.DropTable(
                 name: "Rounds");
+
+            migrationBuilder.DropTable(
+                name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Players");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
