@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190313075059_IdentityMig")]
-    partial class IdentityMig
+    [Migration("20190319160020_BJ")]
+    partial class BJ
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,115 @@ namespace BlackJack.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CustomIdentity.DataAccess.Entities.User", b =>
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Card", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<int>("Rank");
+
+                    b.Property<int>("Suit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Cards");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Game", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<double>("Balance");
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<int>("NumberOfPlayers");
+
+                    b.Property<Guid>("PlayerId");
+
+                    b.Property<double>("Rate");
+
+                    b.Property<Guid>("RoundId");
+
+                    b.Property<string>("Winner");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlayerId");
+
+                    b.HasIndex("RoundId");
+
+                    b.ToTable("Games");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Player", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Score");
+
+                    b.Property<Guid>("UserId");
+
+                    b.Property<string>("UsersId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Round", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<double>("CurentRate");
+
+                    b.Property<double>("CurrentBalance");
+
+                    b.Property<double>("RoundCount");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rounds");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Step", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("CardId");
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<double>("CurentRate");
+
+                    b.Property<double>("CurrentBalance");
+
+                    b.Property<Guid>("RoundId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CardId");
+
+                    b.HasIndex("RoundId");
+
+                    b.ToTable("Steps");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -51,6 +159,8 @@ namespace BlackJack.DataAccess.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<bool>("RememberMe");
 
                     b.Property<string>("SecurityStamp");
 
@@ -184,6 +294,39 @@ namespace BlackJack.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Game", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.Player", "Players")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlackJack.DataAccess.Entities.Round", "Rounds")
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Player", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.User", "Users")
+                        .WithMany()
+                        .HasForeignKey("UsersId");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Step", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.Card", "Cards")
+                        .WithMany()
+                        .HasForeignKey("CardId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlackJack.DataAccess.Entities.Round", "Rounds")
+                        .WithMany()
+                        .HasForeignKey("RoundId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
@@ -194,7 +337,7 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("CustomIdentity.DataAccess.Entities.User")
+                    b.HasOne("BlackJack.DataAccess.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -202,7 +345,7 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("CustomIdentity.DataAccess.Entities.User")
+                    b.HasOne("BlackJack.DataAccess.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -215,7 +358,7 @@ namespace BlackJack.DataAccess.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("CustomIdentity.DataAccess.Entities.User")
+                    b.HasOne("BlackJack.DataAccess.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -223,7 +366,7 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("CustomIdentity.DataAccess.Entities.User")
+                    b.HasOne("BlackJack.DataAccess.Entities.User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);

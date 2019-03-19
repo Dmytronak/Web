@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlackJack.DataAccess.Migrations
 {
-    public partial class IdentityMig : Migration
+    public partial class BJ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,11 +41,41 @@ namespace BlackJack.DataAccess.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Year = table.Column<int>(nullable: false)
+                    Year = table.Column<int>(nullable: false),
+                    RememberMe = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cards",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    Rank = table.Column<int>(nullable: false),
+                    Suit = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cards", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Rounds",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    RoundCount = table.Column<double>(nullable: false),
+                    CurentRate = table.Column<double>(nullable: false),
+                    CurrentBalance = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rounds", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,6 +184,86 @@ namespace BlackJack.DataAccess.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Players",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Score = table.Column<int>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
+                    UsersId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Players", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Players_AspNetUsers_UsersId",
+                        column: x => x.UsersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Steps",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    CurentRate = table.Column<double>(nullable: false),
+                    CurrentBalance = table.Column<double>(nullable: false),
+                    CardId = table.Column<Guid>(nullable: false),
+                    RoundId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Steps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Steps_Cards_CardId",
+                        column: x => x.CardId,
+                        principalTable: "Cards",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Steps_Rounds_RoundId",
+                        column: x => x.RoundId,
+                        principalTable: "Rounds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    NumberOfPlayers = table.Column<int>(nullable: false),
+                    Rate = table.Column<double>(nullable: false),
+                    Balance = table.Column<double>(nullable: false),
+                    Winner = table.Column<string>(nullable: true),
+                    PlayerId = table.Column<Guid>(nullable: false),
+                    RoundId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Games_Players_PlayerId",
+                        column: x => x.PlayerId,
+                        principalTable: "Players",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Games_Rounds_RoundId",
+                        column: x => x.RoundId,
+                        principalTable: "Rounds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -192,6 +302,31 @@ namespace BlackJack.DataAccess.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Games_PlayerId",
+                table: "Games",
+                column: "PlayerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Games_RoundId",
+                table: "Games",
+                column: "RoundId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Players_UsersId",
+                table: "Players",
+                column: "UsersId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Steps_CardId",
+                table: "Steps",
+                column: "CardId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Steps_RoundId",
+                table: "Steps",
+                column: "RoundId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -212,7 +347,22 @@ namespace BlackJack.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Steps");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Players");
+
+            migrationBuilder.DropTable(
+                name: "Cards");
+
+            migrationBuilder.DropTable(
+                name: "Rounds");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
