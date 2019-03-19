@@ -9,12 +9,16 @@ namespace BlackJack.DataAccess.Entities
         public double Rate { get; set; }
         public double Balance { get; set; }
         public string Winner { get; set; }
+        public string Looser { get; set; }
 
         [ForeignKey("Player")]
         public Guid PlayerId { get; set; }
         public virtual Player Players { get; set; }
 
-       
+        [ForeignKey("Bot")]
+        public Guid BotId { get; set; }
+        public virtual Bot Bots { get; set; }
+
 
     }
 }

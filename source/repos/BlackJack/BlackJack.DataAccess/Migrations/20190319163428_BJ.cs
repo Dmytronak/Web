@@ -50,6 +50,21 @@ namespace BlackJack.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Bot",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    BotMaxPlayers = table.Column<int>(nullable: false),
+                    BotName = table.Column<string>(nullable: true),
+                    BotScore = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bot", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cards",
                 columns: table => new
                 {
@@ -175,6 +190,7 @@ namespace BlackJack.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationAt = table.Column<DateTime>(nullable: false),
+                    MaxPlayers = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Score = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
@@ -201,11 +217,19 @@ namespace BlackJack.DataAccess.Migrations
                     Rate = table.Column<double>(nullable: false),
                     Balance = table.Column<double>(nullable: false),
                     Winner = table.Column<string>(nullable: true),
-                    PlayerId = table.Column<Guid>(nullable: false)
+                    Looser = table.Column<string>(nullable: true),
+                    PlayerId = table.Column<Guid>(nullable: false),
+                    BotId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Games", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Games_Bot_BotId",
+                        column: x => x.BotId,
+                        principalTable: "Bot",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Games_Players_PlayerId",
                         column: x => x.PlayerId,
@@ -304,6 +328,11 @@ namespace BlackJack.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Games_BotId",
+                table: "Games",
+                column: "BotId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Games_PlayerId",
                 table: "Games",
                 column: "PlayerId");
@@ -360,6 +389,9 @@ namespace BlackJack.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Bot");
 
             migrationBuilder.DropTable(
                 name: "Players");

@@ -19,6 +19,24 @@ namespace BlackJack.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.Bot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("BotMaxPlayers");
+
+                    b.Property<string>("BotName");
+
+                    b.Property<int>("BotScore");
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bot");
+                });
+
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Card", b =>
                 {
                     b.Property<Guid>("Id")
@@ -42,7 +60,11 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<double>("Balance");
 
+                    b.Property<Guid>("BotId");
+
                     b.Property<DateTime>("CreationAt");
+
+                    b.Property<string>("Looser");
 
                     b.Property<int>("NumberOfPlayers");
 
@@ -53,6 +75,8 @@ namespace BlackJack.DataAccess.Migrations
                     b.Property<string>("Winner");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BotId");
 
                     b.HasIndex("PlayerId");
 
@@ -65,6 +89,8 @@ namespace BlackJack.DataAccess.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreationAt");
+
+                    b.Property<int>("MaxPlayers");
 
                     b.Property<string>("Name");
 
@@ -294,6 +320,11 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Game", b =>
                 {
+                    b.HasOne("BlackJack.DataAccess.Entities.Bot", "Bots")
+                        .WithMany()
+                        .HasForeignKey("BotId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("BlackJack.DataAccess.Entities.Player", "Players")
                         .WithMany()
                         .HasForeignKey("PlayerId")
