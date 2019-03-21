@@ -2,7 +2,7 @@
 
 namespace BlackJack.DataAccess.Interfaces
 {
-    public interface IStepRepository : IBaseRepository<Step>
+    public interface IPlayerStepRepository : IBaseRepository<PlayerStep>
     {
 
     }

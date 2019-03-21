@@ -2,7 +2,8 @@
 
 namespace BlackJack.BusinessLogic.Services
 {
-    public class StepService : IStepService
+    public class PlayerStepService : IPlayerStepService
     {
+
     }
 }

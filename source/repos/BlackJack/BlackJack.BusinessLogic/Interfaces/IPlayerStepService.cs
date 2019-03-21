@@ -1,6 +1,7 @@
 ﻿namespace BlackJack.BusinessLogic.Interfaces
 {
-    public interface IStepService
+    public interface IPlayerStepService
     {
+
     }
 }

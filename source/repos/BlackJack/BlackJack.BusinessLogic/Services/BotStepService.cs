@@ -2,7 +2,7 @@
 
 namespace BlackJack.BusinessLogic.Services
 {
-    public class BotService : IBotService
+    public class BotStepService : IBotStepService
     {
 
     }

@@ -31,7 +31,7 @@ namespace BlackJack.BusinessLogic.Services
 
             if (result.Succeeded)
             {
-                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
+                var appUser = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
                 var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, appUser);
                 
                 return encodedJwt;
@@ -46,7 +46,8 @@ namespace BlackJack.BusinessLogic.Services
             {
                 UserName = model.Email,
                 Email = model.Email,
-                Year = model.Year
+                Year = model.Year,
+                RememberMe = model.RememberMe
             };
             var result = await _userManager.CreateAsync(user, model.Password);
 

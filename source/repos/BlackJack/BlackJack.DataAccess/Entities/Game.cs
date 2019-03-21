@@ -5,23 +5,16 @@ namespace BlackJack.DataAccess.Entities
 {
     public class Game : BaseEntity
     {
-        public int NumberOfPlayers { get; set; }
-        public double Rate { get; set; }
-        public double Balance { get; set; }
+        public int NumberOfBots { get; set; }
         public string Winner { get; set; }
-        public string Loser { get; set; }
+        public string Status { get; set; }
 
         [ForeignKey("Player")]
         public Guid PlayerId { get; set; }
         public virtual Player Players { get; set; }
 
-        [ForeignKey("Bot")]
-        public Guid BotId { get; set; }
-        public virtual Bot Bots { get; set; }
-
-        [ForeignKey("Card")]
-        public Guid CardId { get; set; }
-        public virtual Card Cards { get; set; }
-
+        [ForeignKey("PlayerStep")]
+        public Guid PlayerStepId { get; set; }
+        public virtual PlayerStep PlayerSteps { get; set; }
     }
 }

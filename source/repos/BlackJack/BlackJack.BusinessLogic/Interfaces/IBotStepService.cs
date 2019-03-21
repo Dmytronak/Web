@@ -1,6 +1,6 @@
 ﻿namespace BlackJack.BusinessLogic.Interfaces
 {
-    public interface IGameService
+    public interface IBotStepService
     {
 
     }

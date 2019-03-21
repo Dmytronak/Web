@@ -8,7 +8,10 @@ namespace BlackJack.DataAccess.Entities
     {
         public CardRank Rank { get; set; }
         public CardSuit Suit { get; set; }
-     
+
+        [ForeignKey("Game")]
+        public Guid GameId { get; set; }
+        public virtual Game Games { get; set; }
 
         public Card(CardRank rank, CardSuit suit)
         {

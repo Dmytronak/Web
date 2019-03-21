@@ -4,5 +4,6 @@ namespace BlackJack.BusinessLogic.Services
 {
     public class GameService : IGameService
     {
+
     }
 }

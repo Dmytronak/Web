@@ -3,11 +3,10 @@ using BlackJack.DataAccess.Interfaces;
 
 namespace BlackJack.DataAccess.Repository
 {
-    public class StepRepository : BaseRepository<Step>, IStepRepository
+    public class BotStepRepository : BaseRepository<BotStep>, IBotStepRepository
     {
-        public StepRepository(ApplicationContext context) : base(context)
+        public BotStepRepository(ApplicationContext context) : base(context)
         {
-
         }
     }
 }

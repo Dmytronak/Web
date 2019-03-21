@@ -22,5 +22,8 @@ namespace BlackJack.ViewModels.AccountViews
         [DataType(DataType.Password)]
         [Display(Name = "Подтвердить пароль")]
         public string PasswordConfirm { get; set; }
+
+        [Display(Name = "Запомнить?")]
+        public bool RememberMe { get; set; }
     }
 }
