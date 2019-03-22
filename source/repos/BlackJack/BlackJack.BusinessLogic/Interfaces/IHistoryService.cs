@@ -1,7 +1,6 @@
 ﻿namespace BlackJack.BusinessLogic.Interfaces
 {
-    public interface ICardService
+    public interface IHistoryService
     {
-
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Project.DataAccess.Entities;
 
 namespace Project.DataAccess
 {
-   public class DataBaseContext : DbContext
+   public class DataBaseContext : IdentityDbContext<User>
     {
         public DbSet<Book> Books { get; set; }
         public DbSet<Order> Orders { get; set; }

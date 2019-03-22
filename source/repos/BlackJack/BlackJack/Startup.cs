@@ -6,6 +6,7 @@ using BlackJack.Configuration;
 using BlackJack.DataAccess;
 using BlackJack.DataAccess.Entities;
 using BlackJack.Extension;
+using BlackJack.Filters;
 using BlackJack.ViewModels.JwtProviderView;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -53,7 +54,12 @@ namespace BlackJack
             services.AddJwtConfiguration(Configuration);
 
             // ===== Add MVC ========
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(CustomActionFilter)); // подключение по типу
+
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -72,8 +78,8 @@ namespace BlackJack
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseMiddleware(typeof(ExceptionMiddleware));
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
             app.UseAuthentication();
 
             app.UseMvc(routes =>

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.GameViews
 {
@@ -8,5 +9,10 @@ namespace BlackJack.ViewModels.GameViews
         [StringLength(20)]
         [Display(Name = "PlayerName")]
         public string Name { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
     }
 }
