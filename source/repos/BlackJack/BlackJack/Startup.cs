@@ -5,6 +5,8 @@ using BlackJack.BusinessLogic.Services;
 using BlackJack.Configuration;
 using BlackJack.DataAccess;
 using BlackJack.DataAccess.Entities;
+using BlackJack.DataAccess.Interfaces;
+using BlackJack.DataAccess.Repository;
 using BlackJack.Extension;
 using BlackJack.Filters;
 using BlackJack.ViewModels.JwtProviderView;
@@ -41,8 +43,21 @@ namespace BlackJack
 
             services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IBotRepository, BotRepository>();
+            services.AddTransient<IBotStepRepository, BotStepRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
+            services.AddTransient<IGameRepository, GameRepository>();
+            services.AddTransient<IPlayerRepository, PlayerRepository>();
+            services.AddTransient<IPlayerStepRepository, PlayerStepRepository>();
+
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<IGameService, GameService>();
+            services.AddTransient<IHistoryService, HistoryService>();
             services.AddTransient<IJwtProvider, JwtProvider>();
+
+
+
+
 
             // ===== Add Identity ========
             services.AddIdentity<User, IdentityRole>()

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.GameViews
 {
@@ -10,17 +11,12 @@ namespace BlackJack.ViewModels.GameViews
         public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "BotName")]
-        public string BotName { get; set; }
-
-        [Required]
         [Range(1, 5)]
         [Display(Name = "NumberOfBots")]
         public int NumberOfBots { get; set; }
+
+        [Required]
+        public Guid CurrentPlayerId { get; set; }
+
     }
 }

@@ -13,11 +13,6 @@ namespace BlackJack.DataAccess.Entities
         public Guid GameId { get; set; }
         public virtual Game Games { get; set; }
 
-        public Card(CardRank rank, CardSuit suit)
-        {
-            Rank = rank;
-            Suit = suit;
-        }
     }
 
     public enum CardRank
