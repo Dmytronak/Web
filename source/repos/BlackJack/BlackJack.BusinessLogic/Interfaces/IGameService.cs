@@ -1,5 +1,4 @@
-﻿using BlackJack.ViewModels.AccountViews;
-using BlackJack.ViewModels.GameViews;
+﻿using BlackJack.ViewModels.GameViews;
 using System.Threading.Tasks;
 
 namespace BlackJack.BusinessLogic.Interfaces
@@ -8,7 +7,6 @@ namespace BlackJack.BusinessLogic.Interfaces
     {
         Task CreateNewPlayer(CreatePlayerGameModel model);
         Task PlayGame(PlayGameModel model);
-
-
+        Task ContinueGame(ContinueGameModel model);
     }
 }

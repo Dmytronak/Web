@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.GameViews
@@ -18,5 +19,6 @@ namespace BlackJack.ViewModels.GameViews
         [Required]
         public Guid CurrentPlayerId { get; set; }
 
+      
     }
 }

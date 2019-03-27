@@ -46,6 +46,17 @@ namespace BlackJack.Controllers
             await _gameService.PlayGame(model);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> ContinueGame([FromBody]ContinueGameModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _gameService.ContinueGame(model);
+            return RedirectToAction("Index");
+        }
 
         [HttpGet, Authorize]
         public async Task<object> Protected()
