@@ -5,8 +5,8 @@ namespace BlackJack.DataAccess.Entities
 {
     public class BotStep : BaseEntity
     {
-        public string BotStepRank { get; set; }
-        public string BotStepSuit { get; set; }
+        public CardRank BotStepRank { get; set; }
+        public CardSuit BotStepSuit { get; set; }
 
         [ForeignKey("Bot")]
         public Guid BotId { get; set; }

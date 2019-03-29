@@ -12,6 +12,8 @@ namespace BlackJack.DataAccess
         public DbSet<Game> Games { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<PlayerStep> PlayerSteps { get; set; }
+        public DbSet<BotInGame> BotInGames { get; set; }
+     
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

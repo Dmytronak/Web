@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlackJack.DataAccess.Migrations
 {
-    public partial class Bj : Migration
+    public partial class BJ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -175,6 +175,7 @@ namespace BlackJack.DataAccess.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     CreationAt = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    PlayerScoreValue = table.Column<int>(nullable: false),
                     UserId = table.Column<Guid>(nullable: false),
                     UsersId = table.Column<string>(nullable: true)
                 },
@@ -212,13 +213,40 @@ namespace BlackJack.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BotInGames",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationAt = table.Column<DateTime>(nullable: false),
+                    BotScoreValue = table.Column<int>(nullable: false),
+                    GameId = table.Column<Guid>(nullable: false),
+                    BotId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BotInGames", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BotInGames_Bots_BotId",
+                        column: x => x.BotId,
+                        principalTable: "Bots",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BotInGames_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BotSteps",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationAt = table.Column<DateTime>(nullable: false),
-                    BotStepRank = table.Column<string>(nullable: true),
-                    BotStepSuit = table.Column<string>(nullable: true),
+                    BotStepRank = table.Column<int>(nullable: false),
+                    BotStepSuit = table.Column<int>(nullable: false),
                     BotId = table.Column<Guid>(nullable: false),
                     GameId = table.Column<Guid>(nullable: false)
                 },
@@ -266,8 +294,8 @@ namespace BlackJack.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationAt = table.Column<DateTime>(nullable: false),
-                    StepRank = table.Column<string>(nullable: true),
-                    StepSuit = table.Column<string>(nullable: true),
+                    StepRank = table.Column<int>(nullable: false),
+                    StepSuit = table.Column<int>(nullable: false),
                     GameId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
@@ -321,6 +349,16 @@ namespace BlackJack.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BotInGames_BotId",
+                table: "BotInGames",
+                column: "BotId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BotInGames_GameId",
+                table: "BotInGames",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_BotSteps_BotId",
                 table: "BotSteps",
                 column: "BotId");
@@ -367,6 +405,9 @@ namespace BlackJack.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "BotInGames");
 
             migrationBuilder.DropTable(
                 name: "BotSteps");

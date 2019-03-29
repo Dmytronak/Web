@@ -2,7 +2,7 @@
 
 namespace BlackJack.DataAccess.Interfaces
 {
-    public interface IBotRepository : IBaseRepository<Bot>
+    public interface IBotInGameRepository : IBaseRepository<BotInGame>
     {
 
     }

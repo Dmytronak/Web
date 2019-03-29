@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190328123016_Bj")]
-    partial class Bj
+    [Migration("20190329154128_BJ")]
+    partial class BJ
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,28 @@ namespace BlackJack.DataAccess.Migrations
                     b.ToTable("Bots");
                 });
 
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.BotInGame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("BotId");
+
+                    b.Property<int>("BotScoreValue");
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<Guid>("GameId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BotId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("BotInGames");
+                });
+
             modelBuilder.Entity("BlackJack.DataAccess.Entities.BotStep", b =>
                 {
                     b.Property<Guid>("Id")
@@ -42,9 +64,9 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("BotId");
 
-                    b.Property<string>("BotStepRank");
+                    b.Property<int>("BotStepRank");
 
-                    b.Property<string>("BotStepSuit");
+                    b.Property<int>("BotStepSuit");
 
                     b.Property<DateTime>("CreationAt");
 
@@ -110,6 +132,8 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("PlayerScoreValue");
+
                     b.Property<Guid>("UserId");
 
                     b.Property<string>("UsersId");
@@ -130,9 +154,9 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("GameId");
 
-                    b.Property<string>("StepRank");
+                    b.Property<int>("StepRank");
 
-                    b.Property<string>("StepSuit");
+                    b.Property<int>("StepSuit");
 
                     b.HasKey("Id");
 
@@ -304,6 +328,19 @@ namespace BlackJack.DataAccess.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.BotInGame", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.Bot", "Bots")
+                        .WithMany()
+                        .HasForeignKey("BotId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.BotStep", b =>

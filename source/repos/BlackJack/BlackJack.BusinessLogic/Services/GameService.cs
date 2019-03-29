@@ -46,6 +46,7 @@ namespace BlackJack.BusinessLogic.Services
             var newPlayer = new Player()
             {
                 Name = model.Name,
+                PlayerScoreValue = 0,
                 UserId = Guid.Parse(appUser.Result.Id)
             };
             await _playerRepository.Create(newPlayer);
@@ -54,7 +55,6 @@ namespace BlackJack.BusinessLogic.Services
 
         public async Task PlayGame(PlayGameModel model)
         {
-            var player = await _playerRepository.GetById(model.PlayerId);
 
             List<Bot> botNamesList = new List<Bot>();
             botNamesList.Add(new Bot() { BotName = "Criss" });
@@ -74,7 +74,7 @@ namespace BlackJack.BusinessLogic.Services
             {
                 NumberOfBots = model.NumberOfBots,
                 Status = Status.New.ToString(),
-                PlayerId = player.Id,
+                PlayerId = model.PlayerId,
             };
 
             _cardList = suits
@@ -92,8 +92,8 @@ namespace BlackJack.BusinessLogic.Services
            
             var playerStep = new PlayerStep()
             {
-               StepRank = playerCard.Rank.ToString(),
-               StepSuit = playerCard.Suit.ToString(),
+               StepRank = playerCard.Rank,
+               StepSuit = playerCard.Suit,
                GameId = newGame.Id
             };
 
@@ -110,8 +110,8 @@ namespace BlackJack.BusinessLogic.Services
             {
                 var st = new BotStep();
                 st.BotId = botRandomList[i].Id;
-                st.BotStepRank = cardForBots[i].Rank.ToString();
-                st.BotStepSuit = cardForBots[i].Suit.ToString();
+                st.BotStepRank = cardForBots[i].Rank;
+                st.BotStepSuit = cardForBots[i].Suit;
                 st.GameId = newGame.Id;
                 botsSteps.Add(st);
             }
@@ -125,11 +125,16 @@ namespace BlackJack.BusinessLogic.Services
                 })
                 .ToList();
 
+
+            var player = await _playerRepository.GetById(model.PlayerId);
+            player.PlayerScoreValue = (int)playerStep.StepRank;
+
             await _gameRepository.Create(newGame);
             await _botRepository.AddList(botRandomList);
             await _playerStepRepository.Create(playerStep);
             await _botStepRepository.AddList(botsSteps);
             await _cardRepository.AddList(cardsOfGame);
+            await _playerRepository.Update(player);
         }
 
         public async Task ContinueGame(ContinueGameModel model)
@@ -152,8 +157,8 @@ namespace BlackJack.BusinessLogic.Services
 
             var playerStep = new PlayerStep()
             {
-                StepRank = playerCard.Rank.ToString(),
-                StepSuit = playerCard.Suit.ToString(),
+                StepRank = playerCard.Rank,
+                StepSuit = playerCard.Suit,
                 GameId = model.GameId
             };
 
@@ -171,13 +176,12 @@ namespace BlackJack.BusinessLogic.Services
             }
 
             var botsSteps = new List<BotStep>();
-
             for (var i = 0; i < contBots.Count; i++)
             {
                 var st = new BotStep();
                 st.BotId = contBots[i].Id;
-                st.BotStepRank = cardForBots[i].Rank.ToString();
-                st.BotStepSuit = cardForBots[i].Suit.ToString();
+                st.BotStepRank = cardForBots[i].Rank;
+                st.BotStepSuit = cardForBots[i].Suit;
                 st.GameId = model.GameId;
                 botsSteps.Add(st);
             }
@@ -228,13 +232,17 @@ namespace BlackJack.BusinessLogic.Services
                 throw new ArgumentNullException("BotSteps is null!");
             }
 
-            var PlCCount = new List<int>();
+            var PlCCount = new List<CardRank>();
+            PlCCount
+                .Select(x => x)
+                .Sum(x => (int)x);
+
             for (int i = 0; i < endPlayerStep.Count; i++)
             {
-                var val = PlayerCardValue(endPlayerStep[i]);
+                var val = endPlayerStep[i].StepRank;
                 PlCCount.Add(val);
             }
-            var PlCValue = PlCCount.Sum();
+            // PlCCount VALUE CALCUL
 
             var bots = endBotStepsAndBots
                 .Select(x => x.Bots)
@@ -250,126 +258,10 @@ namespace BlackJack.BusinessLogic.Services
                 var currentBotPoints = 0;
                 item.ToList().ForEach(x =>
                 {
-                    currentBotPoints += BotCardValue(x);
+                    currentBotPoints += (int) x.BotStepRank;
                 });
             }
 
-        }
-        public int PlayerCardValue(PlayerStep card)
-        {
-            int value = 0;
-            if (card.StepRank == "Ace")
-            {
-                value = 1;
-            }
-            if (card.StepRank == "Two")
-            {
-                value = 2;
-            }
-            if (card.StepRank == "Three")
-            {
-                value = 3;
-            }
-            if (card.StepRank == "Four")
-            {
-                value = 4;
-            }
-            if (card.StepRank == "Five")
-            {
-                value = 5;
-            }
-            if (card.StepRank == "Six")
-            {
-                value = 6;
-            }
-            if (card.StepRank == "Seven")
-            {
-                value = 7;
-            }
-            if (card.StepRank == "Eight")
-            {
-                value = 8;
-            }
-            if (card.StepRank == "Nine")
-            {
-                value = 9;
-            }
-            if (card.StepRank == "Ten")
-            {
-                value = 10;
-            }
-            if (card.StepRank == "Jack")
-            {
-                value = 10;
-            }
-            if (card.StepRank == "Queen")
-            {
-                value = 10;
-            }
-            if (card.StepRank == "King")
-            {
-                value = 10;
-            }
-
-            return value;
-        }
-        public int BotCardValue(BotStep card)
-        {
-            int value = 0;
-            if (card.BotStepRank == "Ace")
-            {
-                value = 1;
-            }
-            if (card.BotStepRank == "Two")
-            {
-                value = 2;
-            }
-            if (card.BotStepRank == "Three")
-            {
-                value = 3;
-            }
-            if (card.BotStepRank == "Four")
-            {
-                value = 4;
-            }
-            if (card.BotStepRank == "Five")
-            {
-                value = 5;
-            }
-            if (card.BotStepRank == "Six")
-            {
-                value = 6;
-            }
-            if (card.BotStepRank == "Seven")
-            {
-                value = 7;
-            }
-            if (card.BotStepRank == "Eight")
-            {
-                value = 8;
-            }
-            if (card.BotStepRank == "Nine")
-            {
-                value = 9;
-            }
-            if (card.BotStepRank == "Ten")
-            {
-                value = 10;
-            }
-            if (card.BotStepRank == "Jack")
-            {
-                value = 10;
-            }
-            if (card.BotStepRank == "Queen")
-            {
-                value = 10;
-            }
-            if (card.BotStepRank == "King")
-            {
-                value = 10;
-            }
-
-            return value;
         }
         public virtual void Shuffle()
         {
@@ -381,6 +273,8 @@ namespace BlackJack.BusinessLogic.Services
             Continue,
             Blackjack,
             End,
+            Busted,
+            Winner
         }
     }
 }

@@ -6,6 +6,7 @@ namespace BlackJack.DataAccess.Entities
     public class Player : BaseEntity
     {
         public string Name { get; set; }
+        public int PlayerScoreValue { get; set; }     
 
         [ForeignKey("User")]
         public Guid UserId { get; set; }
