@@ -24,7 +24,7 @@ namespace BlackJack.BusinessLogic.Services
             _jwtProvider = jwtProvider;
         }
 
-      
+
         public async Task<JwtTokenView> Login(LoginAccountView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
@@ -33,13 +33,13 @@ namespace BlackJack.BusinessLogic.Services
             {
                 var appUser = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
                 var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, appUser);
-                
+
                 return encodedJwt;
             }
 
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");             
+            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
         }
-   
+
         public async Task<JwtTokenView> Register(RegisterAccountView model)
         {
             var user = new User
@@ -54,7 +54,7 @@ namespace BlackJack.BusinessLogic.Services
             if (result.Succeeded)
             {
                 //await _signInManager.SignInAsync(user, false);
-                var res= await _jwtProvider.GenerateJwtToken(model.Email, user);
+                var res = await _jwtProvider.GenerateJwtToken(model.Email, user);
                 return res;
             }
 

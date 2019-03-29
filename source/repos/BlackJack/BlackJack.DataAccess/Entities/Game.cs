@@ -13,8 +13,5 @@ namespace BlackJack.DataAccess.Entities
         public Guid PlayerId { get; set; }
         public virtual Player Players { get; set; }
 
-        [ForeignKey("PlayerStep")]
-        public Guid PlayerStepId { get; set; }
-        public virtual PlayerStep PlayerSteps { get; set; }
     }
 }

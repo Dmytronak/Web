@@ -13,5 +13,6 @@ namespace BlackJack.DataAccess.Interfaces
         Task Update(TEntity item);
         Task Delete(TEntity item);
         Task AddList(IEnumerable<TEntity> item);
+        Task RemoveList(IEnumerable<TEntity> item);
     }
 }

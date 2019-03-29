@@ -17,8 +17,7 @@ namespace BlackJack.ViewModels.GameViews
         public int NumberOfBots { get; set; }
 
         [Required]
-        public Guid CurrentPlayerId { get; set; }
+        public Guid PlayerId { get; set; }
 
-      
     }
 }

@@ -16,7 +16,7 @@ namespace BlackJack.DataAccess.Repository
         {
             _dbSet = context.Set<BotStep>();
         }
-        public async Task<List<BotStep>> GetStepsBotsGameId(Guid id)
+        public async Task<List<BotStep>> GetStepsAndBotByGameId(Guid id)
         {
             var result = await _dbSet
                 .Where(x => x.GameId == id)
@@ -24,6 +24,13 @@ namespace BlackJack.DataAccess.Repository
                 .ToListAsync();
             return result;
         }
-      
+
+        public async Task<List<BotStep>> GetStepsByBotId(Guid id)
+        {
+            var result = await _dbSet
+                .Where(x => x.BotId == id)
+                .ToListAsync();
+            return result;
+        }
     }
 }

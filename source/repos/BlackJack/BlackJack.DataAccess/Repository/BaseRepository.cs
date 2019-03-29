@@ -55,7 +55,11 @@ namespace BlackJack.DataAccess.Repository
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
+        public async Task RemoveList(IEnumerable<TEntity> item)
+        {
+            _dbSet.RemoveRange(item);
+            await _context.SaveChangesAsync();
 
-
+        }
     }
 }

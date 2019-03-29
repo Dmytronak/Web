@@ -8,5 +8,6 @@ namespace BlackJack.BusinessLogic.Interfaces
         Task CreateNewPlayer(CreatePlayerGameModel model);
         Task PlayGame(PlayGameModel model);
         Task ContinueGame(ContinueGameModel model);
+        Task EndGame(EndGameModel model);
     }
 }

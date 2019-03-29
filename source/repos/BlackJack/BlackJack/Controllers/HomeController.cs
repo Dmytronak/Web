@@ -9,7 +9,7 @@ using BlackJack.ViewModels.GameViews;
 
 namespace BlackJack.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private readonly IGameService _gameService;
@@ -25,7 +25,7 @@ namespace BlackJack.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> AddPlayer([FromBody]CreatePlayerGameModel model)
+        public async Task<IActionResult> AddPlayer([FromBody]CreatePlayerGameModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -55,6 +55,17 @@ namespace BlackJack.Controllers
             }
 
             await _gameService.ContinueGame(model);
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task<IActionResult> EndGame([FromBody]EndGameModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _gameService.EndGame(model);
             return RedirectToAction("Index");
         }
 

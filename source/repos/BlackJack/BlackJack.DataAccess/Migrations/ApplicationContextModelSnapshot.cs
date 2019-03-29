@@ -88,8 +88,6 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("PlayerId");
 
-                    b.Property<Guid>("PlayerStepId");
-
                     b.Property<string>("Status");
 
                     b.Property<string>("Winner");
@@ -97,8 +95,6 @@ namespace BlackJack.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("PlayerId");
-
-                    b.HasIndex("PlayerStepId");
 
                     b.ToTable("Games");
                 });
@@ -130,11 +126,15 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<DateTime>("CreationAt");
 
+                    b.Property<Guid>("GameId");
+
                     b.Property<string>("StepRank");
 
                     b.Property<string>("StepSuit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
 
                     b.ToTable("PlayerSteps");
                 });
@@ -331,11 +331,6 @@ namespace BlackJack.DataAccess.Migrations
                         .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BlackJack.DataAccess.Entities.PlayerStep", "PlayerSteps")
-                        .WithMany()
-                        .HasForeignKey("PlayerStepId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Player", b =>
@@ -343,6 +338,14 @@ namespace BlackJack.DataAccess.Migrations
                     b.HasOne("BlackJack.DataAccess.Entities.User", "Users")
                         .WithMany()
                         .HasForeignKey("UsersId");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerStep", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

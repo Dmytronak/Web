@@ -7,6 +7,6 @@ namespace BlackJack.DataAccess.Interfaces
 {
     public interface IGameRepository : IBaseRepository<Game>
     {
-        Task<List<Game>> GetGameAndPlayerStepsByPlayerId(Guid id);
+        Task<List<Game>> GetGamesByPlayerId(Guid id);
     }
 }
