@@ -8,10 +8,5 @@ namespace BlackJack.DataAccess.Entities
         public int NumberOfBots { get; set; }
         public string Winner { get; set; }
         public string Status { get; set; }
-
-        [ForeignKey("Player")]
-        public Guid PlayerId { get; set; }
-        public virtual Player Players { get; set; }
-
     }
 }

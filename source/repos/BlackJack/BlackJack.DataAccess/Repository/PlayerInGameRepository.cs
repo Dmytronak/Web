@@ -8,20 +8,20 @@ using System.Threading.Tasks;
 
 namespace BlackJack.DataAccess.Repository
 {
-    public class BotInGameRepository : BaseRepository<BotInGame>, IBotInGameRepository
+    public class PlayerInGameRepository : BaseRepository<PlayerInGame>, IPlayerInGameRepository
     {
-        DbSet<BotInGame> _dbSet;
-        public BotInGameRepository(ApplicationContext context) : base(context)
+        DbSet<PlayerInGame> _dbSet;
+        public PlayerInGameRepository(ApplicationContext context) : base(context)
         {
-            _dbSet = context.Set<BotInGame>();
+            _dbSet = context.Set<PlayerInGame>();
         }
-        public async Task<List<BotInGame>> GetBotInGameByGameId(Guid id)
+        public async Task<List<PlayerInGame>> GetByGameId(Guid id)
         {
             var result = await _dbSet
                 .Where(x => x.GameId == id)
-                .Include(x=>x.Bots)
                 .ToListAsync();
             return result;
         }
+
     }
 }

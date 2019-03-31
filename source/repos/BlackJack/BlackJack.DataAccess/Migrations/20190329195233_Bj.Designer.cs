@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190329154128_BJ")]
-    partial class BJ
+    [Migration("20190329195233_Bj")]
+    partial class Bj
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -110,15 +110,11 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<int>("NumberOfBots");
 
-                    b.Property<Guid>("PlayerId");
-
                     b.Property<string>("Status");
 
                     b.Property<string>("Winner");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PlayerId");
 
                     b.ToTable("Games");
                 });
@@ -132,8 +128,6 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("PlayerScoreValue");
-
                     b.Property<Guid>("UserId");
 
                     b.Property<string>("UsersId");
@@ -143,6 +137,28 @@ namespace BlackJack.DataAccess.Migrations
                     b.HasIndex("UsersId");
 
                     b.ToTable("Players");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerInGame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreationAt");
+
+                    b.Property<Guid>("GameId");
+
+                    b.Property<Guid>("PlayerId");
+
+                    b.Property<int>("PlayerScoreValue");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("PlayerInGames");
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerStep", b =>
@@ -364,19 +380,24 @@ namespace BlackJack.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("BlackJack.DataAccess.Entities.Game", b =>
-                {
-                    b.HasOne("BlackJack.DataAccess.Entities.Player", "Players")
-                        .WithMany()
-                        .HasForeignKey("PlayerId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Player", b =>
                 {
                     b.HasOne("BlackJack.DataAccess.Entities.User", "Users")
                         .WithMany()
                         .HasForeignKey("UsersId");
+                });
+
+            modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerInGame", b =>
+                {
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BlackJack.DataAccess.Entities.Player", "Players")
+                        .WithMany()
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerStep", b =>

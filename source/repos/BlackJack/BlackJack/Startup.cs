@@ -50,6 +50,7 @@ namespace BlackJack
             services.AddTransient<IPlayerRepository, PlayerRepository>();
             services.AddTransient<IPlayerStepRepository, PlayerStepRepository>();
             services.AddTransient<IBotInGameRepository, BotInGameRepository>();
+            services.AddTransient<IPlayerInGameRepository, PlayerInGameRepository>();
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IGameService, GameService>();
