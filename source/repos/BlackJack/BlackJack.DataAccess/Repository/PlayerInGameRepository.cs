@@ -19,6 +19,7 @@ namespace BlackJack.DataAccess.Repository
         {
             var result = await _dbSet
                 .Where(x => x.GameId == id)
+                .Include(x=>x.Players)
                 .ToListAsync();
             return result;
         }

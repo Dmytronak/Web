@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190329195233_Bj")]
+    [Migration("20190401062402_Bj")]
     partial class Bj
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
