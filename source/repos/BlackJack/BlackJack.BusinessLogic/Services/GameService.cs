@@ -389,6 +389,18 @@ namespace BlackJack.BusinessLogic.Services
                     contGame.Winner = winner;
                   
                 }
+                if (msmin == d && msmin == 21)
+                {
+
+                    botWinner.BotScoreValue = d;
+                    botWinner.BotId = item.Key;
+                    botWinner.GameId = model.GameId;
+                    status = Status.Blackjack.ToString();
+                    winner = currentBot.BotName;
+                    contGame.Status = status;
+                    contGame.Winner = winner;
+
+                }
                 if (msm == d && msm < 21 && playerScore > 21)
                 {
                     
