@@ -6,8 +6,8 @@ namespace BlackJack.BusinessLogic.Interfaces
     public interface IGameService
     {
         Task CreateNewPlayer(CreatePlayerGameModel model);
-        Task PlayGame(PlayGameModel model);
-        Task ContinueGame(ContinueGameModel model);
-        Task EndGame(EndGameModel model);
+        Task<PlayGameModel> PlayGame(PlayGameModel model);
+        Task<ContinueGameModel> ContinueGame(ContinueGameModel model);
+        Task<EndGameModel> EndGame(EndGameModel model);
     }
 }

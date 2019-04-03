@@ -23,6 +23,23 @@ namespace BlackJack.DataAccess.Repository
                 .ToListAsync();
             return result;
         }
+        public async Task<List<PlayerInGame>> GetGameByPlayerId(Guid id)
+        {
+            var result = await _dbSet
+                .Where(x => x.PlayerId == id)
+                .Include(x => x.Games)
+                .Include(x=>x.Players)
+                .ToListAsync();
+            return result;
+        }
+        public async Task<List<PlayerInGame>> GetGamebyUserId(Guid id)
+        {
+            var result = await _dbSet
+                .Where(x => x.Players.UserId == id)
+                .Include(x => x.Games)
+                .ToListAsync();
+            return result;
+        }
 
     }
 }
