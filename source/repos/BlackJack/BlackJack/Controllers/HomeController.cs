@@ -1,9 +1,6 @@
-﻿using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using BlackJack.Models;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BlackJack.BusinessLogic.Interfaces;
 using BlackJack.ViewModels.GameViews;
 using BlackJack.ViewModels.HistoryViews;
