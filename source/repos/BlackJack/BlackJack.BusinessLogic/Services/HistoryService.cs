@@ -93,9 +93,29 @@ namespace BlackJack.BusinessLogic.Services
         }
 
 
-        public Task<BotStepsHistoryModel> BotStepsOfGame(Guid id)
+        public async Task<BotStepsHistoryModel> BotStepsOfGame(Guid id)
         {
-            return null;
+            var botSteps = await _botStepRepository.GetStepsAndBotByGameId(id);
+            var bots = botSteps.Select(x => x.Bots).ToList();
+            var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
+            var botStepsModel = new BotStepsHistoryModel();
+            var botStepList = new List<BotStepsOfGmaeModelItem>();
+            foreach (var item in gropedBotSteps)
+            {
+                var botName = botSteps.Select(x => x.Bots).FirstOrDefault(x => x.Id == item.Key).BotName;
+                var botStep = new BotStepsOfGmaeModelItem();
+                botStep.BotName = botName;
+                botStep.BotStepsOfGame = item.Select(x => new BotCardsModelItem()
+                {
+                    BotStepRank = x.BotStepRank.ToString(),
+                    BotStepSuit = x.BotStepSuit.ToString()
+                })
+                .ToList();
+                botStepList.Add(botStep);
+            }
+
+            botStepsModel.BotStepsOfGame.AddRange(botStepList);
+            return botStepsModel;
         }
 
         public async Task<PlayerStepsHistoryModel> PlayerStepsOfGame(Guid id)
@@ -108,7 +128,6 @@ namespace BlackJack.BusinessLogic.Services
                 {
                    BotStepRank = x.StepRank.ToString(),
                    BotStepSuit = x.StepSuit.ToString()
-                    
                 })
                 .ToList();
 
@@ -119,25 +138,23 @@ namespace BlackJack.BusinessLogic.Services
         {
             var GamesByUserId = await _playerInGameRepository.GetGamebyUserId(id);
 
-            var allPlayerGamesModel = new AllGamesModel();
+            var allUserGamesModel = new AllGamesModel();
 
             var groupedGame = GamesByUserId.GroupBy(x => x.Games.Id);
 
+            var gameList = new List<AllGamesModelItem>();
             foreach (var item in groupedGame)
             {
-               
-                allPlayerGamesModel.Games = GamesByUserId
-                    .Select(x => new AllGamesModelItem()
-                    {
-                        Id = item.Key,
-                        NumberOfBots = x.Games.NumberOfBots,////////MAAAKKEEEEEE
-                        Status = x.Games.Status,
-                        Winner = x.Games.Winner
-                    })
-                .Distinct()
-                .ToList();
+                var fromGame = GamesByUserId.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key);
+                var game = new AllGamesModelItem();
+                game.Id = fromGame.Id;
+                game.NumberOfBots = fromGame.NumberOfBots;
+                game.Status = fromGame.Status;
+                game.Winner = fromGame.Winner;
+                gameList.Add(game);
             }
-                return allPlayerGamesModel;
+            allUserGamesModel.Games.AddRange(gameList);
+            return allUserGamesModel;
             }
     }
    

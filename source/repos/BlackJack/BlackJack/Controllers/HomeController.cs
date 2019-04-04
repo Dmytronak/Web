@@ -104,6 +104,17 @@ namespace BlackJack.Controllers
             var result = await _historyService.PlayerStepsOfGame(id);
             return Ok(result);
         }
+        [HttpGet]
+        public async Task<IActionResult> BotStepsOfGame([FromBody] Guid id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(id);
+            }
+
+            var result = await _historyService.BotStepsOfGame(id);
+            return Ok(result);
+        }
 
         [HttpGet, Authorize]
         public async Task<object> Protected()
