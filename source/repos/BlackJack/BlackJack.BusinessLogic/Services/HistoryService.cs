@@ -91,8 +91,6 @@ namespace BlackJack.BusinessLogic.Services
 
             return historyModel;
         }
-
-
         public async Task<BotStepsHistoryModel> BotStepsOfGame(Guid id)
         {
             var botSteps = await _botStepRepository.GetStepsAndBotByGameId(id);
@@ -117,7 +115,6 @@ namespace BlackJack.BusinessLogic.Services
             botStepsModel.BotStepsOfGame.AddRange(botStepList);
             return botStepsModel;
         }
-
         public async Task<PlayerStepsHistoryModel> PlayerStepsOfGame(Guid id)
         {
             var playerSteps = await _playerStepRepository.GetByGameId(id);
@@ -133,7 +130,6 @@ namespace BlackJack.BusinessLogic.Services
 
             return playerStepsGameModel;
         }
-
         public async Task<AllGamesModel> AllUserGames(Guid id)
         {
             var GamesByUserId = await _playerInGameRepository.GetGamebyUserId(id);
@@ -157,5 +153,4 @@ namespace BlackJack.BusinessLogic.Services
             return allUserGamesModel;
             }
     }
-   
 }
