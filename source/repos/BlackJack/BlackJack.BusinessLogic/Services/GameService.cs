@@ -681,7 +681,7 @@ namespace BlackJack.BusinessLogic.Services
                 {
                     if (msmin > 21)
                     {
-                        status = Status.LoseAll.ToString();
+                        status = Status.End.ToString();
                         winner = Status.LoseAll.ToString();
                         Game.Status = status;
                         Game.Winner = winner.ToString();
