@@ -1,13 +1,22 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
-import { RegistrationFormComponent } from './registration-form/registration-form.component';
-import { LoginFormComponent } from './login-form/login-form.component';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { UserService } from './shared/services/user.service';
+import { AccountModule }  from './account/account.module';
+import { ConfigService } from './shared/utils/config.service';
+import { AuthGuard } from './shared/guard/auth.guard';
+import { HeaderComponent } from './header/header.component';
+import { GameModule } from './game/game.module';
+import { HistoryModule } from './history/history.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
 
 
 @NgModule({
@@ -15,25 +24,22 @@ import { LoginFormComponent } from './login-form/login-form.component';
     AppComponent,
     FetchDataComponent,
     HomeComponent,
-    RegistrationFormComponent,
-    LoginFormComponent,
+    HeaderComponent,
 
   ],
   imports: [ 
-    
+    AccountModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'login-form', component: LoginFormComponent },
-      { path: 'registration-form', component: RegistrationFormComponent },
-
-    ])
+    FormsModule,
+    ReactiveFormsModule,
+    GameModule,
+    HistoryModule,
+    BrowserAnimationsModule,
+   
   ],
-  providers: [],
+  providers: [UserService,ConfigService,AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

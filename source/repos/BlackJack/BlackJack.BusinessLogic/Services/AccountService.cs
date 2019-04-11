@@ -27,6 +27,14 @@ namespace BlackJack.BusinessLogic.Services
 
         public async Task<JwtTokenView> Login(LoginAccountView model)
         {
+            if(model.Email == null)
+            {
+                throw new ArgumentNullException("Email is empty");
+            }
+            if (model.Password == null)
+            {
+                throw new ArgumentNullException("Password is empty");
+            }
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
             if (result.Succeeded)
@@ -37,11 +45,19 @@ namespace BlackJack.BusinessLogic.Services
                 return encodedJwt;
             }
 
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+            throw new ApplicationException("INVALID Login or password");
         }
 
         public async Task<JwtTokenView> Register(RegisterAccountView model)
         {
+            if (model.Email == null)
+            {
+                throw new ArgumentNullException("Email is empty");
+            }
+            if (model.Password == null)
+            {
+                throw new ArgumentNullException("Password is empty");
+            }
             var user = new User
             {
                 UserName = model.Email,
@@ -58,7 +74,7 @@ namespace BlackJack.BusinessLogic.Services
                 return res;
             }
 
-            throw new ApplicationException("UNKNOWN_ERROR");
+            throw new ApplicationException("INVALID_REGISTER_ATTEMPT");
         }
 
 

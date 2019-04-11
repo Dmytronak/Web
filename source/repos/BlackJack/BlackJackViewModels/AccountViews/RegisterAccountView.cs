@@ -4,15 +4,15 @@ namespace BlackJack.ViewModels.AccountViews
 {
     public class RegisterAccountView
     {
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Year is required")]
         [Display(Name = "Год рождения")]
         public int Year { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Pasword is required")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }

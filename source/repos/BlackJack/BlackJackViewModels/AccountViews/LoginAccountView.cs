@@ -4,11 +4,11 @@ namespace BlackJack.ViewModels.AccountViews
 {
     public class LoginAccountView
     {
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
         [Display(Name = "Пароль")]
         public string Password { get; set; }

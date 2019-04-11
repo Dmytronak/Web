@@ -5,7 +5,7 @@ using BlackJack.ViewModels.AccountViews;
 
 namespace BlackJack.Controllers
 {
-    [Route("api/auth")]
+    [Route("api/accounts")]
     [ApiController]
     public class AccountController : Controller
     {
@@ -45,8 +45,8 @@ namespace BlackJack.Controllers
             {
                 return View(model);
             }
-            await _accountService.Register(model);
-            return RedirectToAction("Login", "Account");
+            var res = await _accountService.Register(model);
+            return Ok(res);
         }
 
     }
