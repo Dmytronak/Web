@@ -5,23 +5,20 @@ import { BaseService } from './base.service';
 import { ConfigService } from '../utils/config.service';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import '..//..//../../node_modules/rxjs/operators';
-import { Credentials } from 'crypto';
-import { error } from 'util';
+
 
 @Injectable()
 
 export class UserService extends BaseService {
 
   baseUrl: string = '';
-  errorS: string ='';
- 
+
   // Observable navItem source
-  private _authNavStatusSource = new BehaviorSubject<boolean>(false);
+  _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
   authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  private loggedIn = false;
+  loggedIn = false;
 
   constructor(private http: HttpClient, private configService: ConfigService, private router: Router) {
     super();
@@ -30,45 +27,19 @@ export class UserService extends BaseService {
     // header component resulting in authed user nav links disappearing despite the fact user is still logged in
     this._authNavStatusSource.next(this.loggedIn);
     this.baseUrl = configService.getApiURI();
-  
+
   }
 
   register(email: string, password: string, passwordConfirm: string, year: number) {
     debugger
     var body = ({ email, password, passwordConfirm, year });
-    return this.http
-      .post(this.baseUrl + "/accounts/register", body).subscribe(
-        result => {
-          if (result) {
-            this.router.navigate(['/login'], { queryParams: { brandNew: true, email: email } });
-          }
-        },
-        errors => console.error(errors));
+    return this.http.post(this.baseUrl + "/accounts/register", body);
   }
 
   login(email, password, rememberMe) {
-
     var body = ({ email, password, rememberMe });
-    return this.http
-      .post<Credentials>(this.baseUrl + "/accounts/login", body)
-      .subscribe(response => {
-
-        let token = (<any>response).token;
-        localStorage.setItem("auth_token", token);
-        this._authNavStatusSource.next(true);
-        this.loggedIn = true;
-        this.router.navigate(["/game/home"]);
-        localStorage.setItem("log_email", email);
-      }, error => {
-        this.loggedIn = false;
-      
-        console.log(error.error);
-        debugger
-      }
-      );
-     
-  
-    }
+    return this.http.post(this.baseUrl + "/accounts/login", body);
+  }
 
   logout() {
     localStorage.removeItem('auth_token');
@@ -78,9 +49,7 @@ export class UserService extends BaseService {
   }
 
   isLoggedIn() {
-    
     return this.loggedIn;
-
   }
 }
 

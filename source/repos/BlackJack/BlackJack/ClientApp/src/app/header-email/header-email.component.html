@@ -6,13 +6,18 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-    
-      <ul class="nav navbar-nav">
+      <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/register">Register</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="/game">Game</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" routerLink="/login">Login</a>
+          <a class="nav-link" routerLinkActive="active" routerLink="/history">History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">{{email}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()" href="#">Logoff</a>
         </li>
       </ul>
     </div>

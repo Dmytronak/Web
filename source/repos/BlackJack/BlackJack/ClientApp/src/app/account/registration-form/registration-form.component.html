@@ -15,23 +15,27 @@
           </div>
           <div class="form-group">
             <label for="year">Year</label>
-            <input type="number" class="form-control" required id="year" name="year" placeholder="Year" ngModel  #year="ngModel">
+            <input type="number" class="form-control"  required minlength="6" id="year" name="year" placeholder="Year" ngModel  #year="ngModel">
+
           </div> 
           <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password" ngModel>
+            <input type="password"  required minlength="6" class="form-control" id="password" name="password" placeholder="Password" ngModel>
           </div>
+
+          
           <div class="form-group">
             <label for="passwordConfirm">Confirm password</label>
-            <input type="password" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" ngModel>
+            <input type="password"  required minlength="6" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" ngModel>
+           
           </div> 
           <div class="form-group">
-              <button type="submit" class="btn btn-primary" [disabled]="f.invalid || isRequesting">Sign Up</button>
+              <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Sign Up</button>
               <app-spinner [isRunning]="isRequesting"></app-spinner> 
           </div>
 
-          <div *ngIf="errors" class="alert alert-danger" role="alert">
-              <strong>Oops!</strong> {{errors}}
+          <div *ngIf="error" class="alert alert-danger" role="alert">
+              <strong>Oops!</strong> {{error}}
             </div>               
           
         </form>

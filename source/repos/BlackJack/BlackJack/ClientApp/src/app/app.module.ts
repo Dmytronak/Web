@@ -12,6 +12,7 @@ import { AccountModule }  from './account/account.module';
 import { ConfigService } from './shared/utils/config.service';
 import { AuthGuard } from './shared/guard/auth.guard';
 import { HeaderComponent } from './header/header.component';
+import { HeaderEmailComponent } from './header-email/header-email.component';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,6 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FetchDataComponent,
     HomeComponent,
     HeaderComponent,
+    HeaderEmailComponent
 
   ],
   imports: [ 

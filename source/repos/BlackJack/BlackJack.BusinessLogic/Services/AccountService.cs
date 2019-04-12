@@ -29,11 +29,11 @@ namespace BlackJack.BusinessLogic.Services
         {
             if(model.Email == null)
             {
-                throw new ArgumentNullException("Email is empty");
+                throw new ApplicationException("Email is empty");
             }
             if (model.Password == null)
             {
-                throw new ArgumentNullException("Password is empty");
+                throw new ApplicationException("Password is empty");
             }
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
@@ -52,11 +52,11 @@ namespace BlackJack.BusinessLogic.Services
         {
             if (model.Email == null)
             {
-                throw new ArgumentNullException("Email is empty");
+                throw new ApplicationException("Email is empty");
             }
             if (model.Password == null)
             {
-                throw new ArgumentNullException("Password is empty");
+                throw new ApplicationException("Password is empty");
             }
             var user = new User
             {

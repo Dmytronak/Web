@@ -9,7 +9,6 @@ import { RootComponent } from './game/root/root.component';
 const routes: Routes = [
   { path: '', redirectTo: '/game', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
-  { path: 'game', component: RootComponent, canActivate: [AuthGuard] },
   { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthGuard] },
 
 ];
