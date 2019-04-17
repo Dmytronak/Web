@@ -6,10 +6,10 @@ namespace BlackJack.ViewModels.GameViews
 {
     public class PlayGameView
     {
-        [Required]
+        [Required(ErrorMessage = "PlayerId is required")]
         public Guid PlayerId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Numbers of bots is required")]
         [Range(1, 5,ErrorMessage ="Range from 1 to 5")]
         public int NumberOfBots { get; set; }
 

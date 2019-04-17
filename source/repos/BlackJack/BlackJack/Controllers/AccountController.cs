@@ -23,7 +23,7 @@ namespace BlackJack.Controllers
         }
 
         [HttpPost, Route("login")]
-        public async Task<object> Login(LoginAccountView model)
+        public async Task<object> Login([FromBody]LoginAccountView model)
         {
             if (!ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace BlackJack.Controllers
             return res;
         }
         [HttpPost,Route("register")]
-        public async Task<object> Register(RegisterAccountView model)
+        public async Task<IActionResult> Register([FromBody]RegisterAccountView model)
         {
             if (!ModelState.IsValid)
             {

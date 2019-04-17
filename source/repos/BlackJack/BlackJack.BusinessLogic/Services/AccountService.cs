@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using System;
 using BlackJack.ViewModels.AccountViews;
 using BlackJack.DataAccess.Entities;
 using BlackJack.BusinessLogic.Interfaces;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.ViewModels.JwtProviderView;
+using BlackJack.BusinessLogic.Providers;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -32,7 +32,7 @@ namespace BlackJack.BusinessLogic.Services
 
             if (!result.Succeeded)
             {
-                throw new ApplicationException("INVALID Login or password");
+                throw new HttpStatusCodeException(403,"INVALID Login or password");
                
             }
             var appUser = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
@@ -54,7 +54,7 @@ namespace BlackJack.BusinessLogic.Services
 
             if (!result.Succeeded)
             {
-                throw new ApplicationException("INVALID_REGISTER_ATTEMPT");
+                throw new HttpStatusCodeException(403,"INVALID_REGISTER_ATTEMPT");
               
             }
             //await _signInManager.SignInAsync(user, false);

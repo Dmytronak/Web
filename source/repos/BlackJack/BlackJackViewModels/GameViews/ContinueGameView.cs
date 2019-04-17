@@ -6,9 +6,9 @@ namespace BlackJack.ViewModels.GameViews
 {
     public class ContinueGameView
     {
-        [Required]
+        [Required(ErrorMessage = "PlayerId is required")]
         public Guid PlayerId { get; set; }
-        [Required]
+        [Required(ErrorMessage = "GameId is required")]
         public Guid GameId { get; set; }
 
         public string Status { get; set; }

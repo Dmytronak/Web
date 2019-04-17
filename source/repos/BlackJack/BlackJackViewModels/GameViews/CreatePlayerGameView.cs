@@ -5,13 +5,11 @@ namespace BlackJack.ViewModels.GameViews
 {
     public class CreatePlayerGameView
     {
-        [Required]
-        [StringLength(20)]
-      
+        [Required(ErrorMessage = "Name is required")]
+        [StringLength(20,ErrorMessage = "Maximal string length is 25")]
         public string Name { get; set; }
 
-        [Required]
-      
+        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
     }
 }

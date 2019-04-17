@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BlackJack.BusinessLogic.Providers;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -22,25 +23,45 @@ namespace BlackJack.Extension
             {
                 await next(context);
             }
+            catch (HttpStatusCodeException exception)
+            {
+                await HandleExceptionAsync(context, exception);
+            }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex);
             }
+           
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
+           
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
-
-            //if (exception is MyNotFoundException) code = HttpStatusCode.NotFound;
-            //else if (exception is MyUnauthorizedException) code = HttpStatusCode.Unauthorized;
-            //else if (exception is MyException) code = HttpStatusCode.BadRequest;
-
-            var result = JsonConvert.SerializeObject(new { error = exception.Message });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
+            var result = JsonConvert.SerializeObject(new { error = "Status code: " + code + "Messege:" + ex.Message });
+            return context.Response.WriteAsync(result);
+        }
+        private static Task HandleExceptionAsync(HttpContext context, HttpStatusCodeException exception)
+        {
+            var code = exception.StatusCode;
+            string errors = "Messege: "+ exception.Message;
+            context.Response.ContentType = exception.ContentType;
+            context.Response.StatusCode = 404;
+            if (code>400)
+            {
+                context.Response.StatusCode = code;
+                errors = "Status code: " +code+ " Messege: " + exception.Message;
+                context.Response.StatusCode = code;
+
+            }
+            
+            var result = JsonConvert.SerializeObject(new { error = errors });
             return context.Response.WriteAsync(result);
         }
 
+
     }
+   
 }

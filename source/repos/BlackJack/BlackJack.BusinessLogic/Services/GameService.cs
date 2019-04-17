@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Interfaces;
+using BlackJack.BusinessLogic.Providers;
 using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.ViewModels.GameViews;
@@ -37,32 +38,30 @@ namespace BlackJack.BusinessLogic.Services
             _playerInGameRepository = playerInGameRepository;
             _cardList = new List<Card>();
         }
-
-      
-
         public async Task CreateNewPlayer(CreatePlayerGameView model)
         {
-            var appUser = _userManager.FindByEmailAsync(model.Email);
-
-            if (model.Name == null)
+            var user = _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
             {
-                throw new ArgumentNullException("Model received a null argument!");
+                throw new HttpStatusCodeException("user model received a null argument!");
             }
             var newPlayer = new Player()
             {
                 Name = model.Name,
-                UserId = Guid.Parse(appUser.Result.Id)
+                UserId = Guid.Parse(user.Result.Id)
             };
             await _playerRepository.Create(newPlayer);
         }
-        public async Task<GetPlayersGameView> GetAllPlayersByUser(Guid UserId)
+        public async Task<GetPlayersGameView> GetAllPlayersByUser(GetPlayersGameView model)
         {
-            if (UserId == null)
+            var user = _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
             {
-                throw new ArgumentNullException("UserId received a null argument!");
+                throw new HttpStatusCodeException("user model received a null argument!");
             }
-            var players = await _playerRepository.GetPlayers(UserId);
+            var players = await _playerRepository.GetPlayers(Guid.Parse(user.Result.Id));
             var result = new GetPlayersGameView();
+            result.Email = model.Email;
             result.Players = players
                 .Select(x => new Player()
                 {
@@ -81,14 +80,13 @@ namespace BlackJack.BusinessLogic.Services
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
             {
-                throw new ArgumentNullException("player is empty!");
+                throw new HttpStatusCodeException("player is empty!");
             }
             var bots = await _botRepository.GetAll();
             if (bots == null)
             {
-                throw new ArgumentNullException("bots is empty!");
+                throw new HttpStatusCodeException("Bots is empty!");
             }
-
 
             var botRandomList = bots
                 .OrderBy(r => Guid.NewGuid())
@@ -158,7 +156,7 @@ namespace BlackJack.BusinessLogic.Services
             {
                 PlayerId = model.PlayerId,
                 GameId = newGame.Id,
-                PlayerScoreValue = CountingCards(playerCard.Rank)
+                PlayerScore = CountingCards(playerCard.Rank)
             };
 
             var botInGame = botsSteps
@@ -166,7 +164,7 @@ namespace BlackJack.BusinessLogic.Services
                 {
                     GameId = newGame.Id,
                     BotId = x.BotId,
-                    BotScoreValue = CountingCards(x.BotStepRank)
+                    BotScore = CountingCards(x.BotStepRank)
 
                 })
                 .ToList();
@@ -216,37 +214,37 @@ namespace BlackJack.BusinessLogic.Services
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
             {
-                throw new ArgumentNullException("player is empty!");
+                throw new HttpStatusCodeException("player is empty!");
             }
             var contCards = await _cardRepository.GetCards(model.GameId);
             if (contCards == null)
             {
-                throw new ArgumentNullException("Deck IN DB is empty!");
+                throw new HttpStatusCodeException("Deck IN DB is empty!");
             }
             var contPlayerStep = await _playerStepRepository.GetPlayerSteps(model.GameId);
             if (contPlayerStep == null)
             {
-                throw new ArgumentNullException("PlayerStep is null!");
+                throw new HttpStatusCodeException("PlayerStep is null!");
             }
-            var contBotAndSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
-            if (contBotAndSteps == null)
+            var BotAndSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
+            if (BotAndSteps == null)
             {
-                throw new ArgumentNullException("ContinueBotAndSteps is null!");
+                throw new HttpStatusCodeException("ContinueBotAndSteps is null!");
             }
             var contBotInGame = await _botInGameRepository.GetBotInGame(model.GameId);
             if (contBotInGame == null)
             {
-                throw new ArgumentNullException("contBotInGame is null!");
+                throw new HttpStatusCodeException("contBotInGame is null!");
             }
             var contPlayerInGame = await _playerInGameRepository.GetPlayersInGame(model.GameId);
             if (contPlayerInGame == null)
             {
-                throw new ArgumentNullException("contPlayerInGame is null!");
+                throw new HttpStatusCodeException("contPlayerInGame is null!");
             }
             var Game = await _gameRepository.GetById(model.GameId);
             if (Game == null)
             {
-                throw new ArgumentNullException("ContinueGame is null!");
+                throw new HttpStatusCodeException("ContinueGame is null!");
             }
 
             _cardList = contCards;
@@ -264,19 +262,19 @@ namespace BlackJack.BusinessLogic.Services
             {
                 PlayerId = model.PlayerId,
                 GameId = model.GameId,
-                PlayerScoreValue = CountingCards(playerCard.Rank)
+                PlayerScore = CountingCards(playerCard.Rank)
 
             };
 
             var playerScoreDB = contPlayerInGame
-                .Select(x => x.PlayerScoreValue)
+                .Select(x => x.PlayerScore)
                 .Sum();
             var playerScore = playerScoreDB += CountingCards(playerCard.Rank);
 
             var clearCards = await _cardRepository.GetCards(model.GameId);
             if (clearCards == null)
             {
-                throw new ArgumentNullException("ContinueBotAndSteps is null!");
+                throw new HttpStatusCodeException("ContinueBotAndSteps is null!");
             }
             if (playerScore == 21)
             {
@@ -288,9 +286,8 @@ namespace BlackJack.BusinessLogic.Services
                 await _gameRepository.Update(Game);
             }
 
-
             var cardForBots = new List<Card>();
-            var contBots = contBotAndSteps
+            var contBots = BotAndSteps
                 .Select(x => x.Bots)
                 .Distinct()
                 .ToList();
@@ -316,7 +313,7 @@ namespace BlackJack.BusinessLogic.Services
                 {
                     GameId = model.GameId,
                     BotId = x.BotId,
-                    BotScoreValue = CountingCards(x.BotStepRank)
+                    BotScore = CountingCards(x.BotStepRank)
 
                 })
                 .ToList();
@@ -341,11 +338,11 @@ namespace BlackJack.BusinessLogic.Services
                 item.ToList()
                     .ForEach(x =>
                     {
-                        currentBotPoints += x.BotScoreValue;
+                        currentBotPoints += x.BotScore;
                     });
 
                 var d = currentBotPoints;
-                ing.BotScoreValue = d;
+                ing.BotScore = d;
                 ing.BotId = item.Key;
                 ing.GameId = model.GameId;
                 ScoredBotlIstDB.Add(ing);
@@ -361,20 +358,21 @@ namespace BlackJack.BusinessLogic.Services
                 item.ToList()
                     .ForEach(x =>
                     {
-                        currentBotPoints += x.BotScoreValue;
+                        currentBotPoints += x.BotScore;
                     });
 
                 var d = currentBotPoints;
 
-                ing.BotScoreValue = d;
+                ing.BotScore = d;
                 ing.BotId = item.Key;
                 ing.GameId = model.GameId;
                 botsScore.Add(ing);
             }
 
-            CheckWinner(botsScore, bots, status, winner, playerScore, player, Game, model, null);
+            CheckWinner(botsScore, bots, status, winner, playerScore, player, Game, model, null); // method of checking winner at continue game
 
             await _cardRepository.RemoveList(clearCards);
+
             var cardsOfGame = _cardList
                 .Select(x => new Card()
                 {
@@ -387,13 +385,13 @@ namespace BlackJack.BusinessLogic.Services
 
 
             var continueGameModel = new ContinueGameView();
-            contBotAndSteps.AddRange(botsSteps);
+            BotAndSteps.AddRange(botsSteps);
             contPlayerStep.Add(playerStep);
             continueGameModel.GameId = gameId;
             continueGameModel.Status = Game.Status;
             continueGameModel.Winner = Game.Winner;
             continueGameModel.PlayerId = player.Id;
-            var groupedBotAndSteps = contBotAndSteps.GroupBy(x => x.BotId);
+            var groupedBotAndSteps = BotAndSteps.GroupBy(x => x.BotId);
             var botWithCards = new List<ContinueGameBotsViewItem>();
             foreach (var item in groupedBotAndSteps)
             {
@@ -436,41 +434,41 @@ namespace BlackJack.BusinessLogic.Services
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
             {
-                throw new ArgumentNullException("Player is empty!");
+                throw new HttpStatusCodeException("Player is empty!");
             }
             var endCards = await _cardRepository.GetCards(model.GameId);
             if (endCards == null)
             {
-                throw new ArgumentNullException("Deck IN DB is empty!");
+                throw new HttpStatusCodeException("Deck IN DB is empty!");
             }
             var endPlayerAndSteps = await _playerStepRepository.GetPlayerSteps(model.GameId);
             if (endPlayerAndSteps == null)
             {
-                throw new ArgumentNullException("endPlayerAndSteps is null!");
+                throw new HttpStatusCodeException("endPlayerAndSteps is null!");
             }
-            var endBotAndSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
-            if (endBotAndSteps == null)
+            var BotAndSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
+            if (BotAndSteps == null)
             {
-                throw new ArgumentNullException("BotAndSteps is null!");
+                throw new HttpStatusCodeException("BotAndSteps is null!");
             }
             var endBotInGame = await _botInGameRepository.GetBotInGame(model.GameId);
             if (endBotInGame == null)
             {
-                throw new ArgumentNullException("endBotInGame is null!");
+                throw new HttpStatusCodeException("endBotInGame is null!");
             }
             var endPlayerInGame = await _playerInGameRepository.GetPlayersInGame(model.GameId);
             if (endPlayerInGame == null)
             {
-                throw new ArgumentNullException("endPlayerInGame is null!");
+                throw new HttpStatusCodeException("endPlayerInGame is null!");
             }
             var Game = await _gameRepository.GetById(model.GameId);
             if (Game == null)
             {
-                throw new ArgumentNullException("endGame is null!");
+                throw new HttpStatusCodeException("endGame is null!");
             }
 
             var playerScore = endPlayerInGame
-                .Select(x => x.PlayerScoreValue)
+                .Select(x => x.PlayerScore)
                 .Sum();
 
             if (playerScore == 21)
@@ -496,10 +494,10 @@ namespace BlackJack.BusinessLogic.Services
                 item.ToList()
                     .ForEach(x =>
                     {
-                        currentBotPoints += x.BotScoreValue;
+                        currentBotPoints += x.BotScore;
                     });
                 var d = currentBotPoints;
-                ing.BotScoreValue = d;
+                ing.BotScore = d;
                 ing.BotId = item.Key;
                 ing.GameId = model.GameId;
                 ScoredBotlIstDB.Add(ing);
@@ -514,23 +512,23 @@ namespace BlackJack.BusinessLogic.Services
                 item.ToList()
                     .ForEach(x =>
                     {
-                        currentBotPoints += x.BotScoreValue;
+                        currentBotPoints += x.BotScore;
                     });
 
                 var d = currentBotPoints;
 
-                ing.BotScoreValue = d;
+                ing.BotScore = d;
                 ing.BotId = item.Key;
                 ing.GameId = model.GameId;
                 botsScore.Add(ing);
             }
 
-            var maxBotScore = botsScore.Max(x => x.BotScoreValue);
+            var maxBotScore = botsScore.Max(x => x.BotScore);
             if (maxBotScore < 17)
             {
                 _cardList = endCards;
                 var cardForBots = new List<Card>();
-                var contBots = endBotAndSteps
+                var contBots = BotAndSteps
                     .Select(x => x.Bots)
                     .Distinct()
                     .ToList();
@@ -557,7 +555,7 @@ namespace BlackJack.BusinessLogic.Services
                     {
                         GameId = model.GameId,
                         BotId = x.BotId,
-                        BotScoreValue = CountingCards(x.BotStepRank)
+                        BotScore = CountingCards(x.BotStepRank)
 
                     })
                     .ToList();
@@ -567,7 +565,7 @@ namespace BlackJack.BusinessLogic.Services
                 var clearCards = await _cardRepository.GetCards(model.GameId);
                 if (clearCards == null)
                 {
-                    throw new ArgumentNullException("Cards is null!");
+                    throw new HttpStatusCodeException("Cards is null!");
                 }
                 await _cardRepository.RemoveList(clearCards);
                 var cardsOfGame = _cardList
@@ -589,12 +587,12 @@ namespace BlackJack.BusinessLogic.Services
                     item.ToList()
                         .ForEach(x =>
                         {
-                            currentBotPoints += x.BotScoreValue;
+                            currentBotPoints += x.BotScore;
                         });
 
                     var d = currentBotPoints;
 
-                    ing.BotScoreValue = d;
+                    ing.BotScore = d;
                     ing.BotId = item.Key;
                     ing.GameId = model.GameId;
                     botsScore.Add(ing);
@@ -603,11 +601,11 @@ namespace BlackJack.BusinessLogic.Services
                 await _botStepRepository.AddList(botsSteps);
                 await _cardRepository.AddList(cardsOfGame);
                 await _botInGameRepository.AddList(botInGame);
-                endBotAndSteps.AddRange(botsSteps);
+                BotAndSteps.AddRange(botsSteps);
             }
 
             EndGameView endmodel = model;
-            CheckWinner(botsScore, bots, status, winner, playerScore, player, Game, null, endmodel);
+            CheckWinner(botsScore, bots, status, winner, playerScore, player, Game, null, endmodel); // chose winner method 
 
             var endGameModel = new EndGameView();
             endGameModel.PlayerId = endmodel.PlayerId;
@@ -615,7 +613,7 @@ namespace BlackJack.BusinessLogic.Services
             endGameModel.Status = Game.Status;
             endGameModel.Winner = Game.Winner;
 
-            var groupedBotAndSteps = endBotAndSteps.GroupBy(x => x.BotId);
+            var groupedBotAndSteps = BotAndSteps.GroupBy(x => x.BotId);
             var botWithCards = new List<EndGameBotsViewItem>();
             foreach (var item in groupedBotAndSteps)
             {
@@ -684,13 +682,13 @@ namespace BlackJack.BusinessLogic.Services
             foreach (var item in groupBotWinner)
             {
                 var currentBot = bots.FirstOrDefault(x => x.Id == item.Key);
-                var msm = botsScore.Max(x => x.BotScoreValue);
-                var msmin = botsScore.Min(x => x.BotScoreValue);
+                var msm = botsScore.Max(x => x.BotScore);
+                var msmin = botsScore.Min(x => x.BotScore);
                 var currentBotPoints = 0;
                 item.ToList()
                     .ForEach(x =>
                     {
-                        currentBotPoints += x.BotScoreValue;
+                        currentBotPoints += x.BotScore;
                     });
 
                 var d = currentBotPoints;
@@ -708,7 +706,7 @@ namespace BlackJack.BusinessLogic.Services
                     }
                     if (msm == d && msm == 21 || msmin == d && msmin == 21)
                     {
-                        botWinner.BotScoreValue = d;
+                        botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
                         botWinner.GameId = model.GameId;
                         status = Status.Blackjack.ToString();
@@ -719,7 +717,7 @@ namespace BlackJack.BusinessLogic.Services
                     }
                     if (msm == d && msm < 21 || msm > 21 && msmin < 21 && msmin == d)
                     {
-                        botWinner.BotScoreValue = d;
+                        botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
                         botWinner.GameId = model.GameId;
                         status = Status.End.ToString();
@@ -742,7 +740,7 @@ namespace BlackJack.BusinessLogic.Services
                     }
                     if (msm == d && msm < 21 && playerScore < 21 && playerScore < msm || msmin == d && msm > 21 && msmin < 21 && playerScore < msmin)
                     {
-                        botWinner.BotScoreValue = d;
+                        botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
                         botWinner.GameId = endmodel.GameId;
                         status = Status.End.ToString();
@@ -753,7 +751,7 @@ namespace BlackJack.BusinessLogic.Services
                     }
                     if (msmin == d && msm > 21 && msmin < 21 && playerScore == msmin)
                     {
-                        botWinner.BotScoreValue = d;
+                        botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
                         botWinner.GameId = endmodel.GameId;
                         status = Status.End.ToString();
@@ -767,6 +765,10 @@ namespace BlackJack.BusinessLogic.Services
                 Game.Winner = winner;
             }
         }
+        public void CardsForBots()
+        {
 
+
+        }
     }
 }

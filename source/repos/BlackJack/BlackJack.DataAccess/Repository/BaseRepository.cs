@@ -9,8 +9,8 @@ namespace BlackJack.DataAccess.Repository
 {
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
-        ApplicationContext _context;
-        DbSet<TEntity> _dbSet;
+       protected readonly ApplicationContext _context;
+       protected readonly DbSet<TEntity> _dbSet;
 
         public BaseRepository(ApplicationContext context)
         {

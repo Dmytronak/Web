@@ -23,9 +23,9 @@ namespace BlackJack.Controllers
             return View();
         }
         [HttpGet, Route("addPlayer")]
-        public async Task<GetPlayersGameView> AddPlayer([FromBody]Guid id)
+        public async Task<GetPlayersGameView> AddPlayer([FromBody]GetPlayersGameView model)
         {
-            var result = await _gameService.GetAllPlayersByUser(id);
+            var result = await _gameService.GetAllPlayersByUser(model);
             return result;
         }
         [HttpPost, Route("addPlayer")]

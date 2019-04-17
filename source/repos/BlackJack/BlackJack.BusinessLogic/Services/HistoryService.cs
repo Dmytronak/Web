@@ -35,7 +35,6 @@ namespace BlackJack.BusinessLogic.Services
             _playerInGameRepository = playerInGameRepository;
        
         }
-
         public async Task<GetAllHistoryView> HistoryOfGames(GetAllHistoryView model)
         {
             var playerGames = await _playerInGameRepository.GetGamesAndPlayers(model.PlayerId);
