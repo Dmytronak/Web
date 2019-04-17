@@ -15,10 +15,10 @@ namespace BlackJack.DataAccess.Repository
         {
             _dbSet = context.Set<Player>();
         }
-        public async Task<List<Player>> GetByUserId(Guid id)
+        public async Task<List<Player>> GetPlayers(Guid UserId)
         {
             var result = await _dbSet
-                .Where(x => x.UserId == id)
+                .Where(x => x.UserId == UserId)
                 .ToListAsync();
             return result;
         }

@@ -19,7 +19,7 @@ namespace BlackJack.Configuration
         {
             Configuration = configuration;
 
-            var jwtoption = Options.Create(configuration.GetSection("JwtConfiguration").Get<JwtConfigurationModel>());
+            var jwtoption = Options.Create(configuration.GetSection("JwtConfiguration").Get<JwtConfigurationView>());
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 
             services

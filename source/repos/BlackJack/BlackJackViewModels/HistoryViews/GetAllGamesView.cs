@@ -4,19 +4,19 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.HistoryViews
 {
-    public class AllGamesModel
+    public class GetAllGamesView
     {
 
-        public List<AllGamesModelItem> Games { get; set; }
+        public List<GetAllGamesViewItem> Games { get; set; }
 
-        public AllGamesModel()
+        public GetAllGamesView()
         {
-            Games = new List<AllGamesModelItem>();
+            Games = new List<GetAllGamesViewItem>();
         }
 
     }
 
-    public class AllGamesModelItem
+    public class GetAllGamesViewItem
     {
         public Guid Id { get; set; }
         public int NumberOfBots { get; set; }

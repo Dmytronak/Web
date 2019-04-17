@@ -23,13 +23,13 @@ namespace BlackJack.Controllers
             return View();
         }
         [HttpGet, Route("addPlayer")]
-        public async Task<GetPlayersGameModel> AddPlayer([FromBody]Guid id)
+        public async Task<GetPlayersGameView> AddPlayer([FromBody]Guid id)
         {
             var result = await _gameService.GetAllPlayersByUser(id);
             return result;
         }
         [HttpPost, Route("addPlayer")]
-        public async Task<IActionResult> AddPlayer([FromBody]CreatePlayerGameModel model)
+        public async Task<IActionResult> AddPlayer([FromBody]CreatePlayerGameView model)
         {
             if (!ModelState.IsValid)
             {
@@ -40,7 +40,7 @@ namespace BlackJack.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost, Route("playGame")]
-        public async Task<IActionResult> PlayGame([FromBody]PlayGameModel model)
+        public async Task<IActionResult> PlayGame([FromBody]PlayGameView model)
         {
             if (!ModelState.IsValid)
             {
@@ -51,7 +51,7 @@ namespace BlackJack.Controllers
         }
 
         [HttpPost, Route("continueGame")]
-        public async Task<IActionResult> ContinueGame([FromBody]ContinueGameModel model)
+        public async Task<IActionResult> ContinueGame([FromBody]ContinueGameView model)
         {
             if (!ModelState.IsValid)
             {
@@ -62,7 +62,7 @@ namespace BlackJack.Controllers
             return Ok(result);
         }
         [HttpPost, Route("endGame")]
-        public async Task<IActionResult> EndGame([FromBody]EndGameModel model)
+        public async Task<IActionResult> EndGame([FromBody]EndGameView model)
         {
             if (!ModelState.IsValid)
             {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.GameViews
 {
-    public class ContinueGameModel
+    public class ContinueGameView
     {
         [Required]
         public Guid PlayerId { get; set; }
@@ -15,28 +15,28 @@ namespace BlackJack.ViewModels.GameViews
         public string Winner { get; set; }
         public string PlayerName { get; set; }
       
-        public List<ContinueGamePlayerCardsItem> ContinueGamePlayerCards { get; set; }
-        public List<ContinueGameBotsItem> ContinueGameBots { get; set; }
+        public List<ContinueGamePlayerCardsViewItem> ContinueGamePlayerCards { get; set; }
+        public List<ContinueGameBotsViewItem> ContinueGameBots { get; set; }
 
-        public ContinueGameModel()
+        public ContinueGameView()
         {
-            ContinueGameBots = new List<ContinueGameBotsItem>();
-            ContinueGamePlayerCards = new List<ContinueGamePlayerCardsItem>();
+            ContinueGameBots = new List<ContinueGameBotsViewItem>();
+            ContinueGamePlayerCards = new List<ContinueGamePlayerCardsViewItem>();
         }
     }
 
-    public class ContinueGamePlayerCardsItem
+    public class ContinueGamePlayerCardsViewItem
     {
         public string StepRank { get; set; }
         public string StepSuit { get; set; }
     }
-    public class ContinueGameBotsItem
+    public class ContinueGameBotsViewItem
     {
         public string BotName { get; set; }
-        public List<ContinueGameBotCardsItem> ContinueBotCards { get; set; }
+        public List<ContinueGameBotCardsViewItem> ContinueBotCards { get; set; }
     }
     
-    public class ContinueGameBotCardsItem
+    public class ContinueGameBotCardsViewItem
     {
         public string BotStepRank { get; set; }
         public string BotStepSuit { get; set; }

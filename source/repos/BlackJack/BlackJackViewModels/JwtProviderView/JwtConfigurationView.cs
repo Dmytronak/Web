@@ -1,6 +1,6 @@
 ﻿namespace BlackJack.ViewModels.JwtProviderView
 {
-    public class JwtConfigurationModel
+    public class JwtConfigurationView
     {
         public string JwtKey { get; set; }
         public string JwtIssuer { get; set; }

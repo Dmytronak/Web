@@ -18,7 +18,7 @@ namespace BlackJack.Controllers
             _historyService = historyService;
         }
         [HttpPost, Route("allHistory")]
-        public async Task<IActionResult> History([FromBody] GamesHistoryModel model)
+        public async Task<IActionResult> History([FromBody] GetAllHistoryView model)
         {
             if (!ModelState.IsValid)
             {
@@ -29,36 +29,36 @@ namespace BlackJack.Controllers
             return Ok(result);
         }
         [HttpGet, Route("allUserGames")]
-        public async Task<IActionResult> AllUserGames([FromBody] Guid id)
+        public async Task<IActionResult> AllUserGames([FromBody] Guid UserId)
         {
             if (!ModelState.IsValid)
             {
-                return View(id);
+                return View(UserId);
             }
 
-            var result = await _historyService.AllUserGames(id);
+            var result = await _historyService.AllUserGames(UserId);
             return Ok(result);
         }
         [HttpGet, Route("playerSteps")]
-        public async Task<IActionResult> PlayerStepsOfGame([FromBody] Guid id)
+        public async Task<IActionResult> PlayerStepsOfGame([FromBody] Guid GameId)
         {
             if (!ModelState.IsValid)
             {
-                return View(id);
+                return View(GameId);
             }
 
-            var result = await _historyService.PlayerStepsOfGame(id);
+            var result = await _historyService.PlayerStepsOfGame(GameId);
             return Ok(result);
         }
         [HttpGet, Route("botSteps")]
-        public async Task<IActionResult> BotStepsOfGame([FromBody] Guid id)
+        public async Task<IActionResult> BotStepsOfGame([FromBody] Guid GameId)
         {
             if (!ModelState.IsValid)
             {
-                return View(id);
+                return View(GameId);
             }
 
-            var result = await _historyService.BotStepsOfGame(id);
+            var result = await _historyService.BotStepsOfGame(GameId);
             return Ok(result);
         }
 

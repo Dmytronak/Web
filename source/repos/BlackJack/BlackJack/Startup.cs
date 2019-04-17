@@ -67,7 +67,7 @@ namespace BlackJack
                 .AddDefaultTokenProviders();
 
             // ===== Add Jwt Authentication ========
-            services.Configure<JwtConfigurationModel>(Configuration.GetSection("JwtConfiguration"));
+            services.Configure<JwtConfigurationView>(Configuration.GetSection("JwtConfiguration"));
             services.AddJwtConfiguration(Configuration);
 
             // ===== Add MVC ========

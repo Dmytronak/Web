@@ -14,11 +14,11 @@ namespace BlackJack.BusinessLogic.Providers
 {
     public class JwtProvider : IJwtProvider
     {
-        public JwtProvider(IOptions<JwtConfigurationModel> options)
+        public JwtProvider(IOptions<JwtConfigurationView> options)
         {
             JwtConfigurationModel = options.Value;
         }
-        public JwtConfigurationModel JwtConfigurationModel { get; }
+        public JwtConfigurationView JwtConfigurationModel { get; }
         public async Task<JwtTokenView> GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>

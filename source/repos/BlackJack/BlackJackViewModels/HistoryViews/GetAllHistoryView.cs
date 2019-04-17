@@ -5,45 +5,45 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.HistoryViews
 {
-    public class GamesHistoryModel
+    public class GetAllHistoryView
     {
         [Required]
         public Guid PlayerId { get; set; }
 
-        public List<GameHistoryItem> Games { get; set; }
+        public List<GetAllHistoryViewItem> Games { get; set; }
 
-        public GamesHistoryModel()
+        public GetAllHistoryView()
         {
-            Games = new List<GameHistoryItem>();
+            Games = new List<GetAllHistoryViewItem>();
         }
     }
-    public class GameHistoryItem
+    public class GetAllHistoryViewItem
     {
         public Guid Id { get; set; }
         public int NumberOfBots { get; set; }
         public string Status { get; set; }
         public string Winner { get; set; }
         public string PlayerName { get; set; }
-        public List<GameHistoryPlayerSteps> HistoryPlayerSteps { get; set; }
-        public List<GameHistoryBots> HistoryBots { get; set; }
+        public List<GetAllHistoryPlayerStepsViewItem> HistoryPlayerSteps { get; set; }
+        public List<GetAllHistoryBotsViewItem> HistoryBots { get; set; }
     }
-    public class GameHistoryBots
+    public class GetAllHistoryBotsViewItem
     {
         public string BotName { get; set; }
 
-        public List<GameHistoryBotSteps> HistoryBotSteps { get; set; }
+        public List<GetAllHistoryBotStepsViewItem> HistoryBotSteps { get; set; }
 
-        public GameHistoryBots()
+        public GetAllHistoryBotsViewItem()
         {
-            HistoryBotSteps = new List<GameHistoryBotSteps>();
+            HistoryBotSteps = new List<GetAllHistoryBotStepsViewItem>();
         }
     }
-    public class GameHistoryPlayerSteps
+    public class GetAllHistoryPlayerStepsViewItem
     {
         public string StepRank { get; set; }
         public string StepSuit { get; set; }
     }
-    public class GameHistoryBotSteps
+    public class GetAllHistoryBotStepsViewItem
     {
         public string BotStepRank { get; set; }
         public string BotStepSuit { get; set; }

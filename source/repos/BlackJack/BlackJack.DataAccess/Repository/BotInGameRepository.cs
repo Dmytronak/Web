@@ -15,10 +15,10 @@ namespace BlackJack.DataAccess.Repository
         {
             _dbSet = context.Set<BotInGame>();
         }
-        public async Task<List<BotInGame>> GetBotInGameByGameId(Guid id)
+        public async Task<List<BotInGame>> GetBotInGame(Guid GameId)
         {
             var result = await _dbSet
-                .Where(x => x.GameId == id)
+                .Where(x => x.GameId == GameId)
                 .Include(x=>x.Bots)
                 .ToListAsync();
             return result;

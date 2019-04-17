@@ -27,37 +27,22 @@ namespace BlackJack.BusinessLogic.Services
 
         public async Task<JwtTokenView> Login(LoginAccountView model)
         {
-            if(model.Email == null)
-            {
-                throw new ApplicationException("Email is empty");
-            }
-            if (model.Password == null)
-            {
-                throw new ApplicationException("Password is empty");
-            }
+           
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                var appUser = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
-                var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, appUser);
-
-                return encodedJwt;
+                throw new ApplicationException("INVALID Login or password");
+               
             }
+            var appUser = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
+            var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, appUser);
 
-            throw new ApplicationException("INVALID Login or password");
+            return encodedJwt;
         }
 
         public async Task<JwtTokenView> Register(RegisterAccountView model)
         {
-            if (model.Email == null)
-            {
-                throw new ApplicationException("Email is empty");
-            }
-            if (model.Password == null)
-            {
-                throw new ApplicationException("Password is empty");
-            }
             var user = new User
             {
                 UserName = model.Email,
@@ -67,22 +52,23 @@ namespace BlackJack.BusinessLogic.Services
             };
             var result = await _userManager.CreateAsync(user, model.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                //await _signInManager.SignInAsync(user, false);
-                var res = await _jwtProvider.GenerateJwtToken(model.Email, user);
-                return res;
+                throw new ApplicationException("INVALID_REGISTER_ATTEMPT");
+              
             }
+            //await _signInManager.SignInAsync(user, false);
+            var res = await _jwtProvider.GenerateJwtToken(model.Email, user);
+            return res;
 
-            throw new ApplicationException("INVALID_REGISTER_ATTEMPT");
         }
 
-        public async Task<RegisterAccountGetUserView> RegisterList()
+        public async Task<GetAllAccountsView> RegisterList()
         {
             var users = _userManager.Users.ToList();
-            var value = new RegisterAccountGetUserView();
+            var value = new GetAllAccountsView();
             value.UsersReg = users
-                .Select(x => new RegisterAccountGetWiew()
+                .Select(x => new GetAllAccountsViewItem()
                 {
                     Year = x.Year,
                     Email = x.Email

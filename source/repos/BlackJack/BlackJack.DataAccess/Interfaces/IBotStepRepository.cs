@@ -7,7 +7,7 @@ namespace BlackJack.DataAccess.Interfaces
 {
     public interface IBotStepRepository : IBaseRepository<BotStep>
     {
-        Task<List<BotStep>> GetStepsAndBotByGameId(Guid id);
-        Task<List<BotStep>> GetStepsByBotId(Guid id);
+        Task<List<BotStep>> GetStepsAndBot(Guid GameId);
+        Task<List<BotStep>> GetSteps(Guid BotId);
     }
 }

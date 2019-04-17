@@ -5,11 +5,11 @@ using System.Text;
 
 namespace BlackJack.ViewModels.GameViews
 {
-    public class GetPlayersGameModel
+    public class GetPlayersGameView
     {
         public List<Player> Players { get; set; }
 
-        public GetPlayersGameModel()
+        public GetPlayersGameView()
         {
             Players = new List<Player>();
         }

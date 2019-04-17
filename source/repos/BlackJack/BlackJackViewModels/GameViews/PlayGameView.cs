@@ -4,14 +4,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.GameViews
 {
-    public class PlayGameModel
+    public class PlayGameView
     {
         [Required]
         public Guid PlayerId { get; set; }
 
         [Required]
-        [Range(1, 5)]
-        [Display(Name = "NumberOfBots")]
+        [Range(1, 5,ErrorMessage ="Range from 1 to 5")]
         public int NumberOfBots { get; set; }
 
         public Guid GameId { get; set; }
@@ -19,20 +18,20 @@ namespace BlackJack.ViewModels.GameViews
         public string StepRank { get; set; }
         public string StepSuit { get; set; }
 
-        public List<PlayGameBotsItem> PlayGameBots { get; set; }
+        public List<PlayGameBotsViewItem> PlayGameBots { get; set; }
 
-        public PlayGameModel()
+        public PlayGameView()
         {
-            PlayGameBots = new List<PlayGameBotsItem>();
+            PlayGameBots = new List<PlayGameBotsViewItem>();
         }
     }
 
-    public class PlayGameBotsItem
+    public class PlayGameBotsViewItem
     {
         public string BotName { get; set; }
-        public List<PlayGameBotCardsItem> PlayBotCards { get; set; }
+        public List<PlayGameBotCardsViewItem> PlayBotCards { get; set; }
     }
-    public class PlayGameBotCardsItem
+    public class PlayGameBotCardsViewItem
     {
         public string BotStepRank { get; set; }
         public string BotStepSuit { get; set; }

@@ -6,10 +6,10 @@ namespace BlackJack.BusinessLogic.Interfaces
 {
     public interface IHistoryService
     {
-        Task<GamesHistoryModel> HistoryOfGames(GamesHistoryModel model);
-        Task<AllGamesModel> AllUserGames(Guid id);
-        Task<BotStepsHistoryModel> BotStepsOfGame(Guid id);
-        Task<PlayerStepsHistoryModel> PlayerStepsOfGame(Guid id);
+        Task<GetAllHistoryView> HistoryOfGames(GetAllHistoryView model);
+        Task<GetAllGamesView> AllUserGames(Guid UserId);
+        Task<BotStepsHistoryView> BotStepsOfGame(Guid GameId);
+        Task<PlayerStepsHistoryView> PlayerStepsOfGame(Guid GameId);
     }
 }
 
