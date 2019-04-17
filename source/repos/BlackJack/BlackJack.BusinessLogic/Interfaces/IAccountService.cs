@@ -8,5 +8,6 @@ namespace BlackJack.BusinessLogic.Interfaces
     {
         Task<JwtTokenView> Login(LoginAccountView model);
         Task<JwtTokenView> Register(RegisterAccountView model);
+        Task<RegisterAccountGetUserView> RegisterList();
     }
 }

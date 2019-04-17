@@ -5,6 +5,11 @@ import { BaseService } from './base.service';
 import { ConfigService } from '../utils/config.service';
 
 import { Router, ActivatedRoute } from '@angular/router';
+import { Credentials } from '../models/credentials.interface';
+import { UserRegistration } from '../models/user.registration.interface';
+import { UsersReg } from '../models/user.list.interface';
+
+
 
 
 @Injectable()
@@ -12,7 +17,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class UserService extends BaseService {
 
   baseUrl: string = '';
-
+  public usersReg: UsersReg[] = [];
   // Observable navItem source
   _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
@@ -30,14 +35,16 @@ export class UserService extends BaseService {
 
   }
 
-  register(email: string, password: string, passwordConfirm: string, year: number) {
-    debugger
-    var body = ({ email, password, passwordConfirm, year });
-    return this.http.post(this.baseUrl + "/accounts/register", body);
+  register(reg: UserRegistration) {
+
+    return this.http.post(this.baseUrl + "/accounts/register", reg);
+  }
+  registerUsers() {
+    return this.http.get<UsersReg[]>(this.baseUrl + "/accounts/register");
   }
 
-  login(email, password, rememberMe) {
-    var body = ({ email, password, rememberMe });
+  login(loginCred: Credentials) {
+    var body = (loginCred);
     return this.http.post(this.baseUrl + "/accounts/login", body);
   }
 

@@ -6,43 +6,89 @@
 
 <div class="row">
   <div class="col-md-6">
-      <form #f="ngForm" novalidate (ngSubmit)="registerUser(f)">
-          
-          <div class="form-group">
-            <label for="email">Email</label>
-          	<input id="email" type="text" required name="email" validateEmail class="form-control" placeholder="Email" ngModel  #email="ngModel">
-            <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
-          </div>
-          <div class="form-group">
-            <label for="year">Year</label>
-            <input type="number" class="form-control"  required minlength="6" id="year" name="year" placeholder="Year" ngModel  #year="ngModel">
+    <form [formGroup]="formGroup" (ngSubmit)="registerUser(formGroup.value)">
 
-          </div> 
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password"  required minlength="6" class="form-control" id="password" name="password" placeholder="Password" ngModel>
+      <div class="formGroup">
+        <label for="email">Email</label>
+        <input type="text" required name="email" class="form-control" placeholder="Email" formControlName="email">
+      </div>
+      <div
+        *ngIf="formGroup.controls['email'].invalid && (formGroup.controls['email'].dirty || formGroup.controls['email'].touched)"
+        class="alert alert-danger">
+        <div *ngIf="formGroup.controls['email'].errors.required">
+          Email is required.
+        </div>
+        <div *ngIf="formGroup.controls['email'].errors.email">
+          Email not validate
+        </div>
+      </div>
+      <div class="formGroup">
+        <label for="year">Year</label>
+        <input type="text" class="form-control" required name="year" placeholder="Year" formControlName="year">
+      </div>
+      <div
+        *ngIf="formGroup.controls['year'].invalid && (formGroup.controls['year'].dirty || formGroup.controls['year'].touched)"
+        class="alert alert-danger">
+        <div *ngIf="formGroup.controls['year'].errors.required">
+          year is required.
+        </div>
+        <div *ngIf="formGroup.controls['year'].errors.minlength">
+          year min minLength 4
+        </div>
+        <div *ngIf="formGroup.controls['year'].errors.pattern">
+            ONLY NUMB ERROR
           </div>
+      </div>
+      <div class="formGroup">
+        <label for="password">Password</label>
+        <input type="password" required class="form-control" name="password" placeholder="Password"
+          formControlName="password">
+      </div>
+      <div
+        *ngIf="formGroup.controls['password'].invalid && (formGroup.controls['password'].dirty || formGroup.controls['password'].touched)"
+        class="alert alert-danger">
+        <div *ngIf="formGroup.controls['password'].errors.required">
+          Password is required.
+        </div>
+        <div *ngIf="formGroup.controls['password'].errors.minlength">
+          Password minLength 6
+        </div>
+        <div *ngIf="formGroup.controls['password'].errors.pattern">
+          Password not validate
+        </div>
+      </div>
 
-          
-          <div class="form-group">
-            <label for="passwordConfirm">Confirm password</label>
-            <input type="password"  required minlength="6" class="form-control" id="passwordConfirm" name="passwordConfirm" placeholder="Confirm password" ngModel>
-           
-          </div> 
-          <div class="form-group">
-              <button type="submit" class="btn btn-primary" [disabled]="f.invalid">Sign Up</button>
-              <app-spinner [isRunning]="isRequesting"></app-spinner> 
-          </div>
+      <div class="formGroup">
+        <label for="passwordConfirm">Confirm password</label>
+        <input type="password" required class="form-control" name="passwordConfirm" placeholder="Confirm password"
+          formControlName="passwordConfirm">
+      </div>
+      <div
+        *ngIf="formGroup.controls['passwordConfirm'].invalid && (formGroup.controls['passwordConfirm'].dirty || formGroup.controls['passwordConfirm'].touched)"
+        class="alert alert-danger">
+        <div *ngIf="formGroup.controls['passwordConfirm'].errors.required">
+          Password is required.
+        </div>
+        <div *ngIf="formGroup.controls['passwordConfirm'].errors.minlength">
+          Password minLength 6
+        </div>
+        <div *ngIf="formGroup.controls['passwordConfirm'].errors.pattern">
+          Password not validate
+        </div>
+        <div *ngIf="formGroup.controls['passwordConfirm'].errors.mustMatch">
+          Passwords must match
+        </div>
+      </div>
+      <div class="formGroup">
+        <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Login</button>
+        <app-spinner [isRunning]="isRequesting"></app-spinner>
+      </div>
 
-          <div *ngIf="error" class="alert alert-danger" role="alert">
-              <strong>Oops!</strong> {{error}}
-            </div>               
-          
-        </form>
-        
-   </div>
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> {{error}}
+      </div>
+
+    </form>
+
+  </div>
 </div>
-
-
-
-

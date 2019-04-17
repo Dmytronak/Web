@@ -27,7 +27,7 @@ export class GameService extends BaseService {
       headers.append('Content-Type', 'application/json');
       let authToken = localStorage.getItem('auth_token');
       headers.append('Authorization', `Bearer ${authToken}`);
-     this.http.get(this.baseUrl + "/game/home",{headers})
+      this.http.get(this.baseUrl + "/game/home",{headers})
       .subscribe((homeDetails: HomeDetails) => {
         this.homeDetails = homeDetails;
       },

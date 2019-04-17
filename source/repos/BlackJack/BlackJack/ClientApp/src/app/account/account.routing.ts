@@ -1,11 +1,12 @@
 import { ModuleWithProviders } from '@angular/core';
-import { RouterModule }        from '@angular/router';
+import { RouterModule } from '@angular/router';
 
-import { RegistrationFormComponent }    from './registration-form/registration-form.component';
-import { LoginFormComponent }    from './login-form/login-form.component';
-import { AuthGuard } from '../shared/guard/auth.guard';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
+import { LoginFormComponent } from './login-form/login-form.component';
+import { AuthUsersGuard } from '../shared/guard/authUsers.guard';
 
 export const routing: ModuleWithProviders = RouterModule.forChild([
-  { path: 'register', component: RegistrationFormComponent},
-  { path: 'login', component: LoginFormComponent}
+  { path: 'register', component: RegistrationFormComponent, canActivate: [AuthUsersGuard] },
+  { path: 'login', component: LoginFormComponent, canActivate: [AuthUsersGuard] }
+
 ]);

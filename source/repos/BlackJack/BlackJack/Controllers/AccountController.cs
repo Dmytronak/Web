@@ -34,9 +34,10 @@ namespace BlackJack.Controllers
 
         }
         [HttpGet, Route("register")]
-        public IActionResult Register()
+        public async Task<RegisterAccountGetUserView> Register()
         {
-            return View();
+            var res =  await _accountService.RegisterList();
+            return res;
         }
         [HttpPost,Route("register")]
         public async Task<object> Register(RegisterAccountView model)

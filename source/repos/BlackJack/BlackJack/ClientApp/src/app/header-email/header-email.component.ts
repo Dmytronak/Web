@@ -1,5 +1,5 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
-import {Subscription} from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { UserService } from '../shared/services/user.service';
 
@@ -9,26 +9,35 @@ import { UserService } from '../shared/services/user.service';
   styleUrls: ['./header-email.component.css']
 })
 
-export class HeaderEmailComponent implements OnInit,OnDestroy {
- 
+export class HeaderEmailComponent implements OnInit, OnDestroy {
+
   status: boolean;
-  subscription:Subscription;
-  email:string  = '';
+  subscription: Subscription;
+  email: string = '';
+  token: string = '';
+  constructor(private userService: UserService) {
 
-  constructor(private userService:UserService) {   
-   
-   }
-
-   logout() {
-     this.userService.logout();       
+  }
+  logout() {
+    this.userService.logout();
   }
 
   ngOnInit() {
-    this.email = localStorage.getItem('log_email');
+    debugger
+    this.token = localStorage.getItem('auth_token');
+    this.email = this.parseJwt(this.token)['sub'];
   }
 
-   ngOnDestroy() {
+  parseJwt(token) {
+    debugger
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    let res = JSON.parse(window.atob(base64));
+    return res;
+  };
+  ngOnDestroy() {
     // prevent memory leak when component is destroyed
     this.subscription.unsubscribe();
   }
+
 }

@@ -16,6 +16,7 @@ import { HeaderEmailComponent } from './header-email/header-email.component';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthUsersGuard } from './shared/guard/authUsers.guard';
 
 
 
@@ -41,7 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
    
   ],
-  providers: [UserService,ConfigService,AuthGuard],
+  providers: [UserService,ConfigService,AuthGuard, AuthUsersGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

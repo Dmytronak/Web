@@ -38,6 +38,8 @@ namespace BlackJack.BusinessLogic.Services
             _cardList = new List<Card>();
         }
 
+      
+
         public async Task CreateNewPlayer(CreatePlayerGameModel model)
         {
             var appUser = _userManager.FindByEmailAsync(model.Email);
@@ -52,6 +54,22 @@ namespace BlackJack.BusinessLogic.Services
                 UserId = Guid.Parse(appUser.Result.Id)
             };
             await _playerRepository.Create(newPlayer);
+        }
+        public async Task<GetPlayersGameModel> GetAllPlayersByUser(Guid id)
+        {
+            var players = await _playerRepository.GetByUserId(id);
+            var result = new GetPlayersGameModel();
+            result.Players = players
+                .Select(x => new Player()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    UserId = x.UserId
+                })
+                .ToList();
+                
+                return result;
+
         }
         public async Task<PlayGameModel> PlayGame(PlayGameModel model)
         {
@@ -651,7 +669,6 @@ namespace BlackJack.BusinessLogic.Services
             LoseAll,
             Draw
         }
-
         public void IfBlackJack(string status, string winner, Player player, Game Game)
         {
             status = Status.Blackjack.ToString();
@@ -750,5 +767,6 @@ namespace BlackJack.BusinessLogic.Services
             }
         }
 
+      
     }
 }

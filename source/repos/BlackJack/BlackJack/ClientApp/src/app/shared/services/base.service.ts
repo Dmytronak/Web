@@ -15,8 +15,9 @@ export abstract class BaseService {
        errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     } debugger
     // window.alert(errorMessage);
-    window.alert(errorMessage);
-    throwError(errorMessage);
+    //window.alert(errorMessage);
+    throwError(new Error(errorMessage));
+    
     return errorMessage;
   }
 }

@@ -77,7 +77,19 @@ namespace BlackJack.BusinessLogic.Services
             throw new ApplicationException("INVALID_REGISTER_ATTEMPT");
         }
 
+        public async Task<RegisterAccountGetUserView> RegisterList()
+        {
+            var users = _userManager.Users.ToList();
+            var value = new RegisterAccountGetUserView();
+            value.UsersReg = users
+                .Select(x => new RegisterAccountGetWiew()
+                {
+                    Year = x.Year,
+                    Email = x.Email
+                })
+                .ToList();
 
-
+            return value;
+        }
     }
 }
