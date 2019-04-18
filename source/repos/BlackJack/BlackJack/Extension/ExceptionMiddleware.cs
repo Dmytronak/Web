@@ -40,7 +40,7 @@ namespace BlackJack.Extension
             var code = HttpStatusCode.InternalServerError; // 500 if unexpected
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
-            var result = JsonConvert.SerializeObject(new { error = "Status code: " + code + "Messege:" + ex.Message });
+            var result = JsonConvert.SerializeObject(new { error = "Status code: " + (int)code + "Messege:" + ex.Message });
             return context.Response.WriteAsync(result);
         }
         private static Task HandleExceptionAsync(HttpContext context, HttpStatusCodeException exception)
