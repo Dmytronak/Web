@@ -29,7 +29,7 @@ namespace BlackJack.BusinessLogic.Services
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             if (!result.Succeeded)
             {
-                throw new NullReferenceException("INVALID Login or password");
+                throw new Exception("INVALID Login or password");
                
             }
             var user = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
@@ -51,7 +51,7 @@ namespace BlackJack.BusinessLogic.Services
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                throw new NullReferenceException("INVALID_REGISTER_ATTEMPT");
+                throw new Exception("INVALID_REGISTER_ATTEMPT");
             }
             //await _signInManager.SignInAsync(user, false);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, user);
