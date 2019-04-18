@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,8 +29,8 @@ namespace BlackJack.ViewModels.GameViews
 
     public class EndGamePlayerCardsViewItem
     {
-        public string StepRank { get; set; }
-        public string StepSuit { get; set; }
+        public CardRank StepRank { get; set; }
+        public CardSuit StepSuit { get; set; }
     }
     public class EndGameBotsViewItem
     {
@@ -39,7 +40,7 @@ namespace BlackJack.ViewModels.GameViews
 
     public class EndGameBotCardsViewItem
     {
-        public string BotStepRank { get; set; }
-        public string BotStepSuit { get; set; }
+        public CardRank BotStepRank { get; set; }
+        public CardSuit BotStepSuit { get; set; }
     }
 }

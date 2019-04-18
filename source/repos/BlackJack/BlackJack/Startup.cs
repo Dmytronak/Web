@@ -57,10 +57,6 @@ namespace BlackJack
             services.AddTransient<IHistoryService, HistoryService>();
             services.AddTransient<IJwtProvider, JwtProvider>();
 
-
-
-
-
             // ===== Add Identity ========
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()

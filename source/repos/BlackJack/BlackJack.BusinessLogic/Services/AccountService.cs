@@ -35,8 +35,8 @@ namespace BlackJack.BusinessLogic.Services
                 throw new HttpStatusCodeException(403,"INVALID Login or password");
                
             }
-            var appUser = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
-            var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, appUser);
+            var user = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
+            var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, user);
 
             return encodedJwt;
         }

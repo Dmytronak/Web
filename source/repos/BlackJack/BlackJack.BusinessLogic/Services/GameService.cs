@@ -162,8 +162,8 @@ namespace BlackJack.BusinessLogic.Services
             playGameModel.NumberOfBots = numbOfBots;
             playGameModel.GameId = newGame.Id;
             playGameModel.PlayerName = player.Name;
-            playGameModel.StepRank = playerCard.Rank.ToString();
-            playGameModel.StepSuit = playerCard.Suit.ToString();
+            playGameModel.StepRank = playerCard.Rank;
+            playGameModel.StepSuit = playerCard.Suit;
 
             var groupedBotInGame = botsSteps.GroupBy(x => x.BotId);
             var playGameBots = new List<PlayGameBotsViewItem>();
@@ -175,8 +175,8 @@ namespace BlackJack.BusinessLogic.Services
                 modelItem.BotName = currentBot;
                 modelItem.PlayBotCards = item.Select(x => new PlayGameBotCardsViewItem()
                 {
-                    BotStepRank = x.BotStepRank.ToString(),
-                    BotStepSuit = x.BotStepSuit.ToString()
+                    BotStepRank = x.BotStepRank,
+                    BotStepSuit = x.BotStepSuit
                 })
                 .ToList();
 
@@ -301,16 +301,13 @@ namespace BlackJack.BusinessLogic.Services
             var ScoredBotlIstDB = new List<BotInGame>();
             ScoredBotlIstDB.AddRange(botInGame);
             ScorePointFromDb(ScoredBotlIstDB, groupedBotInGame, model, null);
-
             var groupedBotsScore = ScoredBotlIstDB.GroupBy(x => x.BotId);
             var botsScore = new List<BotInGame>();
             RoundScore(botsScore, groupedBotsScore,model,null);
-           
 
             CheckWinner(botsScore, bots, status, winner, playerScore, player, Game, model, null); // method of checking winner at continue game
 
             await _cardRepository.RemoveList(clearCards);
-
             var cardsOfGame = _cardList
                 .Select(x => new Card()
                 {
@@ -320,9 +317,11 @@ namespace BlackJack.BusinessLogic.Services
                 })
                 .ToList();
 
-            var continueGameModel = new ContinueGameView();
             botAndSteps.AddRange(botsSteps);
             contPlayerStep.Add(playerStep);
+
+
+            var continueGameModel = new ContinueGameView();
             continueGameModel.GameId = gameId;
             continueGameModel.Status = Game.Status;
             continueGameModel.Winner = Game.Winner;
@@ -336,8 +335,8 @@ namespace BlackJack.BusinessLogic.Services
                 bot.BotName = botName;
                 bot.ContinueBotCards = item.Select(x => new ContinueGameBotCardsViewItem()
                 {
-                    BotStepRank = x.BotStepRank.ToString(),
-                    BotStepSuit = x.BotStepSuit.ToString()
+                    BotStepRank = x.BotStepRank,
+                    BotStepSuit = x.BotStepSuit
                 })
                 .ToList();
 
@@ -348,8 +347,8 @@ namespace BlackJack.BusinessLogic.Services
             continueGameModel.ContinueGamePlayerCards = contPlayerStep
                 .Select(x => new ContinueGamePlayerCardsViewItem()
                 {
-                    StepRank = x.StepRank.ToString(),
-                    StepSuit = x.StepSuit.ToString()
+                    StepRank = x.StepRank,
+                    StepSuit = x.StepSuit
                 })
                 .ToList();
 
@@ -476,6 +475,7 @@ namespace BlackJack.BusinessLogic.Services
                 await _botInGameRepository.AddList(botInGame);
                 botAndSteps.AddRange(botsSteps);
             }
+
             CheckWinner(botsScore, bots, status, winner, playerScore, player, Game, null, endmodel); // chose winner method 
 
             var endGameModel = new EndGameView();
@@ -483,7 +483,6 @@ namespace BlackJack.BusinessLogic.Services
             endGameModel.GameId = endmodel.GameId;
             endGameModel.Status = Game.Status;
             endGameModel.Winner = Game.Winner;
-
             var groupedBotAndSteps = botAndSteps.GroupBy(x => x.BotId);
             var botWithCards = new List<EndGameBotsViewItem>();
             foreach (var item in groupedBotAndSteps)
@@ -493,21 +492,20 @@ namespace BlackJack.BusinessLogic.Services
                 bot.BotName = botName;
                 bot.ContinueBotCards = item.Select(x => new EndGameBotCardsViewItem()
                 {
-                    BotStepRank = x.BotStepRank.ToString(),
-                    BotStepSuit = x.BotStepSuit.ToString()
+                    BotStepRank = x.BotStepRank,
+                    BotStepSuit = x.BotStepSuit
                 })
                 .ToList();
 
                 botWithCards.Add(bot);
             }
             endGameModel.EndGameBots.AddRange(botWithCards);
-
             endGameModel.PlayerName = player.Name;
             endGameModel.EndGamePlayerCards = endPlayerAndSteps
                 .Select(x => new EndGamePlayerCardsViewItem()
                 {
-                    StepRank = x.StepRank.ToString(),
-                    StepSuit = x.StepSuit.ToString()
+                    StepRank = x.StepRank,
+                    StepSuit = x.StepSuit
                 })
                 .ToList();
             await _gameRepository.Update(Game);
@@ -516,7 +514,7 @@ namespace BlackJack.BusinessLogic.Services
         public virtual void Shuffle()
         {
             _cardList = _cardList.OrderBy(o => Guid.NewGuid()).ToList();
-        }
+        }//Shufle of deck
         public int CountingCards(CardRank rank)
         {
             int value = (int)rank;
@@ -526,7 +524,7 @@ namespace BlackJack.BusinessLogic.Services
                 value = 10;
             }
             return value;
-        }
+        }//Cards value from Card type
         public enum Status
         {
             New,
@@ -537,14 +535,14 @@ namespace BlackJack.BusinessLogic.Services
             Winner,
             LoseAll,
             Draw
-        }
+        }//All status uses
         public void IfBlackJack(string status, string winner, Player player, Game Game)
         {
             status = Status.Blackjack.ToString();
             winner = player.Name;
             Game.Status = status;
             Game.Winner = winner.ToString();
-        }
+        }// Check if score 21
         public void CheckWinner(List<BotInGame> botsScore, List<Bot> bots, string status, string winner, int playerScore, Player player, Game Game, ContinueGameView model, EndGameView endmodel)
         {
             var groupBotWinner = botsScore.GroupBy(x => x.BotId);
@@ -634,7 +632,7 @@ namespace BlackJack.BusinessLogic.Services
                 Game.Status = status;
                 Game.Winner = winner;
             }
-        }
+        }//Check winner of rounds or game
         public void CardForBots(List<Bot> botList, List<Card> cardForBots)
         {
             for (var i = 0; i < botList.Count; i++)
