@@ -5,8 +5,7 @@ using BlackJack.ViewModels.AccountViews;
 using BlackJack.DataAccess.Entities;
 using BlackJack.BusinessLogic.Interfaces;
 using BlackJack.BusinessLogic.Providers.Interfaces;
-using BlackJack.ViewModels.JwtProviderView;
-using BlackJack.BusinessLogic.Providers;
+using System;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -25,23 +24,22 @@ namespace BlackJack.BusinessLogic.Services
         }
 
 
-        public async Task<JwtTokenView> Login(LoginAccountView model)
+        public async Task<AccountResponseView> Login(LoginAccountView model)
         {
-           
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
-
             if (!result.Succeeded)
             {
-                throw new HttpStatusCodeException(403,"INVALID Login or password");
+                throw new Exception("INVALID Login or password");
                
             }
             var user = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, user);
-
-            return encodedJwt;
+            var val = new AccountResponseView();
+            val.Token = encodedJwt;
+            return val;
         }
 
-        public async Task<JwtTokenView> Register(RegisterAccountView model)
+        public async Task<AccountResponseView> Register(RegisterAccountView model)
         {
             var user = new User
             {
@@ -51,15 +49,15 @@ namespace BlackJack.BusinessLogic.Services
                 RememberMe = model.RememberMe
             };
             var result = await _userManager.CreateAsync(user, model.Password);
-
             if (!result.Succeeded)
             {
-                throw new HttpStatusCodeException(403,"INVALID_REGISTER_ATTEMPT");
-              
+                throw new ArgumentNullException("INVALID_REGISTER_ATTEMPT");
             }
             //await _signInManager.SignInAsync(user, false);
-            var res = await _jwtProvider.GenerateJwtToken(model.Email, user);
-            return res;
+            var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, user);
+            var val = new AccountResponseView();
+            val.Token = encodedJwt;
+            return val;
 
         }
 

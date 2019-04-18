@@ -19,7 +19,7 @@ namespace BlackJack.BusinessLogic.Providers
             JwtConfigurationModel = options.Value;
         }
         public JwtConfigurationView JwtConfigurationModel { get; }
-        public async Task<JwtTokenView> GenerateJwtToken(string email, User user)
+        public async Task<string> GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
             {
@@ -40,13 +40,8 @@ namespace BlackJack.BusinessLogic.Providers
                 signingCredentials: creds
             );
 
-            var gentok =  new JwtSecurityTokenHandler().WriteToken(token);
-            var model = new JwtTokenView()
-            {
-                Token = gentok
-            };
-
-            return  model;
+            var gentok =  new JwtSecurityTokenHandler().WriteToken(token);  
+            return gentok;
 
         }
     }

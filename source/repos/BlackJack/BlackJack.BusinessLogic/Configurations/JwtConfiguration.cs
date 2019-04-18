@@ -8,7 +8,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace BlackJack.Configuration
+namespace BlackJack.BusinessLogic.Configurations
 {
 
     public static class JwtConfiguration

@@ -2,12 +2,11 @@
 using BlackJack.BusinessLogic.Providers;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.BusinessLogic.Services;
-using BlackJack.Configuration;
 using BlackJack.DataAccess;
 using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.DataAccess.Repository;
-using BlackJack.Extension;
+using BlackJack.Middleware;
 using BlackJack.Filters;
 using BlackJack.ViewModels.JwtProviderView;
 using Microsoft.AspNetCore.Builder;
@@ -19,6 +18,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BlackJack.BusinessLogic.Configurations;
 
 namespace BlackJack
 {
@@ -94,7 +94,7 @@ namespace BlackJack
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
+          
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

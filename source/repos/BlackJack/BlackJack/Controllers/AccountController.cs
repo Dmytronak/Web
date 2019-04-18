@@ -23,7 +23,7 @@ namespace BlackJack.Controllers
         }
 
         [HttpPost, Route("login")]
-        public async Task<object> Login([FromBody]LoginAccountView model)
+        public async Task<IActionResult> Login([FromBody]LoginAccountView model)
         {
             if (!ModelState.IsValid)
             {
