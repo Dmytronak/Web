@@ -42,7 +42,7 @@ namespace BlackJack.BusinessLogic.Services
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                throw new ArgumentNullException("user model received a null argument!");
+                throw new NullReferenceException("user model received a null argument!");
             }
             var newPlayer = new Player()
             {
@@ -56,7 +56,7 @@ namespace BlackJack.BusinessLogic.Services
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                throw new ArgumentNullException("user model received a null argument!");
+                throw new NullReferenceException("user model received a null argument!");
             }
             var players = await _playerRepository.GetPlayers(Guid.Parse(user.Result.Id));
             var result = new GetPlayersGameView();
@@ -79,12 +79,12 @@ namespace BlackJack.BusinessLogic.Services
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
             {
-                throw new ArgumentNullException("player is empty!");
+                throw new NullReferenceException("player is empty!");
             }
             var bots = await _botRepository.GetAll();
             if (bots == null)
             {
-                throw new ArgumentNullException("Bots is empty!");
+                throw new NullReferenceException("Bots is empty!");
             }
 
             var botList = bots
@@ -200,37 +200,37 @@ namespace BlackJack.BusinessLogic.Services
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
             {
-                throw new ArgumentNullException("player is empty!");
+                throw new NullReferenceException("player is empty!");
             }
             var contCards = await _cardRepository.GetCards(model.GameId);
             if (contCards == null)
             {
-                throw new ArgumentNullException("Deck IN DB is empty!");
+                throw new NullReferenceException("Deck IN DB is empty!");
             }
             var contPlayerStep = await _playerStepRepository.GetPlayerSteps(model.GameId);
             if (contPlayerStep == null)
             {
-                throw new ArgumentNullException("PlayerStep is null!");
+                throw new NullReferenceException("PlayerStep is null!");
             }
             var botAndSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
             if (botAndSteps == null)
             {
-                throw new ArgumentNullException("ContinueBotAndSteps is null!");
+                throw new NullReferenceException("ContinueBotAndSteps is null!");
             }
             var contBotInGame = await _botInGameRepository.GetBotInGame(model.GameId);
             if (contBotInGame == null)
             {
-                throw new ArgumentNullException("contBotInGame is null!");
+                throw new NullReferenceException("contBotInGame is null!");
             }
             var contPlayerInGame = await _playerInGameRepository.GetPlayersInGame(model.GameId);
             if (contPlayerInGame == null)
             {
-                throw new ArgumentNullException("contPlayerInGame is null!");
+                throw new NullReferenceException("contPlayerInGame is null!");
             }
             var Game = await _gameRepository.GetById(model.GameId);
             if (Game == null)
             {
-                throw new ArgumentNullException("ContinueGame is null!");
+                throw new NullReferenceException("ContinueGame is null!");
             }
 
             _cardList = contCards;
@@ -260,7 +260,7 @@ namespace BlackJack.BusinessLogic.Services
             var clearCards = await _cardRepository.GetCards(model.GameId);
             if (clearCards == null)
             {
-                throw new ArgumentNullException("ContinueBotAndSteps is null!");
+                throw new NullReferenceException("ContinueBotAndSteps is null!");
             }
             if (playerScore == 21)
             {
@@ -369,37 +369,37 @@ namespace BlackJack.BusinessLogic.Services
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
             {
-                throw new ArgumentNullException("Player is empty!");
+                throw new NullReferenceException("Player is empty!");
             }
             var endCards = await _cardRepository.GetCards(model.GameId);
             if (endCards == null)
             {
-                throw new ArgumentNullException("Deck IN DB is empty!");
+                throw new NullReferenceException("Deck IN DB is empty!");
             }
             var endPlayerAndSteps = await _playerStepRepository.GetPlayerSteps(model.GameId);
             if (endPlayerAndSteps == null)
             {
-                throw new ArgumentNullException("endPlayerAndSteps is null!");
+                throw new NullReferenceException("endPlayerAndSteps is null!");
             }
             var botAndSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
             if (botAndSteps == null)
             {
-                throw new ArgumentNullException("BotAndSteps is null!");
+                throw new NullReferenceException("BotAndSteps is null!");
             }
             var endBotInGame = await _botInGameRepository.GetBotInGame(model.GameId);
             if (endBotInGame == null)
             {
-                throw new ArgumentNullException("endBotInGame is null!");
+                throw new NullReferenceException("endBotInGame is null!");
             }
             var endPlayerInGame = await _playerInGameRepository.GetPlayersInGame(model.GameId);
             if (endPlayerInGame == null)
             {
-                throw new ArgumentNullException("endPlayerInGame is null!");
+                throw new NullReferenceException("endPlayerInGame is null!");
             }
             var Game = await _gameRepository.GetById(model.GameId);
             if (Game == null)
             {
-                throw new ArgumentNullException("endGame is null!");
+                throw new NullReferenceException("endGame is null!");
             }
 
             var playerScore = endPlayerInGame
@@ -453,7 +453,7 @@ namespace BlackJack.BusinessLogic.Services
                 var clearCards = await _cardRepository.GetCards(model.GameId);
                 if (clearCards == null)
                 {
-                    throw new ArgumentNullException("Cards is null!");
+                    throw new NullReferenceException("Cards is null!");
                 }
                 await _cardRepository.RemoveList(clearCards);
                 var cardsOfGame = _cardList

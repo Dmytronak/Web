@@ -32,13 +32,11 @@ namespace BlackJack.Middleware
 
         private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-           
-            var code = HttpStatusCode.InternalServerError; // 500 if unexpected
-            if (ex is ArgumentNullException)
+            var code = HttpStatusCode.BadRequest; // 500 if unexpected
+            if (ex is NullReferenceException)
             {
-                code = HttpStatusCode.NotFound;
+                code = HttpStatusCode.InternalServerError;
             }
-          
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             var result = JsonConvert.SerializeObject(new { error = "Status code: " + (int)code + " Messege:" + ex.Message });
