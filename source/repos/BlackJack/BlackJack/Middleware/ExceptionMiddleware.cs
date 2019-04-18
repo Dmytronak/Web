@@ -32,7 +32,7 @@ namespace BlackJack.Middleware
 
         private static Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
-            var code = HttpStatusCode.BadRequest; // 500 if unexpected
+            var code = HttpStatusCode.BadRequest;
             if (ex is NullReferenceException)
             {
                 code = HttpStatusCode.InternalServerError;

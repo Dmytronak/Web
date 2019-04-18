@@ -115,10 +115,5 @@ namespace BlackJack
                 }
             });
         }
-
-
-       
-
-
     }
 }
