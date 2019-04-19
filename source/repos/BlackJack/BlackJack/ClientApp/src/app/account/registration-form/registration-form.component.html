@@ -35,9 +35,13 @@
         <div *ngIf="formGroup.controls['year'].errors.minlength">
           year min minLength 4
         </div>
+        <div *ngIf="formGroup.controls['year'].errors.maxlength">
+          year min maxLength 4
+        </div>
         <div *ngIf="formGroup.controls['year'].errors.pattern">
             ONLY NUMB ERROR
           </div>
+          
       </div>
       <div class="formGroup">
         <label for="password">Password</label>

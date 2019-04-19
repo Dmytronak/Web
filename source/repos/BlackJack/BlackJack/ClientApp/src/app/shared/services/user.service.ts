@@ -2,22 +2,18 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { BehaviorSubject } from 'rxjs';
 import { BaseService } from './base.service';
-import { ConfigService } from '../utils/config.service';
+import { ConfigService } from '../configs/url.config';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { Credentials } from '../models/credentials.interface';
-import { UserRegistration } from '../models/user.registration.interface';
-import { UsersReg } from '../models/user.list.interface';
 
-
-
+import { User } from '../entities/user.view';
 
 @Injectable()
 
 export class UserService extends BaseService {
 
   baseUrl: string = '';
-  public usersReg: UsersReg[] = [];
+  public usersReg: User[] = [];
   // Observable navItem source
   _authNavStatusSource = new BehaviorSubject<boolean>(false);
   // Observable navItem stream
@@ -35,22 +31,20 @@ export class UserService extends BaseService {
 
   }
 
-  register(reg: UserRegistration) {
-
-    return this.http.post(this.baseUrl + "/accounts/register", reg);
+  register(user: User) {
+    return this.http.post(this.baseUrl + "/accounts/register", user);
   }
   registerUsers() {
-    return this.http.get<UsersReg[]>(this.baseUrl + "/accounts/register");
+    return this.http.get<User[]>(this.baseUrl + "/accounts/register");
   }
 
-  login(loginCred: Credentials) {
-    var body = (loginCred);
-    return this.http.post(this.baseUrl + "/accounts/login", body);
+  login(user: User) {
+    return this.http.post(this.baseUrl + "/accounts/login", user);
   }
 
   logout() {
     localStorage.removeItem('auth_token');
-    localStorage.removeItem('log_email');
+    localStorage.removeItem('email');
     this.loggedIn = false;
     this._authNavStatusSource.next(false);
   }

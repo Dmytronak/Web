@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { HomeDetails } from '../models/home.details.interface'; 
-import { ConfigService } from '../../shared/utils/config.service';
+import { ConfigService } from '../../shared/configs/url.config';
 
 import {BaseService} from '../../shared/services/base.service';
 

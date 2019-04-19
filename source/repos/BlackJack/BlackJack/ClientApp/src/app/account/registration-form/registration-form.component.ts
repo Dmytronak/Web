@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { UserRegistration } from '../../shared/models/user.registration.interface';
+import { User } from '../../shared/entities/user.view';
 import { UserService } from '../../shared/services/user.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MustMatch } from '../../shared/utils/must-match.validator';
-import { UsersReg } from '../../shared/models/user.list.interface';
+import { MustMatch } from '../../shared/helpers/must-match.helper';
 import { throwError } from 'rxjs';
+import { AlertService } from '../../shared/services/alert.service';
 
 
 
@@ -22,18 +22,18 @@ export class RegistrationFormComponent implements OnInit {
   error: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  public register: UserRegistration;
+  public register: User;
   formGroup: FormGroup;
-  public usersReg: UsersReg[] = [];
-  public reg: UserRegistration;
+  public usersReg: User[] = [];
+  public reg: User;
 
-  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder,private alertService: AlertService) {
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
-      'year': ['', [Validators.minLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      'year': ['', [Validators.minLength(4),Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       'password': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
       'passwordConfirm': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
-    }, {
+    },{
         validator: MustMatch('password', 'passwordConfirm')
       });
   }
@@ -44,15 +44,17 @@ export class RegistrationFormComponent implements OnInit {
         email: '',
         year: 0,
         password: '',
-        passwordConfirm: ''
-
+        passwordConfirm: '',
+        rememberMe: false,
+        token:'',
       }
-    this.userService.registerUsers().subscribe((res: UsersReg[]) => {
-      this.usersReg = res['usersReg'];
+    this.userService.registerUsers().subscribe((user: User[]) => {
+      this.usersReg = user['usersReg'];
       console.log(this.usersReg)
-    }, error => this.userService.handleError(error));
+    }, error => error);
 
   }
+   
   registerUser() {
     debugger
     this.submitted = true;
@@ -67,7 +69,8 @@ export class RegistrationFormComponent implements OnInit {
     if (duplicateUser) {
       let errorMessage = { status:422, message: 'Username "' + newUser + '" is already taken' }
       throwError(new Error(errorMessage.message));
-      return this.error = this.userService.handleError(errorMessage);
+      this.error = errorMessage.message;
+      return  this.alertService.error(errorMessage.message);
       }
     this.userService.register(this.reg)
       .subscribe(x => {
@@ -77,8 +80,8 @@ export class RegistrationFormComponent implements OnInit {
       },
         err => {
           debugger
-         
-          this.error = this.userService.handleError(err);
+       
+           this.error = err;
         }
         
       )

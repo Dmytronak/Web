@@ -2,9 +2,10 @@ import { Subscription, observable, BehaviorSubject } from 'rxjs';
 import { Component, OnInit, OnDestroy, ErrorHandler } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { Credentials } from '../../shared/models/credentials.interface';
+import { User } from '../../shared/entities/user.view';
 import { UserService } from '../../shared/services/user.service';
 import { FormBuilder, FormGroup, Validators, FormGroupName } from '@angular/forms';
+import { AlertService } from '../../shared/services/alert.service';
 
 
 @Component({
@@ -20,10 +21,11 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   error: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  credentials: Credentials = { email: '', password: '', rememberMe: false };
-  loginCred: Credentials;
+  credentials: User = { email: '', password: '',passwordConfirm:'', rememberMe: false ,year:0,token:''};
+  loginCred: User;
 
-  constructor(private userService: UserService, private router: Router, private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder, ) {
+  constructor(private userService: UserService, private router: Router,
+     private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder,private alertService: AlertService) {
     this.userService.loggedIn = !!localStorage.getItem('auth_token');
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
@@ -54,7 +56,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
 
-  login() {
+  login():User {
     debugger
     this.loginCred = Object.assign(this.credentials, this.formGroup.value);
     this.submitted = true;
@@ -67,6 +69,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
       .subscribe(x => {
         let token = (<any>x).token;
         localStorage.setItem("auth_token", token);
+        localStorage.setItem("email", this.loginCred.email);
         this.userService._authNavStatusSource.next(true);
         this.userService.loggedIn = true;
         this.router.navigate(["/game/home"]);
@@ -75,8 +78,9 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         err => {
           debugger
           this.userService.loggedIn = false;
-          this.error = err.error.error;
-          this.userService.handleError(err);
+          if(err==='Bad Request')
+          this.error = "Invalid login or password";
+       
         }
       )
   }

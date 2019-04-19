@@ -1,6 +1,5 @@
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -9,14 +8,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { UserService } from './shared/services/user.service';
 import { AccountModule }  from './account/account.module';
-import { ConfigService } from './shared/utils/config.service';
-import { AuthGuard } from './shared/guard/auth.guard';
+import { ConfigService } from './shared/configs/url.config';
+import { AuthGuard } from './shared/guards/onlyLoggedOutUsers.guard';
 import { HeaderComponent } from './header/header.component';
 import { HeaderEmailComponent } from './header-email/header-email.component';
 import { GameModule } from './game/game.module';
 import { HistoryModule } from './history/history.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthUsersGuard } from './shared/guard/authUsers.guard';
+import { AuthUsersGuard } from './shared/guards/onlyLoggedInUsers.guard';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 
 
 
@@ -24,7 +25,6 @@ import { AuthUsersGuard } from './shared/guard/authUsers.guard';
 @NgModule({
   declarations: [
     AppComponent,
-    FetchDataComponent,
     HomeComponent,
     HeaderComponent,
     HeaderEmailComponent
@@ -42,7 +42,12 @@ import { AuthUsersGuard } from './shared/guard/authUsers.guard';
     BrowserAnimationsModule,
    
   ],
-  providers: [UserService,ConfigService,AuthGuard, AuthUsersGuard],
+  providers: [UserService,ConfigService,AuthGuard,AuthUsersGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  
+  
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

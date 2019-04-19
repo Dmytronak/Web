@@ -14,7 +14,7 @@ export class HeaderEmailComponent implements OnInit, OnDestroy {
   status: boolean;
   subscription: Subscription;
   email: string = '';
-  token: string = '';
+ 
   constructor(private userService: UserService) {
 
   }
@@ -24,17 +24,10 @@ export class HeaderEmailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     debugger
-    this.token = localStorage.getItem('auth_token');
-    this.email = this.parseJwt(this.token)['sub'];
+    
+    this.email = localStorage.getItem('email');
   }
 
-  parseJwt(token) {
-    debugger
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    let res = JSON.parse(window.atob(base64));
-    return res;
-  };
   ngOnDestroy() {
     // prevent memory leak when component is destroyed
     this.subscription.unsubscribe();

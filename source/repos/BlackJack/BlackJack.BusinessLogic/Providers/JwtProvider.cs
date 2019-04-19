@@ -1,7 +1,6 @@
 ﻿using BlackJack.BusinessLogic.Options;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.DataAccess.Entities;
-
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;

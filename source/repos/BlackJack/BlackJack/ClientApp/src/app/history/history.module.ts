@@ -8,7 +8,7 @@ import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
 import { HistoryService } from './services/history.service';
 
-import { AuthGuard } from '../shared/guard/auth.guard';
+import { AuthGuard } from '../shared/guards/onlyLoggedOutUsers.guard';
 import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
