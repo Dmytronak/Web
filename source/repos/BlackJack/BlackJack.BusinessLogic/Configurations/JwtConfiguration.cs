@@ -1,8 +1,7 @@
-﻿using BlackJack.ViewModels.JwtProviderView;
+﻿using BlackJack.BusinessLogic.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,15 +13,16 @@ namespace BlackJack.BusinessLogic.Configurations
     public static class JwtConfiguration
     {
         public static IConfiguration Configuration { get; set; }
-
+        
         public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             Configuration = configuration;
 
-            var jwtoption = Options.Create(configuration.GetSection("JwtConfiguration").Get<JwtConfigurationView>());
+            var jwtoption = configuration.GetSection("Jwt").Get<JwtOption>();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
 
             services
+                .Configure<JwtOption>(configuration.GetSection("Jwt"))
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -37,17 +37,17 @@ namespace BlackJack.BusinessLogic.Configurations
                         // укзывает, будет ли валидироваться издатель при валидации токена
                         ValidateIssuer = true,
                         // строка, представляющая издателя
-                        ValidIssuer = jwtoption.Value.JwtIssuer,
+                        ValidIssuer = jwtoption.Issuer,
 
                         // будет ли валидироваться потребитель токена
                         ValidateAudience = true,
                         // установка потребителя токена
-                        ValidAudience = jwtoption.Value.JwtIssuer,
+                        ValidAudience = jwtoption.Issuer,
                         // будет ли валидироваться время существования
                         ValidateLifetime = true,
 
                         // установка ключа безопасности
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoption.Value.JwtKey)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoption.Key)),
                         // валидация ключа безопасности
                         ValidateIssuerSigningKey = true,
                         ClockSkew = TimeSpan.Zero // remove delay of token when expire

@@ -1,6 +1,7 @@
-﻿using BlackJack.BusinessLogic.Providers.Interfaces;
+﻿using BlackJack.BusinessLogic.Options;
+using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.DataAccess.Entities;
-using BlackJack.ViewModels.JwtProviderView;
+
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,11 +15,12 @@ namespace BlackJack.BusinessLogic.Providers
 {
     public class JwtProvider : IJwtProvider
     {
-        public JwtProvider(IOptions<JwtConfigurationView> options)
+        private readonly IOptions<JwtOption> _options;
+
+        public JwtProvider(IOptions<JwtOption> options)
         {
-            JwtConfigurationModel = options.Value;
+            _options = options;
         }
-        public JwtConfigurationView JwtConfigurationModel { get; }
         public async Task<string> GenerateJwtToken(string email, User user)
         {
             var claims = new List<Claim>
@@ -28,13 +30,13 @@ namespace BlackJack.BusinessLogic.Providers
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfigurationModel.JwtKey));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(Convert.ToDouble(JwtConfigurationModel.JwtExpireHours));
+            var expires = DateTime.Now.AddHours(Convert.ToDouble(_options.Value.ExpireHours));
 
             var token = new JwtSecurityToken(
-                JwtConfigurationModel.JwtIssuer,
-                JwtConfigurationModel.JwtIssuer,
+                _options.Value.Issuer,
+                _options.Value.Issuer,
                 claims,
                 expires: expires,
                 signingCredentials: creds

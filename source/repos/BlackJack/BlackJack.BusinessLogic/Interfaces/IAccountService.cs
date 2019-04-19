@@ -1,5 +1,4 @@
 ﻿using BlackJack.ViewModels.AccountViews;
-using BlackJack.ViewModels.JwtProviderView;
 using System.Threading.Tasks;
 
 namespace BlackJack.BusinessLogic.Interfaces

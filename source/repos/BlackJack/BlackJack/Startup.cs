@@ -8,7 +8,6 @@ using BlackJack.DataAccess.Interfaces;
 using BlackJack.DataAccess.Repository;
 using BlackJack.Middleware;
 using BlackJack.Filters;
-using BlackJack.ViewModels.JwtProviderView;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -63,7 +62,6 @@ namespace BlackJack
                 .AddDefaultTokenProviders();
 
             // ===== Add Jwt Authentication ========
-            services.Configure<JwtConfigurationView>(Configuration.GetSection("JwtConfiguration"));
             services.AddJwtConfiguration(Configuration);
 
             // ===== Add MVC ========
