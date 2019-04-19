@@ -16,30 +16,24 @@ namespace BlackJack.ViewModels.GameViews
         public string Winner { get; set; }
         public string PlayerName { get; set; }
       
-        public List<ContinueGamePlayerCardsViewItem> ContinueGamePlayerCards { get; set; }
-        public List<ContinueGameBotsViewItem> ContinueGameBots { get; set; }
+        public List<ContinueGameCardsViewItem> PlayerCards { get; set; }
+        public List<ContinueGameBotsViewItem> Bots { get; set; }
 
         public ContinueGameView()
         {
-            ContinueGameBots = new List<ContinueGameBotsViewItem>();
-            ContinueGamePlayerCards = new List<ContinueGamePlayerCardsViewItem>();
+            Bots = new List<ContinueGameBotsViewItem>();
+            PlayerCards = new List<ContinueGameCardsViewItem>();
         }
-    }
-
-    public class ContinueGamePlayerCardsViewItem
-    {
-        public CardRank StepRank { get; set; }
-        public CardSuit StepSuit { get; set; }
     }
     public class ContinueGameBotsViewItem
     {
         public string BotName { get; set; }
-        public List<ContinueGameBotCardsViewItem> ContinueBotCards { get; set; }
+        public List<ContinueGameCardsViewItem> BotCards { get; set; }
     }
     
-    public class ContinueGameBotCardsViewItem
+    public class ContinueGameCardsViewItem
     {
-        public CardRank BotStepRank { get; set; }
-        public CardSuit BotStepSuit { get; set; }
+        public CardRank StepRank { get; set; }
+        public CardSuit StepSuit { get; set; }
     }
 }

@@ -24,28 +24,24 @@ namespace BlackJack.ViewModels.HistoryViews
         public string Status { get; set; }
         public string Winner { get; set; }
         public string PlayerName { get; set; }
-        public List<GetAllHistoryPlayerStepsViewItem> HistoryPlayerSteps { get; set; }
-        public List<GetAllHistoryBotsViewItem> HistoryBots { get; set; }
+        public List<GetAllHistoryStepsViewItem> PlayerSteps { get; set; }
+        public List<GetAllHistoryBotsViewItem> Bots { get; set; }
     }
     public class GetAllHistoryBotsViewItem
     {
         public string BotName { get; set; }
 
-        public List<GetAllHistoryBotStepsViewItem> HistoryBotSteps { get; set; }
+        public List<GetAllHistoryStepsViewItem> BotSteps { get; set; }
 
         public GetAllHistoryBotsViewItem()
         {
-            HistoryBotSteps = new List<GetAllHistoryBotStepsViewItem>();
+            BotSteps = new List<GetAllHistoryStepsViewItem>();
         }
     }
-    public class GetAllHistoryPlayerStepsViewItem
+    public class GetAllHistoryStepsViewItem
     {
-        public string StepRank { get; set; }
-        public string StepSuit { get; set; }
+        public CardRank StepRank { get; set; }
+        public CardSuit StepSuit { get; set; }
     }
-    public class GetAllHistoryBotStepsViewItem
-    {
-        public string BotStepRank { get; set; }
-        public string BotStepSuit { get; set; }
-    }
+   
 }

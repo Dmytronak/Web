@@ -172,10 +172,10 @@ namespace BlackJack.BusinessLogic.Services
 
                 var currentBot = botList.FirstOrDefault(x => x.Id == item.Key).BotName;
                 modelItem.BotName = currentBot;
-                modelItem.PlayBotCards = item.Select(x => new PlayGameBotCardsViewItem()
+                modelItem.BotCards = item.Select(x => new PlayGameBotCardsViewItem()
                 {
-                    BotStepRank = x.BotStepRank,
-                    BotStepSuit = x.BotStepSuit
+                    StepRank = x.BotStepRank,
+                    StepSuit = x.BotStepSuit
                 })
                 .ToList();
 
@@ -332,19 +332,19 @@ namespace BlackJack.BusinessLogic.Services
                 var bot = new ContinueGameBotsViewItem();
                 var botName = botList.FirstOrDefault(x => x.Id == item.Key).BotName;
                 bot.BotName = botName;
-                bot.ContinueBotCards = item.Select(x => new ContinueGameBotCardsViewItem()
+                bot.BotCards = item.Select(x => new ContinueGameCardsViewItem()
                 {
-                    BotStepRank = x.BotStepRank,
-                    BotStepSuit = x.BotStepSuit
+                    StepRank = x.BotStepRank,
+                    StepSuit = x.BotStepSuit
                 })
                 .ToList();
 
                 botWithCards.Add(bot);
             }
-            continueGameModel.ContinueGameBots.AddRange(botWithCards);
+            continueGameModel.Bots.AddRange(botWithCards);
             continueGameModel.PlayerName = player.Name;
-            continueGameModel.ContinueGamePlayerCards = contPlayerStep
-                .Select(x => new ContinueGamePlayerCardsViewItem()
+            continueGameModel.PlayerCards = contPlayerStep
+                .Select(x => new ContinueGameCardsViewItem()
                 {
                     StepRank = x.StepRank,
                     StepSuit = x.StepSuit
@@ -489,19 +489,19 @@ namespace BlackJack.BusinessLogic.Services
                 var bot = new EndGameBotsViewItem();
                 var botName = bots.FirstOrDefault(x => x.Id == item.Key).BotName;
                 bot.BotName = botName;
-                bot.ContinueBotCards = item.Select(x => new EndGameBotCardsViewItem()
+                bot.BotCards = item.Select(x => new EndGameCardsViewItem()
                 {
-                    BotStepRank = x.BotStepRank,
-                    BotStepSuit = x.BotStepSuit
+                    StepRank = x.BotStepRank,
+                    StepSuit = x.BotStepSuit
                 })
                 .ToList();
 
                 botWithCards.Add(bot);
             }
-            endGameModel.EndGameBots.AddRange(botWithCards);
+            endGameModel.Bots.AddRange(botWithCards);
             endGameModel.PlayerName = player.Name;
-            endGameModel.EndGamePlayerCards = endPlayerAndSteps
-                .Select(x => new EndGamePlayerCardsViewItem()
+            endGameModel.PlayerCards = endPlayerAndSteps
+                .Select(x => new EndGameCardsViewItem()
                 {
                     StepRank = x.StepRank,
                     StepSuit = x.StepSuit

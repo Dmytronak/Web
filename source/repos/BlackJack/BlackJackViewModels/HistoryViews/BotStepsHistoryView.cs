@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlackJack.DataAccess.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,23 +7,23 @@ namespace BlackJack.ViewModels.HistoryViews
 {
     public class BotStepsHistoryView
     {
-        public List<BotStepsHistoryViewItem> BotStepsOfGame { get; set; }
+        public List<BotStepsHistoryViewItem> BotSteps { get; set; }
 
         public BotStepsHistoryView()
         {
-            BotStepsOfGame = new List<BotStepsHistoryViewItem>();
+            BotSteps = new List<BotStepsHistoryViewItem>();
         }
 
     }
     public class BotStepsHistoryViewItem
     {
         public string BotName { get; set; }
-        public List<BotCardViewItem> BotStepsOfGame { get; set; }
+        public List<BotCardViewItem> BotSteps { get; set; }
     }
  
     public class BotCardViewItem
     {
-        public string BotStepRank { get; set; }
-        public string BotStepSuit { get; set; }
+        public CardRank StepRank { get; set; }
+        public CardSuit StepSuit { get; set; }
     }
 }

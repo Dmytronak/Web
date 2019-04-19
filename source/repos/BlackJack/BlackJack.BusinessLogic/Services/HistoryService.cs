@@ -60,10 +60,10 @@ namespace BlackJack.BusinessLogic.Services
                 historyOfgame.Status = status;
                 historyOfgame.Winner = winner;
                 historyOfgame.PlayerName = playerNeme;
-                historyOfgame.HistoryPlayerSteps = playerSteps.Select(x => new GetAllHistoryPlayerStepsViewItem()
+                historyOfgame.PlayerSteps = playerSteps.Select(x => new GetAllHistoryStepsViewItem()
                 {
-                    StepRank = x.StepRank.ToString(),
-                    StepSuit = x.StepSuit.ToString()
+                    StepRank = x.StepRank,
+                    StepSuit = x.StepSuit
                 })
                 .ToList();
 
@@ -75,15 +75,15 @@ namespace BlackJack.BusinessLogic.Services
 
                    var hb = new GetAllHistoryBotsViewItem();
                    hb.BotName = botName;
-                   hb.HistoryBotSteps = i.Select(x => new GetAllHistoryBotStepsViewItem()
+                   hb.BotSteps = i.Select(x => new GetAllHistoryStepsViewItem()
                     {
-                        BotStepRank = x.BotStepRank.ToString(),
-                        BotStepSuit = x.BotStepSuit.ToString()
+                        StepRank = x.BotStepRank,
+                        StepSuit = x.BotStepSuit
                     }).ToList();
 
                     historyOfbots.Add(hb);
                 }
-                historyOfgame.HistoryBots = historyOfbots;
+                historyOfgame.Bots = historyOfbots;
                 items.Add(historyOfgame);
             }          
             historyModel.Games.AddRange(items);
@@ -102,16 +102,16 @@ namespace BlackJack.BusinessLogic.Services
                 var botName = botSteps.Select(x => x.Bots).FirstOrDefault(x => x.Id == item.Key).BotName;
                 var botStep = new BotStepsHistoryViewItem();
                 botStep.BotName = botName;
-                botStep.BotStepsOfGame = item.Select(x => new BotCardViewItem()
+                botStep.BotSteps = item.Select(x => new BotCardViewItem()
                 {
-                    BotStepRank = x.BotStepRank.ToString(),
-                    BotStepSuit = x.BotStepSuit.ToString()
+                    StepRank = x.BotStepRank,
+                    StepSuit = x.BotStepSuit
                 })
                 .ToList();
                 botStepList.Add(botStep);
             }
 
-            botStepsModel.BotStepsOfGame.AddRange(botStepList);
+            botStepsModel.BotSteps.AddRange(botStepList);
             return botStepsModel;
         }
         public async Task<PlayerStepsHistoryView> PlayerStepsOfGame(Guid GameId)
@@ -122,8 +122,8 @@ namespace BlackJack.BusinessLogic.Services
             playerStepsGameModel.PlayerStepsOfGame = playerSteps
                 .Select(x => new PlayerStepsHistoryViewItem()
                 {
-                   BotStepRank = x.StepRank.ToString(),
-                   BotStepSuit = x.StepSuit.ToString()
+                   StepRank = x.StepRank,
+                   StepSuit = x.StepSuit
                 })
                 .ToList();
 

@@ -30,11 +30,11 @@ namespace BlackJack.ViewModels.GameViews
     public class PlayGameBotsViewItem
     {
         public string BotName { get; set; }
-        public List<PlayGameBotCardsViewItem> PlayBotCards { get; set; }
+        public List<PlayGameBotCardsViewItem> BotCards { get; set; }
     }
     public class PlayGameBotCardsViewItem
     {
-        public CardRank BotStepRank { get; set; }
-        public CardSuit BotStepSuit { get; set; }
+        public CardRank StepRank { get; set; }
+        public CardSuit StepSuit { get; set; }
     }
 }
