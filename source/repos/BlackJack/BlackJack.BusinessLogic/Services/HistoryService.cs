@@ -38,6 +38,10 @@ namespace BlackJack.BusinessLogic.Services
         public async Task<GetAllHistoryView> HistoryOfGames(GetAllHistoryView model)
         {
             var playerGames = await _playerInGameRepository.GetGamesAndPlayers(model.PlayerId);
+            if (playerGames.Count == 0)
+            {
+                throw new NullReferenceException("PlayerId not correct!");
+            }
             var games = playerGames.Select(x => x.Games).ToList();
             var groupedGames = games.GroupBy(x => x.Id);
 
@@ -87,7 +91,7 @@ namespace BlackJack.BusinessLogic.Services
                 items.Add(historyOfgame);
             }          
             historyModel.Games.AddRange(items);
-
+           
             return historyModel;
         }
         public async Task<BotStepsHistoryView> BotStepsOfGame(Guid GameId)

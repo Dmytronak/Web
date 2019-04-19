@@ -7,7 +7,7 @@ namespace BlackJack.ViewModels.HistoryViews
 {
     public class GetAllHistoryView
     {
-        [Required]
+        [Required(ErrorMessage = "PlayerId is required")]
         public Guid PlayerId { get; set; }
 
         public List<GetAllHistoryViewItem> Games { get; set; }
