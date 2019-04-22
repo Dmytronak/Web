@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Interfaces;
 using BlackJack.ViewModels.GameViews;
-using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlackJack.Controllers
 {
@@ -22,8 +22,8 @@ namespace BlackJack.Controllers
         {
             return View();
         }
-        [HttpGet, Route("addPlayer")]
-        public async Task<GetPlayersGameView> AddPlayer([FromBody]GetPlayersGameView model)
+        [HttpGet, Route("getExistingPlayers")]
+        public async Task<GetPlayersGameView> GetExistingPlayers([FromHeader]GetPlayersGameView model)
         {
             var result = await _gameService.GetAllPlayersByUser(model);
             return result;

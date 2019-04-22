@@ -7,9 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MustMatch } from '../../shared/helpers/must-match.helper';
 import { throwError } from 'rxjs';
 import { AlertService } from '../../shared/services/alert.service';
-
-
-
+import { YearRange } from '../../shared/helpers/year-range.helper';
 
 
 @Component({
@@ -27,13 +25,13 @@ export class RegistrationFormComponent implements OnInit {
   public usersReg: User[] = [];
   public reg: User;
 
-  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder,private alertService: AlertService) {
+  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
-      'year': ['', [Validators.minLength(4),Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      'year': ['', [Validators.minLength(4),YearRange, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       'password': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
       'passwordConfirm': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
-    },{
+    }, {
         validator: MustMatch('password', 'passwordConfirm')
       });
   }
@@ -46,7 +44,7 @@ export class RegistrationFormComponent implements OnInit {
         password: '',
         passwordConfirm: '',
         rememberMe: false,
-        token:'',
+        token: '',
       }
     this.userService.registerUsers().subscribe((user: User[]) => {
       this.usersReg = user['usersReg'];
@@ -54,7 +52,7 @@ export class RegistrationFormComponent implements OnInit {
     }, error => error);
 
   }
-   
+
   registerUser() {
     debugger
     this.submitted = true;
@@ -67,11 +65,11 @@ export class RegistrationFormComponent implements OnInit {
       return;
     }
     if (duplicateUser) {
-      let errorMessage = { status:422, message: 'Username "' + newUser + '" is already taken' }
+      let errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' }
       throwError(new Error(errorMessage.message));
       this.error = errorMessage.message;
-      return  this.alertService.error(errorMessage.message);
-      }
+      return this.alertService.error(errorMessage.message);
+    }
     this.userService.register(this.reg)
       .subscribe(x => {
         if (x) {
@@ -80,10 +78,10 @@ export class RegistrationFormComponent implements OnInit {
       },
         err => {
           debugger
-       
-           this.error = err;
+
+          this.error = err;
         }
-        
+
       )
   }
 

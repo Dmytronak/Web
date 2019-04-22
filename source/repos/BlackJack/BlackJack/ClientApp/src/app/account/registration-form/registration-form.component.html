@@ -41,6 +41,12 @@
         <div *ngIf="formGroup.controls['year'].errors.pattern">
             ONLY NUMB ERROR
           </div>
+          <div *ngIf="formGroup.controls['year'].errors.ageRange">
+          Year range from 1920 to 2019
+          </div>
+          <div *ngIf="formGroup.controls['year'].errors.adultRange">
+           You don`t adult enough
+          </div>
           
       </div>
       <div class="formGroup">
