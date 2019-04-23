@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule }        from '@angular/forms';
 import { SharedModule }       from '../shared/modules/shared.module';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { routing }  from './game.routing';
 import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
@@ -18,7 +18,8 @@ import { AlertService } from '../shared/services/alert.service';
     CommonModule,
     FormsModule,
     routing,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule
   ],
   declarations: [RootComponent,HomeComponent, SettingsComponent],
   exports:      [ ],

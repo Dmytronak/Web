@@ -36,8 +36,8 @@ namespace BlackJack.Controllers
                 return View(model);
             }
 
-            await _gameService.CreateNewPlayer(model);
-            return RedirectToAction("Index");
+            var result =  await _gameService.CreateNewPlayer(model);
+            return Ok(result);
         }
         [HttpPost, Route("playGame")]
         public async Task<IActionResult> PlayGame([FromBody]PlayGameView model)

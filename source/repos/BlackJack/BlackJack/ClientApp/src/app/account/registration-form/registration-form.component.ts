@@ -54,7 +54,6 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   registerUser() {
-    debugger
     this.submitted = true;
     this.isRequesting = true;
     this.reg = Object.assign(this.register, this.formGroup.value)

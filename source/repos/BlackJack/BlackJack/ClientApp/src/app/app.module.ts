@@ -22,12 +22,13 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    HeaderEmailComponent
+    HeaderEmailComponent,
 
   ],
   imports: [ 

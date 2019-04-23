@@ -37,7 +37,7 @@ namespace BlackJack.BusinessLogic.Services
             _playerInGameRepository = playerInGameRepository;
             _cardList = new List<Card>();
         }
-        public async Task CreateNewPlayer(CreatePlayerGameView model)
+        public async Task<CreatePlayerGameView> CreateNewPlayer(CreatePlayerGameView model)
         {
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -50,6 +50,13 @@ namespace BlackJack.BusinessLogic.Services
                 UserId = Guid.Parse(user.Result.Id)
             };
             await _playerRepository.Create(newPlayer);
+            var result = new CreatePlayerGameView();
+            result.PlayerId = newPlayer.Id;
+            result.Name = newPlayer.Name;
+            result.Email = model.Email;
+
+
+            return result;
         }
         public async Task<GetPlayersGameView> GetAllPlayersByUser(GetPlayersGameView model)
         {

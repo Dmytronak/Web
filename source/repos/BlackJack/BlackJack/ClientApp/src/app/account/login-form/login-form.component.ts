@@ -57,7 +57,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
 
   login():User {
-    debugger
+   
     this.loginCred = Object.assign(this.credentials, this.formGroup.value);
     this.submitted = true;
     this.isRequesting = true;
@@ -73,10 +73,10 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         this.userService._authNavStatusSource.next(true);
         this.userService.loggedIn = true;
         this.router.navigate(["/game/home"]);
-        debugger
+       
       },
         err => {
-          debugger
+         
           this.userService.loggedIn = false;
           if(err==='Bad Request')
           this.error = "Invalid login or password";

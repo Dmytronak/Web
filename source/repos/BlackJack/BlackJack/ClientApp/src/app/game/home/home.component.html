@@ -1,1 +1,29 @@
+<div>
+    <h3>Choose player</h3>
+    <form #f="ngForm">
+        <select name="player" ngModel>
+            <option value="" disabled>Choose a player</option>
+            <option *ngFor="let x of players" [ngValue]="x">
+                {{ x.name }}
+            </option>
+        </select>
+        <button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button>
+    </form>
 
+    <p>Form value: {{ f.value | json }}</p>
+    <div *ngIf="showForm">
+        <input type="text" #name placeholder="Add player name">
+        <button class="btn btn-success" (click)="addNewPlayer(name.value)"><i class="fas fa-plus"></i></button>
+        <button class="btn btn-danger" (click)="closeInput()"><i class="fas fa-times"></i></button>
+    </div>
+    <div *ngIf="brandNew" class="alert alert-success" role="alert">
+        <strong>All set!</strong> PlayerCreate
+    </div>
+    <div>
+        <button class="btn btn-primary" (click)="playGame(f.value.player)">Play Game</button>
+    </div>
+    <div *ngIf="error" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> {{error}}
+    </div>
+
+</div>
