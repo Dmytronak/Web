@@ -5,7 +5,7 @@ import { GameService } from '../../shared/services/game.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../shared/services/alert.service';
 import { Player } from '../../shared/entities/player.view';
-import { throwError } from 'rxjs';
+
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,6 @@ import { throwError } from 'rxjs';
 })
 export class HomeComponent implements OnInit {
   isRequesting: boolean;
-  submitted: boolean = false;
   emailS: string = '';
   error: string = '';
   showForm: boolean;
@@ -22,26 +21,21 @@ export class HomeComponent implements OnInit {
   public players: Player[];
   public playersDb: Player[];
   public playerReq: Player;
-  formGroup: FormGroup;
+
 
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
     this.emailS = localStorage.getItem('email');
     this.playerReq = { email: this.emailS, name: '', id: '' };
-    this.formGroup = _formBuilder.group({
-      'name': ['', [Validators.maxLength(20)]]
-    });
   }
 
   ngOnInit() {
     debugger
     this.gameService.getExistingPlayers(this.playerReq).subscribe(x => {
       this.players = x['players'];
-      console.log(this.players)
     }, error => error);
     this.gameService.getExistingPlayers(this.playerReq).subscribe(x => {
       this.playersDb = x['players'];
-      console.log(this.playersDb)
     }, error => error);
   }
   addNewPlayer(name: string) {
@@ -60,27 +54,20 @@ export class HomeComponent implements OnInit {
   playGame(newPlayer: Player) {
     debugger
     this.isRequesting = true;
-    let newUser = newPlayer.name;
+    let newUser = newPlayer['player'].name;
     let duplicatePlayer = this.playersDb.filter(x => { return x['name'] === newUser; }).length;
-    if (this.formGroup.invalid) {
-      return;
-    }
     if (!duplicatePlayer) {
-      this.gameService.createNewPlayer(newPlayer)
+      this.gameService.createNewPlayer(newPlayer['player'])
         .subscribe(x => {
           if (x) {
-            this.router.navigate(['/game/settings'], { queryParams: { brandNew: true, name: x['name'], email: x['email'], id: x['playerId'] }});
+            this.router.navigate(['/game/play'], { queryParams: { name: x['name'], id: x['playerId'],numberOfBots: newPlayer['numberOfBots'] } });
           }
         }, err => {
-          debugger
-         
-            this.error = err;
-     
-        }
-        )
+          this.error = err;
+        })
     }
     else {
-      this.router.navigate(['/game/settings'], { queryParams: { brandNew: true, name: newPlayer.name, id: newPlayer.id, email: newPlayer.email } });
+      this.router.navigate(['/game/play'], { queryParams: { name: newPlayer['player'].name, id: newPlayer['player'].id, numberOfBots: newPlayer['numberOfBots']} });
     }
 
   }

@@ -1,0 +1,70 @@
+<h2>New Game</h2>
+<div>
+    <label>Your player name:{{ playGame.playerName }}</label>
+</div>
+<div>
+    <label>Game status : {{ playGame.status }}</label>
+</div>
+<div>
+    <label>Winner: {{ playGame.winner }}</label>
+</div>
+<div>
+    <label>Your cards:</label>
+    <ul>
+        <li *ngFor="let x of playGame.playerCards">
+            {{x.stepRank}},{{x.stepSuit}}
+        </li>
+    </ul>
+</div>
+<div>
+        <label>Bots:</label>
+        <ul>
+            <li *ngFor="let x of playGame.bots">
+                {{x.botName}}, 
+                <div>
+                        <label>Bot cards:</label>
+                        <ul>
+                            <li *ngFor="let d of x.botCards">
+                                    {{d.stepRank}},{{d.stepSuit}}
+                            </li>
+                        </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <div *ngIf="gameExisting">
+            <button class="btn btn-success" (click)="continueGame()"><i class="fas fa-plus"></i></button>
+            <button class="btn btn-danger" (click)="endGame()"><i class="fas fa-times"></i></button>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div>{{playGame | json}}</div>
+
+
+<div *ngIf="error" class="alert alert-danger" role="alert">
+    <strong>Oops!</strong> {{error}}
+</div>

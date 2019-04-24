@@ -14,25 +14,26 @@ namespace BlackJack.ViewModels.GameViews
         [Range(1, 5,ErrorMessage ="Range from 1 to 5")]
         public int NumberOfBots { get; set; }
 
-        public Guid GameId { get; set; }
+        public string Status { get; set; }
+        public string Winner { get; set; }
         public string PlayerName { get; set; }
-        public CardRank StepRank { get; set; }
-        public CardSuit StepSuit { get; set; }
-
-        public List<PlayGameBotsViewItem> PlayGameBots { get; set; }
+        public Guid NewGameId { get; set; }
+        public List<PlayGameCardsViewItem> PlayerCards { get; set; }
+        public List<PlayGameBotsViewItem> Bots { get; set; }
 
         public PlayGameView()
         {
-            PlayGameBots = new List<PlayGameBotsViewItem>();
+            PlayerCards = new List<PlayGameCardsViewItem>();
+            Bots = new List<PlayGameBotsViewItem>();
         }
     }
 
     public class PlayGameBotsViewItem
     {
         public string BotName { get; set; }
-        public List<PlayGameBotCardsViewItem> BotCards { get; set; }
+        public List<PlayGameCardsViewItem> BotCards { get; set; }
     }
-    public class PlayGameBotCardsViewItem
+    public class PlayGameCardsViewItem
     {
         public CardRank StepRank { get; set; }
         public CardSuit StepSuit { get; set; }

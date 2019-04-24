@@ -11,6 +11,7 @@ import { AuthGuard } from '../shared/guards/onlyLoggedOutUsers.guard';
 import { SettingsComponent } from './settings/settings.component';
 import { GameService } from '../shared/services/game.service';
 import { AlertService } from '../shared/services/alert.service';
+import { PlayGameComponent } from './play-game/play-game.component';
 
 
 @NgModule({
@@ -21,7 +22,7 @@ import { AlertService } from '../shared/services/alert.service';
     SharedModule,
     ReactiveFormsModule
   ],
-  declarations: [RootComponent,HomeComponent, SettingsComponent],
+  declarations: [RootComponent,HomeComponent, SettingsComponent, PlayGameComponent],
   exports:      [ ],
   providers:    [AuthGuard,GameService,AlertService]
 })

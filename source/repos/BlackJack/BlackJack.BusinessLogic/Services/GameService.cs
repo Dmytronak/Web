@@ -81,6 +81,7 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<PlayGameView> PlayGame(PlayGameView model)
         {
+            var winner = "No one";
             var numbOfBots = model.NumberOfBots;
             var player = await _playerRepository.GetById(model.PlayerId);
             if (player == null)
@@ -165,12 +166,17 @@ namespace BlackJack.BusinessLogic.Services
             var playGameModel = new PlayGameView();
             playGameModel.PlayerId = player.Id;
             playGameModel.NumberOfBots = numbOfBots;
-            playGameModel.GameId = newGame.Id;
+            playGameModel.NewGameId = newGame.Id;
+            playGameModel.Status = Status.New.ToString();
+            playGameModel.Winner = winner;
             playGameModel.PlayerName = player.Name;
-            playGameModel.StepRank = playerCard.Rank;
-            playGameModel.StepSuit = playerCard.Suit;
-
-            var groupedBotInGame = botsSteps.GroupBy(x => x.BotId);
+            playGameModel.PlayerCards
+                .Add(new PlayGameCardsViewItem()
+                {
+                    StepRank = playerCard.Rank,
+                    StepSuit = playerCard.Suit
+                });
+           var groupedBotInGame = botsSteps.GroupBy(x => x.BotId);
             var playGameBots = new List<PlayGameBotsViewItem>();
             foreach (var item in groupedBotInGame)
             {
@@ -178,7 +184,7 @@ namespace BlackJack.BusinessLogic.Services
 
                 var currentBot = botList.FirstOrDefault(x => x.Id == item.Key).BotName;
                 modelItem.BotName = currentBot;
-                modelItem.BotCards = item.Select(x => new PlayGameBotCardsViewItem()
+                modelItem.BotCards = item.Select(x => new PlayGameCardsViewItem()
                 {
                     StepRank = x.BotStepRank,
                     StepSuit = x.BotStepSuit
@@ -187,7 +193,7 @@ namespace BlackJack.BusinessLogic.Services
 
                 playGameBots.Add(modelItem);
             }
-            playGameModel.PlayGameBots.AddRange(playGameBots);
+            playGameModel.Bots.AddRange(playGameBots);
 
             await _gameRepository.Create(newGame);
             await _playerStepRepository.Create(playerStep);
@@ -577,7 +583,7 @@ namespace BlackJack.BusinessLogic.Services
                         break;
 
                     }
-                    if (msm == d && msm == 21 || msmin == d && msmin == 21)
+                    if (d == 21)
                     {
                         botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
@@ -588,7 +594,7 @@ namespace BlackJack.BusinessLogic.Services
                         Game.Winner = winner;
                         break;
                     }
-                    if (msm == d && msm < 21 || msm > 21 && msmin < 21 && msmin == d)
+                    if (d < 21 && msmin<21 && msmin <=d && d>17)
                     {
                         botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
@@ -602,7 +608,7 @@ namespace BlackJack.BusinessLogic.Services
                 }
                 if (playerScore < 21 & model == null || msmin > 21)
                 {
-                    if (msmin > 21 || playerScore > msm && msm < 21 || playerScore > msmin && msmin < 21 && msm > 21 || msmin > 21 && playerScore > 21)
+                    if (msmin > 21 || playerScore > msm && msm < 21 || playerScore > msmin && msmin < 21 && msm > 21 || d > 21 && playerScore < 21 && playerScore > d)
                     {
                         status = Status.End.ToString();
                         winner = player.Name;
@@ -611,7 +617,7 @@ namespace BlackJack.BusinessLogic.Services
                         break;
 
                     }
-                    if (msm == d && msm < 21 && playerScore < 21 && playerScore < msm || msmin == d && msm > 21 && msmin < 21 && playerScore < msmin)
+                    if (d<21 && d > playerScore && d <= msm && d > 17 || d < 21 && d > playerScore && d <= msmin && d > 17)
                     {
                         botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
@@ -622,7 +628,7 @@ namespace BlackJack.BusinessLogic.Services
                         Game.Winner = winner;
                         break;
                     }
-                    if (msmin == d && msm > 21 && msmin < 21 && playerScore == msmin)
+                    if (msmin == d && msm > 21 && msmin < 21 && playerScore == msmin|| msm == d && playerScore == msm)
                     {
                         botWinner.BotScore = d;
                         botWinner.BotId = item.Key;
