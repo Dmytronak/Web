@@ -25,7 +25,7 @@
   </table>
 </div>
 <div *ngIf="showPlayerTable">Player steps
-  <table>
+  <table class="table">
     <thead>
       <tr>
         <th *ngFor="let head of headPlayerSteps">{{head}}</th>
@@ -33,7 +33,9 @@
     </thead>
     <tbody>
       <tr *ngFor="let d of playerSteps.playerStepsOfGame">
+        <td></td>
         <td>{{d.stepRank}},{{d.stepSuit}}</td>
+        <td></td>
       </tr>
     </tbody>
   </table>

@@ -24,7 +24,7 @@ export class HistoryGameComponent implements OnInit {
 
   headBotSteps= ['Cards'];
   headBots= ['Bot name', 'Steps'];
-  headPlayerSteps = ['Cards'];
+  headPlayerSteps = ['','Cards',''];
   headElements = ['PlayerName', 'Number of bots', 'Status', 'Winner', ''];
   constructor(private historyService: HistoryService) { }
 
