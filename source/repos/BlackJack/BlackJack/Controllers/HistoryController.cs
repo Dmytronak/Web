@@ -29,36 +29,36 @@ namespace BlackJack.Controllers
             return Ok(result);
         }
         [HttpGet, Route("allUserGames")]
-        public async Task<IActionResult> AllUserGames([FromBody] Guid UserId)
+        public async Task<IActionResult> AllUserGames([FromHeader] GetAllGamesView model)
         {
             if (!ModelState.IsValid)
             {
-                return View(UserId);
+                return View(model);
             }
 
-            var result = await _historyService.AllUserGames(UserId);
+            var result = await _historyService.AllUserGames(model);
             return Ok(result);
         }
         [HttpGet, Route("playerSteps")]
-        public async Task<IActionResult> PlayerStepsOfGame([FromBody] Guid GameId)
+        public async Task<IActionResult> PlayerStepsOfGame([FromHeader] PlayerStepsHistoryView model)
         {
             if (!ModelState.IsValid)
             {
-                return View(GameId);
+                return View(model);
             }
 
-            var result = await _historyService.PlayerStepsOfGame(GameId);
+            var result = await _historyService.PlayerStepsOfGame(model);
             return Ok(result);
         }
         [HttpGet, Route("botSteps")]
-        public async Task<IActionResult> BotStepsOfGame([FromBody] Guid GameId)
+        public async Task<IActionResult> BotStepsOfGame([FromHeader] BotStepsHistoryView model)
         {
             if (!ModelState.IsValid)
             {
-                return View(GameId);
+                return View(model);
             }
 
-            var result = await _historyService.BotStepsOfGame(GameId);
+            var result = await _historyService.BotStepsOfGame(model);
             return Ok(result);
         }
 

@@ -1,0 +1,66 @@
+<h2> History of games</h2>
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th *ngFor="let head of headElements">{{head}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of historyGames.games">
+        <td>{{x.playerName}}</td>
+        <td>{{x.numberOfBots}}</td>
+        <td>{{x.status}}</td>
+        <td>{{x.winner}}</td>
+        <td>
+          <button class="btn btn-info" (click)="showBotSteps(x)">
+            Bot steps
+          </button>
+          <button class="btn btn-danger" (click)="showPlayerSteps(x)">
+            Player steps
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="showPlayerTable">Player steps
+  <table>
+    <thead>
+      <tr>
+        <th *ngFor="let head of headPlayerSteps">{{head}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of playerSteps.playerStepsOfGame">
+        <td>{{d.stepRank}},{{d.stepSuit}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-danger" (click)="hideStepTable()">
+  Back
+  </button>
+</div>
+<div *ngIf="showBotTable">Bot steps
+    <table class="table">
+      <thead>
+        <tr>
+          <th *ngFor="let head of headBots">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of allBotSteps.botSteps">
+          <td>{{e.botName}}</td>
+          <td>
+            <tr *ngFor="let q of e.botSteps">
+                <td>{{q.stepRank}},{{q.stepSuit}}</td>
+            </tr>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-danger" (click)="hideStepTable()">
+    Back
+    </button>
+  </div>

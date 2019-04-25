@@ -13,7 +13,6 @@ import { AuthGuard } from './shared/guards/onlyLoggedOutUsers.guard';
 import { HeaderComponent } from './shared/modules/header/header.component';
 import { HeaderEmailComponent } from './shared/modules/header-email/header-email.component';
 import { GameModule } from './game/game.module';
-import { HistoryModule } from './history/history.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthUsersGuard } from './shared/guards/onlyLoggedInUsers.guard';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
@@ -39,7 +38,6 @@ import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
     FormsModule,
     ReactiveFormsModule,
     GameModule,
-    HistoryModule,
     BrowserAnimationsModule,
    
   ],

@@ -8,10 +8,10 @@ import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
 
 import { AuthGuard } from '../shared/guards/onlyLoggedOutUsers.guard';
-import { SettingsComponent } from './settings/settings.component';
 import { GameService } from '../shared/services/game.service';
 import { AlertService } from '../shared/services/alert.service';
 import { PlayGameComponent } from './play-game/play-game.component';
+import { HistoryGameComponent } from './history-game/history-game.component';
 
 
 @NgModule({
@@ -22,7 +22,7 @@ import { PlayGameComponent } from './play-game/play-game.component';
     SharedModule,
     ReactiveFormsModule
   ],
-  declarations: [RootComponent,HomeComponent, SettingsComponent, PlayGameComponent],
+  declarations: [RootComponent,HomeComponent, PlayGameComponent, HistoryGameComponent],
   exports:      [ ],
   providers:    [AuthGuard,GameService,AlertService]
 })

@@ -33,7 +33,7 @@ namespace BlackJack.BusinessLogic.Services
             _botStepRepository = botStepRepository;
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
-       
+
         }
         public async Task<GetAllHistoryView> HistoryOfGames(GetAllHistoryView model)
         {
@@ -72,14 +72,14 @@ namespace BlackJack.BusinessLogic.Services
                 .ToList();
 
                 var groupedBots = bostSteps.GroupBy(x => x.Bots.Id);
-                var historyOfbots= new List<GetAllHistoryBotsViewItem>();
-                foreach(var i in groupedBots)
+                var historyOfbots = new List<GetAllHistoryBotsViewItem>();
+                foreach (var i in groupedBots)
                 {
-                   var botName = bostSteps.Select(x => x.Bots).FirstOrDefault(x => x.Id == i.Key).BotName;
+                    var botName = bostSteps.Select(x => x.Bots).FirstOrDefault(x => x.Id == i.Key).BotName;
 
-                   var hb = new GetAllHistoryBotsViewItem();
-                   hb.BotName = botName;
-                   hb.BotSteps = i.Select(x => new GetAllHistoryStepsViewItem()
+                    var hb = new GetAllHistoryBotsViewItem();
+                    hb.BotName = botName;
+                    hb.BotSteps = i.Select(x => new GetAllHistoryStepsViewItem()
                     {
                         StepRank = x.BotStepRank,
                         StepSuit = x.BotStepSuit
@@ -89,17 +89,18 @@ namespace BlackJack.BusinessLogic.Services
                 }
                 historyOfgame.Bots = historyOfbots;
                 items.Add(historyOfgame);
-            }          
+            }
             historyModel.Games.AddRange(items);
-           
+
             return historyModel;
         }
-        public async Task<BotStepsHistoryView> BotStepsOfGame(Guid GameId)
+        public async Task<BotStepsHistoryView> BotStepsOfGame(BotStepsHistoryView model)
         {
-            var botSteps = await _botStepRepository.GetStepsAndBot(GameId);
+            var botSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
             var bots = botSteps.Select(x => x.Bots).ToList();
             var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
             var botStepsModel = new BotStepsHistoryView();
+            botStepsModel.GameId = model.GameId;
             var botStepList = new List<BotStepsHistoryViewItem>();
             foreach (var item in gropedBotSteps)
             {
@@ -118,35 +119,43 @@ namespace BlackJack.BusinessLogic.Services
             botStepsModel.BotSteps.AddRange(botStepList);
             return botStepsModel;
         }
-        public async Task<PlayerStepsHistoryView> PlayerStepsOfGame(Guid GameId)
+        public async Task<PlayerStepsHistoryView> PlayerStepsOfGame(PlayerStepsHistoryView model)
         {
-            var playerSteps = await _playerStepRepository.GetPlayerSteps(GameId);
+            var playerSteps = await _playerStepRepository.GetPlayerSteps(model.GameId);
 
             var playerStepsGameModel = new PlayerStepsHistoryView();
+            playerStepsGameModel.GameId = model.GameId;
             playerStepsGameModel.PlayerStepsOfGame = playerSteps
-                .Select(x => new PlayerStepsHistoryViewItem()
+                .Select(x => new PlayerStepsViewItem()
                 {
-                   StepRank = x.StepRank,
-                   StepSuit = x.StepSuit
+                    StepRank = x.StepRank,
+                    StepSuit = x.StepSuit
                 })
                 .ToList();
 
             return playerStepsGameModel;
         }
-        public async Task<GetAllGamesView> AllUserGames(Guid UserId)
+        public async Task<GetAllGamesView> AllUserGames(GetAllGamesView model)
         {
-            var GamesByUserId = await _playerInGameRepository.GetGames(UserId);
-
+            var user = _userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                throw new NullReferenceException("user model received a null argument!");
+            }
+            
+            var gamesByUserId = await _playerInGameRepository.GetGames(Guid.Parse(user.Result.Id));
+            var player = gamesByUserId.Select(x => x.Players).FirstOrDefault(x => x.UserId == (Guid.Parse(user.Result.Id)));
             var allUserGamesModel = new GetAllGamesView();
-
-            var groupedGame = GamesByUserId.GroupBy(x => x.Games.Id);
-
+            allUserGamesModel.Email = model.Email;
+            var groupedGame = gamesByUserId.GroupBy(x => x.Games.Id);
             var gameList = new List<GetAllGamesViewItem>();
             foreach (var item in groupedGame)
             {
-                var fromGame = GamesByUserId.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key);
+                var fromGame = gamesByUserId.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key);
+           
                 var game = new GetAllGamesViewItem();
                 game.Id = fromGame.Id;
+                game.PlayerName = player.Name;
                 game.NumberOfBots = fromGame.NumberOfBots;
                 game.Status = fromGame.Status;
                 game.Winner = fromGame.Winner;
@@ -154,6 +163,6 @@ namespace BlackJack.BusinessLogic.Services
             }
             allUserGamesModel.Games.AddRange(gameList);
             return allUserGamesModel;
-            }
+        }
     }
 }

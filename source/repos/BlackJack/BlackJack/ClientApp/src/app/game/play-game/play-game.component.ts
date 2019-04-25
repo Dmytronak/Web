@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PlayGame, PlayGameCardsViewItem, PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
 import { GameService } from '../../shared/services/game.service';
@@ -17,7 +17,7 @@ export class PlayGameComponent implements OnInit {
   botsGame: PlayGameBotsViewItem = { botName: '', botCards: [this.cardsGame] }
   playGame: PlayGame = { gameId: '', playerId: '', status: '', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };
 
-  constructor(private gameService: GameService, private activatedRoute: ActivatedRoute) {
+  constructor(private gameService: GameService, private activatedRoute: ActivatedRoute,private router: Router) {
   }
 
   ngOnInit() {
@@ -38,7 +38,6 @@ export class PlayGameComponent implements OnInit {
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
-          console.log(this.playGame)
           this.gameExisting = true;
         }
       },
@@ -56,7 +55,6 @@ export class PlayGameComponent implements OnInit {
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
-          console.log(this.playGame)
           this.gameExisting = true;
           if (this.playGame.winner !== 'No one') {
             this.gameExisting = false;
@@ -77,12 +75,33 @@ export class PlayGameComponent implements OnInit {
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
-          console.log(this.playGame)
           this.gameExisting = false;
         }
       },
         err => {
           this.error = err;
         });
+  }
+  backToHome(){
+    this.router.navigate(['/game/home']);
+  }
+
+  playAgain(){
+    this.gameService.playGame(this.playGame)
+      .subscribe(x => {
+        if (x) {
+          debugger
+          this.playGame.gameId = x['newGameId'];
+          this.playGame.status = x['status'];
+          this.playGame.winner = x['winner'];
+          this.playGame.playerCards = x['playerCards'];
+          this.playGame.bots = x['bots'];
+          this.gameExisting = true;
+        }
+      },
+        err => {
+          this.error = err;
+        });
+
   }
 }

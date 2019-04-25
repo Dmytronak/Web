@@ -37,6 +37,10 @@
             <button class="btn btn-success" (click)="continueGame()"><i class="fas fa-plus"></i></button>
             <button class="btn btn-danger" (click)="endGame()"><i class="fas fa-times"></i></button>
         </div>
+        <div *ngIf="!gameExisting">
+            <button class="btn btn-primary" (click)="playAgain()">Play again with the same parametrs?</button>
+            <button class="btn btn-danger" (click)="backToHome()"><i class="fas fa-times"></i></button>
+        </div>
 
 
 

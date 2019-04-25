@@ -1,12 +1,14 @@
 ﻿using BlackJack.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.HistoryViews
 {
     public class BotStepsHistoryView
     {
+        [Required(ErrorMessage = "GameId is required")]
+        public Guid GameId { get; set; }
         public List<BotStepsHistoryViewItem> BotSteps { get; set; }
 
         public BotStepsHistoryView()
