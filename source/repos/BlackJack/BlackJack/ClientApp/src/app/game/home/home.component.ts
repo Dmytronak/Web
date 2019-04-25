@@ -60,14 +60,14 @@ export class HomeComponent implements OnInit {
       this.gameService.createNewPlayer(newPlayer['player'])
         .subscribe(x => {
           if (x) {
-            this.router.navigate(['/game/play'], { queryParams: { name: x['name'], id: x['playerId'],numberOfBots: newPlayer['numberOfBots'] } });
+            this.router.navigate(['/game/play'], { queryParams: { name: x['name'], id: x['playerId'], numberOfBots: newPlayer['numberOfBots'] } });
           }
         }, err => {
           this.error = err;
         })
     }
     else {
-      this.router.navigate(['/game/play'], { queryParams: { name: newPlayer['player'].name, id: newPlayer['player'].id, numberOfBots: newPlayer['numberOfBots']} });
+      this.router.navigate(['/game/play'], { queryParams: { name: newPlayer['player'].name, id: newPlayer['player'].id, numberOfBots: newPlayer['numberOfBots'] } });
     }
 
   }
