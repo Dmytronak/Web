@@ -16,6 +16,7 @@ export class GameService {
 
   }
   createNewPlayer(player: Player) {
+    debugger
     return this.http.post(this.baseUrl + "/game/addPlayer", player);
   }
   getExistingPlayers(player: Player) {

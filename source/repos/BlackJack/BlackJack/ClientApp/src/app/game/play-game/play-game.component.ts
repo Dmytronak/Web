@@ -28,6 +28,7 @@ export class PlayGameComponent implements OnInit {
       if (x) {
         debugger
         this.playGame.playerId = x['playerId'];
+        this.playGame.playerName = x['playerName'];
         this.playGame.numberOfBots = x['numberOfBots'];
         this.playGame.status = x['status'];
         this.playGame.winner = x['winner'];
@@ -37,7 +38,6 @@ export class PlayGameComponent implements OnInit {
         this.haveActiveGame =true;
         if (this.playGame.winner !== 'No one') {
           this.gameExisting = false;
-          
         }
       }
     },

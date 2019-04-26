@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   cardsGame: PlayGameCardsViewItem = { stepRank: 0, stepSuit: 0 };
   botsGame: PlayGameBotsViewItem = { botName: '', botCards: [this.cardsGame] }
   createGame: PlayGame = { gameId: '', playerId: '', status: '', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };
-  
+  newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
     this.emailS = localStorage.getItem('email');
@@ -45,9 +45,25 @@ export class HomeComponent implements OnInit {
   }
   addNewPlayer(name: string) {
     debugger
-    const addPlayer = Object.assign({}, this.playerReq, { name: name });
-    this.players.push(addPlayer)
-    this.brandNew = true;
+    this.newPlayer.name = name;
+    this.newPlayer.email =this.emailS;
+    let newUser = this.newPlayer.name;
+    let duplicatePlayer = this.playersDb.filter(x => { return x['name'] === newUser; }).length;
+    if (!duplicatePlayer) {
+      debugger
+      this.gameService.createNewPlayer(this.newPlayer)
+        .subscribe(x => {
+          if(x){ 
+            debugger
+            this.newPlayer.id = x['playerId']
+            this.players.push(this.newPlayer);
+            this.brandNew = true;
+          }
+        }, err => {
+          this.error = err;
+        })
+    }
+
   }
   showInput() {
     this.showForm = true;
@@ -56,29 +72,12 @@ export class HomeComponent implements OnInit {
     this.showForm = false;
     this.brandNew = false;
   }
-  playGame(newPlayer: Player) {
+  playGame(f) {
     debugger
     this.isRequesting = true;
-    let newUser = newPlayer['player'].name;
-    let duplicatePlayer = this.playersDb.filter(x => { return x['name'] === newUser; }).length;
-    if (!duplicatePlayer) {
-      this.gameService.createNewPlayer(newPlayer['player'])
-        .subscribe(x => {
-          if (x) {
-            this.createGame.playerId = x['playerId'];
-            this.createGame.numberOfBots = newPlayer['numberOfBots'];
-          }
-        }, err => {
-          this.error = err;
-        })
-    }
-    else {
-      this.createGame.playerId = newPlayer['player'].id;
-      this.createGame.numberOfBots = newPlayer['numberOfBots'];
-    }
-
-  debugger
-    this.gameService.playGame(this.createGame)
+    this.createGame.playerId = f['player'].id;
+    this.createGame.numberOfBots =f['numberOfBots'];
+      this.gameService.playGame(this.createGame)
       .subscribe(x => {
         if (x) {
           debugger
@@ -89,4 +88,5 @@ export class HomeComponent implements OnInit {
           this.error = err;
         });
   }
+
 }
