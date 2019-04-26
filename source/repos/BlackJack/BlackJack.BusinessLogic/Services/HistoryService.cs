@@ -142,17 +142,17 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new NullReferenceException("user model received a null argument!");
             }
-            
             var gamesByUserId = await _playerInGameRepository.GetGames(Guid.Parse(user.Result.Id));
-            var player = gamesByUserId.Select(x => x.Players).FirstOrDefault(x => x.UserId == (Guid.Parse(user.Result.Id)));
             var allUserGamesModel = new GetAllGamesView();
+            var playersDB = await _playerRepository.GetAll();
             allUserGamesModel.Email = model.Email;
             var groupedGame = gamesByUserId.GroupBy(x => x.Games.Id);
             var gameList = new List<GetAllGamesViewItem>();
             foreach (var item in groupedGame)
             {
                 var fromGame = gamesByUserId.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key);
-           
+                var playerGames = gamesByUserId.Select(x => x).FirstOrDefault(x => x.GameId == item.Key);
+                var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
                 var game = new GetAllGamesViewItem();
                 game.Id = fromGame.Id;
                 game.PlayerName = player.Name;

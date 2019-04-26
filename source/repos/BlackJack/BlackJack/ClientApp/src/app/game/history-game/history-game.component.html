@@ -1,6 +1,6 @@
-<h2> History of games</h2>
-<div>
-  <table class="table">
+<h2> History of user games</h2>
+<div> 
+  <table *ngIf="showMainTable"  class="table">
     <thead>
       <tr>
         <th *ngFor="let head of headElements">{{head}}</th>

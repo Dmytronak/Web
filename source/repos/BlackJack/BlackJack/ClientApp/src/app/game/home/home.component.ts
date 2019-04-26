@@ -5,6 +5,9 @@ import { GameService } from '../../shared/services/game.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../shared/services/alert.service';
 import { Player } from '../../shared/entities/player.view';
+import { PlayGameCardsViewItem } from '../../shared/entities/play-game.view';
+import { PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
+import { PlayGame } from '../../shared/entities/play-game.view';
 
 
 @Component({
@@ -21,8 +24,10 @@ export class HomeComponent implements OnInit {
   public players: Player[];
   public playersDb: Player[];
   public playerReq: Player;
-
-
+  cardsGame: PlayGameCardsViewItem = { stepRank: 0, stepSuit: 0 };
+  botsGame: PlayGameBotsViewItem = { botName: '', botCards: [this.cardsGame] }
+  createGame: PlayGame = { gameId: '', playerId: '', status: '', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };
+  
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
     this.emailS = localStorage.getItem('email');
@@ -60,15 +65,28 @@ export class HomeComponent implements OnInit {
       this.gameService.createNewPlayer(newPlayer['player'])
         .subscribe(x => {
           if (x) {
-            this.router.navigate(['/game/play'], { queryParams: { name: x['name'], id: x['playerId'], numberOfBots: newPlayer['numberOfBots'] } });
+            this.createGame.playerId = x['playerId'];
+            this.createGame.numberOfBots = newPlayer['numberOfBots'];
           }
         }, err => {
           this.error = err;
         })
     }
     else {
-      this.router.navigate(['/game/play'], { queryParams: { name: newPlayer['player'].name, id: newPlayer['player'].id, numberOfBots: newPlayer['numberOfBots'] } });
+      this.createGame.playerId = newPlayer['player'].id;
+      this.createGame.numberOfBots = newPlayer['numberOfBots'];
     }
 
+  debugger
+    this.gameService.playGame(this.createGame)
+      .subscribe(x => {
+        if (x) {
+          debugger
+          this.router.navigate(['/game/play']);
+        }
+      },
+        err => {
+          this.error = err;
+        });
   }
 }

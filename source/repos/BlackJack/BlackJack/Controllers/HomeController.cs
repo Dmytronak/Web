@@ -51,25 +51,31 @@ namespace BlackJack.Controllers
         }
 
         [HttpPost, Route("continueGame")]
-        public async Task<IActionResult> ContinueGame([FromBody]ContinueGameView model)
+        public async Task<IActionResult> ContinueGame()
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View();
             }
 
-            var result = await _gameService.ContinueGame(model);
+            var result = await _gameService.ContinueGame();
             return Ok(result);
         }
+        [HttpGet, Route("getActiveGame")]
+        public async Task<PlayGameView> GetActiveGame()
+        {
+            var result = await _gameService.GetActiveGame();
+            return result;
+        }
         [HttpPost, Route("endGame")]
-        public async Task<IActionResult> EndGame([FromBody]EndGameView model)
+        public async Task<IActionResult> EndGame()
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View();
             }
 
-            var result = await _gameService.EndGame(model);
+            var result = await _gameService.EndGame();
             return Ok(result);
         }
 

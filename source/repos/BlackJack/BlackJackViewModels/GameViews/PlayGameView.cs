@@ -17,7 +17,6 @@ namespace BlackJack.ViewModels.GameViews
         public string Status { get; set; }
         public string Winner { get; set; }
         public string PlayerName { get; set; }
-        public Guid NewGameId { get; set; }
         public List<PlayGameCardsViewItem> PlayerCards { get; set; }
         public List<PlayGameBotsViewItem> Bots { get; set; }
 

@@ -13,6 +13,7 @@ export class HistoryGameComponent implements OnInit {
   error: string = '';
   showPlayerTable = false;
   showBotTable = false;
+  showMainTable = true;
   emailS: string = localStorage.getItem('email');
   game: GetAllGamesViewItem = { id: '', playerName: '', numberOfBots: 0, status: '', winner: '' };
   historyGames: HistoryGame = { email: this.emailS, games: [this.game] };
@@ -43,6 +44,7 @@ export class HistoryGameComponent implements OnInit {
     }, error => error);
     this.showBotTable = true;
     this.showPlayerTable = false;
+    this.showMainTable = false;
 
   }
   showPlayerSteps(x) {
@@ -54,10 +56,12 @@ export class HistoryGameComponent implements OnInit {
     }, error => error);
     this.showPlayerTable = true;
     this.showBotTable = false;
-
+    this.showMainTable = false;
+  
   }
   hideStepTable() {
     this.showPlayerTable = false;
     this.showBotTable = false;
+    this.showMainTable = true;
   }
 }

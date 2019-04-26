@@ -9,7 +9,8 @@ namespace BlackJack.BusinessLogic.Interfaces
         Task<CreatePlayerGameView> CreateNewPlayer(CreatePlayerGameView model);
         Task<GetPlayersGameView> GetAllPlayersByUser(GetPlayersGameView model);
         Task<PlayGameView> PlayGame(PlayGameView model);
-        Task<ContinueGameView> ContinueGame(ContinueGameView model);
-        Task<EndGameView> EndGame(EndGameView model);
+        Task<ContinueGameView> ContinueGame();
+        Task<EndGameView> EndGame();
+        Task<PlayGameView> GetActiveGame();
     }
 }

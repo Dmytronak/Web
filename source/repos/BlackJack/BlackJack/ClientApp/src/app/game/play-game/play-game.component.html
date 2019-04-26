@@ -1,74 +1,53 @@
-<h2>New Game</h2>
-<div>
-    <label>Your player name:{{ playGame.playerName }}</label>
-</div>
-<div>
-    <label>Game status : {{ playGame.status }}</label>
-</div>
-<div>
-    <label>Winner: {{ playGame.winner }}</label>
-</div>
-<div>
-    <label>Your cards:</label>
-    <ul>
-        <li *ngFor="let x of playGame.playerCards">
-            {{x.stepRank}},{{x.stepSuit}}
-        </li>
-    </ul>
-</div>
-<div>
+<div *ngIf="haveActiveGame">
+    <h2>New Game</h2>
+    <div>
+        <label>Your player name:{{ playGame.playerName }}</label>
+    </div>
+    <div>
+        <label>Game status : {{ playGame.status }}</label>
+    </div>
+    <div>
+        <label>Winner: {{ playGame.winner }}</label>
+    </div>
+    <div>
+        <label>Your cards:</label>
+        <ul>
+            <li *ngFor="let x of playGame.playerCards">
+                {{x.stepRank}},{{x.stepSuit}}
+            </li>
+        </ul>
+    </div>
+    <div>
         <label>Bots:</label>
         <ul>
             <li *ngFor="let x of playGame.bots">
-                {{x.botName}}, 
+                {{x.botName}},
                 <div>
-                        <label>Bot cards:</label>
-                        <ul>
-                            <li *ngFor="let d of x.botCards">
-                                    {{d.stepRank}},{{d.stepSuit}}
-                            </li>
-                        </ul>
+                    <label>Bot cards:</label>
+                    <ul>
+                        <li *ngFor="let d of x.botCards">
+                            {{d.stepRank}},{{d.stepSuit}}
+                        </li>
+                    </ul>
                 </div>
             </li>
         </ul>
     </div>
-    
+
     <div *ngIf="gameExisting">
-            <button class="btn btn-success" (click)="continueGame()"><i class="fas fa-plus"></i></button>
-            <button class="btn btn-danger" (click)="endGame()"><i class="fas fa-times"></i></button>
-        </div>
-        <div *ngIf="!gameExisting">
-            <button class="btn btn-primary" (click)="playAgain()">Play again with the same parametrs?</button>
-            <button class="btn btn-danger" (click)="backToHome()"><i class="fas fa-times"></i></button>
-        </div>
+        <button class="btn btn-success" (click)="continueGame()"><i class="fas fa-plus"></i></button>
+        <button class="btn btn-danger" (click)="endGame()"><i class="fas fa-times"></i></button>
+    </div>
+    <div *ngIf="!gameExisting">
+        <button class="btn btn-primary" (click)="playAgain()">Play again with the same parametrs?</button>
+        <button class="btn btn-danger" (click)="backToHome()"><i class="fas fa-times"></i></button>
+    </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div>{{playGame | json}}</div>
-
-
+    <div>{{playGame | json}}</div>
+</div>
 <div *ngIf="error" class="alert alert-danger" role="alert">
     <strong>Oops!</strong> {{error}}
 </div>
+<div *ngIf="error">
+    <label>Back to home : <button class="btn btn-success" (click)="backToHome()"><i class="fa fa-arrow-left"></i></button></label>
+</div> 
