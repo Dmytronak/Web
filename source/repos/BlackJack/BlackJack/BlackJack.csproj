@@ -24,4 +24,8 @@
     <ProjectReference Include="..\BlackJack.BusinessLogic\BlackJack.BusinessLogic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\cards\" />
+  </ItemGroup>
+
 </Project>

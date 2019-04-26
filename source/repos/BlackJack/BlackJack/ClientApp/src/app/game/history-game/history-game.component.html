@@ -34,7 +34,7 @@
     <tbody>
       <tr *ngFor="let d of playerSteps.playerStepsOfGame">
         <td></td>
-        <td>{{d.stepRank}},{{d.stepSuit}}</td>
+        <img src= "http://localhost:59257/images/cards/{{d.stepRank}}_{{d.stepSuit}}.svg" width="100px">
         <td></td>
       </tr>
     </tbody>
@@ -55,7 +55,7 @@
           <td>{{e.botName}}</td>
           <td>
             <tr *ngFor="let q of e.botSteps">
-                <td>{{q.stepRank}},{{q.stepSuit}}</td>
+              <img src= "http://localhost:59257/images/cards/{{q.stepRank}}_{{q.stepSuit}}.svg" width="100px">
             </tr>
 
           </td>
