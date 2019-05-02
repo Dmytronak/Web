@@ -210,7 +210,7 @@ namespace BlackJack.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationAt = table.Column<DateTime>(nullable: false),
-                    BotScoreValue = table.Column<int>(nullable: false),
+                    BotScore = table.Column<int>(nullable: false),
                     GameId = table.Column<Guid>(nullable: false),
                     BotId = table.Column<Guid>(nullable: false)
                 },
@@ -307,7 +307,7 @@ namespace BlackJack.DataAccess.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CreationAt = table.Column<DateTime>(nullable: false),
-                    PlayerScoreValue = table.Column<int>(nullable: false),
+                    PlayerScore = table.Column<int>(nullable: false),
                     GameId = table.Column<Guid>(nullable: false),
                     PlayerId = table.Column<Guid>(nullable: false)
                 },

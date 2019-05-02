@@ -40,7 +40,7 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("BotId");
 
-                    b.Property<int>("BotScoreValue");
+                    b.Property<int>("BotScore");
 
                     b.Property<DateTime>("CreationAt");
 
@@ -148,7 +148,7 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("PlayerId");
 
-                    b.Property<int>("PlayerScoreValue");
+                    b.Property<int>("PlayerScore");
 
                     b.HasKey("Id");
 
