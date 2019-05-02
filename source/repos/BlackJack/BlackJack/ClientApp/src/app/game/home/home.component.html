@@ -1,7 +1,7 @@
 <div>
     <form #f="ngForm">
         <div>
-            <label>Players: </label>
+            <p>Players: </p>
             <select name="player" ngModel>
                 <option value="" disabled>Choose a player</option>
                 <option *ngFor="let x of players" [ngValue]="x">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div>
-            <label>Numbers Of Bots: </label>
+            <p>Numbers Of Bots: </p>
             <select name="numberOfBots" ngModel>
                 <option value="" disabled>Choose a number</option>
                 <option value="1">1</option>
@@ -30,9 +30,14 @@
     <div *ngIf="brandNew" class="alert alert-success" role="alert">
         <strong>All set!</strong> PlayerCreate
     </div>
-    <div>
+    <div *ngIf="!gameExisting">
         <button class="btn btn-primary" (click)="playGame(f.value)">Play Game</button>
     </div>
+    <div *ngIf="!haveActiveGame">
+       <p> <label> You have active game already, you can`t start new</label></p>
+        <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
+    </div>
+    
     <div *ngIf="error" class="alert alert-danger" role="alert">
         <strong>Oops!</strong> {{error}}
     </div>

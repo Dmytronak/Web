@@ -1,8 +1,4 @@
-/*
- * Sidebar
- */
-
- .sidebar {
+.sidebar {
     position: fixed;
     top: 51px;
     bottom: 0;
@@ -29,4 +25,3 @@
   .sidebar .nav-link {
     border-radius: 0;
   }
-  

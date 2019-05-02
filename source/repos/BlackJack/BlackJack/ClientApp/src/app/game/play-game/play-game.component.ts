@@ -14,7 +14,10 @@ export class PlayGameComponent implements OnInit {
   error: string = '';
   gameExisting: boolean = false;
   haveActiveGame:boolean = false;
- 
+  headBotSteps= ['Cards'];
+  headBots= ['Bot name', 'Cards'];
+  headPlayerSteps = ['Player cards'];
+  headElements = ['Player name', 'Number of bots', 'Status', 'Winner', ''];
   cardsGame: PlayGameCardsViewItem = { stepRank: 0, stepSuit: 0 };
   botsGame: PlayGameBotsViewItem = { botName: '', botCards: [this.cardsGame] }
   playGame: PlayGame = { gameId: '', playerId: '', status: '', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };

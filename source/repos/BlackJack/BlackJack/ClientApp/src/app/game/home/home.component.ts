@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
   error: string = '';
   showForm: boolean;
   brandNew: boolean;
+  gameExisting: boolean;
+  haveActiveGame:boolean;
   public players: Player[];
   public playersDb: Player[];
   public playerReq: Player;
@@ -42,6 +44,25 @@ export class HomeComponent implements OnInit {
     this.gameService.getExistingPlayers(this.playerReq).subscribe(x => {
       this.playersDb = x['players'];
     }, error => error);
+
+    this.gameService.getActiveGame()
+    .subscribe(x => {
+      if (x) {
+        debugger
+        this.createGame.playerId = x['playerId'];
+        this.createGame.playerName = x['playerName'];
+        this.createGame.numberOfBots = x['numberOfBots'];
+        this.createGame.status = x['status'];
+        this.createGame.winner = x['winner'];
+        this.createGame.playerCards = x['playerCards'];
+        this.createGame.bots = x['bots'];
+        this.gameExisting = true;
+      }
+    },
+      err => {
+        this.gameExisting =false;
+        this.haveActiveGame = true;
+      });
   }
   addNewPlayer(name: string) {
     debugger
@@ -67,6 +88,9 @@ export class HomeComponent implements OnInit {
   }
   showInput() {
     this.showForm = true;
+  }
+  continueActiveGame() {
+    this.router.navigate(["/game/play"]);
   }
   closeInput() {
     this.showForm = false;

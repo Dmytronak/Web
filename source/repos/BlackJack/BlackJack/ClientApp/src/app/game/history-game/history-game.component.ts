@@ -23,16 +23,15 @@ export class HistoryGameComponent implements OnInit {
   bots:BotStepsHistoryViewItem={botName:'',botSteps:[this.botCards]};
   allBotSteps: BotSteps={gameId:'', botSteps:[this.bots]};
 
-  headBotSteps= ['Cards'];
-  headBots= ['Bot name', 'Steps'];
-  headPlayerSteps = ['','Cards',''];
-  headElements = ['PlayerName', 'Number of bots', 'Status', 'Winner', ''];
+  headBotSteps= ['Cards','','',''];
+  headBots= ['Bot name', 'Steps','','',''];
+  headPlayerSteps = ['Player steps','','',''];
+  headElements = ['Player name', 'Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   constructor(private historyService: HistoryService) { }
 
   ngOnInit() {
     this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
       this.historyGames.games = x['games'];
-      console.log(this.historyGames);
     }, error => error);
   }
   showBotSteps(x) {
@@ -40,7 +39,6 @@ export class HistoryGameComponent implements OnInit {
     this.allBotSteps.gameId = x.id;
     this.historyService.getBotSteps(this.allBotSteps).subscribe(x => {
     this.allBotSteps.botSteps= x['botSteps'];
-      console.log(this.allBotSteps.botSteps);
     }, error => error);
     this.showBotTable = true;
     this.showPlayerTable = false;
@@ -52,7 +50,6 @@ export class HistoryGameComponent implements OnInit {
     this.playerSteps.gameId = x.id;
     this.historyService.getPlayerSteps(this.playerSteps).subscribe(x => {
       this.playerSteps.playerStepsOfGame = x['playerStepsOfGame'];
-      console.log( this.playerSteps.playerStepsOfGame);
     }, error => error);
     this.showPlayerTable = true;
     this.showBotTable = false;

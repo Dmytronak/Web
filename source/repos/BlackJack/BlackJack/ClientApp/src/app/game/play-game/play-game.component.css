@@ -1,0 +1,16 @@
+.table {
+    margin: auto;
+    height: auto;
+    width: auto;
+    text-align: center;
+  
+}
+.td,tr,th {
+  
+    width: auto; 
+    text-align: left;
+}
+.p {
+    margin-bottom: 0rem;
+}
+
