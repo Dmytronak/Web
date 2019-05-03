@@ -30,14 +30,13 @@
     <div *ngIf="brandNew" class="alert alert-success" role="alert">
         <strong>All set!</strong> PlayerCreate
     </div>
-    <div *ngIf="!gameExisting">
+    <div *ngIf="gameExisting">
         <button class="btn btn-primary" (click)="playGame(f.value)">Play Game</button>
     </div>
-    <div *ngIf="!haveActiveGame">
+    <div *ngIf="haveActiveGame">
        <p> <label> You have active game already, you can`t start new</label></p>
         <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
     </div>
-    
     <div *ngIf="error" class="alert alert-danger" role="alert">
         <strong>Oops!</strong> {{error}}
     </div>

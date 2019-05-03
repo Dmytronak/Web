@@ -29,7 +29,6 @@ export class PlayGameComponent implements OnInit {
     this.gameService.getActiveGame()
     .subscribe(x => {
       if (x) {
-        debugger
         this.playGame.playerId = x['playerId'];
         this.playGame.playerName = x['playerName'];
         this.playGame.numberOfBots = x['numberOfBots'];
@@ -42,14 +41,16 @@ export class PlayGameComponent implements OnInit {
         if (this.playGame.winner !== 'No one') {
           this.gameExisting = false;
         }
+        
+        if(this.playGame.status === 'noGames') {
+          this.haveActiveGame =false;
+          let errorMessage = { message: 'You havent active games! Play new game.' }
+          this.error = errorMessage.message;
+        }
       }
     },
       err => {
-        this.haveActiveGame =false;
-        let errorMessage = { status: 500, message: 'You havent active games! Play new game.' }
-        throwError(new Error(errorMessage.message));
-        this.error = errorMessage.message;
-        return this.alertService.error(errorMessage.message);
+        return this.alertService.error(err);
       });
   }
   continueGame() {

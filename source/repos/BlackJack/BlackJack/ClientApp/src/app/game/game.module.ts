@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { routing }  from './game.routing';
 import { RootComponent } from './root/root.component';
 import { HomeComponent } from './home/home.component';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AuthGuard } from '../shared/guards/onlyLoggedOutUsers.guard';
 import { GameService } from '../shared/services/game.service';
 import { AlertService } from '../shared/services/alert.service';
@@ -20,7 +20,8 @@ import { HistoryGameComponent } from './history-game/history-game.component';
     FormsModule,
     routing,
     SharedModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   declarations: [RootComponent,HomeComponent, PlayGameComponent, HistoryGameComponent],
   exports:      [ ],

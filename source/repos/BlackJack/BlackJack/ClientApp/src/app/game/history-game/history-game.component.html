@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let x of historyGames.games">
+      <tr *ngFor="let x of historyGames.games | slice: (page) * pageSize : (page) * pageSize + pageSize">
         <td>{{x.playerName}}</td>
         <td>{{x.numberOfBots}}</td>
         <td>{{x.status}}</td>
@@ -37,7 +37,7 @@
         </tbody>
       </table>
       <button class="btn btn-danger" (click)="hideStepTable()">
-        Back
+        <i class="fa fa-arrow-left"></i>
       </button>
     </div>
     <div *ngIf="showBotTable">
@@ -57,7 +57,8 @@
         </tbody>
       </table>
       <button class="btn btn-danger" (click)="hideStepTable()">
-        Back
+        <i class="fa fa-arrow-left"></i>
       </button>
     </div>
 </div>
+<ngb-pagination [collectionSize]="listOfGamesCount" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>

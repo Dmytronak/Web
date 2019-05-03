@@ -22,7 +22,9 @@ export class HistoryGameComponent implements OnInit {
   botCards:BotCardViewItem={stepRank:0,stepSuit:0};
   bots:BotStepsHistoryViewItem={botName:'',botSteps:[this.botCards]};
   allBotSteps: BotSteps={gameId:'', botSteps:[this.bots]};
-
+  page = 1;
+  pageSize = 9;
+  listOfGamesCount;
   headBotSteps= ['Cards','','',''];
   headBots= ['Bot name', 'Steps','','',''];
   headPlayerSteps = ['Player steps','','',''];
@@ -32,6 +34,7 @@ export class HistoryGameComponent implements OnInit {
   ngOnInit() {
     this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
       this.historyGames.games = x['games'];
+      this.listOfGamesCount = this.historyGames.games.length;
     }, error => error);
   }
   showBotSteps(x) {

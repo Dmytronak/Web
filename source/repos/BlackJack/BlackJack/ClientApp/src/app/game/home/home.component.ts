@@ -16,13 +16,12 @@ import { PlayGame } from '../../shared/entities/play-game.view';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  isRequesting: boolean;
   emailS: string = '';
   error: string = '';
   showForm: boolean;
   brandNew: boolean;
-  gameExisting: boolean;
-  haveActiveGame:boolean;
+  haveActiveGame:boolean= false;
+  gameExisting:boolean = false;
   public players: Player[];
   public playersDb: Player[];
   public playerReq: Player;
@@ -46,22 +45,20 @@ export class HomeComponent implements OnInit {
     }, error => error);
 
     this.gameService.getActiveGame()
+    
     .subscribe(x => {
       if (x) {
-        debugger
-        this.createGame.playerId = x['playerId'];
-        this.createGame.playerName = x['playerName'];
-        this.createGame.numberOfBots = x['numberOfBots'];
-        this.createGame.status = x['status'];
-        this.createGame.winner = x['winner'];
-        this.createGame.playerCards = x['playerCards'];
-        this.createGame.bots = x['bots'];
-        this.gameExisting = true;
+        if(x['status'] === 'noGames') {
+        
+          this.gameExisting = true;
+        }
+        if(x['status'] !=='noGames') {
+        this.haveActiveGame = true;
+        }
       }
     },
       err => {
-        this.gameExisting =false;
-        this.haveActiveGame = true;
+        this.error = err;
       });
   }
   addNewPlayer(name: string) {
@@ -98,7 +95,6 @@ export class HomeComponent implements OnInit {
   }
   playGame(f) {
     debugger
-    this.isRequesting = true;
     this.createGame.playerId = f['player'].id;
     this.createGame.numberOfBots =f['numberOfBots'];
       this.gameService.playGame(this.createGame)

@@ -1,6 +1,6 @@
 .tableFixHead    { 
     overflow-y: auto; 
-    height: 600px;
+    height: 556px;
     width: auto;
 }
 .tableFixHead th { 
@@ -18,3 +18,23 @@
      background:#343a40; 
      color: rgb(255, 255, 255); 
  }
+::ng-deep .page-item.active .page-link {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #474c52;;
+}
+::ng-deep .page-link{
+     color: #343a40;
+    }
+::ng-deep  .page-link:hover{ 
+    color: #6b7075;
+}
+::ng-deep .pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+ {
+    box-shadow: 0 0 0 0.2rem rgba(62, 63, 65, 0.25);
+    color: #343a40;
+    border-color: #ddd;
+}

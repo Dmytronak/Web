@@ -81,6 +81,7 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<PlayGameView> GetActiveGame()
         {
+            var statusEmpty = "noGames";
             var gameId = Guid.NewGuid();
             var existingGames = await _gameRepository.GetAll();
             if (existingGames == null)
@@ -88,66 +89,69 @@ namespace BlackJack.BusinessLogic.Services
                 throw new NullReferenceException("existingGames is null!");
             }
             var game = existingGames.Select(x => x).FirstOrDefault(x => x.Status == "New" || x.Status == "Continue");
+            var playGameModel = new PlayGameView();
             if (game != null)
             {
                 gameId = game.Id;
-
-            }
-            var contPlayerStep = await _playerStepRepository.GetPlayerSteps(gameId);
-            if (contPlayerStep.Count == 0)
-            {
-                throw new NullReferenceException("PlayerStep is null!");
-            }
-            var botAndSteps = await _botStepRepository.GetStepsAndBot(gameId);
-            if (botAndSteps.Count == 0)
-            {
-                throw new NullReferenceException("ContinueBotAndSteps is null!");
-            }
-            var playersAndGames = await _playerInGameRepository.GetPlayersInGame(gameId);
-            var playersDB = await _playerRepository.GetAll();
-            var playerGames = playersAndGames.Select(x => x).FirstOrDefault(x => x.GameId == gameId);
-            var playerExistingGame = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
-            var playerId = playerExistingGame.Id;
-            var status = game.Status;
-            var winner = game.Winner;
-
-
-            var playGameModel = new PlayGameView();
-            playGameModel.PlayerId = playerId;
-            playGameModel.NumberOfBots = game.NumberOfBots;
-            playGameModel.Status = status;
-            playGameModel.Winner = winner;
-            playGameModel.PlayerName = playerExistingGame.Name;
-            playGameModel.PlayerCards = contPlayerStep
-                .Select(x => new PlayGameCardsViewItem()
+                var contPlayerStep = await _playerStepRepository.GetPlayerSteps(gameId);
+                if (contPlayerStep.Count == 0)
                 {
-                    StepRank = x.StepRank,
-                    StepSuit = x.StepSuit
-                })
-                .ToList();
-            var botList = botAndSteps
-                .Select(x => x.Bots)
-                .Distinct()
-                .ToList();
-            var groupedBotInGame = botAndSteps.GroupBy(x => x.BotId);
-            var playGameBots = new List<PlayGameBotsViewItem>();
-            foreach (var item in groupedBotInGame)
-            {
-                var modelItem = new PlayGameBotsViewItem();
-
-                var currentBot = botList.FirstOrDefault(x => x.Id == item.Key).BotName;
-                modelItem.BotName = currentBot;
-                modelItem.BotCards = item.Select(x => new PlayGameCardsViewItem()
+                    throw new NullReferenceException("PlayerStep is null!");
+                }
+                var botAndSteps = await _botStepRepository.GetStepsAndBot(gameId);
+                if (botAndSteps.Count == 0)
                 {
-                    StepRank = x.BotStepRank,
-                    StepSuit = x.BotStepSuit
-                })
-                .ToList();
+                    throw new NullReferenceException("ContinueBotAndSteps is null!");
+                }
+                var playersAndGames = await _playerInGameRepository.GetPlayersInGame(gameId);
+                var playersDB = await _playerRepository.GetAll();
+                var playerGames = playersAndGames.Select(x => x).FirstOrDefault(x => x.GameId == gameId);
+                var playerExistingGame = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
+                var playerId = playerExistingGame.Id;
+                var status = game.Status;
+                var winner = game.Winner;
 
-                playGameBots.Add(modelItem);
+
+              
+                playGameModel.PlayerId = playerId;
+                playGameModel.NumberOfBots = game.NumberOfBots;
+                playGameModel.Status = status;
+                playGameModel.Winner = winner;
+                playGameModel.PlayerName = playerExistingGame.Name;
+                playGameModel.PlayerCards = contPlayerStep
+                    .Select(x => new PlayGameCardsViewItem()
+                    {
+                        StepRank = x.StepRank,
+                        StepSuit = x.StepSuit
+                    })
+                    .ToList();
+                var botList = botAndSteps
+                    .Select(x => x.Bots)
+                    .Distinct()
+                    .ToList();
+                var groupedBotInGame = botAndSteps.GroupBy(x => x.BotId);
+                var playGameBots = new List<PlayGameBotsViewItem>();
+                foreach (var item in groupedBotInGame)
+                {
+                    var modelItem = new PlayGameBotsViewItem();
+
+                    var currentBot = botList.FirstOrDefault(x => x.Id == item.Key).BotName;
+                    modelItem.BotName = currentBot;
+                    modelItem.BotCards = item.Select(x => new PlayGameCardsViewItem()
+                    {
+                        StepRank = x.BotStepRank,
+                        StepSuit = x.BotStepSuit
+                    })
+                    .ToList();
+
+                    playGameBots.Add(modelItem);
+                }
+                playGameModel.Bots.AddRange(playGameBots);
+                return playGameModel;
             }
-            playGameModel.Bots.AddRange(playGameBots);
+            playGameModel.Status = statusEmpty;
             return playGameModel;
+
         }
         public async Task<PlayGameView> PlayGame(PlayGameView model)
         {
