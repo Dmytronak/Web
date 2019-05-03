@@ -8,10 +8,11 @@
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
     border-right: 1px solid #eee;
+    
   }
-  
-  .sidebar .nav {
-    margin-bottom: 20px;
+  .sidebar .nav , a{ 
+    margin-bottom: 7px;
+    color: #000;
   }
   
   .sidebar .nav-item {
@@ -20,8 +21,16 @@
   
   .sidebar .nav-item + .nav-item {
     margin-left: 0;
+    color: #000;
   }
   
   .sidebar .nav-link {
     border-radius: 0;
+  }
+  .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+    color: rgb(255, 255, 255);
+    background-color: #000;
+  }
+  .row{
+    min-width: fit-content;
   }

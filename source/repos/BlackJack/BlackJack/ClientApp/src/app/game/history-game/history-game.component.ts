@@ -24,7 +24,7 @@ export class HistoryGameComponent implements OnInit {
   allBotSteps: BotSteps={gameId:'', botSteps:[this.bots]};
   page = 1;
   pageSize = 9;
-  listOfGamesCount;
+  listOfGamesCount:number;
   headBotSteps= ['Cards','','',''];
   headBots= ['Bot name', 'Steps','','',''];
   headPlayerSteps = ['Player steps','','',''];
@@ -34,6 +34,7 @@ export class HistoryGameComponent implements OnInit {
   ngOnInit() {
     this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
       this.historyGames.games = x['games'];
+      debugger
       this.listOfGamesCount = this.historyGames.games.length;
     }, error => error);
   }

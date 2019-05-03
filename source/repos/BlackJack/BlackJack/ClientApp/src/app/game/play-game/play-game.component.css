@@ -2,15 +2,16 @@
     margin: auto;
     height: auto;
     width: auto;
-    text-align: center;
-  
+    text-align: -webkit-center;
+    min-width: -webkit-fill-available;
 }
 .td,tr,th {
-  
     width: auto; 
-    text-align: left;
+    height: auto;
+    text-align: -webkit-center;
+    padding: 0.43rem;
+    
 }
 .p {
     margin-bottom: 0rem;
 }
-

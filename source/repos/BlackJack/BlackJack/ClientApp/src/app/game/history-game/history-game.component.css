@@ -32,8 +32,7 @@
 ::ng-deep .pagination > li > a:focus,
 .pagination > li > a:hover,
 .pagination > li > span:focus,
-.pagination > li > span:hover
- {
+.pagination > li > span:hover{
     box-shadow: 0 0 0 0.2rem rgba(62, 63, 65, 0.25);
     color: #343a40;
     border-color: #ddd;

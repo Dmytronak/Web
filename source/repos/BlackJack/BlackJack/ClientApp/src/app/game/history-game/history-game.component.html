@@ -7,7 +7,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let x of historyGames.games | slice: (page) * pageSize : (page) * pageSize + pageSize">
+      <tr *ngFor="let x of historyGames.games | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
         <td>{{x.playerName}}</td>
         <td>{{x.numberOfBots}}</td>
         <td>{{x.status}}</td>
@@ -31,7 +31,7 @@
           </tr>
         </thead>
         <tbody>
-          <td colspan="" *ngFor="let d of playerSteps.playerStepsOfGame">
+          <td *ngFor="let d of playerSteps.playerStepsOfGame">
             <img src="http://localhost:59257/images/cards/{{d.stepRank}}_{{d.stepSuit}}.svg" width="88px">
           </td>
         </tbody>
