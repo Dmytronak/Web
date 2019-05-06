@@ -15,7 +15,7 @@ namespace BlackJack.DataAccess.Repository
         {
             _dbSet = context.Set<Player>();
         }
-        public async Task<List<Player>> GetPlayers(Guid UserId)
+        public async Task<List<Player>> GetByUserId(string UserId)
         {
             var result = await _dbSet
                 .Where(x => x.UserId == UserId)

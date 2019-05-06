@@ -5,14 +5,14 @@ namespace BlackJack.DataAccess.Entities
 {
     public class PlayerInGame : BaseEntity
     {
-        public int PlayerScore { get; set; }
+        public int Score { get; set; }
 
-        [ForeignKey("Game")]
         public Guid GameId { get; set; }
-        public virtual Game Games { get; set; }
+        [ForeignKey("GameId")]
+        public virtual Game Game { get; set; }
 
-        [ForeignKey("Player")]
         public Guid PlayerId { get; set; }
-        public virtual Player Players { get; set; }
+        [ForeignKey("PlayerId")]
+        public virtual Player Player { get; set; }
     }
 }

@@ -24,9 +24,9 @@ namespace BlackJack.DataAccess.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("BotName");
-
                     b.Property<DateTime>("CreationAt");
+
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -40,11 +40,11 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("BotId");
 
-                    b.Property<int>("BotScore");
-
                     b.Property<DateTime>("CreationAt");
 
                     b.Property<Guid>("GameId");
+
+                    b.Property<int>("Score");
 
                     b.HasKey("Id");
 
@@ -62,13 +62,13 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("BotId");
 
-                    b.Property<int>("BotStepRank");
-
-                    b.Property<int>("BotStepSuit");
-
                     b.Property<DateTime>("CreationAt");
 
                     b.Property<Guid>("GameId");
+
+                    b.Property<int>("Rank");
+
+                    b.Property<int>("Suit");
 
                     b.HasKey("Id");
 
@@ -108,7 +108,7 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<int>("NumberOfBots");
 
-                    b.Property<string>("Status");
+                    b.Property<int>("Status");
 
                     b.Property<string>("Winner");
 
@@ -126,13 +126,11 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<Guid>("UserId");
-
-                    b.Property<string>("UsersId");
+                    b.Property<string>("UserId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsersId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Players");
                 });
@@ -148,7 +146,7 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("PlayerId");
 
-                    b.Property<int>("PlayerScore");
+                    b.Property<int>("Score");
 
                     b.HasKey("Id");
 
@@ -168,9 +166,9 @@ namespace BlackJack.DataAccess.Migrations
 
                     b.Property<Guid>("GameId");
 
-                    b.Property<int>("StepRank");
+                    b.Property<int>("Rank");
 
-                    b.Property<int>("StepSuit");
+                    b.Property<int>("Suit");
 
                     b.HasKey("Id");
 
@@ -209,8 +207,6 @@ namespace BlackJack.DataAccess.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<bool>("RememberMe");
 
                     b.Property<string>("SecurityStamp");
 
@@ -346,12 +342,12 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.BotInGame", b =>
                 {
-                    b.HasOne("BlackJack.DataAccess.Entities.Bot", "Bots")
+                    b.HasOne("BlackJack.DataAccess.Entities.Bot", "Bot")
                         .WithMany()
                         .HasForeignKey("BotId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -359,12 +355,12 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.BotStep", b =>
                 {
-                    b.HasOne("BlackJack.DataAccess.Entities.Bot", "Bots")
+                    b.HasOne("BlackJack.DataAccess.Entities.Bot", "Bot")
                         .WithMany()
                         .HasForeignKey("BotId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -372,7 +368,7 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Card", b =>
                 {
-                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -380,19 +376,19 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.Player", b =>
                 {
-                    b.HasOne("BlackJack.DataAccess.Entities.User", "Users")
+                    b.HasOne("BlackJack.DataAccess.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UsersId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerInGame", b =>
                 {
-                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BlackJack.DataAccess.Entities.Player", "Players")
+                    b.HasOne("BlackJack.DataAccess.Entities.Player", "Player")
                         .WithMany()
                         .HasForeignKey("PlayerId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -400,7 +396,7 @@ namespace BlackJack.DataAccess.Migrations
 
             modelBuilder.Entity("BlackJack.DataAccess.Entities.PlayerStep", b =>
                 {
-                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Games")
+                    b.HasOne("BlackJack.DataAccess.Entities.Game", "Game")
                         .WithMany()
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);

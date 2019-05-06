@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Interfaces;
 using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Interfaces;
-using BlackJack.ViewModels.HistoryViews;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System;
+using BlackJack.ViewModels.HistoryViews;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -37,12 +37,12 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<GetAllHistoryView> HistoryOfGames(GetAllHistoryView model)
         {
-            var playerGames = await _playerInGameRepository.GetGamesAndPlayers(model.PlayerId);
+            var playerGames = await _playerInGameRepository.GetByPlayerId(model.PlayerId);
             if (playerGames.Count == 0)
             {
                 throw new NullReferenceException("PlayerId not correct!");
             }
-            var games = playerGames.Select(x => x.Games).ToList();
+            var games = playerGames.Select(x => x.Game).ToList();
             var groupedGames = games.GroupBy(x => x.Id);
 
             var historyModel = new GetAllHistoryView();
@@ -51,12 +51,12 @@ namespace BlackJack.BusinessLogic.Services
             var items = new List<GetAllHistoryViewItem>();
             foreach (var item in groupedGames)
             {
-                var playerSteps = await _playerStepRepository.GetPlayerSteps(item.Key);
-                var bostSteps = await _botStepRepository.GetStepsAndBot(item.Key);
-                var numbOfBots = playerSteps.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key).NumberOfBots;
-                var status = playerSteps.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key).Status;
-                var winner = playerSteps.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key).Winner;
-                var playerNeme = playerGames.Select(x => x.Players).FirstOrDefault(x => x.Id == model.PlayerId).Name;
+                var playerSteps = await _playerStepRepository.GetByGameId(item.Key);
+                var bostSteps = await _botStepRepository.GetByGameId(item.Key);
+                var numbOfBots = playerSteps.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key).NumberOfBots;
+                var status = playerSteps.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key).Status;
+                var winner = playerSteps.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key).Winner;
+                var playerNeme = playerGames.Select(x => x.Player).FirstOrDefault(x => x.Id == model.PlayerId).Name;
 
                 var historyOfgame = new GetAllHistoryViewItem();
                 historyOfgame.Id = item.Key;
@@ -66,23 +66,23 @@ namespace BlackJack.BusinessLogic.Services
                 historyOfgame.PlayerName = playerNeme;
                 historyOfgame.PlayerSteps = playerSteps.Select(x => new GetAllHistoryStepsViewItem()
                 {
-                    StepRank = x.StepRank,
-                    StepSuit = x.StepSuit
+                    Rank = x.Rank,
+                    Suit = x.Suit
                 })
                 .ToList();
 
-                var groupedBots = bostSteps.GroupBy(x => x.Bots.Id);
+                var groupedBots = bostSteps.GroupBy(x => x.Bot.Id);
                 var historyOfbots = new List<GetAllHistoryBotsViewItem>();
                 foreach (var i in groupedBots)
                 {
-                    var botName = bostSteps.Select(x => x.Bots).FirstOrDefault(x => x.Id == i.Key).BotName;
+                    var botName = bostSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == i.Key).Name;
 
                     var hb = new GetAllHistoryBotsViewItem();
-                    hb.BotName = botName;
+                    hb.Name = botName;
                     hb.BotSteps = i.Select(x => new GetAllHistoryStepsViewItem()
                     {
-                        StepRank = x.BotStepRank,
-                        StepSuit = x.BotStepSuit
+                        Rank = x.Rank,
+                        Suit = x.Suit
                     }).ToList();
 
                     historyOfbots.Add(hb);
@@ -96,21 +96,21 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<BotStepsHistoryView> BotStepsOfGame(BotStepsHistoryView model)
         {
-            var botSteps = await _botStepRepository.GetStepsAndBot(model.GameId);
-            var bots = botSteps.Select(x => x.Bots).ToList();
+            var botSteps = await _botStepRepository.GetByGameId(model.GameId);
+            var bots = botSteps.Select(x => x.Bot).ToList();
             var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
             var botStepsModel = new BotStepsHistoryView();
             botStepsModel.GameId = model.GameId;
             var botStepList = new List<BotStepsHistoryViewItem>();
             foreach (var item in gropedBotSteps)
             {
-                var botName = botSteps.Select(x => x.Bots).FirstOrDefault(x => x.Id == item.Key).BotName;
+                var botName = botSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == item.Key).Name;
                 var botStep = new BotStepsHistoryViewItem();
-                botStep.BotName = botName;
+                botStep.Name = botName;
                 botStep.BotSteps = item.Select(x => new BotCardViewItem()
                 {
-                    StepRank = x.BotStepRank,
-                    StepSuit = x.BotStepSuit
+                    Rank = x.Rank,
+                    Suit = x.Suit
                 })
                 .ToList();
                 botStepList.Add(botStep);
@@ -121,15 +121,15 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<PlayerStepsHistoryView> PlayerStepsOfGame(PlayerStepsHistoryView model)
         {
-            var playerSteps = await _playerStepRepository.GetPlayerSteps(model.GameId);
+            var playerSteps = await _playerStepRepository.GetByGameId(model.GameId);
 
             var playerStepsGameModel = new PlayerStepsHistoryView();
             playerStepsGameModel.GameId = model.GameId;
             playerStepsGameModel.PlayerStepsOfGame = playerSteps
                 .Select(x => new PlayerStepsViewItem()
                 {
-                    StepRank = x.StepRank,
-                    StepSuit = x.StepSuit
+                    Rank = x.Rank,
+                    Suit = x.Suit
                 })
                 .ToList();
 
@@ -142,15 +142,15 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new NullReferenceException("user model received a null argument!");
             }
-            var gamesByUserId = await _playerInGameRepository.GetGames(Guid.Parse(user.Result.Id));
+            var gamesByUserId = await _playerInGameRepository.GetByUserId(user.Result.Id);
             var allUserGamesModel = new GetAllGamesView();
             var playersDB = await _playerRepository.GetAll();
             allUserGamesModel.Email = model.Email;
-            var groupedGame = gamesByUserId.GroupBy(x => x.Games.Id);
+            var groupedGame = gamesByUserId.GroupBy(x => x.Game.Id);
             var gameList = new List<GetAllGamesViewItem>();
             foreach (var item in groupedGame)
             {
-                var fromGame = gamesByUserId.Select(x => x.Games).FirstOrDefault(x => x.Id == item.Key);
+                var fromGame = gamesByUserId.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key);
                 var playerGames = gamesByUserId.Select(x => x).FirstOrDefault(x => x.GameId == item.Key);
                 var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
                 var game = new GetAllGamesViewItem();

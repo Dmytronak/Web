@@ -2,6 +2,6 @@
 {
     public class Bot : BaseEntity
     {
-        public string BotName { get; set; }
+        public string Name { get; set; }
     }
 }

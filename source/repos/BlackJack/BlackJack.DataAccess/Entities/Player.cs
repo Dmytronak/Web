@@ -7,8 +7,8 @@ namespace BlackJack.DataAccess.Entities
     {
         public string Name { get; set; }
         
-        [ForeignKey("User")]
-        public Guid UserId { get; set; }
-        public virtual User Users { get; set; }
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual User User { get; set; }
     }
 }

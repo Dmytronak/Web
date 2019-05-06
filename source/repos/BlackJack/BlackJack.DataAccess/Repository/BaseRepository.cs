@@ -18,9 +18,9 @@ namespace BlackJack.DataAccess.Repository
             _dbSet = _context.Set<TEntity>();
         }
 
-        public async Task AddList(List<TEntity> item)
+        public async Task CreateRange(List<TEntity> items)
         {
-            await _dbSet.AddRangeAsync(item);
+            await _dbSet.AddRangeAsync(items);
             await _context.SaveChangesAsync();
 
         }
@@ -32,7 +32,7 @@ namespace BlackJack.DataAccess.Repository
 
         }
 
-        public async Task Delete(TEntity item)
+        public async Task Remove(TEntity item)
         {
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
@@ -55,9 +55,9 @@ namespace BlackJack.DataAccess.Repository
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
-        public async Task RemoveList(List<TEntity> item)
+        public async Task RemoveRange(List<TEntity> items)
         {
-            _dbSet.RemoveRange(item);
+            _dbSet.RemoveRange(items);
             await _context.SaveChangesAsync();
 
         }

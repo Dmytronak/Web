@@ -11,8 +11,8 @@ namespace BlackJack.DataAccess.Interfaces
         Task<TEntity> GetById(Guid id);
         Task Create(TEntity item);
         Task Update(TEntity item);
-        Task Delete(TEntity item);
-        Task AddList(List<TEntity> item);
-        Task RemoveList(List<TEntity> item);
+        Task Remove(TEntity item);
+        Task CreateRange(List<TEntity> items);
+        Task RemoveRange(List<TEntity> items);
     }
 }

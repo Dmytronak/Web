@@ -7,6 +7,6 @@ namespace BlackJack.BusinessLogic.Interfaces
     {
         Task<AccountResponseView> Login(LoginAccountView model);
         Task<AccountResponseView> Register(RegisterAccountView model);
-        Task<GetAllAccountsView> RegisterList();
+        Task<GetAllAccountView> RegisterList();
     }
 }

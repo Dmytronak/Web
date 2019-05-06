@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using BlackJack.DataAccess.Enums;
 
 namespace BlackJack.DataAccess.Entities
 {
@@ -7,6 +6,6 @@ namespace BlackJack.DataAccess.Entities
     {
         public int NumberOfBots { get; set; }
         public string Winner { get; set; }
-        public string Status { get; set; }
+        public StatusType Status { get; set; }
     }
 }

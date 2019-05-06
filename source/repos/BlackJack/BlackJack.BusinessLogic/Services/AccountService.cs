@@ -26,7 +26,7 @@ namespace BlackJack.BusinessLogic.Services
 
         public async Task<AccountResponseView> Login(LoginAccountView model)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
             if (!result.Succeeded)
             {
                 throw new Exception("INVALID Login or password");
@@ -46,7 +46,6 @@ namespace BlackJack.BusinessLogic.Services
                 UserName = model.Email,
                 Email = model.Email,
                 Year = model.Year,
-                RememberMe = model.RememberMe
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -61,12 +60,12 @@ namespace BlackJack.BusinessLogic.Services
 
         }
 
-        public async Task<GetAllAccountsView> RegisterList()
+        public async Task<GetAllAccountView> RegisterList()
         {
             var users = _userManager.Users.ToList();
-            var value = new GetAllAccountsView();
-            value.UsersReg = users
-                .Select(x => new GetAllAccountsViewItem()
+            var value = new GetAllAccountView();
+            value.Users = users
+                .Select(x => new UserGetAllAccountViewItem()
                 {
                     Year = x.Year,
                     Email = x.Email

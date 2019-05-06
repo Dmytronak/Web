@@ -1,15 +1,16 @@
-﻿using System;
+﻿using BlackJack.DataAccess.Enums;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlackJack.DataAccess.Entities
 {
     public class PlayerStep : BaseEntity
     {
-        public CardRank StepRank { get; set; }
-        public CardSuit StepSuit { get; set; }
+        public CardRankType Rank { get; set; }
+        public CardSuitType Suit { get; set; }
 
-        [ForeignKey("Game")]
         public Guid GameId { get; set; }
-        public virtual Game Games { get; set; }
+        [ForeignKey("GameId")]
+        public virtual Game Game { get; set; }
     }
 }
