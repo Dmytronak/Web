@@ -37,12 +37,10 @@ export class HistoryGameComponent implements OnInit {
     this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
       this.historyGames.games = x['games'];
       this.listOfGamesCount = this.historyGames.games.length;
-      for (let index = 0; index <  this.listOfGamesCount; index++) {
-        const x = this.historyGames.games[index];
+      this.historyGames.games.forEach(x => {
         x.status = Status[x.status];
-     
-      }
-    
+      });
+ 
     }, error => error);
 
   }
