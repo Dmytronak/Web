@@ -8,6 +8,7 @@ import { Player } from '../../shared/entities/player.view';
 import { PlayGameCardsViewItem } from '../../shared/entities/play-game.view';
 import { PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
 import { PlayGame } from '../../shared/entities/play-game.view';
+import { Status } from '../../shared/enums/status-type.enum.view';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   haveActiveGame:boolean= false;
   gameExisting:boolean = false;
   public players: Player[];
+  public statusEnum: Status;
   public playersDb: Player[];
   public playerReq: Player;
   cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
@@ -48,11 +50,11 @@ export class HomeComponent implements OnInit {
     
     .subscribe(x => {
       if (x) {
-        if(x['status'] === 8) {
+        if(x['status'] === Status.NoGames) {
         
           this.gameExisting = true;
         }
-        if(x['status'] !== 8) {
+        if(x['status'] !== Status.NoGames) {
         this.haveActiveGame = true;
         }
       }

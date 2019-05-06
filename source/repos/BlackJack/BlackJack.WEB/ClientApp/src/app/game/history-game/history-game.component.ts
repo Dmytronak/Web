@@ -3,6 +3,7 @@ import { HistoryGame, GetAllGamesViewItem } from '../../shared/entities/history-
 import { HistoryService } from '../../shared/services/history.service';
 import { PlayerSteps, PlayerStepsViewItem } from '../../shared/entities/player-steps.view';
 import { BotSteps, BotStepsHistoryViewItem, BotCardViewItem } from '../../shared/entities/bot-steps.view';
+import { Status } from '../../shared/enums/status-type.enum.view';
 
 @Component({
   selector: 'app-history-game',
@@ -14,6 +15,7 @@ export class HistoryGameComponent implements OnInit {
   showPlayerTable = false;
   showBotTable = false;
   showMainTable = true;
+  public statusEnum: Status;
   emailS: string = localStorage.getItem('email');
   game: GetAllGamesViewItem = { id: '', playerName: '', numberOfBots: 0, status: '', winner: '' };
   historyGames: HistoryGame = { email: this.emailS, games: [this.game] };
@@ -34,9 +36,15 @@ export class HistoryGameComponent implements OnInit {
   ngOnInit() {
     this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
       this.historyGames.games = x['games'];
-      debugger
       this.listOfGamesCount = this.historyGames.games.length;
+      for (let index = 0; index <  this.listOfGamesCount; index++) {
+        const x = this.historyGames.games[index];
+        x.status = Status[x.status];
+     
+      }
+    
     }, error => error);
+
   }
   showBotSteps(x) {
     debugger

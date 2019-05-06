@@ -1,3 +1,5 @@
+import { Status } from '../enums/status-type.enum.view';
+
 export class PlayGame {
     playerId: string;
     gameId: string;

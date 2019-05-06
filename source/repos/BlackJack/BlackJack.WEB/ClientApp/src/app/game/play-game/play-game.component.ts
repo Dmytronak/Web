@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PlayGame, PlayGameCardsViewItem, PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
 import { GameService } from '../../shared/services/game.service';
 import { AlertService } from '../../shared/services/alert.service';
+import { Status } from '../../shared/enums/status-type.enum.view';
 
 @Component({
   selector: 'app-play-game',
@@ -13,6 +14,7 @@ export class PlayGameComponent implements OnInit {
   error: string = '';
   gameExisting: boolean = false;
   haveActiveGame:boolean = false;
+  public statusEnum: Status;
   headBotSteps= ['Cards'];
   headBots= ['Bot name', 'Cards'];
   headPlayerSteps = ['Player cards'];
@@ -28,10 +30,12 @@ export class PlayGameComponent implements OnInit {
     this.gameService.getActiveGame()
     .subscribe(x => {
       if (x) {
+        debugger
         this.playGame.playerId = x['playerId'];
         this.playGame.playerName = x['playerName'];
         this.playGame.numberOfBots = x['numberOfBots'];
-        this.playGame.status = x['status'];
+        this.statusEnum = x['status'];
+        this.playGame.status = Status[this.statusEnum];
         this.playGame.winner = x['winner'];
         this.playGame.playerCards = x['playerCards'];
         this.playGame.bots = x['bots'];
@@ -41,7 +45,7 @@ export class PlayGameComponent implements OnInit {
           this.gameExisting = false;
         }
         
-        if(x['status'] === 8) {
+        if(x['status'] === Status.NoGames) {
           this.haveActiveGame =false;
           let errorMessage = { message: 'You havent active games! Play new game.' }
           this.error = errorMessage.message;
@@ -58,7 +62,8 @@ export class PlayGameComponent implements OnInit {
         if (x) {
           debugger
           this.playGame.gameId = x['gameId'];
-          this.playGame.status = x['status'];
+          this.statusEnum = x['status'];
+          this.playGame.status = Status[this.statusEnum];
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
@@ -78,7 +83,8 @@ export class PlayGameComponent implements OnInit {
         if (x) {
           debugger
           this.playGame.gameId = x['gameId'];
-          this.playGame.status = x['status'];
+          this.statusEnum = x['status'];
+          this.playGame.status = Status[this.statusEnum];
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
@@ -99,7 +105,8 @@ export class PlayGameComponent implements OnInit {
         if (x) {
           debugger
           this.playGame.playerId = x['playerId'];
-          this.playGame.status = x['status'];
+          this.statusEnum = x['status'];
+          this.playGame.status = Status[this.statusEnum];
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];

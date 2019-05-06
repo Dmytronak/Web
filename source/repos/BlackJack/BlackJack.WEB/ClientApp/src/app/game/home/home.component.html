@@ -1,38 +1,48 @@
 <div>
-    <form #f="ngForm">
+    <form #f="ngForm" class="form-group">
         <div>
             <p>Players: </p>
-            <select name="player" ngModel>
+            <select class="form-control" name="player" ngModel>
                 <option value="" disabled>Choose a player</option>
                 <option *ngFor="let x of players" [ngValue]="x">
                     {{ x.name }}
                 </option>
             </select>
-            <button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button>
+            <br>
+            <div>  
+                <p><label>Add new palyer</label></p> 
+                <button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button> 
+            </div>
+     
             <div *ngIf="showForm">
-                <input type="text" #name placeholder="Add player name">
+                <p><input class ="form-control" type="text" #name placeholder="Add player name"></p>
                 <button class="btn btn-success" (click)="addNewPlayer(name.value)"><i class="fas fa-plus"></i></button>
                 <button class="btn btn-danger" (click)="closeInput()"><i class="fas fa-times"></i></button>
             </div>
         </div>
+        <br>
         <div>
-            <p>Numbers Of Bots: </p>
-            <select name="numberOfBots" ngModel>
+            <label for="numberOfBots">Numbers Of Bots: </label>
+            <select class="form-control"name="numberOfBots" ngModel>
                 <option value="" disabled>Choose a number</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
             </select>
+    
         </div>
     </form>
+    
     <div *ngIf="brandNew" class="alert alert-success" role="alert">
         <strong>All set!</strong> PlayerCreate
     </div>
+<br>
     <div *ngIf="gameExisting">
-        <button class="btn btn-primary" (click)="playGame(f.value)">Play Game</button>
+       <button class="btn btn-primary" (click)="playGame(f.value)">Play Game</button>
     </div>
+
     <div *ngIf="haveActiveGame">
        <p> <label> You have active game already, you can`t start new</label></p>
         <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>

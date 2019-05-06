@@ -50,7 +50,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let e of playGame.bots">
-                            <td>{{e.botName}}</td>
+                            <td>{{e.name}}</td>
                             <td *ngFor="let q of e.botCards">
                                 <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg" width="88px">
                             </td>
