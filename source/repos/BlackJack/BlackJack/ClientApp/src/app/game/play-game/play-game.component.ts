@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, throwError } from 'rxjs';
 import { PlayGame, PlayGameCardsViewItem, PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
 import { GameService } from '../../shared/services/game.service';
 import { AlertService } from '../../shared/services/alert.service';

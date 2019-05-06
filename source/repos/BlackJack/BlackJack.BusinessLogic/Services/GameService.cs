@@ -672,7 +672,7 @@ namespace BlackJack.BusinessLogic.Services
                 var msm = botScore.Max(x => x.BotScore);
                 var botWinner = botScore.FirstOrDefault(x => x.BotScore == msm);
                 var profileWinnerBot = bots.FirstOrDefault(x => x.Id == botWinner.BotId);
-                if (playerScore == msm && playerScore >= 20)
+                if (playerScore == msm && status == "End")
                 {
                     status = Status.End.ToString();
                     winner = Status.Draw.ToString();
