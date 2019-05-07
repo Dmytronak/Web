@@ -11,7 +11,7 @@
             <br>
             <div>  
                 <p><label>Add new palyer</label></p> 
-                <p> <button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button></p>
+                <p><button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button></p>
             </div>
              
             <div *ngIf="showForm">
@@ -22,7 +22,7 @@
                 </p>
             </div>
         </div>
-        <br>
+
         <div>
             <label for="numberOfBots">Numbers Of Bots: </label>
             <select class="form-control"name="numberOfBots" ngModel>
@@ -40,7 +40,6 @@
     <div *ngIf="brandNew" class="alert alert-success" role="alert">
         <strong>All set!</strong> PlayerCreate
     </div>
-<br>
     <div *ngIf="gameExisting">
        <button class="btn btn-primary" (click)="playGame(f.value)">Play Game</button>
     </div>
