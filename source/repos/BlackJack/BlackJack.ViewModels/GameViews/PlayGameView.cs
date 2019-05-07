@@ -1,5 +1,4 @@
-﻿using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Enums;
+﻿using BlackJack.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,7 +14,7 @@ namespace BlackJack.ViewModels.GameViews
         [Range(1, 5,ErrorMessage ="Range from 1 to 5")]
         public int NumberOfBots { get; set; }
 
-        public Enum Status { get; set; }
+        public StatusType Status { get; set; }
         public string Winner { get; set; }
         public string PlayerName { get; set; }
         public List<CardPlayGameViewItem> PlayerCards { get; set; }

@@ -31,8 +31,3 @@
     color: rgb(255, 255, 255);
     background-color:  #343a40;
   }
-  .row{
-    min-width: fit-content;
-    min-height: fit-content;
-    min-block-size: fit-content;
-  }

@@ -35,7 +35,7 @@ export class PlayGameComponent implements OnInit {
         this.playGame.playerName = x['playerName'];
         this.playGame.numberOfBots = x['numberOfBots'];
         this.statusEnum = x['status'];
-        this.playGame.status = Status[this.statusEnum];
+        this.playGame.status = Status[this.statusEnum]
         this.playGame.winner = x['winner'];
         this.playGame.playerCards = x['playerCards'];
         this.playGame.bots = x['bots'];
@@ -63,7 +63,7 @@ export class PlayGameComponent implements OnInit {
           debugger
           this.playGame.gameId = x['gameId'];
           this.statusEnum = x['status'];
-          this.playGame.status = Status[this.statusEnum];
+          this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
@@ -84,7 +84,7 @@ export class PlayGameComponent implements OnInit {
           debugger
           this.playGame.gameId = x['gameId'];
           this.statusEnum = x['status'];
-          this.playGame.status = Status[this.statusEnum];
+          this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];
@@ -106,7 +106,7 @@ export class PlayGameComponent implements OnInit {
           debugger
           this.playGame.playerId = x['playerId'];
           this.statusEnum = x['status'];
-          this.playGame.status = Status[this.statusEnum];
+          this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
           this.playGame.playerCards = x['playerCards'];
           this.playGame.bots = x['bots'];

@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   public playerReq: Player;
   cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
   botsGame: PlayGameBotsViewItem = { Name: '', botCards: [this.cardsGame] }
-  createGame: PlayGame = { gameId: '', playerId: '', status: '', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };
+  createGame: PlayGame = { gameId: '', playerId: '', status: '0', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };
   newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger

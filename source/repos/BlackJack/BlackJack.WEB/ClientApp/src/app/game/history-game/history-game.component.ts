@@ -40,7 +40,6 @@ export class HistoryGameComponent implements OnInit {
       this.historyGames.games.forEach(x => {
         x.status = Status[x.status];
       });
- 
     }, error => error);
 
   }
@@ -70,5 +69,7 @@ export class HistoryGameComponent implements OnInit {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;
+    this.playerSteps.playerStepsOfGame = null;
+    this.allBotSteps.botSteps=null;
   }
 }

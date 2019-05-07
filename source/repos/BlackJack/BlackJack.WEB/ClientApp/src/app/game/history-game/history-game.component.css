@@ -1,6 +1,6 @@
 .tableFixHead    { 
     overflow-y: auto; 
-    height: 556px;
+    height: 580px;
     width: auto;
 }
 .tableFixHead th { 
@@ -12,7 +12,7 @@
      text-align:center;
     }
  th, td {
-      padding: 8px 16px;
+      padding: 0.5%;
     }
  th { 
      background:#343a40; 
