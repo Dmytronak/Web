@@ -83,6 +83,9 @@ export class HomeComponent implements OnInit {
           this.error = err;
         })
     }
+    if (duplicatePlayer>0) {
+      this.error = 'This player name already has, chose at dropbox';
+    }
 
   }
   showInput() {

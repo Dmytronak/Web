@@ -11,13 +11,15 @@
             <br>
             <div>  
                 <p><label>Add new palyer</label></p> 
-                <button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button> 
+                <p> <button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button></p>
             </div>
-     
+             
             <div *ngIf="showForm">
                 <p><input class ="form-control" type="text" #name placeholder="Add player name"></p>
-                <button class="btn btn-success" (click)="addNewPlayer(name.value)"><i class="fas fa-plus"></i></button>
+               
+                <p><button class="btn btn-success" (click)="addNewPlayer(name.value)"><i class="fas fa-plus"></i></button>
                 <button class="btn btn-danger" (click)="closeInput()"><i class="fas fa-times"></i></button>
+                </p>
             </div>
         </div>
         <br>
@@ -44,7 +46,8 @@
     </div>
 
     <div *ngIf="haveActiveGame">
-       <p> <label> You have active game already, you can`t start new</label></p>
+      <label> You have active game already, you can`t start new</label>
+      <br>
         <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
     </div>
     <div *ngIf="error" class="alert alert-danger" role="alert">
