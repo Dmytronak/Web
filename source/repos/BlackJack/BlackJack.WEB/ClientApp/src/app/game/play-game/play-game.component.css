@@ -23,18 +23,6 @@ p {
 .btn-danger{
     margin-right: 1%; 
 }
-@media (min-width: 360px) {
-   table,td,th,tr {
-        padding:0.1rem;
-        text-align: -webkit-center;
-        margin-bottom: auto;
-        min-width: auto;
-        font-size: 0.7rem;
-    }
-    img{
-        width: 61px;
-    }
-}
 @media (min-width: 560px) {
     table,td,th,tr {
          padding:0.1rem;
@@ -47,6 +35,29 @@ p {
          width: 78px;
      }
  }
+ @media (max-width: 411px) {
+    table,td,th,tr {
+         padding:0.1rem;
+         text-align: -webkit-center;
+         margin-bottom: auto;
+         min-width: auto;
+         font-size: 0.7rem;
+     }
+     img{
+         width: 61px;
+     }
+     .btn-info {
+        margin-right: 1%;
+        padding: 6px 10px;
+    }
+    .btn-danger {
+        margin-right: 1%;
+        padding: 6px 10px;
+    }
+    .btn-success {
+        padding: 6px 10px;
+    }
+ }
 @media (max-width: 320px) {
     table,td,th,tr {
         padding:0.1rem;
@@ -58,5 +69,16 @@ p {
     img{
     width: 52px;
     
+}
+.btn-info {
+    margin-right: 1%;
+    padding: 3px 10px;
+}
+.btn-danger {
+    margin-right: 1%;
+    padding: 3px 10px;
+}
+.btn-success {
+    padding: 3px 10px;
 }
 }

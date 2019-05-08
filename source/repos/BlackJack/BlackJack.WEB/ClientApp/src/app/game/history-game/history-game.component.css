@@ -58,6 +58,29 @@ table  {
         overflow-y: auto; 
         height: 25rem;
         width: auto;
+        font-size: 0.8rem;
+    }
+    .tableFixHead th { 
+        position: sticky; 
+        top: 0; 
+        border-top:0px;
+    }
+     img{
+     width: 59px;
+    }
+    .btn-info {
+        margin-right: 1%;
+        padding: 7px;
+    }
+    .btn-success {
+        padding: 7px;
+    }
+ } 
+ @media (max-width: 360px) {
+    .tableFixHead    { 
+        overflow-y: auto; 
+        height: 25rem;
+        width: auto;
         font-size: 0.7rem;
     }
     .tableFixHead th { 
