@@ -44,8 +44,8 @@
                 <th colspan="8" *ngFor="let head of headBots">{{head}}</th>
             </thead>
             <thead class="thead-dark">
-                <th *ngFor="let e of playGame.bots">{{e.name}}</th>
-                <th colspan="2"></th>
+                <th colspan="" *ngFor="let e of playGame.bots">{{e.name}}</th>
+               
             </thead>
                 <tbody>
                     <td *ngFor="let e of playGame.bots">
