@@ -30,30 +30,6 @@ table  {
     border-color: #ddd;
 }
 
-@media (min-width: 360px) {
-    .tableFixHead    { 
-        overflow-y: auto; 
-        height: 30rem;
-        width: auto;
-        font-size: 0.9rem;
-    }
-    .tableFixHead th { 
-        position: sticky; 
-        top: 0; 
-        border-top:0px;
-    }
-     img{
-         width: 61px;
-    }
-    .btn-info {
-        margin-right: 1%;
-        padding: 3px;
-    }
-    .btn-success {
-        padding: 3px;
-    }
- }
-
  @media (min-width: 560px) {
     .tableFixHead { 
         overflow-y: auto; 
@@ -77,8 +53,7 @@ table  {
         padding: 7px 17px;
     }
   }
-
- @media (max-width: 320px) {
+ @media (max-width: 403px) {
     .tableFixHead    { 
         overflow-y: auto; 
         height: 25rem;

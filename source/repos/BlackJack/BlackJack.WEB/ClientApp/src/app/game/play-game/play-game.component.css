@@ -3,6 +3,8 @@ table,td,th,tr {
     text-align: -webkit-center;
     margin-bottom: auto;
     min-width: auto;
+    font-size: 0.7rem;
+    
 }
 .table thead th{
     vertical-align: middle;
@@ -10,6 +12,7 @@ table,td,th,tr {
 img{
     margin-bottom: 3px;
     margin-top: 3px; 
+    width: 52px;
 }
 p {
     margin-bottom: 0rem;
