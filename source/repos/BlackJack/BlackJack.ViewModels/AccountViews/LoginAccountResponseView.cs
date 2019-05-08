@@ -1,6 +1,6 @@
 ﻿namespace BlackJack.ViewModels.AccountViews
 {
-    public class AccountResponseView
+    public class LoginAccountResponseView
     {
         public string Token { get; set; }
     }

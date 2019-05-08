@@ -13,7 +13,7 @@ namespace BlackJack.ViewModels.GameViews
         [Required(ErrorMessage = "GameId is required")]
         public Guid GameId { get; set; }
 
-        public Enum Status { get; set; }
+        public StatusType Status { get; set; }
         public string Winner { get; set; }
         public string PlayerName { get; set; }
 

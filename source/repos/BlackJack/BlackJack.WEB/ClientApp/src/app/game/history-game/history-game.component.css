@@ -6,6 +6,9 @@ table  {
  th, td {
       padding: 0.5%;
 }
+img{
+    width: 78px;
+}
  th { 
      background:#343a40; 
      color: rgb(255, 255, 255); 
@@ -53,7 +56,7 @@ table  {
         padding: 7px 17px;
     }
   }
- @media (max-width: 403px) {
+ @media (max-width: 411px) {
     .tableFixHead    { 
         overflow-y: auto; 
         height: 25rem;

@@ -30,9 +30,9 @@ export class RegistrationFormComponent implements OnInit {
       'email': ['', Validators.email],
       'year': ['', [Validators.minLength(4),YearRange, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       'password': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
-      'passwordConfirm': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
+      'confirmPassword': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
     }, {
-        validator: MustMatch('password', 'passwordConfirm')
+        validator: MustMatch('password', 'confirmPassword')
       });
   }
 
@@ -42,7 +42,7 @@ export class RegistrationFormComponent implements OnInit {
         email: '',
         year: 0,
         password: '',
-        passwordConfirm: '',
+        confirmPassword: '',
         token: '',
       }
     this.userService.registerUsers().subscribe((user: User[]) => {

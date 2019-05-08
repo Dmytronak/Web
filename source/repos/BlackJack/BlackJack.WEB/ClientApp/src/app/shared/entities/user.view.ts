@@ -2,6 +2,6 @@ export class User {
     email: string;  
     password: string;
     year: number;
-    passwordConfirm: string;
+    confirmPassword: string;
     token: string;
 }

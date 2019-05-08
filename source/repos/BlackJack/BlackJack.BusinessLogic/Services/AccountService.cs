@@ -24,7 +24,7 @@ namespace BlackJack.BusinessLogic.Services
         }
 
 
-        public async Task<AccountResponseView> Login(LoginAccountView model)
+        public async Task<LoginAccountResponseView> Login(LoginAccountView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
             if (!result.Succeeded)
@@ -34,12 +34,12 @@ namespace BlackJack.BusinessLogic.Services
             }
             var user = _userManager.Users.SingleOrDefault(x => x.Email == model.Email);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, user);
-            var val = new AccountResponseView();
+            var val = new LoginAccountResponseView();
             val.Token = encodedJwt;
             return val;
         }
 
-        public async Task<AccountResponseView> Register(RegisterAccountView model)
+        public async Task<LoginAccountResponseView> Register(RegisterAccountView model)
         {
             var user = new User
             {
@@ -54,7 +54,7 @@ namespace BlackJack.BusinessLogic.Services
             }
             //await _signInManager.SignInAsync(user, false);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(model.Email, user);
-            var val = new AccountResponseView();
+            var val = new LoginAccountResponseView();
             val.Token = encodedJwt;
             return val;
 

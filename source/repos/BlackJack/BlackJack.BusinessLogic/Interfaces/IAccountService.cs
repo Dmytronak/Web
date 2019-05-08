@@ -5,8 +5,8 @@ namespace BlackJack.BusinessLogic.Interfaces
 {
     public interface IAccountService
     {
-        Task<AccountResponseView> Login(LoginAccountView model);
-        Task<AccountResponseView> Register(RegisterAccountView model);
+        Task<LoginAccountResponseView> Login(LoginAccountView model);
+        Task<LoginAccountResponseView> Register(RegisterAccountView model);
         Task<GetAllAccountView> RegisterList();
     }
 }

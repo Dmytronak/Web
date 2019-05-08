@@ -11,13 +11,11 @@ namespace BlackJack.ViewModels.AccountViews
         public int Year { get; set; }
 
         [Required(ErrorMessage = "Pasword is required")]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         [Required]
         [Compare("Password", ErrorMessage = "Passwords is not confirmed")]
-        [DataType(DataType.Password)]
-        public string PasswordConfirm { get; set; }
+        public string ConfirmPassword { get; set; }
 
     }
 }
