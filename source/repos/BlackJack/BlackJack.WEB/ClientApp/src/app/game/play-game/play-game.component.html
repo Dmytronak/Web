@@ -27,37 +27,31 @@
             </thead>
         </table>
         <table class="table">
-            <tr>
-                <td>
-                    <thead class="thead-dark">
-                        <tr>
-                            <th *ngFor="let head of headPlayerSteps">{{head}}</th>
-                            <th colspan="5"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                <td *ngFor="let d of playGame.playerCards">
-                    <img src="http://localhost:59257/images/cards/{{d.rank}}_{{d.suit}}.svg" width="88px">
-                </td>
-                </tbody>
-                </td>
-                <td>
-                    <thead class="thead-dark">
-                        <tr>
-                            <th *ngFor="let head of headBots">{{head}}</th>
-                            <th colspan="5"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let e of playGame.bots">
-                            <td>{{e.name}}</td>
-                            <td *ngFor="let q of e.botCards">
-                                <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg" width="88px">
+            <thead>
+                <th colspan="8" *ngFor="let head of headPlayerSteps">{{head}}</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td *ngFor="let d of playGame.playerCards">
+                        <img src="http://localhost:59257/images/cards/{{d.rank}}_{{d.suit}}.svg" width="78px">
+                  
+                    </td>
+                </tr>
+                <tr></tr>
+            </tbody>
+            <thead>
+                <th colspan="8" *ngFor="let head of headBots">{{head}}</th>
+            </thead>
+            <thead>
+                <th *ngFor="let e of playGame.bots">{{e.name}}</th>
+            </thead>
+                <tbody>
+                        <td *ngFor="let e of playGame.bots">
+                                <tr *ngFor="let q of e.botCards">
+                                  <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg" width="78px">
+                                </tr>
                             </td>
-                        </tr>
-                    </tbody>
-                </td>
-            </tr>
+                </tbody>
         </table>
     </div>
 </div>

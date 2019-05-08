@@ -44,7 +44,7 @@ export class HistoryGameComponent implements OnInit {
 
   }
   showBotSteps(x) {
-    debugger
+    
     this.allBotSteps.gameId = x.id;
     this.historyService.getBotSteps(this.allBotSteps).subscribe(x => {
     this.allBotSteps.botSteps= x['botSteps'];
@@ -55,7 +55,7 @@ export class HistoryGameComponent implements OnInit {
 
   }
   showPlayerSteps(x) {
-    debugger
+   
     this.playerSteps.gameId = x.id;
     this.historyService.getPlayerSteps(this.playerSteps).subscribe(x => {
       this.playerSteps.playerStepsOfGame = x['playerStepsOfGame'];

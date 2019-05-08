@@ -1,20 +1,9 @@
-.table {
-    margin: auto;
-    height: auto;
-    width: auto;
-    text-align: -webkit-center;
-    min-width: -webkit-fill-available;
-}
-.td,tr,th {
-    width: auto; 
-    height: auto;
-    text-align: -webkit-center;
-    padding: 0.43rem;
+table,td,th {
+    padding:0.1rem;
     
 }
 p {
     margin-bottom: 0rem;
-    
 }
 .btn-success{
     margin-right: 1%;

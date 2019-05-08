@@ -16,7 +16,7 @@ export class PlayGameComponent implements OnInit {
   haveActiveGame:boolean = false;
   public statusEnum: Status;
   headBotSteps= ['Cards'];
-  headBots= ['Bot name', 'Cards'];
+  headBots= ['Bots'];
   headPlayerSteps = ['Player cards'];
   headElements = ['Player name', 'Number of bots', 'Status', 'Winner', ''];
   cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
@@ -30,7 +30,7 @@ export class PlayGameComponent implements OnInit {
     this.gameService.getActiveGame()
     .subscribe(x => {
       if (x) {
-        debugger
+        
         this.playGame.playerId = x['playerId'];
         this.playGame.playerName = x['playerName'];
         this.playGame.numberOfBots = x['numberOfBots'];
@@ -60,7 +60,7 @@ export class PlayGameComponent implements OnInit {
     this.gameService.continueGame(this.playGame)
       .subscribe(x => {
         if (x) {
-          debugger
+          
           this.playGame.gameId = x['gameId'];
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
@@ -81,7 +81,7 @@ export class PlayGameComponent implements OnInit {
     this.gameService.endGame(this.playGame)
       .subscribe(x => {
         if (x) {
-          debugger
+
           this.playGame.gameId = x['gameId'];
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
@@ -103,7 +103,7 @@ export class PlayGameComponent implements OnInit {
     this.gameService.playGame(this.playGame)
       .subscribe(x => {
         if (x) {
-          debugger
+     
           this.playGame.playerId = x['playerId'];
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]

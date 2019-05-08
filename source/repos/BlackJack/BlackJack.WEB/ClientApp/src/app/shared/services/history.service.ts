@@ -20,12 +20,12 @@ export class HistoryService {
     return this.http.get<HistoryGame[]>(this.baseUrl + "/history/allUserGames", { params:params })
    }
    getPlayerSteps(history:PlayerSteps) {
-     debugger
+   
     let params = new HttpParams().set("gameId",history.gameId); 
     return this.http.get<HistoryGame[]>(this.baseUrl + "/history/playerSteps", { params:params })
    }
    getBotSteps(history:BotSteps) {
-    debugger
+    
     let params = new HttpParams().set("gameId",history.gameId); 
     return this.http.get<HistoryGame[]>(this.baseUrl + "/history/botSteps", { params:params })
    }
