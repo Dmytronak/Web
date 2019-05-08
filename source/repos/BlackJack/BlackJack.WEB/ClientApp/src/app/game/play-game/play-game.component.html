@@ -23,34 +23,35 @@
                                     class="fa fa-arrow-left"></i></button>
                         </div>
                     </th>
+                
                 </tr>
             </thead>
         </table>
         <table class="table">
-            <thead>
+            <thead class="thead-dark">
                 <th colspan="8" *ngFor="let head of headPlayerSteps">{{head}}</th>
             </thead>
             <tbody>
                 <tr>
                     <td *ngFor="let d of playGame.playerCards">
-                        <img src="http://localhost:59257/images/cards/{{d.rank}}_{{d.suit}}.svg" width="78px">
+                        <img src="http://localhost:59257/images/cards/{{d.rank}}_{{d.suit}}.svg">
                   
                     </td>
                 </tr>
                 <tr></tr>
             </tbody>
-            <thead>
+            <thead class="thead-dark">
                 <th colspan="8" *ngFor="let head of headBots">{{head}}</th>
             </thead>
-            <thead>
+            <thead class="thead-dark">
                 <th *ngFor="let e of playGame.bots">{{e.name}}</th>
             </thead>
                 <tbody>
-                        <td *ngFor="let e of playGame.bots">
-                                <tr *ngFor="let q of e.botCards">
-                                  <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg" width="78px">
-                                </tr>
-                            </td>
+                    <td *ngFor="let e of playGame.bots">
+                        <tr *ngFor="let q of e.botCards">
+                            <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg">
+                        </tr>
+                    </td>
                 </tbody>
         </table>
     </div>

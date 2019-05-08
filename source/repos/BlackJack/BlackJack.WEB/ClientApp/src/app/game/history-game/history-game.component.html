@@ -1,28 +1,32 @@
 <h2> History of user games</h2>
 <div class="tableFixHead">
-  <table *ngIf="showMainTable">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="row" *ngFor="let head of headElements">{{head}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let x of historyGames.games | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-        <td>{{x.playerName}}</td>
-        <td>{{x.numberOfBots}}</td>
-        <td>{{x.status}}</td>
-        <td>{{x.winner}}</td>
-        <td>
-          <button class="btn btn-info" (click)="showBotSteps(x)">
-              <i class="fas fa-robot"></i>
-          </button>
-          <button class="btn btn-success" (click)="showPlayerSteps(x)">
-              <i class="fas fa-user"></i>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div *ngIf="showMainTable">
+      <table>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="row" *ngFor="let head of headElements">{{head}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let x of historyGames.games | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
+              <td>{{x.playerName}}</td>
+              <td>{{x.numberOfBots}}</td>
+              <td>{{x.status}}</td>
+              <td>{{x.winner}}</td>
+              <td>
+                <button class="btn btn-info" (click)="showBotSteps(x)">
+                    <i class="fas fa-robot"></i>
+                </button>
+                <button class="btn btn-success" (click)="showPlayerSteps(x)">
+                    <i class="fas fa-user"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ngb-pagination [collectionSize]="listOfGamesCount" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  </div>
+  
   <div *ngIf="showPlayerTable">
       <table class="table">
         <thead class="thead-dark">
@@ -32,7 +36,7 @@
         </thead>
         <tbody>
           <td *ngFor="let d of playerSteps.playerStepsOfGame">
-            <img src="http://localhost:59257/images/cards/{{d.rank}}_{{d.suit}}.svg" width="88px">
+            <img src="http://localhost:59257/images/cards/{{d.rank}}_{{d.suit}}.svg">
           </td>
         </tbody>
       </table>
@@ -51,7 +55,7 @@
           <tr *ngFor="let e of allBotSteps.botSteps">
             <td>{{e.name}}</td>
             <td *ngFor="let q of e.botSteps">
-              <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg" width="88px">
+              <img src="http://localhost:59257/images/cards/{{q.rank}}_{{q.suit}}.svg">
             </td>
           </tr>
         </tbody>
@@ -61,4 +65,3 @@
       </button>
     </div>
 </div>
-<ngb-pagination [collectionSize]="listOfGamesCount" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
