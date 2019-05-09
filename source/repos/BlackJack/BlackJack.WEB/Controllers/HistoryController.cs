@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.ViewModels.HistoryViews;
-using BlackJack.BusinessLogic.Interfaces;
+using BlackJack.BusinessLogic.Services.Interfaces;
 
 namespace BlackJack.Controllers
 {
@@ -17,17 +17,7 @@ namespace BlackJack.Controllers
        
             _historyService = historyService;
         }
-        [HttpPost, Route("allHistory")]
-        public async Task<IActionResult> History([FromBody] GetAllHistoryView model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var result = await _historyService.HistoryOfGames(model);
-            return Ok(result);
-        }
+       
         [HttpGet, Route("allUserGames")]
         public async Task<IActionResult> AllUserGames([FromHeader] GetAllGamesView model)
         {
@@ -36,7 +26,7 @@ namespace BlackJack.Controllers
                 return View(model);
             }
 
-            var result = await _historyService.AllUserGames(model);
+            var result = await _historyService.GetAllGames(model);
             return Ok(result);
         }
         [HttpGet, Route("playerSteps")]
@@ -47,7 +37,7 @@ namespace BlackJack.Controllers
                 return View(model);
             }
 
-            var result = await _historyService.PlayerStepsOfGame(model);
+            var result = await _historyService.PlayerStep(model);
             return Ok(result);
         }
         [HttpGet, Route("botSteps")]
@@ -58,7 +48,7 @@ namespace BlackJack.Controllers
                 return View(model);
             }
 
-            var result = await _historyService.BotStepsOfGame(model);
+            var result = await _historyService.BotStep(model);
             return Ok(result);
         }
 

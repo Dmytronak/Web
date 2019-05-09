@@ -10,32 +10,30 @@ namespace BlackJack.DataAccess.Repository
 {
     public class PlayerInGameRepository : BaseRepository<PlayerInGame>, IPlayerInGameRepository
     {
-        DbSet<PlayerInGame> _dbSet;
         public PlayerInGameRepository(ApplicationContext context) : base(context)
         {
-            _dbSet = context.Set<PlayerInGame>();
         }
-        public async Task<List<PlayerInGame>> GetByGameId(Guid GameId)
+        public async Task<List<PlayerInGame>> GetByGameId(Guid gameId)
         {
             var result = await _dbSet
-                .Where(x => x.GameId == GameId)
+                .Where(x => x.GameId == gameId)
                 .Include(x=>x.Player)
                 .ToListAsync();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetByPlayerId(Guid PlayerId)
+        public async Task<List<PlayerInGame>> GetByPlayerId(Guid playerId)
         {
             var result = await _dbSet
-                .Where(x => x.PlayerId == PlayerId)
+                .Where(x => x.PlayerId == playerId)
                 .Include(x => x.Game)
                 .Include(x=>x.Player)
                 .ToListAsync();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetByUserId(string UserId)
+        public async Task<List<PlayerInGame>> GetByUserId(string userId)
         {
             var result = await _dbSet
-                .Where(x => x.Player.UserId == UserId)
+                .Where(x => x.Player.UserId == userId)
                 .Include(x => x.Game)
                 .Include(x=>x.Player)
                 .ToListAsync();

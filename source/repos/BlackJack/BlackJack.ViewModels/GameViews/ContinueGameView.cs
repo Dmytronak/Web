@@ -2,36 +2,32 @@
 using BlackJack.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.GameViews
 {
     public class ContinueGameView
     {
-        [Required(ErrorMessage = "PlayerId is required")]
-        public Guid PlayerId { get; set; }
-        [Required(ErrorMessage = "GameId is required")]
-        public Guid GameId { get; set; }
-
         public StatusType Status { get; set; }
         public string Winner { get; set; }
-        public string PlayerName { get; set; }
-      
-        public List<CardContinueGameViewItem> PlayerCards { get; set; }
+        public List<PlayerContinueGameViewItem> Player { get; set; }
         public List<BotContinueGameViewItem> Bots { get; set; }
 
         public ContinueGameView()
         {
             Bots = new List<BotContinueGameViewItem>();
-            PlayerCards = new List<CardContinueGameViewItem>();
+            Player = new List<PlayerContinueGameViewItem>();
         }
     }
     public class BotContinueGameViewItem
     {
         public string Name { get; set; }
-        public List<CardContinueGameViewItem> BotCards { get; set; }
+        public List<CardContinueGameViewItem> Cards { get; set; }
     }
-    
+    public class PlayerContinueGameViewItem
+    {
+        public string Name { get; set; }
+        public List<CardContinueGameViewItem> Cards { get; set; }
+    }
     public class CardContinueGameViewItem
     {
         public CardRankType Rank { get; set; }

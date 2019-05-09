@@ -10,16 +10,13 @@ namespace BlackJack.DataAccess.Repository
 {
     public class CardRepository : BaseRepository<Card>, ICardRepository
     {
-        DbSet<Card> _dbSet;
-
         public CardRepository(ApplicationContext context) : base(context)
         {
-            _dbSet = context.Set<Card>();
         }
-        public async Task<List<Card>> GetByGameId(Guid GameId)
+        public async Task<List<Card>> GetByGameId(Guid gameId)
         {
             var result = await _dbSet
-                .Where(x => x.GameId == GameId)
+                .Where(x => x.GameId == gameId)
                 .ToListAsync();
             return result;
         }

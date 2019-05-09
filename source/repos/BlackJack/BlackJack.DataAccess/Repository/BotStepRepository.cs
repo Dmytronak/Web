@@ -10,25 +10,22 @@ namespace BlackJack.DataAccess.Repository
 {
     public class BotStepRepository : BaseRepository<BotStep>, IBotStepRepository
     {
-        DbSet<BotStep> _dbSet;
-
         public BotStepRepository(ApplicationContext context) : base(context)
         {
-            _dbSet = context.Set<BotStep>();
         }
-        public async Task<List<BotStep>> GetByGameId(Guid GameId)
+        public async Task<List<BotStep>> GetByGameId(Guid gameId)
         {
             var result = await _dbSet
-                .Where(x => x.GameId == GameId)
+                .Where(x => x.GameId == gameId)
                 .Include(x =>x.Bot)
                 .ToListAsync();
             return result;
         }
 
-        public async Task<List<BotStep>> GetStepsByBotId(Guid BotId)
+        public async Task<List<BotStep>> GetStepByBotId(Guid botId)
         {
             var result = await _dbSet
-                .Where(x => x.BotId == BotId)
+                .Where(x => x.BotId == botId)
                 .ToListAsync();
             return result;
         }

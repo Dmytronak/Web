@@ -9,16 +9,14 @@ using System.Threading.Tasks;
 namespace BlackJack.DataAccess.Repository
 {
     public class PlayerRepository : BaseRepository<Player>, IPlayerRepository
-    {
-        DbSet<Player> _dbSet;
+    { 
         public PlayerRepository(ApplicationContext context) : base(context)
         {
-            _dbSet = context.Set<Player>();
         }
-        public async Task<List<Player>> GetByUserId(string UserId)
+        public async Task<List<Player>> GetByUserId(string userId)
         {
             var result = await _dbSet
-                .Where(x => x.UserId == UserId)
+                .Where(x => x.UserId == userId)
                 .ToListAsync();
             return result;
         }

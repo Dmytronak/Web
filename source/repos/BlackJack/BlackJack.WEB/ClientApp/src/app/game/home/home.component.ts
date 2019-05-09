@@ -28,8 +28,9 @@ export class HomeComponent implements OnInit {
   public playersDb: Player[];
   public playerReq: Player;
   cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
-  botsGame: PlayGameBotsViewItem = { Name: '', botCards: [this.cardsGame] }
-  createGame: PlayGame = { gameId: '', playerId: '', status: '0', winner: '', playerName: '', numberOfBots: 0, playerCards: [this.cardsGame], bots: [this.botsGame] };
+  botsGame: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
+  playerGame: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
+  createGame: PlayGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: [this.playerGame], bots: [this.botsGame] };
   newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
@@ -38,20 +39,10 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
-    this.gameService.getExistingPlayers(this.playerReq).subscribe(x => {
-      this.players = x['players'];
-    }, error => error);
-    this.gameService.getExistingPlayers(this.playerReq).subscribe(x => {
-      this.playersDb = x['players'];
-    }, error => error);
-
     this.gameService.getActiveGame()
-    
     .subscribe(x => {
       if (x) {
         if(x['status'] === Status.NoGames) {
-        
           this.gameExisting = true;
         }
         if(x['status'] !== Status.NoGames) {
@@ -62,31 +53,6 @@ export class HomeComponent implements OnInit {
       err => {
         this.error = err;
       });
-  }
-  addNewPlayer(name: string) {
-    debugger
-    this.newPlayer.name = name;
-    this.newPlayer.email =this.emailS;
-    let newUser = this.newPlayer.name;
-    let duplicatePlayer = this.playersDb.filter(x => { return x['name'] === newUser; }).length;
-    if (!duplicatePlayer) {
-      debugger
-      this.gameService.createNewPlayer(this.newPlayer)
-        .subscribe(x => {
-          if(x){ 
-            debugger
-            this.newPlayer.id = x['playerId']
-            this.players.push(this.newPlayer);
-            this.brandNew = true;
-          }
-        }, err => {
-          this.error = err;
-        })
-    }
-    if (duplicatePlayer>0) {
-      this.error = 'This player name already has, chose at dropbox';
-    }
-
   }
   showInput() {
     this.showForm = true;
@@ -100,7 +66,7 @@ export class HomeComponent implements OnInit {
   }
   playGame(f) {
     debugger
-    this.createGame.playerId = f['player'].id;
+    this.createGame.email = localStorage.getItem('email')
     this.createGame.numberOfBots =f['numberOfBots'];
       this.gameService.playGame(this.createGame)
       .subscribe(x => {

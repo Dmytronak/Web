@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlackJack.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20190506113958_BJ")]
+    [Migration("20190509152524_BJ")]
     partial class BJ
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,6 +197,8 @@ namespace BlackJack.DataAccess.Migrations
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);

@@ -5,6 +5,6 @@ namespace BlackJack.BusinessLogic.Providers.Interfaces
 {
     public interface IJwtProvider
     {
-        Task<string> GenerateJwtToken(string email, User user);
+        Task<string> GenerateJwtToken(User user);
     }
 }

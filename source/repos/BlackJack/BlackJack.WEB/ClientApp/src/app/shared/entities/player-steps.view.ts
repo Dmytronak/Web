@@ -1,6 +1,7 @@
 export class PlayerSteps{
     gameId:string;
-    playerStepsOfGame:[PlayerStepsViewItem];
+    name:string;
+    playerSteps:[PlayerStepsViewItem];
 }
 export class PlayerStepsViewItem{
     rank:number;

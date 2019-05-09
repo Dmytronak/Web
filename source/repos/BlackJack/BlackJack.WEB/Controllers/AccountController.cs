@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BlackJack.BusinessLogic.Interfaces;
+using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.ViewModels.AccountViews;
 
 namespace BlackJack.Controllers
@@ -30,7 +30,7 @@ namespace BlackJack.Controllers
         [HttpGet, Route("register")]
         public async Task<GetAllAccountView> Register()
         {
-            var res =  await _accountService.RegisterList();
+            var res =  await _accountService.GetAll();
             return res;
         }
         [HttpPost,Route("register")]

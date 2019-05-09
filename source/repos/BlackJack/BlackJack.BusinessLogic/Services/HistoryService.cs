@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using BlackJack.BusinessLogic.Interfaces;
+using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Identity;
@@ -35,107 +35,56 @@ namespace BlackJack.BusinessLogic.Services
             _playerInGameRepository = playerInGameRepository;
 
         }
-        public async Task<GetAllHistoryView> HistoryOfGames(GetAllHistoryView model)
-        {
-            var playerGames = await _playerInGameRepository.GetByPlayerId(model.PlayerId);
-            if (playerGames.Count == 0)
-            {
-                throw new NullReferenceException("PlayerId not correct!");
-            }
-            var games = playerGames.Select(x => x.Game).ToList();
-            var groupedGames = games.GroupBy(x => x.Id);
-
-            var historyModel = new GetAllHistoryView();
-            historyModel.PlayerId = model.PlayerId;
-
-            var items = new List<GetAllHistoryViewItem>();
-            foreach (var item in groupedGames)
-            {
-                var playerSteps = await _playerStepRepository.GetByGameId(item.Key);
-                var bostSteps = await _botStepRepository.GetByGameId(item.Key);
-                var numbOfBots = playerSteps.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key).NumberOfBots;
-                var status = playerSteps.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key).Status;
-                var winner = playerSteps.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key).Winner;
-                var playerNeme = playerGames.Select(x => x.Player).FirstOrDefault(x => x.Id == model.PlayerId).Name;
-
-                var historyOfgame = new GetAllHistoryViewItem();
-                historyOfgame.Id = item.Key;
-                historyOfgame.NumberOfBots = numbOfBots;
-                historyOfgame.Status = status;
-                historyOfgame.Winner = winner;
-                historyOfgame.PlayerName = playerNeme;
-                historyOfgame.PlayerSteps = playerSteps.Select(x => new GetAllHistoryStepsViewItem()
-                {
-                    Rank = x.Rank,
-                    Suit = x.Suit
-                })
-                .ToList();
-
-                var groupedBots = bostSteps.GroupBy(x => x.Bot.Id);
-                var historyOfbots = new List<GetAllHistoryBotsViewItem>();
-                foreach (var i in groupedBots)
-                {
-                    var botName = bostSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == i.Key).Name;
-
-                    var hb = new GetAllHistoryBotsViewItem();
-                    hb.Name = botName;
-                    hb.BotSteps = i.Select(x => new GetAllHistoryStepsViewItem()
-                    {
-                        Rank = x.Rank,
-                        Suit = x.Suit
-                    }).ToList();
-
-                    historyOfbots.Add(hb);
-                }
-                historyOfgame.Bots = historyOfbots;
-                items.Add(historyOfgame);
-            }
-            historyModel.Games.AddRange(items);
-
-            return historyModel;
-        }
-        public async Task<BotStepsHistoryView> BotStepsOfGame(BotStepsHistoryView model)
+        public async Task<BotStepsHistoryView> BotStep(BotStepsHistoryView model)
         {
             var botSteps = await _botStepRepository.GetByGameId(model.GameId);
             var bots = botSteps.Select(x => x.Bot).ToList();
             var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
-            var botStepsModel = new BotStepsHistoryView();
-            botStepsModel.GameId = model.GameId;
             var botStepList = new List<BotStepsHistoryViewItem>();
             foreach (var item in gropedBotSteps)
             {
                 var botName = botSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == item.Key).Name;
-                var botStep = new BotStepsHistoryViewItem();
-                botStep.Name = botName;
-                botStep.BotSteps = item.Select(x => new BotCardViewItem()
+                var botStep = new BotStepsHistoryViewItem()
                 {
-                    Rank = x.Rank,
-                    Suit = x.Suit
-                })
-                .ToList();
+                    Name = botName,
+                    Steps = item.Select(x => new BotCardViewItem()
+                    {
+                        Rank = x.Rank,
+                        Suit = x.Suit
+                    })
+                .ToList()
+                };
                 botStepList.Add(botStep);
             }
-
-            botStepsModel.BotSteps.AddRange(botStepList);
-            return botStepsModel;
+            var response = new BotStepsHistoryView()
+            {
+                GameId = model.GameId,
+                Bots = botStepList
+            };
+            return response;
         }
-        public async Task<PlayerStepsHistoryView> PlayerStepsOfGame(PlayerStepsHistoryView model)
+        public async Task<PlayerStepsHistoryView> PlayerStep(PlayerStepsHistoryView model)
         {
             var playerSteps = await _playerStepRepository.GetByGameId(model.GameId);
-
-            var playerStepsGameModel = new PlayerStepsHistoryView();
-            playerStepsGameModel.GameId = model.GameId;
-            playerStepsGameModel.PlayerStepsOfGame = playerSteps
+            var playersAndGames = await _playerInGameRepository.GetByGameId(model.GameId);
+            var playersDB = await _playerRepository.GetAll();
+            var playerGames = playersAndGames.Select(x => x).FirstOrDefault(x => x.GameId == (model.GameId));
+            var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
+            var response = new PlayerStepsHistoryView()
+            {
+                Name = player.Name,
+                GameId = model.GameId,
+                PlayerSteps = playerSteps
                 .Select(x => new PlayerStepsViewItem()
                 {
                     Rank = x.Rank,
                     Suit = x.Suit
                 })
-                .ToList();
-
-            return playerStepsGameModel;
+                .ToList()
+            };
+            return response;
         }
-        public async Task<GetAllGamesView> AllUserGames(GetAllGamesView model)
+        public async Task<GetAllGamesView> GetAllGames(GetAllGamesView model)
         {
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -143,26 +92,28 @@ namespace BlackJack.BusinessLogic.Services
                 throw new NullReferenceException("user model received a null argument!");
             }
             var gamesByUserId = await _playerInGameRepository.GetByUserId(user.Result.Id);
-            var allUserGamesModel = new GetAllGamesView();
             var playersDB = await _playerRepository.GetAll();
-            allUserGamesModel.Email = model.Email;
             var groupedGame = gamesByUserId.GroupBy(x => x.Game.Id);
-            var gameList = new List<GetAllGamesViewItem>();
+            var gameList = new List<GameGetAllGameViewItem>();
             foreach (var item in groupedGame)
             {
                 var fromGame = gamesByUserId.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key);
                 var playerGames = gamesByUserId.Select(x => x).FirstOrDefault(x => x.GameId == item.Key);
                 var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
-                var game = new GetAllGamesViewItem();
-                game.Id = fromGame.Id;
-                game.PlayerName = player.Name;
-                game.NumberOfBots = fromGame.NumberOfBots;
-                game.Status = fromGame.Status;
-                game.Winner = fromGame.Winner;
+                var game = new GameGetAllGameViewItem() {
+                    Id = fromGame.Id,
+                    NumberOfBots = fromGame.NumberOfBots,
+                    Status = fromGame.Status,
+                    Winner = fromGame.Winner,
+                };
                 gameList.Add(game);
             }
-            allUserGamesModel.Games.AddRange(gameList);
-            return allUserGamesModel;
+            var response = new GetAllGamesView()
+            {
+                Email = model.Email,
+                Games = gameList
+            };
+            return response;
         }
     }
 }

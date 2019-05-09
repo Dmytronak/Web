@@ -41,6 +41,7 @@ namespace BlackJack.DataAccess.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
                     Year = table.Column<int>(nullable: false)
                 },
                 constraints: table =>

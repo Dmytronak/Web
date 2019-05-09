@@ -1,29 +1,6 @@
 <div>
     <form #f="ngForm" class="form-group">
         <div>
-            <p>Players: </p>
-            <select class="form-control" name="player" ngModel>
-                <option value="" disabled>Choose a player</option>
-                <option *ngFor="let x of players" [ngValue]="x">
-                    {{ x.name }}
-                </option>
-            </select>
-            <br>
-            <div>  
-                <p><label>Add new palyer</label></p> 
-                <p><button class="btn btn-success" (click)="showInput()"><i class="fas fa-plus"></i></button></p>
-            </div>
-             
-            <div *ngIf="showForm">
-                <p><input class ="form-control" type="text" #name placeholder="Add player name"></p>
-               
-                <p><button class="btn btn-success" (click)="addNewPlayer(name.value)"><i class="fas fa-plus"></i></button>
-                <button class="btn btn-danger" (click)="closeInput()"><i class="fas fa-times"></i></button>
-                </p>
-            </div>
-        </div>
-
-        <div>
             <label for="numberOfBots">Numbers Of Bots: </label>
             <select class="form-control"name="numberOfBots" ngModel>
                 <option value="" disabled>Choose a number</option>
@@ -37,9 +14,6 @@
         </div>
     </form>
     
-    <div *ngIf="brandNew" class="alert alert-success" role="alert">
-        <strong>All set!</strong> PlayerCreate
-    </div>
     <div *ngIf="gameExisting">
        <button class="btn btn-primary" (click)="playGame(f.value)">Play Game</button>
     </div>

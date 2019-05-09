@@ -9,11 +9,12 @@ namespace BlackJack.ViewModels.HistoryViews
     {
         [Required(ErrorMessage = "GameId is required")]
         public Guid GameId { get; set; }
-        public List<PlayerStepsViewItem> PlayerStepsOfGame { get; set; }
+        public string Name { get; set; }
+        public List<PlayerStepsViewItem> PlayerSteps { get; set; }
 
         public PlayerStepsHistoryView()
         {
-            PlayerStepsOfGame = new List<PlayerStepsViewItem>();
+            PlayerSteps = new List<PlayerStepsViewItem>();
         }
     }
     public class PlayerStepsViewItem

@@ -1,10 +1,10 @@
 export class BotSteps{
     gameId:string;
-    botSteps:[BotStepsHistoryViewItem];
+    bots:[BotStepsHistoryViewItem];
 }
 export class BotStepsHistoryViewItem{
-    Name:string;
-    botSteps:[BotCardViewItem];
+    name:string;
+    steps:[BotCardViewItem];
 }
 export class BotCardViewItem{
     rank:number;

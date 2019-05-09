@@ -7,6 +7,6 @@ namespace BlackJack.DataAccess.Interfaces
 {
     public interface IPlayerStepRepository : IBaseRepository<PlayerStep>
     {
-        Task<List<PlayerStep>> GetByGameId(Guid GameId);
+        Task<List<PlayerStep>> GetByGameId(Guid gameId);
     }
 }

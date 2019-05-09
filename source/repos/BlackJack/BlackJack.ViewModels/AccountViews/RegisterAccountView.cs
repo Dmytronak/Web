@@ -7,6 +7,9 @@ namespace BlackJack.ViewModels.AccountViews
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Name is required")]
+        public string Name { get; set; }
+
         [Required(ErrorMessage = "Year is required")]
         public int Year { get; set; }
 
@@ -16,6 +19,5 @@ namespace BlackJack.ViewModels.AccountViews
         [Required]
         [Compare("Password", ErrorMessage = "Passwords is not confirmed")]
         public string ConfirmPassword { get; set; }
-
     }
 }

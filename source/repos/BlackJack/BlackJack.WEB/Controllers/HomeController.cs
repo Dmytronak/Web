@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using BlackJack.BusinessLogic.Interfaces;
+using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.ViewModels.GameViews;
 using Microsoft.AspNetCore.Authorization;
 
@@ -22,23 +22,6 @@ namespace BlackJack.Controllers
         {
             return View();
         }
-        [HttpGet, Route("getExistingPlayers")]
-        public async Task<GetPlayersGameView> GetExistingPlayers([FromHeader]GetPlayersGameView model)
-        {
-            var result = await _gameService.GetAllPlayersByUser(model);
-            return result;
-        }
-        [HttpPost, Route("addPlayer")]
-        public async Task<IActionResult> AddPlayer([FromBody]CreatePlayerGameView model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var result =  await _gameService.CreateNewPlayer(model);
-            return Ok(result);
-        }
         [HttpPost, Route("playGame")]
         public async Task<IActionResult> PlayGame([FromBody]PlayGameView model)
         {
@@ -46,10 +29,9 @@ namespace BlackJack.Controllers
             {
                 return View(model);
             }
-            var result  =  await _gameService.PlayGame(model);
+            var result  =  await _gameService.Play(model);
             return Ok(result);
         }
-
         [HttpPost, Route("continueGame")]
         public async Task<IActionResult> ContinueGame()
         {
@@ -58,13 +40,13 @@ namespace BlackJack.Controllers
                 return View();
             }
 
-            var result = await _gameService.ContinueGame();
+            var result = await _gameService.Continue();
             return Ok(result);
         }
         [HttpGet, Route("getActiveGame")]
         public async Task<PlayGameView> GetActiveGame()
         {
-            var result = await _gameService.GetActiveGame();
+            var result = await _gameService.GetActive();
             return result;
         }
         [HttpPost, Route("endGame")]
@@ -75,7 +57,7 @@ namespace BlackJack.Controllers
                 return View();
             }
 
-            var result = await _gameService.EndGame();
+            var result = await _gameService.End();
             return Ok(result);
         }
 

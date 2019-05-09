@@ -20,11 +20,11 @@ namespace BlackJack.BusinessLogic.Providers
         {
             _options = options;
         }
-        public async Task<string> GenerateJwtToken(string email, User user)
+        public async Task<string> GenerateJwtToken(User user)
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
+                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
@@ -40,7 +40,6 @@ namespace BlackJack.BusinessLogic.Providers
                 expires: expires,
                 signingCredentials: creds
             );
-
             var gentok =  new JwtSecurityTokenHandler().WriteToken(token);  
             return gentok;
 

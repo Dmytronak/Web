@@ -17,20 +17,20 @@ export class HistoryGameComponent implements OnInit {
   showMainTable = true;
   public statusEnum: Status;
   emailS: string = localStorage.getItem('email');
-  game: GetAllGamesViewItem = { id: '', playerName: '', numberOfBots: 0, status: '', winner: '' };
+  game: GetAllGamesViewItem = { id: '', numberOfBots: 0, status: '', winner: '' };
   historyGames: HistoryGame = { email: this.emailS, games: [this.game] };
   playerStepsItem:PlayerStepsViewItem={rank:0,suit:0};
-  playerSteps: PlayerSteps = {gameId:'',playerStepsOfGame:[this.playerStepsItem]}
-  botCards:BotCardViewItem={rank:0,suit:0};
-  bots:BotStepsHistoryViewItem={Name:'',botSteps:[this.botCards]};
-  allBotSteps: BotSteps={gameId:'', botSteps:[this.bots]};
+  playerSteps: PlayerSteps = {gameId:'', name:'',playerSteps:[this.playerStepsItem]}
+  cards:BotCardViewItem={rank:0,suit:0};
+  bots:BotStepsHistoryViewItem={name:'',steps:[this.cards]};
+  allBotSteps: BotSteps={gameId:'', bots:[this.bots]};
   page = 1;
   pageSize = 9;
   listOfGamesCount:number;
   headBotSteps= ['Cards','','',''];
   headBots= ['Bot name', 'Steps','','',''];
-  headPlayerSteps = ['Player steps','','',''];
-  headElements = ['Player name', 'Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
+  headPlayerSteps = ['Player name','Player steps','',''];
+  headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   constructor(private historyService: HistoryService) { }
 
   ngOnInit() {
@@ -47,7 +47,7 @@ export class HistoryGameComponent implements OnInit {
     
     this.allBotSteps.gameId = x.id;
     this.historyService.getBotSteps(this.allBotSteps).subscribe(x => {
-    this.allBotSteps.botSteps= x['botSteps'];
+    this.allBotSteps.bots= x['bots'];
     }, error => error);
     this.showBotTable = true;
     this.showPlayerTable = false;
@@ -58,7 +58,8 @@ export class HistoryGameComponent implements OnInit {
    
     this.playerSteps.gameId = x.id;
     this.historyService.getPlayerSteps(this.playerSteps).subscribe(x => {
-      this.playerSteps.playerStepsOfGame = x['playerStepsOfGame'];
+      this.playerSteps.name = x['name'];
+      this.playerSteps.playerSteps = x['playerSteps'];
     }, error => error);
     this.showPlayerTable = true;
     this.showBotTable = false;
@@ -69,7 +70,7 @@ export class HistoryGameComponent implements OnInit {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;
-    this.playerSteps.playerStepsOfGame = null;
-    this.allBotSteps.botSteps=null;
+    this.playerSteps.playerSteps = null;
+    this.allBotSteps.bots=null;
   }
 }

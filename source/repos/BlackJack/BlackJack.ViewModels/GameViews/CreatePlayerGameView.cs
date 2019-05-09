@@ -8,10 +8,7 @@ namespace BlackJack.ViewModels.GameViews
         [Required(ErrorMessage = "Name is required")]
         [StringLength(20,ErrorMessage = "Maximal string length is 20")]
         public string Name { get; set; }
-
-        [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
-
         public Guid PlayerId { get; set; }
     }
 }

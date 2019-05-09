@@ -19,7 +19,7 @@ namespace BlackJack.BusinessLogic.Configurations
             Configuration = configuration;
 
             var jwtoption = configuration.GetSection("Jwt").Get<JwtOption>();
-            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear(); // => remove default claims
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
             services
                 .Configure<JwtOption>(configuration.GetSection("Jwt"))
@@ -34,23 +34,14 @@ namespace BlackJack.BusinessLogic.Configurations
                     options.RequireHttpsMetadata = false;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        // укзывает, будет ли валидироваться издатель при валидации токена
                         ValidateIssuer = true,
-                        // строка, представляющая издателя
                         ValidIssuer = jwtoption.Issuer,
-
-                        // будет ли валидироваться потребитель токена
                         ValidateAudience = true,
-                        // установка потребителя токена
                         ValidAudience = jwtoption.Issuer,
-                        // будет ли валидироваться время существования
                         ValidateLifetime = true,
-
-                        // установка ключа безопасности
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoption.Key)),
-                        // валидация ключа безопасности
                         ValidateIssuerSigningKey = true,
-                        ClockSkew = TimeSpan.Zero // remove delay of token when expire
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
         }
