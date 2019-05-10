@@ -9,7 +9,7 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./header-email.component.css']
 })
 
-export class HeaderEmailComponent implements OnInit, OnDestroy {
+export class HeaderEmailComponent implements OnInit {
 
   status: boolean;
   subscription: Subscription;
@@ -25,10 +25,4 @@ export class HeaderEmailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.email = localStorage.getItem('email');
   }
-
-  ngOnDestroy() {
-    // prevent memory leak when component is destroyed
-    this.subscription.unsubscribe();
-  }
-
 }

@@ -36,7 +36,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userService._authNavStatusSource.next(this.userService.loggedIn);
-    // subscribe to router event
     this.subscription = this.activatedRoute.queryParams.subscribe(
       (param: any) => {
         this.brandNew = param['brandNew'];
@@ -46,7 +45,6 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // prevent memory leak by unsubscribing
     this.subscription.unsubscribe();
   }
   get f() {

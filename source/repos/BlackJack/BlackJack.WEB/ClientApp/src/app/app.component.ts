@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
    
   ngOnInit() {
     this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
-  
   }
 
 

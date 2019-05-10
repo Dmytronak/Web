@@ -32,6 +32,9 @@
           <div *ngIf="formGroup.controls['name'].errors.required">
             Name is required.
           </div>
+          <div *ngIf="formGroup.controls['name'].errors.maxlength">
+            Name max Length 15
+          </div>
         </div>
       <div class="formGroup">
         <label for="year">Year</label>
@@ -44,10 +47,10 @@
           year is required.
         </div>
         <div *ngIf="formGroup.controls['year'].errors.minlength">
-          year min minLength 4
+          year min min Length 4
         </div>
         <div *ngIf="formGroup.controls['year'].errors.maxlength">
-          year min maxLength 4
+          year min max Length 4
         </div>
         <div *ngIf="formGroup.controls['year'].errors.pattern">
             ONLY NUMB ERROR
@@ -91,7 +94,7 @@
           Password is required.
         </div>
         <div *ngIf="formGroup.controls['confirmPassword'].errors.minlength">
-          Password minLength 6
+          Password min Length 6
         </div>
         <div *ngIf="formGroup.controls['confirmPassword'].errors.pattern">
           Password not validate

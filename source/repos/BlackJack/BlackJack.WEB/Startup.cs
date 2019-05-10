@@ -1,20 +1,10 @@
-﻿using BlackJack.BusinessLogic.Services;
-using BlackJack.BusinessLogic.Providers;
-using BlackJack.BusinessLogic.Providers.Interfaces;
-using BlackJack.DataAccess;
-using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Interfaces;
-using BlackJack.DataAccess.Repository;
-using BlackJack.Middleware;
+﻿using BlackJack.Middleware;
 using BlackJack.Filters;
-using BlackJack.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
@@ -38,31 +28,12 @@ namespace BlackJack
             });
 
             services.AddOptions();
-            services.AddDbContext<ApplicationContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IBotRepository, BotRepository>();
-            services.AddTransient<IBotStepRepository, BotStepRepository>();
-            services.AddTransient<ICardRepository, CardRepository>();
-            services.AddTransient<IGameRepository, GameRepository>();
-            services.AddTransient<IPlayerRepository, PlayerRepository>();
-            services.AddTransient<IPlayerStepRepository, PlayerStepRepository>();
-            services.AddTransient<IBotInGameRepository, BotInGameRepository>();
-            services.AddTransient<IPlayerInGameRepository, PlayerInGameRepository>();
-
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IGameService, GameService>();
-            services.AddTransient<IHistoryService, HistoryService>();
-            services.AddTransient<IJwtProvider, JwtProvider>();
-
-            // ===== Add Identity ========
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationContext>()
-                .AddDefaultTokenProviders();
-
-            // ===== Add Jwt Authentication ========
+            services.AddIdentityConfiguration();
+            services.AddDatabaseContextConfiguration(Configuration);
+            services.AddDependencyConfiguration();
+            services.AddOptionsConfiguration(Configuration);
             services.AddJwtConfiguration(Configuration);
 
-            // ===== Add MVC ========
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(CustomActionFilter));

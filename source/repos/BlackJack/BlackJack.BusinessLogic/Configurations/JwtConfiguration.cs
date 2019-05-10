@@ -20,9 +20,7 @@ namespace BlackJack.BusinessLogic.Configurations
 
             var jwtoption = configuration.GetSection("Jwt").Get<JwtOption>();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-
             services
-                .Configure<JwtOption>(configuration.GetSection("Jwt"))
                 .AddAuthentication(options =>
                 {
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

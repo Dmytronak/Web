@@ -28,7 +28,7 @@ export class RegistrationFormComponent implements OnInit {
   constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
-      'name': ['', Validators.maxLength(20)],
+      'name': ['', Validators.maxLength(15)],
       'year': ['', [Validators.minLength(4),YearRange, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
       'password': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
       'confirmPassword': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
