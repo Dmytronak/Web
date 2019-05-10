@@ -15,26 +15,18 @@ export class GameService {
     this.baseUrl = configService.getApiURI();
 
   }
-  createNewPlayer(player: Player) {
-    debugger
-    return this.http.post(this.baseUrl + "/game/addPlayer", player);
-  }
-  getExistingPlayers(player: Player) {
-    let params = new HttpParams().set("email", player.email);
-    return this.http.get<Player[]>(this.baseUrl + "/game/getExistingPlayers", { params: params })
-  }
   getActiveGame() {
     return this.http.get<PlayGame[]>(this.baseUrl + "/game/getActiveGame")
   }
-  playGame(game: PlayGame) {
+  play(game: PlayGame) {
     debugger
     return this.http.post(this.baseUrl + "/game/playGame", game)
   }
-  continueGame(game: PlayGame) {
+  continue(game: PlayGame) {
     debugger
     return this.http.post(this.baseUrl + "/game/continueGame", game)
   }
-  endGame(game: PlayGame) {
+  end(game: PlayGame) {
     debugger
     return this.http.post(this.baseUrl + "/game/endGame", game)
   }

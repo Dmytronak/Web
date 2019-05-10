@@ -13,17 +13,17 @@
               <td>{{x.status}}</td>
               <td>{{x.winner}}</td>
               <td>
-                <button class="btn btn-info" (click)="showBotSteps(x)">
+                <button class="btn btn-info" (click)="bot(x)">
                     <i class="fas fa-robot"></i>
                 </button>
-                <button class="btn btn-success" (click)="showPlayerSteps(x)">
+                <button class="btn btn-success" (click)="player(x)">
                     <i class="fas fa-user"></i>
                 </button>
               </td>
             </tr>
           </tbody>
         </table>
-        <ngb-pagination [collectionSize]="listOfGamesCount" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+        <ngb-pagination [collectionSize]="listCount" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
   </div>
   <div *ngIf="showPlayerTable">
       <table class="table">
@@ -39,7 +39,7 @@
           </td>
         </tbody>
       </table>
-      <button class="btn btn-danger" (click)="hideStepTable()">
+      <button class="btn btn-danger" (click)="hideTable()">
         <i class="fa fa-arrow-left"></i>
       </button>
     </div>
@@ -59,7 +59,7 @@
           </tr>
         </tbody>
       </table>
-      <button class="btn btn-danger" (click)="hideStepTable()">
+      <button class="btn btn-danger" (click)="hideTable()">
         <i class="fa fa-arrow-left"></i>
       </button>
     </div>

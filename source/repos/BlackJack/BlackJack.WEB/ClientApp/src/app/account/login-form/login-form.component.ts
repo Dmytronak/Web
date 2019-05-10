@@ -22,7 +22,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
   isRequesting: boolean;
   submitted: boolean = false;
   credentials: User = { email: '', name:'',password: '',confirmPassword:'' ,year:0,token:''};
-  loginCred: User;
+  user: User;
 
   constructor(private userService: UserService, private router: Router,
      private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder,private alertService: AlertService) {
@@ -41,9 +41,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
         this.brandNew = param['brandNew'];
         this.credentials.email = param['email'];
       });
-  
   }
-
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -54,18 +52,18 @@ export class LoginFormComponent implements OnInit, OnDestroy {
 
   login():User {
    
-    this.loginCred = Object.assign(this.credentials, this.formGroup.value);
+    this.user = Object.assign(this.credentials, this.formGroup.value);
     this.submitted = true;
     this.isRequesting = true;
 
     if (this.formGroup.invalid) {
       return;
     }
-    this.userService.login(this.loginCred)
+    this.userService.login(this.user)
       .subscribe(x => {
         let token = (<any>x).token;
         localStorage.setItem("auth_token", token);
-        localStorage.setItem("email", this.loginCred.email);
+        localStorage.setItem("email", this.user.email);
         this.userService._authNavStatusSource.next(true);
         this.userService.loggedIn = true;
         this.router.navigate(["/game/home"]);

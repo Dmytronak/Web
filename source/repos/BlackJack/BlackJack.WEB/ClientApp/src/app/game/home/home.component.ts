@@ -17,7 +17,7 @@ import { Status } from '../../shared/enums/status-type.enum.view';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  emailS: string = '';
+  email: string = '';
   error: string = '';
   showForm: boolean;
   brandNew: boolean;
@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
   public players: Player[];
   public statusEnum: Status;
   public playersDb: Player[];
-  public playerReq: Player;
+  public player: Player;
   cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
   botsGame: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
   playerGame: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
@@ -34,8 +34,8 @@ export class HomeComponent implements OnInit {
   newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
-    this.emailS = localStorage.getItem('email');
-    this.playerReq = { email: this.emailS, name: '', id: '' };
+    this.email = localStorage.getItem('email');
+    this.player = { email: this.email, name: '', id: '' };
   }
 
   ngOnInit() {
@@ -64,11 +64,11 @@ export class HomeComponent implements OnInit {
     this.showForm = false;
     this.brandNew = false;
   }
-  playGame(f) {
+  play(f) {
     debugger
     this.createGame.email = localStorage.getItem('email')
     this.createGame.numberOfBots =f['numberOfBots'];
-      this.gameService.playGame(this.createGame)
+      this.gameService.play(this.createGame)
       .subscribe(x => {
         if (x) {
           debugger

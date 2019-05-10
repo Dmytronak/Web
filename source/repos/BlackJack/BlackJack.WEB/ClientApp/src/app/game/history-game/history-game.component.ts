@@ -16,9 +16,9 @@ export class HistoryGameComponent implements OnInit {
   showBotTable = false;
   showMainTable = true;
   public statusEnum: Status;
-  emailS: string = localStorage.getItem('email');
+  email: string = localStorage.getItem('email');
   game: GetAllGamesViewItem = { id: '', numberOfBots: 0, status: '', winner: '' };
-  historyGames: HistoryGame = { email: this.emailS, games: [this.game] };
+  historyGames: HistoryGame = { email: this.email, games: [this.game] };
   playerStepsItem:PlayerStepsViewItem={rank:0,suit:0};
   playerSteps: PlayerSteps = {gameId:'', name:'',playerSteps:[this.playerStepsItem]}
   cards:BotCardViewItem={rank:0,suit:0};
@@ -26,7 +26,7 @@ export class HistoryGameComponent implements OnInit {
   allBotSteps: BotSteps={gameId:'', bots:[this.bots]};
   page = 1;
   pageSize = 9;
-  listOfGamesCount:number;
+  listCount:number;
   headBotSteps= ['Cards','','',''];
   headBots= ['Bot name', 'Steps','','',''];
   headPlayerSteps = ['Player name','Player steps','',''];
@@ -36,15 +36,13 @@ export class HistoryGameComponent implements OnInit {
   ngOnInit() {
     this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
       this.historyGames.games = x['games'];
-      this.listOfGamesCount = this.historyGames.games.length;
+      this.listCount = this.historyGames.games.length;
       this.historyGames.games.forEach(x => {
         x.status = Status[x.status];
       });
     }, error => error);
-
   }
-  showBotSteps(x) {
-    
+  bot(x) {
     this.allBotSteps.gameId = x.id;
     this.historyService.getBotSteps(this.allBotSteps).subscribe(x => {
     this.allBotSteps.bots= x['bots'];
@@ -52,10 +50,8 @@ export class HistoryGameComponent implements OnInit {
     this.showBotTable = true;
     this.showPlayerTable = false;
     this.showMainTable = false;
-
   }
-  showPlayerSteps(x) {
-   
+  player(x) {
     this.playerSteps.gameId = x.id;
     this.historyService.getPlayerSteps(this.playerSteps).subscribe(x => {
       this.playerSteps.name = x['name'];
@@ -64,9 +60,8 @@ export class HistoryGameComponent implements OnInit {
     this.showPlayerTable = true;
     this.showBotTable = false;
     this.showMainTable = false;
-  
   }
-  hideStepTable() {
+  hideTable() {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;

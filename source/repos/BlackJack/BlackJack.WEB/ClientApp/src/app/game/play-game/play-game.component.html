@@ -10,9 +10,9 @@
                     <th> <label>Winner : {{ playGame.winner }} </label></th>
                     <th>
                         <div *ngIf="gameExisting">
-                            <button class="btn btn-success" (click)="continueGame()"><i
+                            <button class="btn btn-success" (click)="continue()"><i
                                     class="fas fa-plus"></i></button>
-                            <button class="btn btn-danger" (click)="endGame()"><i class="fas fa-times"></i></button>
+                            <button class="btn btn-danger" (click)="end()"><i class="fas fa-times"></i></button>
                             <button class="btn btn-info" (click)="backToHome()"><i
                                     class="fa fa-arrow-left"></i></button>
                         </div>

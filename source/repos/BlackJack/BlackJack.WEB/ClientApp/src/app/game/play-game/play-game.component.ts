@@ -55,8 +55,8 @@ export class PlayGameComponent implements OnInit {
         return this.alertService.error(err);
       });
   }
-  continueGame() {
-    this.gameService.continueGame(this.playGame)
+  continue() {
+    this.gameService.continue(this.playGame)
       .subscribe(x => {
         if (x) {
           
@@ -76,8 +76,8 @@ export class PlayGameComponent implements OnInit {
           this.error = err;
         });
   }
-  endGame() {
-    this.gameService.endGame(this.playGame)
+  end() {
+    this.gameService.end(this.playGame)
       .subscribe(x => {
         if (x) {
           this.playGame.email = x['email'];
@@ -96,10 +96,9 @@ export class PlayGameComponent implements OnInit {
   backToHome(){
     this.router.navigate(['/game/home']);
   }
-
   playAgain(){
     this.playGame.email = localStorage.getItem('email');
-    this.gameService.playGame(this.playGame)
+    this.gameService.play(this.playGame)
       .subscribe(x => {
         if (x) {
           this.playGame.email = x['email'];

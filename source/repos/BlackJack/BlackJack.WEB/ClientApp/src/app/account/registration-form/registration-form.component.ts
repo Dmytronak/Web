@@ -20,10 +20,10 @@ export class RegistrationFormComponent implements OnInit {
   error: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  public register: User;
+  public registerForm: User;
   formGroup: FormGroup;
-  public usersReg: User[] = [];
-  public reg: User;
+  public users: User[] = [];
+  public user: User;
 
   constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     this.formGroup = _formBuilder.group({
@@ -38,7 +38,7 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.register =
+    this.registerForm =
       {
         email: '',
         name:'',
@@ -48,19 +48,19 @@ export class RegistrationFormComponent implements OnInit {
         token: '',
       }
     this.userService.registerUsers().subscribe((user: User[]) => {
-      this.usersReg = user['users'];
-      console.log(this.usersReg)
+      this.users = user['users'];
+      console.log(this.users)
     }, error => error);
 
   }
 
-  registerUser() {
+  registration() {
     this.submitted = true;
     this.isRequesting = true;
-    this.reg = Object.assign(this.register, this.formGroup.value)
-    let newUser = this.reg.email;
+    this.user = Object.assign(this.registerForm, this.formGroup.value)
+    let newUser = this.user.email;
     debugger
-    let duplicateUser = this.usersReg.filter(x => { return x.email === newUser; }).length;
+    let duplicateUser = this.users.filter(x => { return x.email === newUser; }).length;
     debugger
     if (this.formGroup.invalid) {
       return;
@@ -72,11 +72,11 @@ export class RegistrationFormComponent implements OnInit {
       this.error = errorMessage.message;
       return this.alertService.error(errorMessage.message);
     }
-    this.userService.register(this.reg)
+    this.userService.register(this.user)
       .subscribe(x => {
         debugger
         if (x) {
-          this.router.navigate(['/login'], { queryParams: { brandNew: true, email: this.reg.email } });
+          this.router.navigate(['/login'], { queryParams: { brandNew: true, email: this.user.email } });
         }
       },
         err => {
@@ -87,6 +87,5 @@ export class RegistrationFormComponent implements OnInit {
 
       )
   }
-
 }
 
