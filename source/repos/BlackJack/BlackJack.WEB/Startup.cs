@@ -27,12 +27,13 @@ namespace BlackJack
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddOptions();
-            services.AddIdentityConfiguration();
             services.AddDatabaseContextConfiguration(Configuration);
             services.AddDependencyConfiguration();
-            services.AddOptionsConfiguration(Configuration);
+            services.AddIdentityConfiguration();
             services.AddJwtConfiguration(Configuration);
+            services.AddOptions();
+            services.AddOptionsConfiguration(Configuration);
+
 
             services.AddMvc(options =>
             {
