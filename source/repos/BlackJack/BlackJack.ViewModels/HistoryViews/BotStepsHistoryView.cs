@@ -10,20 +10,20 @@ namespace BlackJack.ViewModels.HistoryViews
     {
         [Required(ErrorMessage = "GameId is required")]
         public Guid GameId { get; set; }
-        public List<BotStepsHistoryViewItem> Bots { get; set; }
+        public List<BotBotStepsHistoryViewItem> Bots { get; set; }
 
         public BotStepsHistoryView()
         {
-            Bots= new List<BotStepsHistoryViewItem>();
+            Bots= new List<BotBotStepsHistoryViewItem>();
         }
     }
-    public class BotStepsHistoryViewItem
+    public class BotBotStepsHistoryViewItem
     {
         public string Name { get; set; }
-        public List<BotCardViewItem> Steps { get; set; }
+        public List<CardBotStepsHistoryViewItem> Steps { get; set; }
     }
  
-    public class BotCardViewItem
+    public class CardBotStepsHistoryViewItem
     {
         public CardRankType Rank { get; set; }
         public CardSuitType Suit { get; set; }

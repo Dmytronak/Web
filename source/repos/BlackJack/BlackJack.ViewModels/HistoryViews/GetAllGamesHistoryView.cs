@@ -1,21 +1,20 @@
 ﻿using BlackJack.DataAccess.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BlackJack.ViewModels.HistoryViews
 {
-    public class GetAllGamesView
+    public class GetAllGamesHistoryView
     {
         public string Email { get; set; }
-        public List<GameGetAllGameViewItem> Games { get; set; }
+        public List<GameGetAllGamesHistoryView> Games { get; set; }
 
-        public GetAllGamesView()
+        public GetAllGamesHistoryView()
         {
-            Games = new List<GameGetAllGameViewItem>();
+            Games = new List<GameGetAllGamesHistoryView>();
         }
     }
-    public class GameGetAllGameViewItem
+    public class GameGetAllGamesHistoryView
     {
         public Guid Id { get; set; }
         public int NumberOfBots { get; set; }

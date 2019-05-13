@@ -1,9 +1,9 @@
 export class PlayerSteps{
     gameId:string;
     name:string;
-    playerSteps:[PlayerStepsViewItem];
+    playerSteps:[PlayerPlayerStepsHistoryViewItem];
 }
-export class PlayerStepsViewItem{
+export class PlayerPlayerStepsHistoryViewItem{
     rank:number;
     suit:number;
 }

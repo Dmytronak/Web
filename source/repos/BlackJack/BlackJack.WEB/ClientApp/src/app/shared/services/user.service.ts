@@ -30,16 +30,16 @@ export class UserService  {
 
   register(user: User) {
 
-    return this.http.post(this.baseUrl + "/accounts/register", user);
+    return this.http.post(this.baseUrl + "/account/register", user);
   }
   registerUsers() {
  
-    return this.http.get<User[]>(this.baseUrl + "/accounts/register");
+    return this.http.get<User[]>(this.baseUrl + "/account/register");
   }
 
   login(user: User) {
 
-    return this.http.post(this.baseUrl + "/accounts/login", user);
+    return this.http.post(this.baseUrl + "/account/login", user);
   }
 
   logout() {

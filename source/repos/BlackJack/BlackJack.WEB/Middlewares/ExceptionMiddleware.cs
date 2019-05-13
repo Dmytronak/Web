@@ -4,7 +4,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace BlackJack.Middleware
+namespace BlackJack.Middlewares
 {
     public class ExceptionMiddleware
     {

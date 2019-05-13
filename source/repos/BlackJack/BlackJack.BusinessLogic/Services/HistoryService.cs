@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System;
 using BlackJack.ViewModels.HistoryViews;
+using System.Security.Claims;
+using System.Threading;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -40,14 +43,14 @@ namespace BlackJack.BusinessLogic.Services
             var botSteps = await _botStepRepository.GetByGameId(model.GameId);
             var bots = botSteps.Select(x => x.Bot).ToList();
             var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
-            var botStepList = new List<BotStepsHistoryViewItem>();
+            var botStepList = new List<BotBotStepsHistoryViewItem>();
             foreach (var item in gropedBotSteps)
             {
                 var botName = botSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == item.Key).Name;
-                var botStep = new BotStepsHistoryViewItem()
+                var botStep = new BotBotStepsHistoryViewItem()
                 {
                     Name = botName,
-                    Steps = item.Select(x => new BotCardViewItem()
+                    Steps = item.Select(x => new CardBotStepsHistoryViewItem()
                     {
                         Rank = x.Rank,
                         Suit = x.Suit
@@ -75,7 +78,7 @@ namespace BlackJack.BusinessLogic.Services
                 Name = player.Name,
                 GameId = model.GameId,
                 PlayerSteps = playerSteps
-                .Select(x => new PlayerStepsViewItem()
+                .Select(x => new PlayerPlayerStepsHistoryViewItem()
                 {
                     Rank = x.Rank,
                     Suit = x.Suit
@@ -84,7 +87,7 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        public async Task<GetAllGamesView> GetAllGames(GetAllGamesView model)
+        public async Task<GetAllGamesHistoryView> GetAllGames(GetAllGamesHistoryView model)
         {
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -94,13 +97,13 @@ namespace BlackJack.BusinessLogic.Services
             var gamesByUserId = await _playerInGameRepository.GetByUserId(user.Result.Id);
             var playersDB = await _playerRepository.GetAll();
             var groupedGame = gamesByUserId.GroupBy(x => x.Game.Id);
-            var gameList = new List<GameGetAllGameViewItem>();
+            var gameList = new List<GameGetAllGamesHistoryView>();
             foreach (var item in groupedGame)
             {
                 var fromGame = gamesByUserId.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key);
                 var playerGames = gamesByUserId.Select(x => x).FirstOrDefault(x => x.GameId == item.Key);
                 var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
-                var game = new GameGetAllGameViewItem() {
+                var game = new GameGetAllGamesHistoryView() {
                     Id = fromGame.Id,
                     NumberOfBots = fromGame.NumberOfBots,
                     Status = fromGame.Status,
@@ -108,7 +111,7 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 gameList.Add(game);
             }
-            var response = new GetAllGamesView()
+            var response = new GetAllGamesHistoryView()
             {
                 Email = model.Email,
                 Games = gameList

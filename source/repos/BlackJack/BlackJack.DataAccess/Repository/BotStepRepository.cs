@@ -22,7 +22,7 @@ namespace BlackJack.DataAccess.Repository
             return result;
         }
 
-        public async Task<List<BotStep>> GetStepByBotId(Guid botId)
+        public async Task<List<BotStep>> GetByBotId(Guid botId)
         {
             var result = await _dbSet
                 .Where(x => x.BotId == botId)

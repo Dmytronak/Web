@@ -1,4 +1,4 @@
-﻿using BlackJack.Middleware;
+﻿using BlackJack.Middlewares;
 using BlackJack.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,7 +37,7 @@ namespace BlackJack
 
             services.AddMvc(options =>
             {
-                options.Filters.Add(typeof(CustomActionFilter));
+                options.Filters.Add(typeof(ModelStateActionFilter));
 
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 

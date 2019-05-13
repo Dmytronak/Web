@@ -1,22 +1,20 @@
-import { Status } from '../enums/status-type.enum.view';
-
 export class PlayGame {;
     email: string;
     numberOfBots: number;
     status: string;
     winner: string;
-    player:[PlayGamePlayerViewItem];
-    bots:[PlayGameBotsViewItem];
+    player:[PlayerPlayGameViewItem];
+    bots:[BotPlayGameViewItem];
 }
-export class PlayGamePlayerViewItem{
+export class PlayerPlayGameViewItem{
     name:string;
-    cards:[PlayGameCardsViewItem];
+    cards:[CardPlayGameViewItem];
 }
-export class PlayGameBotsViewItem{
+export class BotPlayGameViewItem{
     name:string;
-    cards:[PlayGameCardsViewItem];
+    cards:[CardPlayGameViewItem];
 }
-export class PlayGameCardsViewItem{
+export class CardPlayGameViewItem{
     rank:number;
     suit:number;
 }

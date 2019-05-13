@@ -1,8 +1,8 @@
 export class HistoryGame {
     email:string;
-    games:[GetAllGamesViewItem];
+    games:[GameGetAllGamesHistoryView];
 }
-export class GetAllGamesViewItem {
+export class GameGetAllGamesHistoryView {
     id:string;
     numberOfBots:number;
     status:string;

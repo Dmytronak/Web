@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BlackJack.Filters
 {
-    public class CustomActionFilter : Attribute, IActionFilter
+    public class ModelStateActionFilter : Attribute, IActionFilter
     {
         public void OnActionExecuted(ActionExecutedContext context)
         {

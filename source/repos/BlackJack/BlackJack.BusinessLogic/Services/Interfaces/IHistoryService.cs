@@ -6,7 +6,7 @@ namespace BlackJack.BusinessLogic.Services.Interfaces
 {
     public interface IHistoryService
     {
-        Task<GetAllGamesView> GetAllGames(GetAllGamesView model);
+        Task<GetAllGamesHistoryView> GetAllGames(GetAllGamesHistoryView model);
         Task<BotStepsHistoryView> BotStep(BotStepsHistoryView model);
         Task<PlayerStepsHistoryView> PlayerStep(PlayerStepsHistoryView model);
     }

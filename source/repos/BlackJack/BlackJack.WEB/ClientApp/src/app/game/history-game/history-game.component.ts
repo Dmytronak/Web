@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoryGame, GetAllGamesViewItem } from '../../shared/entities/history-game.view';
+import { HistoryGame, GameGetAllGamesHistoryView } from '../../shared/entities/history-game.view';
 import { HistoryService } from '../../shared/services/history.service';
-import { PlayerSteps, PlayerStepsViewItem } from '../../shared/entities/player-steps.view';
-import { BotSteps, BotStepsHistoryViewItem, BotCardViewItem } from '../../shared/entities/bot-steps.view';
+import { PlayerSteps, PlayerPlayerStepsHistoryViewItem } from '../../shared/entities/player-steps.view';
+import { BotSteps, BotBotStepsHistoryViewItem, CardBotStepsHistoryViewItem } from '../../shared/entities/bot-steps.view';
 import { Status } from '../../shared/enums/status-type.enum.view';
 
 @Component({
@@ -17,12 +17,12 @@ export class HistoryGameComponent implements OnInit {
   showMainTable = true;
   public statusEnum: Status;
   email: string = localStorage.getItem('email');
-  game: GetAllGamesViewItem = { id: '', numberOfBots: 0, status: '', winner: '' };
+  game: GameGetAllGamesHistoryView = { id: '', numberOfBots: 0, status: '', winner: '' };
   historyGames: HistoryGame = { email: this.email, games: [this.game] };
-  playerStepsItem:PlayerStepsViewItem={rank:0,suit:0};
+  playerStepsItem:PlayerPlayerStepsHistoryViewItem={rank:0,suit:0};
   playerSteps: PlayerSteps = {gameId:'', name:'',playerSteps:[this.playerStepsItem]}
-  cards:BotCardViewItem={rank:0,suit:0};
-  bots:BotStepsHistoryViewItem={name:'',steps:[this.cards]};
+  cards:CardBotStepsHistoryViewItem={rank:0,suit:0};
+  bots:BotBotStepsHistoryViewItem={name:'',steps:[this.cards]};
   allBotSteps: BotSteps={gameId:'', bots:[this.bots]};
   page = 1;
   pageSize = 9;

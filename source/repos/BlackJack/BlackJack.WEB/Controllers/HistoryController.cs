@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.ViewModels.HistoryViews;
 using BlackJack.BusinessLogic.Services.Interfaces;
 
 namespace BlackJack.Controllers
 {
-    [Route("api/history")]
+    [Route("api/history/[action]")]
     [ApiController]
     public class HistoryController : Controller
     {
@@ -18,38 +17,32 @@ namespace BlackJack.Controllers
             _historyService = historyService;
         }
        
-        [HttpGet, Route("allUserGames")]
-        public async Task<IActionResult> AllUserGames([FromHeader] GetAllGamesView model)
+        [HttpGet]
+        public async Task<IActionResult> AllUserGames([FromQuery] GetAllGamesHistoryView model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var result = await _historyService.GetAllGames(model);
-            return Ok(result);
+            var response = await _historyService.GetAllGames(model);
+            return Ok(response);
         }
-        [HttpGet, Route("playerSteps")]
-        public async Task<IActionResult> PlayerStepsOfGame([FromHeader] PlayerStepsHistoryView model)
+        [HttpGet]
+        public async Task<IActionResult> PlayerSteps([FromQuery] PlayerStepsHistoryView model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-            var result = await _historyService.PlayerStep(model);
-            return Ok(result);
+            var response = await _historyService.PlayerStep(model);
+            return Ok(response);
         }
-        [HttpGet, Route("botSteps")]
-        public async Task<IActionResult> BotStepsOfGame([FromHeader] BotStepsHistoryView model)
+        [HttpGet]
+        public async Task<IActionResult> BotSteps([FromQuery] BotStepsHistoryView model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var result = await _historyService.BotStep(model);
-            return Ok(result);
+            var response = await _historyService.BotStep(model);
+            return Ok(response);
         }
 
     }

@@ -5,8 +5,8 @@ import { GameService } from '../../shared/services/game.service';
 import { Router } from '@angular/router';
 import { AlertService } from '../../shared/services/alert.service';
 import { Player } from '../../shared/entities/player.view';
-import { PlayGameCardsViewItem } from '../../shared/entities/play-game.view';
-import { PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
+import { CardPlayGameViewItem, PlayerPlayGameViewItem } from '../../shared/entities/play-game.view';
+import { BotPlayGameViewItem } from '../../shared/entities/play-game.view';
 import { PlayGame } from '../../shared/entities/play-game.view';
 import { Status } from '../../shared/enums/status-type.enum.view';
 
@@ -27,9 +27,9 @@ export class HomeComponent implements OnInit {
   public statusEnum: Status;
   public playersDb: Player[];
   public player: Player;
-  cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
-  botsGame: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
-  playerGame: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
+  cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
+  botsGame: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
+  playerGame: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
   createGame: PlayGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: [this.playerGame], bots: [this.botsGame] };
   newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {

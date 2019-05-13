@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PlayGame, PlayGameCardsViewItem, PlayGameBotsViewItem } from '../../shared/entities/play-game.view';
+import { PlayGame, CardPlayGameViewItem, BotPlayGameViewItem, PlayerPlayGameViewItem } from '../../shared/entities/play-game.view';
 import { GameService } from '../../shared/services/game.service';
 import { AlertService } from '../../shared/services/alert.service';
 import { Status } from '../../shared/enums/status-type.enum.view';
@@ -19,9 +19,9 @@ export class PlayGameComponent implements OnInit {
   headBots= ['Bots'];
   headPlayerSteps = ['Player name','Player cards'];
   headElements = ['Number of bots', 'Status', 'Winner', ''];
-  cardsGame: PlayGameCardsViewItem = { rank: 0, suit: 0 };
-  bots: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
-  player: PlayGameBotsViewItem = { name: '', cards: [this.cardsGame] }
+  cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
+  bots: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
+  player: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
   playGame: PlayGame = { email: '', status: '', winner: '', numberOfBots: 0, player: [this.player], bots: [this.bots] };
 
   constructor(private gameService: GameService,private router: Router,private alertService: AlertService) {
