@@ -7,12 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using System;
 using BlackJack.ViewModels.HistoryViews;
-using System.Security.Claims;
-using System.Threading;
-using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlackJack.BusinessLogic.Services
 {
+    
     public class HistoryService : IHistoryService
     {
         private readonly UserManager<User> _userManager;
@@ -38,16 +37,20 @@ namespace BlackJack.BusinessLogic.Services
             _playerInGameRepository = playerInGameRepository;
 
         }
-        public async Task<BotStepsHistoryView> BotStep(BotStepsHistoryView model)
+        public async Task<BotStepsHistoryView> BotSteps(BotStepsHistoryView model)
         {
             var botSteps = await _botStepRepository.GetByGameId(model.GameId);
+            if (botSteps.Count == 0)
+            {
+                throw new CustomErrorException("Game doesn`t exist");
+            }
             var bots = botSteps.Select(x => x.Bot).ToList();
             var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
-            var botStepList = new List<BotBotStepsHistoryViewItem>();
+            var botStepViewItems = new List<BotBotStepsHistoryViewItem>();
             foreach (var item in gropedBotSteps)
             {
                 var botName = botSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == item.Key).Name;
-                var botStep = new BotBotStepsHistoryViewItem()
+                var botStepViewItem = new BotBotStepsHistoryViewItem()
                 {
                     Name = botName,
                     Steps = item.Select(x => new CardBotStepsHistoryViewItem()
@@ -57,22 +60,29 @@ namespace BlackJack.BusinessLogic.Services
                     })
                 .ToList()
                 };
-                botStepList.Add(botStep);
+                botStepViewItems.Add(botStepViewItem);
             }
             var response = new BotStepsHistoryView()
             {
                 GameId = model.GameId,
-                Bots = botStepList
+                Bots = botStepViewItems
             };
             return response;
         }
         public async Task<PlayerStepsHistoryView> PlayerStep(PlayerStepsHistoryView model)
         {
             var playerSteps = await _playerStepRepository.GetByGameId(model.GameId);
+            if (playerSteps.Count == 0)
+            {
+                throw new CustomErrorException("Player steps doesn`t exist");
+            }
             var playersAndGames = await _playerInGameRepository.GetByGameId(model.GameId);
-            var playersDB = await _playerRepository.GetAll();
+            if (playersAndGames.Count == 0)
+            {
+                throw new CustomErrorException("Score doesn`t exist");
+            }
             var playerGames = playersAndGames.Select(x => x).FirstOrDefault(x => x.GameId == (model.GameId));
-            var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
+            var player = await _playerRepository.GetById(playerGames.PlayerId);
             var response = new PlayerStepsHistoryView()
             {
                 Name = player.Name,
@@ -89,32 +99,33 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<GetAllGamesHistoryView> GetAllGames(GetAllGamesHistoryView model)
         {
+            if (model.Email == null)
+            {
+                throw new CustomErrorException("Email doesn`t exist");
+            }
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                throw new NullReferenceException("user model received a null argument!");
+                throw new CustomErrorException("User doesn`t exist");
             }
-            var gamesByUserId = await _playerInGameRepository.GetByUserId(user.Result.Id);
-            var playersDB = await _playerRepository.GetAll();
-            var groupedGame = gamesByUserId.GroupBy(x => x.Game.Id);
-            var gameList = new List<GameGetAllGamesHistoryView>();
+            var playerInGames = await _playerInGameRepository.GetByUserId(user.Result.Id);
+            var groupedGame = playerInGames.GroupBy(x => x.Game.Id);
+            var gameViewItems = new List<GameGetAllGamesHistoryViewItem>();
             foreach (var item in groupedGame)
             {
-                var fromGame = gamesByUserId.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key);
-                var playerGames = gamesByUserId.Select(x => x).FirstOrDefault(x => x.GameId == item.Key);
-                var player = playersDB.Select(x => x).FirstOrDefault(x => x.Id == playerGames.PlayerId);
-                var game = new GameGetAllGamesHistoryView() {
+                var fromGame = playerInGames.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key);
+                var gameViewItem = new GameGetAllGamesHistoryViewItem() {
                     Id = fromGame.Id,
                     NumberOfBots = fromGame.NumberOfBots,
                     Status = fromGame.Status,
                     Winner = fromGame.Winner,
                 };
-                gameList.Add(game);
+                gameViewItems.Add(gameViewItem);
             }
             var response = new GetAllGamesHistoryView()
             {
                 Email = model.Email,
-                Games = gameList
+                Games = gameViewItems
             };
             return response;
         }

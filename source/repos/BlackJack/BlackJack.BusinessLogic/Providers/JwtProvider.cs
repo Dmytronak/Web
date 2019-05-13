@@ -1,6 +1,8 @@
 ﻿using BlackJack.BusinessLogic.Options;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.DataAccess.Entities;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,10 +17,11 @@ namespace BlackJack.BusinessLogic.Providers
     public class JwtProvider : IJwtProvider
     {
         private readonly IOptions<JwtOption> _options;
-
-        public JwtProvider(IOptions<JwtOption> options)
+        private readonly UserManager<User> _userManager;
+        public JwtProvider(IOptions<JwtOption> options, UserManager<User> userManager)
         {
             _options = options;
+            _userManager = userManager;
         }
         public async Task<string> GenerateJwtToken(User user)
         {
@@ -40,7 +43,8 @@ namespace BlackJack.BusinessLogic.Providers
                 expires: expires,
                 signingCredentials: creds
             );
-            var gentok =  new JwtSecurityTokenHandler().WriteToken(token);  
+            var gentok =  new JwtSecurityTokenHandler().WriteToken(token);
+          
             return gentok;
 
         }

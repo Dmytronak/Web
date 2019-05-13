@@ -7,14 +7,14 @@ namespace BlackJack.ViewModels.HistoryViews
     public class GetAllGamesHistoryView
     {
         public string Email { get; set; }
-        public List<GameGetAllGamesHistoryView> Games { get; set; }
+        public List<GameGetAllGamesHistoryViewItem> Games { get; set; }
 
         public GetAllGamesHistoryView()
         {
-            Games = new List<GameGetAllGamesHistoryView>();
+            Games = new List<GameGetAllGamesHistoryViewItem>();
         }
     }
-    public class GameGetAllGamesHistoryView
+    public class GameGetAllGamesHistoryViewItem
     {
         public Guid Id { get; set; }
         public int NumberOfBots { get; set; }

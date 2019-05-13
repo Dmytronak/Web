@@ -25,14 +25,12 @@ namespace BlackJack.BusinessLogic.Services
             _jwtProvider = jwtProvider;
             _playerRepository = playerRepository;
         }
-
-
         public async Task<LoginAccountResponseView> Login(LoginAccountView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
             if (!result.Succeeded)
             {
-                throw new Exception("INVALID Login or password");
+                throw new CustomErrorException("Invalid Login or password");
                
             }
             var user = _userManager.Users.FirstOrDefault(x => x.Email == model.Email);
@@ -59,7 +57,7 @@ namespace BlackJack.BusinessLogic.Services
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                throw new Exception("INVALID_REGISTER_ATTEMPT");
+                throw new CustomErrorException("Registration is not complete");
             }
             await _playerRepository.Create(player);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(user);

@@ -57,11 +57,12 @@ namespace BlackJack
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseMiddleware(typeof(ExceptionMiddleware));
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-          
+            app.UseMiddleware(typeof(ExceptionMiddleware));
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

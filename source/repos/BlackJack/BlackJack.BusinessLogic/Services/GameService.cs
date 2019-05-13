@@ -43,9 +43,9 @@ namespace BlackJack.BusinessLogic.Services
         {
             var gameId = Guid.NewGuid();
             var existingGames = await _gameRepository.GetAll();
-            if (existingGames == null)
+            if (existingGames.Count == 0)
             {
-                throw new NullReferenceException("existingGames is null!");
+                throw new CustomErrorException("Games doesn`t exist");
             }
             var game = existingGames.Select(x => x).FirstOrDefault(x => x.Status == StatusType.New || x.Status == StatusType.Continue);
             var users = _userManager.Users.ToList();
@@ -56,12 +56,12 @@ namespace BlackJack.BusinessLogic.Services
                 var playerStep = await _playerStepRepository.GetByGameId(gameId);
                 if (playerStep.Count == 0)
                 {
-                    throw new NullReferenceException("PlayerStep is null!");
+                    throw new CustomErrorException("Player steps doesn`t exist");
                 }
                 var botAndSteps = await _botStepRepository.GetByGameId(gameId);
                 if (botAndSteps.Count == 0)
                 {
-                    throw new NullReferenceException("BotAndSteps is null!");
+                    throw new CustomErrorException("Bot steps doesn`t exist!");
                 }
                 var playersAndGames = await _playerInGameRepository.GetByGameId(gameId);
                 var playersDB = await _playerRepository.GetAll();
@@ -119,7 +119,7 @@ namespace BlackJack.BusinessLogic.Services
             var user = _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                throw new NullReferenceException("user model received a null argument!");
+                throw new CustomErrorException("User doesn`t exist!");
             }
             var playersDb = await _playerRepository.GetAll();
             var player = playersDb.FirstOrDefault(x => x.UserId == user.Result.Id);
@@ -128,7 +128,7 @@ namespace BlackJack.BusinessLogic.Services
             var bots = await _botRepository.GetAll();
             if (bots.Count == 0)
             {
-                throw new NullReferenceException("Bots is empty!");
+                throw new CustomErrorException("Bots doesn`t exist!");
             }
             var botList = bots
                 .OrderBy(r => Guid.NewGuid())
@@ -238,9 +238,9 @@ namespace BlackJack.BusinessLogic.Services
         {
             var gameId = Guid.NewGuid();
             var existingGames = await _gameRepository.GetAll();
-            if (existingGames == null)
+            if (existingGames.Count == 0)
             {
-                throw new NullReferenceException("existingGames is null!");
+                throw new CustomErrorException("Active games doesn`t exist!");
             }
             var activeGame = existingGames.Select(x => x).FirstOrDefault(x => x.Status == StatusType.New || x.Status == StatusType.Continue);
             if (activeGame != null)
@@ -257,32 +257,32 @@ namespace BlackJack.BusinessLogic.Services
             var cards = await _cardRepository.GetByGameId(gameId);
             if (cards.Count == 0)
             {
-                throw new NullReferenceException("Deck IN DB is empty!");
+                throw new CustomErrorException("Deck doesn`t exist!");
             }
             var playerStepDb = await _playerStepRepository.GetByGameId(gameId);
             if (playerStepDb.Count == 0)
             {
-                throw new NullReferenceException("PlayerStep is null!");
+                throw new CustomErrorException("Player step doesn`t exist!");
             }
             var botAndSteps = await _botStepRepository.GetByGameId(gameId);
             if (botAndSteps.Count == 0)
             {
-                throw new NullReferenceException("BotAndSteps is null!");
+                throw new CustomErrorException("Bot and steps doesn`t exist");
             }
             var botInGameDb = await _botInGameRepository.GetByGameId(gameId);
             if (botInGameDb.Count == 0)
             {
-                throw new NullReferenceException("BotInGame is null!");
+                throw new CustomErrorException("Bot in game doesn`t exist");
             }
             var playerInGameDb = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameDb.Count == 0)
             {
-                throw new NullReferenceException("PlayerInGame is null!");
+                throw new CustomErrorException("Player in game doesn`t exist");
             }
             var game = await _gameRepository.GetById(gameId);
             if (game == null)
             {
-                throw new NullReferenceException("Game is null!");
+                throw new CustomErrorException("Game doesn`t exist!");
             }
             deck = cards;
             var playerCard = deck.ElementAt(0);
@@ -307,7 +307,7 @@ namespace BlackJack.BusinessLogic.Services
             var clearCards = await _cardRepository.GetByGameId(gameId);
             if (clearCards.Count == 0)
             {
-                throw new NullReferenceException("Cards is empty!");
+                throw new CustomErrorException("Cards doesn`t exist!");
             }
             var cardForBots = new List<Card>();
             var botList = botAndSteps
@@ -397,9 +397,9 @@ namespace BlackJack.BusinessLogic.Services
         {
             var gameId = Guid.NewGuid();
             var existingGames = await _gameRepository.GetAll();
-            if (existingGames == null)
+            if (existingGames.Count == 0)
             {
-                throw new NullReferenceException("existingGames is null!");
+                throw new CustomErrorException("Existing games doesn`t exist!");
             }
             var activeGame = existingGames.Select(x => x).FirstOrDefault(x => x.Status == StatusType.New || x.Status == StatusType.Continue);
             if (activeGame != null)
@@ -416,32 +416,32 @@ namespace BlackJack.BusinessLogic.Services
             var cards = await _cardRepository.GetByGameId(gameId);
             if (cards.Count == 0)
             {
-                throw new NullReferenceException("Deck IN DB is empty!");
+                throw new CustomErrorException("Deck doesn`t exist!");
             }
             var playerStepDb = await _playerStepRepository.GetByGameId(gameId);
             if (playerStepDb.Count == 0)
             {
-                throw new NullReferenceException("PlayerAndSteps is null!");
+                throw new CustomErrorException("Player and steps doesn`t exist!");
             }
             var botAndSteps = await _botStepRepository.GetByGameId(gameId);
             if (botAndSteps.Count == 0)
             {
-                throw new NullReferenceException("BotAndSteps is null!");
+                throw new CustomErrorException("Bot and steps doesn`t exist!");
             }
             var botInGameDb = await _botInGameRepository.GetByGameId(gameId);
             if (botInGameDb.Count == 0)
             {
-                throw new NullReferenceException("BotInGame is null!");
+                throw new CustomErrorException("Bot in game doesn`t exist!");
             }
             var playerInGameDb = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameDb.Count == 0)
             {
-                throw new NullReferenceException("PlayerInGame is null!");
+                throw new CustomErrorException("PlayerInGame is null!");
             }
             var game = await _gameRepository.GetById(gameId);
             if (game == null)
             {
-                throw new NullReferenceException("Game is null!");
+                throw new CustomErrorException("Game is null!");
             }
             var playerScore = playerInGameDb
                 .Select(x => x.Score)
@@ -483,7 +483,7 @@ namespace BlackJack.BusinessLogic.Services
                 var clearCards = await _cardRepository.GetByGameId(gameId);
                 if (clearCards.Count == 0)
                 {
-                    throw new NullReferenceException("Cards is null!");
+                    throw new CustomErrorException("Cards doesn`t exist!");
                 }
                 await _cardRepository.RemoveRange(clearCards);
                 var cardsOfGame = deck

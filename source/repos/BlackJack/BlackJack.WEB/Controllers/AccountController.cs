@@ -7,6 +7,7 @@ namespace BlackJack.Controllers
 {
     [Route("api/account/[action]")]
     [ApiController]
+    
     public class AccountController : Controller
     {
         private readonly IAccountService _accountService;

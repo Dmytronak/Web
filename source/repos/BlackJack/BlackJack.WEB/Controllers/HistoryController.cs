@@ -7,6 +7,7 @@ namespace BlackJack.Controllers
 {
     [Route("api/history/[action]")]
     [ApiController]
+
     public class HistoryController : Controller
     {
         private readonly IHistoryService _historyService;
@@ -20,8 +21,8 @@ namespace BlackJack.Controllers
         [HttpGet]
         public async Task<IActionResult> AllUserGames([FromQuery] GetAllGamesHistoryView model)
         {
-            var response = await _historyService.GetAllGames(model);
-            return Ok(response);
+           var response = await _historyService.GetAllGames(model);
+           return Ok(response);
         }
         [HttpGet]
         public async Task<IActionResult> PlayerSteps([FromQuery] PlayerStepsHistoryView model)
@@ -41,7 +42,7 @@ namespace BlackJack.Controllers
                 return View(model);
             }
 
-            var response = await _historyService.BotStep(model);
+            var response = await _historyService.BotSteps(model);
             return Ok(response);
         }
 
