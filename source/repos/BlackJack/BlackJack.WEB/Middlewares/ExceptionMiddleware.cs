@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -29,7 +28,7 @@ namespace BlackJack.Middlewares
             }
             catch (UnauthorizedAccessException ex)
             {
-                await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
+                await HandleExceptionAsync(context, ex, HttpStatusCode.Unauthorized);
             }
             catch (Exception ex)
             {
@@ -39,16 +38,14 @@ namespace BlackJack.Middlewares
 
         private static Task HandleExceptionAsync(HttpContext context, Exception ex, HttpStatusCode statusCode)
         {
-            //var code = HttpStatusCode.InternalServerError;
-
-            //if (ex is CustomErrorException) code = HttpStatusCode.NotFound;
-            //else if (ex is UnauthorizedAccessException) code = HttpStatusCode.Unauthorized;
-
-
-
             var result = JsonConvert.SerializeObject(new { error = ex.Message });
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)statusCode;
+            if ((int)statusCode>=500)
+            {
+                result = JsonConvert.SerializeObject(new { error = "Status code: " + (int)statusCode +" , "+ "Internal Server Error" });
+                context.Response.ContentType = "application/json";
+                context.Response.StatusCode = (int)statusCode; 
+            }
             return context.Response.WriteAsync(result);
         }
     }

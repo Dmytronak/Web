@@ -33,13 +33,12 @@ namespace BlackJack.BusinessLogic.Services
                 throw new CustomErrorException("Invalid Login or password");
                
             }
-            var user = _userManager.Users.FirstOrDefault(x => x.Email == model.Email);
-            var encodedJwt = await _jwtProvider.GenerateJwtToken(user);
+            var user = _userManager.FindByEmailAsync(model.Email);
+            var encodedJwt = await _jwtProvider.GenerateJwtToken(user.Result);
             var response = new LoginAccountResponseView();
             response.Token = encodedJwt;
             return response;
         }
-
         public async Task<LoginAccountResponseView> Register(RegisterAccountView model)
         {
             var user = new User
@@ -67,7 +66,6 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-
         public async Task<GetAllAccountView> GetAll()
         {
             var users = _userManager.Users.ToList();
