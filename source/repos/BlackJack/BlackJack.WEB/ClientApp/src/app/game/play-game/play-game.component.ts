@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PlayGame, CardPlayGameViewItem, BotPlayGameViewItem, PlayerPlayGameViewItem } from '../../shared/entities/play-game.view';
-import { GameService } from '../../shared/services/game.service';
-import { AlertService } from '../../shared/services/alert.service';
-import { Status } from '../../shared/enums/status-type.enum.view';
+import { Status } from 'src/app/shared/enums/status-type.enum.view';
+import { CardPlayGameViewItem, BotPlayGameViewItem, PlayerPlayGameViewItem, PlayGame } from 'src/app/shared/entities/play-game.view';
+import { GameService } from 'src/app/shared/services/game.service';
+import { Router } from '@angular/router';
+import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
   selector: 'app-play-game',
   templateUrl: './play-game.component.html',
-  styleUrls: ['./play-game.component.css']
+  styleUrls: ['./play-game.component.scss']
 })
 export class PlayGameComponent implements OnInit {
   error: string = '';

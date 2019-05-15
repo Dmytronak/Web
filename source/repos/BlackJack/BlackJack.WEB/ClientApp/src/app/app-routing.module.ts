@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './shared/guards/onlyLoggedOutUsers.guard';
+import { AuthUsersGuard } from './shared/guards/onlyLoggedInUsers.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/game', pathMatch: 'full'},
-  { path: 'home', component: HomeComponent },
-
+  {path: 'home',loadChildren: './home/home.module#HomeModule',canActivate: [AuthUsersGuard]},
+  {path: 'auth',loadChildren: './auth/auth.module#AuthModule',canActivate: [AuthUsersGuard]},
+  {path: 'game',loadChildren: './game/game.module#GameModule',canActivate: [AuthGuard]},
+  {path: 'history',loadChildren: './history/history.module#HistoryModule',canActivate: [AuthGuard]},
+  {path: 'shared',loadChildren: './shared/shared.module#SharedModule'},
+  {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
 @NgModule({
