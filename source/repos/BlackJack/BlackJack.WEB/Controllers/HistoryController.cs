@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.ViewModels.HistoryViews;
 using BlackJack.BusinessLogic.Services.Interfaces;
+using System;
 
 namespace BlackJack.Controllers
 {
@@ -25,24 +26,15 @@ namespace BlackJack.Controllers
            return Ok(response);
         }
         [HttpGet]
-        public async Task<IActionResult> PlayerSteps([FromQuery] PlayerStepsHistoryView model)
+        public async Task<IActionResult> PlayerSteps([FromQuery] Guid gameId)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var response = await _historyService.PlayerStep(model);
+            var response = await _historyService.PlayerStep(gameId);
             return Ok(response);
         }
         [HttpGet]
-        public async Task<IActionResult> BotSteps([FromQuery] BotStepsHistoryView model)
+        public async Task<IActionResult> BotSteps([FromQuery] Guid gameId)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var response = await _historyService.BotSteps(model);
+            var response = await _historyService.BotSteps(gameId);
             return Ok(response);
         }
 

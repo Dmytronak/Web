@@ -36,92 +36,86 @@ namespace BlackJack.BusinessLogic.Services
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
         }
-      
         public async Task<PlayGameView> GetActive()
         {
+            var activeGame = await _gameRepository.GetActiveGame();
+            if (activeGame == null)
+            {
+                throw new CustomServiceException("Active game is doesn`t exist");
+            }
+            var playerStep = await _playerStepRepository.GetByGameId(activeGame.Id);
+            var boSteps = await _botStepRepository.GetByGameId(activeGame.Id);
+            var playerInGame = await _playerInGameRepository.GetByGameId(activeGame.Id);
+            var playerGame = playerInGame.Select(x => x).FirstOrDefault(x => x.GameId == activeGame.Id);
+            var player = await _playerRepository.GetById(playerGame.PlayerId);
+            var user = await _userManager.FindByIdAsync(player.UserId);
+            var status = activeGame.Status;
+            var winner = activeGame.Winner;
             var response = new PlayGameView();
-            var game = await _gameRepository.GetActiveGame();
-            if (game == null)
+            response.NumberOfBots = activeGame.NumberOfBots;
+            response.Email = user.Email;
+            response.Status = status;
+            response.Winner = winner;
+            response.Player = new PlayerPlayGameViewItem()
             {
-                response.Status = StatusType.NoGames;
-            }
-            if (game != null)
-            {
-                var playerStep = await _playerStepRepository.GetByGameId(game.Id);
-                var boSteps = await _botStepRepository.GetByGameId(game.Id);
-                var playerInGame = await _playerInGameRepository.GetByGameId(game.Id);
-                var playerGame = playerInGame.Select(x => x).FirstOrDefault(x => x.GameId == game.Id);
-                var player = await _playerRepository.GetById(playerGame.PlayerId);
-                var user = _userManager.FindByIdAsync(player.UserId);
-                var status = game.Status;
-                var winner = game.Winner;
-                response.NumberOfBots = game.NumberOfBots;
-                response.Email = user.Result.Email;
-                response.Status = status;
-                response.Winner = winner;
-                var groupedPlayerStep = playerStep.GroupBy(x => x.GameId);
-                response.Player = groupedPlayerStep
-                    .Select(x => new PlayerPlayGameViewItem()
-                    {
-                        Name = player.Name,
-                        Cards = playerStep.Select(d=>new CardPlayGameViewItem() {
-                            Rank = d.Rank,
-                            Suit = d.Suit
-                        })
-                        .ToList()
-                    })
-                    .ToList();
-                var botList = boSteps
-                    .Select(x => x.Bot)
-                    .Distinct()
-                    .ToList();
-                var groupedBotSteps = boSteps.GroupBy(x => x.BotId);
-                var botPlayGameViewItems = new List<BotPlayGameViewItem>();
-                foreach (var item in groupedBotSteps)
+                Name = player.Name,
+                Cards = playerStep.Select(d => new CardPlayGameViewItem()
                 {
-                    var currentBot = botList.FirstOrDefault(x => x.Id == item.Key).Name;
-                    var botPlayGameViewItem = new BotPlayGameViewItem() {
-                        Name = currentBot,
-                        Cards = item.Select(x => new CardPlayGameViewItem()
-                        {
-                            Rank = x.Rank,
-                            Suit = x.Suit
-                        })
-                    .ToList()
-                    };
-                    botPlayGameViewItems.Add(botPlayGameViewItem);
-                }
-                response.Bots.AddRange(botPlayGameViewItems);
-                return response;
+                    Rank = d.Rank,
+                    Suit = d.Suit
+                })
+                .ToList()
+            };
+            var botList = boSteps
+                .Select(x => x.Bot)
+                .Distinct()
+                .ToList();
+            var groupedBotSteps = boSteps.GroupBy(x => x.BotId);
+            var botPlayGameViewItems = new List<BotPlayGameViewItem>();
+            foreach (var item in groupedBotSteps)
+            {
+                var currentBot = botList.FirstOrDefault(x => x.Id == item.Key).Name;
+                var botPlayGameViewItem = new BotPlayGameViewItem()
+                {
+                    Name = currentBot,
+                    Cards = item.Select(x => new CardPlayGameViewItem()
+                    {
+                        Rank = x.Rank,
+                        Suit = x.Suit
+                    })
+                .ToList()
+                };
+                botPlayGameViewItems.Add(botPlayGameViewItem);
             }
+            response.Bots.AddRange(botPlayGameViewItems);
             return response;
         }
-        public async Task<PlayGameView> Play(PlayGameView model)
+        public async Task<PlayGameView> Play(string email, int numberOfBots)
         {
-            var user = _userManager.FindByEmailAsync(model.Email);
+            var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
             {
-                throw new CustomErrorException("User doesn`t exist!");
+                throw new CustomServiceException("User doesn`t exist!");
             }
-            var player = await _playerRepository.GetByUserId(user.Result.Id);
+            var player = await _playerRepository.GetByUserId(user.Id);
             var winner = "No one";
             var bots = await _botRepository.GetAll();
             if (bots.Count == 0)
             {
-                throw new CustomErrorException("Bots doesn`t exist. Add bots on Data base!");
+                throw new CustomServiceException("Bots doesn`t exist. Add bots on Data base!");
             }
             var botList = bots
                 .OrderBy(r => Guid.NewGuid())
-                .Take(model.NumberOfBots)
+                .Take(numberOfBots)
                 .ToList();
             var game = new Game()
             {
-                NumberOfBots = model.NumberOfBots,
+                NumberOfBots = numberOfBots,
                 Status = StatusType.New,
                 Winner = winner
             };
-            var deck = new List<Card>();
-            deck.AddRange(Shuffle());
+            var deckOfCards = ShuffleDeckOfCards();
+            var deck = deckOfCards;
             var playerCard = deck.ElementAt(0);
             deck.RemoveAt(0);
             var playerStep = new PlayerStep()
@@ -132,9 +126,9 @@ namespace BlackJack.BusinessLogic.Services
             };
             var gameId = game.Id;
             var cardForBots = new List<Card>();
-            CardForBots(botList, cardForBots, deck);
+            DistributeCardsToBots(botList, cardForBots, deck);
             var botsSteps = new List<BotStep>();
-            BotSteps(botList, cardForBots, game, botsSteps, gameId);
+            WriteCardsToBotSteps(botList, cardForBots, game, botsSteps, gameId);
             var playerInGame = new PlayerInGame()
             {
                 PlayerId = player.Id,
@@ -158,8 +152,8 @@ namespace BlackJack.BusinessLogic.Services
                 }
                 ).ToList();
             var response = new PlayGameView();
-            response.NumberOfBots = model.NumberOfBots;
-            response.Email = model.Email;
+            response.NumberOfBots = numberOfBots;
+            response.Email = email;
             response.Status = StatusType.New;
             response.Winner = winner;
             var cardPlayGameViewItems = new List<CardPlayGameViewItem>();
@@ -168,11 +162,11 @@ namespace BlackJack.BusinessLogic.Services
                 Rank = playerStep.Rank,
                 Suit = playerStep.Suit
             });
-            response.Player.Add(new PlayerPlayGameViewItem()
+            response.Player = new PlayerPlayGameViewItem()
             {
                 Name = player.Name,
                 Cards = cardPlayGameViewItems
-            });
+            };
             var groupedBotsSteps = botsSteps.GroupBy(x => x.BotId);
             var botPlayGameViewItems = new List<BotPlayGameViewItem>();
             foreach (var item in groupedBotsSteps)
@@ -201,43 +195,39 @@ namespace BlackJack.BusinessLogic.Services
         public async Task<ContinueGameView> Continue()
         {
             var gameId = Guid.NewGuid();
-            var game = await _gameRepository.GetActiveGame();
-            if (game == null)
+            var activeGame = await _gameRepository.GetActiveGame();
+            if (activeGame == null)
             {
-                throw new CustomErrorException("Active game doesn`t exist!");
+                throw new CustomServiceException("Active game doesn`t exist!");
             }
-            if (game != null)
-            {
-                gameId = game.Id;
-
-            }
+            gameId = activeGame.Id;
             var playerInGameDb = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameDb.Count == 0)
             {
-                throw new CustomErrorException("Player in game doesn`t exist!");
+                throw new CustomServiceException("Player in game doesn`t exist!");
             }
             var deck = await _cardRepository.GetByGameId(gameId);
             if (deck.Count == 0)
             {
-                throw new CustomErrorException("Deck doesn`t exist!");
+                throw new CustomServiceException("Deck doesn`t exist!");
             }
             var playerStepDb = await _playerStepRepository.GetByGameId(gameId);
             if (playerStepDb.Count == 0)
             {
-                throw new CustomErrorException("Player step doesn`t exist!");
+                throw new CustomServiceException("Player step doesn`t exist!");
             }
             var botStepsDb = await _botStepRepository.GetByGameId(gameId);
             if (botStepsDb.Count == 0)
             {
-                throw new CustomErrorException("Bot and steps doesn`t exist");
+                throw new CustomServiceException("Bot and steps doesn`t exist");
             }
             var botInGameDb = await _botInGameRepository.GetByGameId(gameId);
             if (botInGameDb.Count == 0)
             {
-                throw new CustomErrorException("Bot in game doesn`t exist");
+                throw new CustomServiceException("Bot in game doesn`t exist");
             }
             var status = StatusType.Continue;
-            var winner = game.Winner;
+            var winner = activeGame.Winner;
             var player = playerInGameDb.Select(x => x.Player).FirstOrDefault();
 
             var playerCard = deck.ElementAt(0);
@@ -262,16 +252,16 @@ namespace BlackJack.BusinessLogic.Services
             var clearCards = await _cardRepository.GetByGameId(gameId);
             if (clearCards.Count == 0)
             {
-                throw new CustomErrorException("Cards doesn`t exist!");
+                throw new CustomServiceException("Cards doesn`t exist!");
             }
             var cardForBots = new List<Card>();
             var botList = botStepsDb
                 .Select(x => x.Bot)
                 .Distinct()
                 .ToList();
-            CardForBots(botList, cardForBots,deck);
+            DistributeCardsToBots(botList, cardForBots, deck);
             var botsSteps = new List<BotStep>();
-            BotSteps(botList, cardForBots, null, botsSteps, gameId);
+            WriteCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
             var botInGame = botsSteps
                 .Select(x => new BotInGame()
                 {
@@ -289,11 +279,11 @@ namespace BlackJack.BusinessLogic.Services
                 .GroupBy(x => x.BotId);
             var scoredBotValuesDb = new List<BotInGame>();
             scoredBotValuesDb.AddRange(botInGame);
-            ScorePointFromDb(scoredBotValuesDb, groupedBotInGame, gameId);
+            ScoreBotExistingPoint(scoredBotValuesDb, groupedBotInGame, gameId);
             var groupedBotsScore = scoredBotValuesDb.GroupBy(x => x.BotId);
             var botsScore = new List<BotInGame>();
-            RoundScore(botsScore, groupedBotsScore, gameId);
-            CheckWinner(botsScore, bots, status, winner, playerScore, player, game, gameId); // method of checking winner at continue game
+            ScoreBotPointsOfRound(botsScore, groupedBotsScore, gameId);
+            CheckWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId); // method of checking winner at continue game
             await _cardRepository.RemoveRange(clearCards);
             var cardsOfGame = deck
                 .Select(x => new Card()
@@ -306,8 +296,8 @@ namespace BlackJack.BusinessLogic.Services
             botStepsDb.AddRange(botsSteps);
             playerStepDb.Add(playerStep);
             var response = new ContinueGameView();
-            response.Status = game.Status;
-            response.Winner = game.Winner;
+            response.Status = activeGame.Status;
+            response.Winner = activeGame.Winner;
             var groupedBotSteps = botStepsDb.GroupBy(x => x.BotId);
             var botContinueGameViewItems = new List<BotContinueGameViewItem>();
             foreach (var item in groupedBotSteps)
@@ -324,69 +314,63 @@ namespace BlackJack.BusinessLogic.Services
                 botContinueGameViewItems.Add(botContinueGameViewItem);
             }
             response.Bots.AddRange(botContinueGameViewItems);
-            var groupedPlayerSteps = playerStepDb.GroupBy(x => x.GameId);
-            response.Player = groupedPlayerSteps
-                .Select(x => new PlayerContinueGameViewItem()
-                {
-                    Name = player.Name,
-                    Cards = playerStepDb
-                    .Select(d => new CardContinueGameViewItem() {
+            response.Player = new PlayerContinueGameViewItem()
+            {
+                Name = player.Name,
+                Cards = playerStepDb
+                    .Select(d => new CardContinueGameViewItem()
+                    {
                         Rank = d.Rank,
                         Suit = d.Suit
                     })
                     .ToList()
-                })
-                .ToList();
+            };
 
             await _playerStepRepository.Create(playerStep);
             await _botStepRepository.CreateRange(botsSteps);
             await _cardRepository.CreateRange(cardsOfGame);
             await _botInGameRepository.CreateRange(botInGame);
             await _playerInGameRepository.Create(playerInGame);
-            await _gameRepository.Update(game);
+            await _gameRepository.Update(activeGame);
             return response;
         }
         public async Task<EndGameView> End()
         {
             var gameId = Guid.NewGuid();
-            var game = await _gameRepository.GetActiveGame();
-            if (game == null)
+            var activeGame = await _gameRepository.GetActiveGame();
+            if (activeGame == null)
             {
-                throw new CustomErrorException("Active game doesn`t exist!");
+                throw new CustomServiceException("Active game doesn`t exist!");
             }
-            if (game != null)
-            {
-                gameId = game.Id;
-
-            }
+            gameId = activeGame.Id;
             var playerInGameDb = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameDb.Count == 0)
             {
-                throw new CustomErrorException("Player in game doesn`t exist!");
+                throw new CustomServiceException("Player in game doesn`t exist!");
             }
             var deck = await _cardRepository.GetByGameId(gameId);
             if (deck.Count == 0)
             {
-                throw new CustomErrorException("Deck doesn`t exist!");
+                throw new CustomServiceException("Deck doesn`t exist!");
             }
             var playerStepDb = await _playerStepRepository.GetByGameId(gameId);
             if (playerStepDb.Count == 0)
             {
-                throw new CustomErrorException("Player and steps doesn`t exist!");
+                throw new CustomServiceException("Player and steps doesn`t exist!");
             }
             var botStepDb = await _botStepRepository.GetByGameId(gameId);
             if (botStepDb.Count == 0)
             {
-                throw new CustomErrorException("Bot and steps doesn`t exist!");
+                throw new CustomServiceException("Bot and steps doesn`t exist!");
             }
             var botInGameDb = await _botInGameRepository.GetByGameId(gameId);
             if (botInGameDb.Count == 0)
             {
-                throw new CustomErrorException("Bot in game doesn`t exist!");
+                throw new CustomServiceException("Bot in game doesn`t exist!");
             }
 
             var status = StatusType.End;
-            var winner = game.Winner;
+            var winner = activeGame.Winner;
             var player = playerInGameDb.Select(x => x.Player).FirstOrDefault();
             var playerScore = playerInGameDb
                 .Select(x => x.Score)
@@ -397,10 +381,10 @@ namespace BlackJack.BusinessLogic.Services
                 .ToList();
             var groupedBotInGame = botInGameDb.GroupBy(x => x.BotId);
             var scoredBotValuesDb = new List<BotInGame>();
-            ScorePointFromDb(scoredBotValuesDb, groupedBotInGame, gameId);
+            ScoreBotExistingPoint(scoredBotValuesDb, groupedBotInGame, gameId);
             var groupedBotsScore = scoredBotValuesDb.GroupBy(x => x.BotId);
             var botsScore = new List<BotInGame>();
-            RoundScore(botsScore, groupedBotsScore, gameId);
+            ScoreBotPointsOfRound(botsScore, groupedBotsScore, gameId);
             var maxBotScore = botsScore.Max(x => x.Score);
             if (maxBotScore < 17)
             {
@@ -409,9 +393,9 @@ namespace BlackJack.BusinessLogic.Services
                   .Distinct()
                   .ToList();
                 var cardForBots = new List<Card>();
-                CardForBots(botList, cardForBots,deck);
+                DistributeCardsToBots(botList, cardForBots, deck);
                 var botsSteps = new List<BotStep>();
-                BotSteps(botList, cardForBots, null, botsSteps, gameId);
+                WriteCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
 
                 var botInGame = botsSteps
                     .Select(x => new BotInGame()
@@ -426,7 +410,7 @@ namespace BlackJack.BusinessLogic.Services
                 var clearCards = await _cardRepository.GetByGameId(gameId);
                 if (clearCards.Count == 0)
                 {
-                    throw new CustomErrorException("Cards doesn`t exist!");
+                    throw new CustomServiceException("Cards doesn`t exist!");
                 }
                 await _cardRepository.RemoveRange(clearCards);
                 var cardsOfGame = deck
@@ -439,22 +423,23 @@ namespace BlackJack.BusinessLogic.Services
                     .ToList();
                 groupedBotsScore = scoredBotValuesDb.GroupBy(x => x.BotId);
                 botsScore = new List<BotInGame>();
-                RoundScore(botsScore, groupedBotsScore, gameId);
+                ScoreBotPointsOfRound(botsScore, groupedBotsScore, gameId);
                 await _botStepRepository.CreateRange(botsSteps);
                 await _cardRepository.CreateRange(cardsOfGame);
                 await _botInGameRepository.CreateRange(botInGame);
                 botStepDb.AddRange(botsSteps);
             }
-            CheckWinner(botsScore, bots, status, winner, playerScore, player, game, gameId); // chose winner method 
+            CheckWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId); // chose winner method 
             var response = new EndGameView();
-            response.Status = game.Status;
-            response.Winner = game.Winner;
+            response.Status = activeGame.Status;
+            response.Winner = activeGame.Winner;
             var groupedBotSteps = botStepDb.GroupBy(x => x.BotId);
             var botEndGameViewItems = new List<BotEndGameViewItem>();
             foreach (var item in groupedBotSteps)
             {
                 var botName = bots.FirstOrDefault(x => x.Id == item.Key).Name;
-                var botEndGameViewItem = new BotEndGameViewItem() {
+                var botEndGameViewItem = new BotEndGameViewItem()
+                {
                     Name = botName,
                     Cards = item.Select(x => new CardEndGameViewItem()
                     {
@@ -466,24 +451,21 @@ namespace BlackJack.BusinessLogic.Services
                 botEndGameViewItems.Add(botEndGameViewItem);
             }
             response.Bots.AddRange(botEndGameViewItems);
-            var groupedPlayerSteps = playerStepDb.GroupBy(x => x.GameId);
-            response.Player = groupedPlayerSteps
-                .Select(x => new PlayerEndGameViewItem()
-                {
-                    Name = player.Name,
-                    Cards = playerStepDb
+            response.Player = new PlayerEndGameViewItem()
+            {
+                Name = player.Name,
+                Cards = playerStepDb
                     .Select(d => new CardEndGameViewItem()
                     {
                         Rank = d.Rank,
                         Suit = d.Suit
                     })
                     .ToList()
-                })
-                .ToList();
-            await _gameRepository.Update(game);
+            };
+            await _gameRepository.Update(activeGame);
             return response;
         }
-        private List<Card> Shuffle()
+        private List<Card> ShuffleDeckOfCards()
         {
             var ranks = Enum.GetValues(typeof(CardRankType))
               .Cast<CardRankType>()
@@ -491,14 +473,14 @@ namespace BlackJack.BusinessLogic.Services
             var suits = Enum.GetValues(typeof(CardSuitType))
                 .Cast<CardSuitType>()
                 .ToList();
-           var  deck = suits
-                 .SelectMany(s => ranks
-                 .Select(c => new Card()
-                 {
-                     Suit = (CardSuitType)s,
-                     Rank = (CardRankType)c
-                 }))
-                 .ToList();
+            var deck = suits
+                  .SelectMany(s => ranks
+                  .Select(c => new Card()
+                  {
+                      Suit = (CardSuitType)s,
+                      Rank = (CardRankType)c
+                  }))
+                  .ToList();
             deck = deck.OrderBy(x => Guid.NewGuid()).ToList();
             return deck;
         }
@@ -511,7 +493,7 @@ namespace BlackJack.BusinessLogic.Services
             }
             return value;
         }
-        private void CheckWinner(List<BotInGame> botsScore, List<Bot> bots, StatusType status, string winner, int playerScore, Player player, Game game, Guid gameId)
+        private void CheckWinner(List<BotInGame> botsScore, List<Bot> bots, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
         {
             var groupBotScore = botsScore.GroupBy(x => x.BotId);
             var botScore = new List<BotInGame>();
@@ -551,14 +533,14 @@ namespace BlackJack.BusinessLogic.Services
                 {
                     status = StatusType.End;
                     winner = StatusType.Draw.ToString();
-                    game.Status = status;
-                    game.Winner = winner;
+                    activeGame.Status = status;
+                    activeGame.Winner = winner;
                 }
                 if (playerScore > maxBotScore && status == StatusType.End)
                 {
                     winner = player.Name;
-                    game.Status = status;
-                    game.Winner = winner.ToString();
+                    activeGame.Status = status;
+                    activeGame.Winner = winner.ToString();
                 }
                 if (playerScore > 21 && status == StatusType.Continue || playerScore < maxBotScore && status == StatusType.End)
                 {
@@ -567,8 +549,8 @@ namespace BlackJack.BusinessLogic.Services
                     botWinner.GameId = gameId;
                     status = StatusType.End;
                     winner = profileWinnerBot.Name;
-                    game.Status = status;
-                    game.Winner = winner;
+                    activeGame.Status = status;
+                    activeGame.Winner = winner;
 
                 }
                 if (maxBotScore == 21 || playerScore > 21 && maxBotScore == 21)
@@ -578,8 +560,8 @@ namespace BlackJack.BusinessLogic.Services
                     botWinner.GameId = gameId;
                     status = StatusType.Blackjack;
                     winner = profileWinnerBot.Name;
-                    game.Status = status;
-                    game.Winner = winner;
+                    activeGame.Status = status;
+                    activeGame.Winner = winner;
                 }
 
             }
@@ -587,8 +569,8 @@ namespace BlackJack.BusinessLogic.Services
             {
                 status = StatusType.End;
                 winner = player.Name;
-                game.Status = status;
-                game.Winner = winner.ToString();
+                activeGame.Status = status;
+                activeGame.Winner = winner.ToString();
             }
             if (playerScore > 21 && botScore.Count == 0)
             {
@@ -599,13 +581,13 @@ namespace BlackJack.BusinessLogic.Services
             {
                 status = StatusType.Blackjack;
                 winner = player.Name;
-                game.Status = status;
-                game.Winner = winner.ToString();
+                activeGame.Status = status;
+                activeGame.Winner = winner.ToString();
             }
-            game.Status = status;
-            game.Winner = winner;
+            activeGame.Status = status;
+            activeGame.Winner = winner;
         }
-        private void CardForBots(List<Bot> botList, List<Card> cardForBots, List<Card> deck)
+        private void DistributeCardsToBots(List<Bot> botList, List<Card> cardForBots, List<Card> deck)
         {
             for (var i = 0; i < botList.Count; i++)
             {
@@ -614,7 +596,7 @@ namespace BlackJack.BusinessLogic.Services
                 cardForBots.Add(card);
             }
         }
-        private void BotSteps(List<Bot> botList, List<Card> cardForBots, Game game, List<BotStep> botsSteps, Guid gameId)
+        private void WriteCardsToBotSteps(List<Bot> botList, List<Card> cardForBots, Game game, List<BotStep> botsSteps, Guid gameId)
         {
             for (var i = 0; i < botList.Count; i++)
             {
@@ -628,7 +610,7 @@ namespace BlackJack.BusinessLogic.Services
                 botsSteps.Add(step);
             }
         }
-        private void RoundScore(List<BotInGame> botsScore, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotsScore, Guid gameId)
+        private void ScoreBotPointsOfRound(List<BotInGame> botsScore, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotsScore, Guid gameId)
         {
             foreach (var item in groupedBotsScore)
             {
@@ -649,7 +631,7 @@ namespace BlackJack.BusinessLogic.Services
                 botsScore.Add(record);
             }
         }
-        private void ScorePointFromDb(List<BotInGame> scoredBotValuesDb, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotInGame, Guid gameId)
+        private void ScoreBotExistingPoint(List<BotInGame> scoredBotValuesDb, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotInGame, Guid gameId)
         {
             foreach (var item in groupedBotInGame)
             {

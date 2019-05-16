@@ -1,7 +1,6 @@
 ﻿using BlackJack.BusinessLogic.Options;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.DataAccess.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -29,11 +28,10 @@ namespace BlackJack.BusinessLogic.Providers
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
+                new Claim(ClaimTypes.Name, user.Id)
             };
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.Key));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.Key));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddHours(Convert.ToDouble(_options.Value.ExpireHours));
 
             var token = new JwtSecurityToken(
@@ -41,11 +39,11 @@ namespace BlackJack.BusinessLogic.Providers
                 _options.Value.Issuer,
                 claims,
                 expires: expires,
-                signingCredentials: creds
+                signingCredentials: credentials
             );
-            var gentok =  new JwtSecurityTokenHandler().WriteToken(token);
+            var response =  new JwtSecurityTokenHandler().WriteToken(token);
           
-            return gentok;
+            return response;
 
         }
     }

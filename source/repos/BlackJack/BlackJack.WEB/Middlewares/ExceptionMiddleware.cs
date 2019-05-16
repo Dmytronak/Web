@@ -22,7 +22,7 @@ namespace BlackJack.Middlewares
             {
                 await next(context);
             }
-            catch (CustomErrorException ex)
+            catch (CustomServiceException ex)
             {
                 await HandleExceptionAsync(context, ex, HttpStatusCode.BadRequest);
             }

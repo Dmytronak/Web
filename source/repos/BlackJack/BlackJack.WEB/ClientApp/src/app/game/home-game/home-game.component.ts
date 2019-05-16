@@ -26,7 +26,7 @@ export class HomeGameComponent implements OnInit {
   cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
   botsGame: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
   playerGame: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
-  createGame: PlayGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: [this.playerGame], bots: [this.botsGame] };
+  createGame: PlayGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
   newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
@@ -37,14 +37,10 @@ export class HomeGameComponent implements OnInit {
   ngOnInit() {
     this.gameService.getActiveGame()
     .subscribe(x => {
-      if (x) {
-        if(x['status'] === Status.NoGames) {
-          this.gameExisting = true;
-        }
-        if(x['status'] !== Status.NoGames) {
-        this.haveActiveGame = true;
-        }
+      if(x['error']) {
+        return this.gameExisting = true;
       }
+      this.haveActiveGame = true;
     },
       err => {
         this.error = err;

@@ -25,15 +25,17 @@
                 </tr>
             </thead>
         </table>
+<div>
+</div>
         <table class="table">
             <thead class="thead-dark">
                 <th *ngFor="let head of headPlayerSteps">{{head}}</th>
                 <th colspan="4"></th>
             </thead>
             <tbody>
-                <tr *ngFor="let h of playGame.player"><th>{{h.name}}</th>
-                <td *ngFor="let e of playGame.player">
-                    <tr *ngFor="let q of e.cards">
+                <tr><th>{{playGame.player.name}}</th>
+                <td>
+                    <tr *ngFor="let q of playGame.player.cards">
                             <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
                     </tr>
                 </td>

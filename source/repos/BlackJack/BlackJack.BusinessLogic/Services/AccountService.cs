@@ -5,8 +5,8 @@ using BlackJack.ViewModels.AccountViews;
 using BlackJack.DataAccess.Entities;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.BusinessLogic.Providers.Interfaces;
-using System;
 using BlackJack.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -30,11 +30,11 @@ namespace BlackJack.BusinessLogic.Services
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
             if (!result.Succeeded)
             {
-                throw new CustomErrorException("Invalid Login or password");
+                throw new CustomServiceException("Invalid Login or password");
                
             }
-            var user = _userManager.FindByEmailAsync(model.Email);
-            var encodedJwt = await _jwtProvider.GenerateJwtToken(user.Result);
+            var user = await _userManager.FindByEmailAsync(model.Email);
+            var encodedJwt = await _jwtProvider.GenerateJwtToken(user);
             var response = new LoginAccountResponseView();
             response.Token = encodedJwt;
             return response;
@@ -56,7 +56,7 @@ namespace BlackJack.BusinessLogic.Services
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
-                throw new CustomErrorException("Registration is not complete");
+                throw new CustomServiceException("Registration is not complete");
             }
             await _playerRepository.Create(player);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(user);
@@ -68,7 +68,7 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<GetAllAccountView> GetAll()
         {
-            var users = _userManager.Users.ToList();
+            var users = await _userManager.Users.ToListAsync();
             var response = new GetAllAccountView();
             response.Users = users
                 .Select(x => new UserGetAllAccountViewItem()

@@ -3,7 +3,7 @@ export class PlayGame {;
     numberOfBots: number;
     status: string;
     winner: string;
-    player:[PlayerPlayGameViewItem];
+    player:PlayerPlayGameViewItem;
     bots:[BotPlayGameViewItem];
 }
 export class PlayerPlayGameViewItem{

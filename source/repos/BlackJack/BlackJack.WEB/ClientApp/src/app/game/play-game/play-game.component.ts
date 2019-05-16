@@ -22,7 +22,7 @@ export class PlayGameComponent implements OnInit {
   cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
   bots: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
   player: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
-  playGame: PlayGame = { email: '', status: '', winner: '', numberOfBots: 0, player: [this.player], bots: [this.bots] };
+  playGame: PlayGame = { email: '', status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
 
   constructor(private gameService: GameService,private router: Router,private alertService: AlertService) {
   }
@@ -30,25 +30,24 @@ export class PlayGameComponent implements OnInit {
   ngOnInit() {
     this.gameService.getActiveGame()
     .subscribe(x => {
-      if (x) {
-        this.playGame.email = x['email'];
-        this.playGame.numberOfBots = x['numberOfBots'];
-        this.statusEnum = x['status'];
-        this.playGame.status = Status[this.statusEnum]
-        this.playGame.winner = x['winner'];
-        this.playGame.player = x['player'];
-        this.playGame.bots = x['bots'];
-        this.gameExisting = true;
-        this.haveActiveGame =true;
-        if (this.playGame.winner !== 'No one') {
-          this.gameExisting = false;
-        }
-        
-        if(x['status'] === Status.NoGames) {
-          this.haveActiveGame =false;
-          let errorMessage = { message: 'You havent active games! Play new game.' }
-          this.error = errorMessage.message;
-        }
+      if(x['error']) {
+        this.haveActiveGame =false;
+        let errorMessage = { message: 'You havent active games! Play new game.' }
+        this.error = errorMessage.message;
+        return this.error;
+      }
+      this.playGame.email = x['email'];
+      this.playGame.numberOfBots = x['numberOfBots'];
+      this.statusEnum = x['status'];
+      this.playGame.status = Status[this.statusEnum]
+      this.playGame.winner = x['winner'];
+      this.playGame.player.name = x['player'].name;
+      this.playGame.player.cards = x['player'].cards;
+      this.playGame.bots = x['bots'];
+      this.gameExisting = true;
+      this.haveActiveGame = true;
+      if (this.playGame.winner !== 'No one') {
+        this.gameExisting = false;
       }
     },
       err => {
@@ -64,7 +63,8 @@ export class PlayGameComponent implements OnInit {
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
-          this.playGame.player = x['player'];
+          this.playGame.player.name = x['player'].name;
+          this.playGame.player.cards = x['player'].cards;
           this.playGame.bots = x['bots'];
           this.gameExisting = true;
           if (this.playGame.winner !== 'No one') {
@@ -84,7 +84,8 @@ export class PlayGameComponent implements OnInit {
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
-          this.playGame.player = x['player'];
+          this.playGame.player.name = x['player'].name;
+          this.playGame.player.cards = x['player'].cards;
           this.playGame.bots = x['bots'];
           this.gameExisting = false;
         }
@@ -105,7 +106,8 @@ export class PlayGameComponent implements OnInit {
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
-          this.playGame.player = x['player'];
+          this.playGame.player.name = x['player'].name;
+          this.playGame.player.cards = x['player'].cards;
           this.playGame.bots = x['bots'];
           this.gameExisting = true;
         }

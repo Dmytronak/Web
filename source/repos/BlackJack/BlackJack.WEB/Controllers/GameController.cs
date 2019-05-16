@@ -21,13 +21,9 @@ namespace BlackJack.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> PlayGame([FromBody]PlayGameView model)
+        public async Task<IActionResult> PlayGame([FromQuery]string email,int numberOfBots)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var response =  await _gameService.Play(model);
+            var response =  await _gameService.Play(email,numberOfBots);
             return Ok(response);
         }
         [HttpPost]

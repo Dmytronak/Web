@@ -5,13 +5,14 @@ using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
-using System;
 using BlackJack.ViewModels.HistoryViews;
-using Microsoft.AspNetCore.Authorization;
+using System;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace BlackJack.BusinessLogic.Services
 {
-    
+
     public class HistoryService : IHistoryService
     {
         private readonly UserManager<User> _userManager;
@@ -23,7 +24,7 @@ namespace BlackJack.BusinessLogic.Services
         protected readonly ICardRepository _cardRepository;
         protected readonly IBotInGameRepository _botInGameRepository;
         protected readonly IPlayerInGameRepository _playerInGameRepository;
-
+        public System.Security.Principal.IPrincipal User { get; set; }
         public HistoryService(UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, ICardRepository cardRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
@@ -35,22 +36,21 @@ namespace BlackJack.BusinessLogic.Services
             _botStepRepository = botStepRepository;
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
-
         }
-        public async Task<BotStepsHistoryView> BotSteps(BotStepsHistoryView model)
+        public async Task<GetBotStepsHistoryView> BotSteps(Guid gameId)
         {
-            var botSteps = await _botStepRepository.GetByGameId(model.GameId);
+            var botSteps = await _botStepRepository.GetByGameId(gameId);
             if (botSteps.Count == 0)
             {
-                throw new CustomErrorException("Game doesn`t exist");
+                throw new CustomServiceException("Game doesn`t exist");
             }
             var bots = botSteps.Select(x => x.Bot).ToList();
             var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
-            var botStepViewItems = new List<BotBotStepsHistoryViewItem>();
+            var botStepViewItems = new List<BotGetBotStepsHistoryViewItem>();
             foreach (var item in gropedBotSteps)
             {
                 var botName = botSteps.Select(x => x.Bot).FirstOrDefault(x => x.Id == item.Key).Name;
-                var botStepViewItem = new BotBotStepsHistoryViewItem()
+                var botStepViewItem = new BotGetBotStepsHistoryViewItem()
                 {
                     Name = botName,
                     Steps = item.Select(x => new CardBotStepsHistoryViewItem()
@@ -62,33 +62,33 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 botStepViewItems.Add(botStepViewItem);
             }
-            var response = new BotStepsHistoryView()
+            var response = new GetBotStepsHistoryView()
             {
-                GameId = model.GameId,
+                GameId = gameId,
                 Bots = botStepViewItems
             };
             return response;
         }
-        public async Task<PlayerStepsHistoryView> PlayerStep(PlayerStepsHistoryView model)
+        public async Task<GetPlayerStepsHistoryView> PlayerStep(Guid gameId)
         {
-            var playerSteps = await _playerStepRepository.GetByGameId(model.GameId);
+            var playerSteps = await _playerStepRepository.GetByGameId(gameId);
             if (playerSteps.Count == 0)
             {
-                throw new CustomErrorException("Player steps doesn`t exist");
+                throw new CustomServiceException("Player steps doesn`t exist");
             }
-            var playersAndGames = await _playerInGameRepository.GetByGameId(model.GameId);
+            var playersAndGames = await _playerInGameRepository.GetByGameId(gameId);
             if (playersAndGames.Count == 0)
             {
-                throw new CustomErrorException("Score doesn`t exist");
+                throw new CustomServiceException("Score doesn`t exist");
             }
-            var playerGames = playersAndGames.Select(x => x).FirstOrDefault(x => x.GameId == (model.GameId));
+            var playerGames = playersAndGames.Select(x => x).FirstOrDefault(x => x.GameId == (gameId));
             var player = await _playerRepository.GetById(playerGames.PlayerId);
-            var response = new PlayerStepsHistoryView()
+            var response = new GetPlayerStepsHistoryView()
             {
                 Name = player.Name,
-                GameId = model.GameId,
+                GameId = gameId,
                 PlayerSteps = playerSteps
-                .Select(x => new PlayerPlayerStepsHistoryViewItem()
+                .Select(x => new PlayerGetPlayerStepsHistoryViewItem()
                 {
                     Rank = x.Rank,
                     Suit = x.Suit
@@ -99,16 +99,18 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<GetAllGamesHistoryView> GetAllGames(GetAllGamesHistoryView model)
         {
+           
             if (model.Email == null)
             {
-                throw new CustomErrorException("Email doesn`t exist");
+                throw new CustomServiceException("Email doesn`t exist");
             }
-            var user = _userManager.FindByEmailAsync(model.Email);
+
+            var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
             {
-                throw new CustomErrorException("User doesn`t exist");
+                throw new CustomServiceException("User doesn`t exist");
             }
-            var playerInGames = await _playerInGameRepository.GetByUserId(user.Result.Id);
+            var playerInGames = await _playerInGameRepository.GetByUserId(user.Id);
             var groupedGame = playerInGames.GroupBy(x => x.Game.Id);
             var gameViewItems = new List<GameGetAllGamesHistoryViewItem>();
             foreach (var item in groupedGame)

@@ -125,12 +125,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeGameComponent", function() { return HomeGameComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
-/* harmony import */ var src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/game.service */ "./src/app/shared/services/game.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/services/alert.service */ "./src/app/shared/services/alert.service.ts");
-
+/* harmony import */ var src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/game.service */ "./src/app/shared/services/game.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/alert.service */ "./src/app/shared/services/alert.service.ts");
 
 
 
@@ -150,7 +148,7 @@ var HomeGameComponent = /** @class */ (function () {
         this.cardsGame = { rank: 0, suit: 0 };
         this.botsGame = { name: '', cards: [this.cardsGame] };
         this.playerGame = { name: '', cards: [this.cardsGame] };
-        this.createGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: [this.playerGame], bots: [this.botsGame] };
+        this.createGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
         this.newPlayer = { id: '', email: '', name: '' };
         debugger;
         this.email = localStorage.getItem('email');
@@ -160,14 +158,10 @@ var HomeGameComponent = /** @class */ (function () {
         var _this = this;
         this.gameService.getActiveGame()
             .subscribe(function (x) {
-            if (x) {
-                if (x['status'] === src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"].NoGames) {
-                    _this.gameExisting = true;
-                }
-                if (x['status'] !== src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"].NoGames) {
-                    _this.haveActiveGame = true;
-                }
+            if (x['error']) {
+                return _this.gameExisting = true;
             }
+            _this.haveActiveGame = true;
         }, function (err) {
             _this.error = err;
         });
@@ -203,7 +197,7 @@ var HomeGameComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home-game.component.html */ "./src/app/game/home-game/home-game.component.html"),
             styles: [__webpack_require__(/*! ./home-game.component.scss */ "./src/app/game/home-game/home-game.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_3__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormBuilder"], src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_6__["AlertService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"], src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__["AlertService"]])
     ], HomeGameComponent);
     return HomeGameComponent;
 }());
@@ -219,7 +213,7 @@ var HomeGameComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"haveActiveGame\">\n    <div class=\"row\">\n        <table class=\"table\">\n            <thead class=\"thead-dark\">\n                <tr>\n                    <th colspan=\"6\">New Game</th>\n                </tr>\n                <tr>\n                    <th> <label>Game status : {{ playGame.status }}</label></th>\n                    <th> <label>Winner : {{ playGame.winner }} </label></th>\n                    <th>\n                        <div *ngIf=\"gameExisting\">\n                            <button class=\"btn btn-success\" (click)=\"continue()\"><i\n                                    class=\"fas fa-plus\"></i></button>\n                            <button class=\"btn btn-danger\" (click)=\"end()\"><i class=\"fas fa-times\"></i></button>\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\n                                    class=\"fa fa-arrow-left\"></i></button>\n                        </div>\n                        <div *ngIf=\"!gameExisting\">\n                            <button class=\"btn btn-primary\" (click)=\"playAgain()\">Play again with the same parametrs?</button>\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\n                                    class=\"fa fa-arrow-left\"></i></button>\n                        </div>\n                    </th>\n                </tr>\n            </thead>\n        </table>\n        <table class=\"table\">\n            <thead class=\"thead-dark\">\n                <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\n                <th colspan=\"4\"></th>\n            </thead>\n            <tbody>\n                <tr *ngFor=\"let h of playGame.player\"><th>{{h.name}}</th>\n                <td *ngFor=\"let e of playGame.player\">\n                    <tr *ngFor=\"let q of e.cards\">\n                            <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\n                    </tr>\n                </td>\n            </tr>\n            </tbody>\n            <thead class=\"thead-dark\">\n                <th colspan=\"8\" *ngFor=\"let head of headBots\">{{head}}</th>\n            </thead>\n            <thead class=\"thead-dark\">\n                <th *ngFor=\"let e of playGame.bots\">{{e.name}}</th>\n                <th colspan=\"8\"></th>\n            </thead>\n                <tbody>\n                    <td *ngFor=\"let e of playGame.bots\">\n                        <tr *ngFor=\"let q of e.cards\">\n                            <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\n                        </tr>\n                    </td>\n                </tbody>\n        </table>\n    </div>\n</div>\n<div *ngIf=\"error\" class=\"alert alert-danger\" role=\"alert\">\n    <strong>Oops!</strong> {{error}}\n</div>\n<div *ngIf=\"error\">\n    <p><label>Back to home : </label></p>\n    <button class=\"btn btn-success\" (click)=\"backToHome()\"><i\n        class=\"fa fa-arrow-left\"></i></button>\n</div>"
+module.exports = "<div *ngIf=\"haveActiveGame\">\n    <div class=\"row\">\n        <table class=\"table\">\n            <thead class=\"thead-dark\">\n                <tr>\n                    <th colspan=\"6\">New Game</th>\n                </tr>\n                <tr>\n                    <th> <label>Game status : {{ playGame.status }}</label></th>\n                    <th> <label>Winner : {{ playGame.winner }} </label></th>\n                    <th>\n                        <div *ngIf=\"gameExisting\">\n                            <button class=\"btn btn-success\" (click)=\"continue()\"><i\n                                    class=\"fas fa-plus\"></i></button>\n                            <button class=\"btn btn-danger\" (click)=\"end()\"><i class=\"fas fa-times\"></i></button>\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\n                                    class=\"fa fa-arrow-left\"></i></button>\n                        </div>\n                        <div *ngIf=\"!gameExisting\">\n                            <button class=\"btn btn-primary\" (click)=\"playAgain()\">Play again with the same parametrs?</button>\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\n                                    class=\"fa fa-arrow-left\"></i></button>\n                        </div>\n                    </th>\n                </tr>\n            </thead>\n        </table>\n<div>\n</div>\n        <table class=\"table\">\n            <thead class=\"thead-dark\">\n                <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\n                <th colspan=\"4\"></th>\n            </thead>\n            <tbody>\n                <tr><th>{{playGame.player.name}}</th>\n                <td>\n                    <tr *ngFor=\"let q of playGame.player.cards\">\n                            <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\n                    </tr>\n                </td>\n            </tr>\n            </tbody>\n            <thead class=\"thead-dark\">\n                <th colspan=\"8\" *ngFor=\"let head of headBots\">{{head}}</th>\n            </thead>\n            <thead class=\"thead-dark\">\n                <th *ngFor=\"let e of playGame.bots\">{{e.name}}</th>\n                <th colspan=\"8\"></th>\n            </thead>\n                <tbody>\n                    <td *ngFor=\"let e of playGame.bots\">\n                        <tr *ngFor=\"let q of e.cards\">\n                            <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\n                        </tr>\n                    </td>\n                </tbody>\n        </table>\n    </div>\n</div>\n<div *ngIf=\"error\" class=\"alert alert-danger\" role=\"alert\">\n    <strong>Oops!</strong> {{error}}\n</div>\n<div *ngIf=\"error\">\n    <p><label>Back to home : </label></p>\n    <button class=\"btn btn-success\" (click)=\"backToHome()\"><i\n        class=\"fa fa-arrow-left\"></i></button>\n</div>"
 
 /***/ }),
 
@@ -271,30 +265,30 @@ var PlayGameComponent = /** @class */ (function () {
         this.cardsGame = { rank: 0, suit: 0 };
         this.bots = { name: '', cards: [this.cardsGame] };
         this.player = { name: '', cards: [this.cardsGame] };
-        this.playGame = { email: '', status: '', winner: '', numberOfBots: 0, player: [this.player], bots: [this.bots] };
+        this.playGame = { email: '', status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
     }
     PlayGameComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.gameService.getActiveGame()
             .subscribe(function (x) {
-            if (x) {
-                _this.playGame.email = x['email'];
-                _this.playGame.numberOfBots = x['numberOfBots'];
-                _this.statusEnum = x['status'];
-                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
-                _this.playGame.winner = x['winner'];
-                _this.playGame.player = x['player'];
-                _this.playGame.bots = x['bots'];
-                _this.gameExisting = true;
-                _this.haveActiveGame = true;
-                if (_this.playGame.winner !== 'No one') {
-                    _this.gameExisting = false;
-                }
-                if (x['status'] === src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"].NoGames) {
-                    _this.haveActiveGame = false;
-                    var errorMessage = { message: 'You havent active games! Play new game.' };
-                    _this.error = errorMessage.message;
-                }
+            if (x['error']) {
+                _this.haveActiveGame = false;
+                var errorMessage = { message: 'You havent active games! Play new game.' };
+                _this.error = errorMessage.message;
+                return _this.error;
+            }
+            _this.playGame.email = x['email'];
+            _this.playGame.numberOfBots = x['numberOfBots'];
+            _this.statusEnum = x['status'];
+            _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
+            _this.playGame.winner = x['winner'];
+            _this.playGame.player.name = x['player'].name;
+            _this.playGame.player.cards = x['player'].cards;
+            _this.playGame.bots = x['bots'];
+            _this.gameExisting = true;
+            _this.haveActiveGame = true;
+            if (_this.playGame.winner !== 'No one') {
+                _this.gameExisting = false;
             }
         }, function (err) {
             return _this.alertService.error(err);
@@ -309,7 +303,8 @@ var PlayGameComponent = /** @class */ (function () {
                 _this.statusEnum = x['status'];
                 _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
                 _this.playGame.winner = x['winner'];
-                _this.playGame.player = x['player'];
+                _this.playGame.player.name = x['player'].name;
+                _this.playGame.player.cards = x['player'].cards;
                 _this.playGame.bots = x['bots'];
                 _this.gameExisting = true;
                 if (_this.playGame.winner !== 'No one') {
@@ -329,7 +324,8 @@ var PlayGameComponent = /** @class */ (function () {
                 _this.statusEnum = x['status'];
                 _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
                 _this.playGame.winner = x['winner'];
-                _this.playGame.player = x['player'];
+                _this.playGame.player.name = x['player'].name;
+                _this.playGame.player.cards = x['player'].cards;
                 _this.playGame.bots = x['bots'];
                 _this.gameExisting = false;
             }
@@ -350,7 +346,8 @@ var PlayGameComponent = /** @class */ (function () {
                 _this.statusEnum = x['status'];
                 _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
                 _this.playGame.winner = x['winner'];
-                _this.playGame.player = x['player'];
+                _this.playGame.player.name = x['player'].name;
+                _this.playGame.player.cards = x['player'].cards;
                 _this.playGame.bots = x['bots'];
                 _this.gameExisting = true;
             }
@@ -462,7 +459,8 @@ var GameService = /** @class */ (function () {
     };
     GameService.prototype.play = function (game) {
         debugger;
-        return this.http.post(this.baseUrl + "/game/playGame", game);
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]().set("email", game.email).set("numberOfBots", game.numberOfBots.toString());
+        return this.http.post(this.baseUrl + "/game/playGame?" + params, '');
     };
     GameService.prototype.continue = function (game) {
         debugger;

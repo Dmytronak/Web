@@ -12,13 +12,11 @@ namespace BlackJack.BusinessLogic.Configurations
 
     public static class JwtConfiguration
     {
-        public static IConfiguration Configuration { get; set; }
-        
         public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            Configuration = configuration;
+  
 
-            var jwtoption = configuration.GetSection("Jwt").Get<JwtOption>();
+            var jwtOption = configuration.GetSection("Jwt").Get<JwtOption>();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services
                 .AddAuthentication(options =>
@@ -33,11 +31,11 @@ namespace BlackJack.BusinessLogic.Configurations
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidIssuer = jwtoption.Issuer,
+                        ValidIssuer = jwtOption.Issuer,
                         ValidateAudience = true,
-                        ValidAudience = jwtoption.Issuer,
+                        ValidAudience = jwtOption.Issuer,
                         ValidateLifetime = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtoption.Key)),
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOption.Key)),
                         ValidateIssuerSigningKey = true,
                         ClockSkew = TimeSpan.Zero
                     };
