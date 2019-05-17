@@ -16,9 +16,8 @@ export class UserGamesComponent implements OnInit {
   showBotTable = false;
   showMainTable = true;
   public statusEnum: Status;
-  email: string = localStorage.getItem('email');
   game: GameGetAllGamesHistoryView = { id: '', numberOfBots: 0, status: '', winner: '' };
-  historyGames: HistoryGame = { email: this.email, games: [this.game] };
+  historyGames: HistoryGame = { games: [this.game] };
   playerStepsItem:PlayerPlayerStepsHistoryViewItem={rank:0,suit:0};
   playerSteps: PlayerSteps = {gameId:'', name:'',playerSteps:[this.playerStepsItem]}
   cards:CardBotStepsHistoryViewItem={rank:0,suit:0};
@@ -34,7 +33,7 @@ export class UserGamesComponent implements OnInit {
   constructor(private historyService: HistoryService) { }
 
   ngOnInit() {
-    this.historyService.getGamesByUser(this.historyGames).subscribe(x => {
+    this.historyService.getGamesByUser().subscribe(x => {
       this.historyGames.games = x['games'];
       this.listCount = this.historyGames.games.length;
       this.historyGames.games.forEach(x => {

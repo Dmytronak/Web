@@ -1,5 +1,4 @@
 export class PlayGame {;
-    email: string;
     numberOfBots: number;
     status: string;
     winner: string;

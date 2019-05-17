@@ -20,7 +20,7 @@ export class GameService {
   }
   play(game: PlayGame) {
     debugger
-    let params = new HttpParams().set("email",game.email).set("numberOfBots",game.numberOfBots.toString()); 
+    let params = new HttpParams().set("numberOfBots",game.numberOfBots.toString()); 
     return this.http.post(this.baseUrl + "/game/playGame?"+params,'')
   }
   continue(game: PlayGame) {

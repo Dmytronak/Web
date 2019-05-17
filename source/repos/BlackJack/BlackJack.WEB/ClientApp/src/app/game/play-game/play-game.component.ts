@@ -22,7 +22,7 @@ export class PlayGameComponent implements OnInit {
   cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
   bots: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
   player: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
-  playGame: PlayGame = { email: '', status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
+  playGame: PlayGame = { status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
 
   constructor(private gameService: GameService,private router: Router,private alertService: AlertService) {
   }
@@ -36,7 +36,6 @@ export class PlayGameComponent implements OnInit {
         this.error = errorMessage.message;
         return this.error;
       }
-      this.playGame.email = x['email'];
       this.playGame.numberOfBots = x['numberOfBots'];
       this.statusEnum = x['status'];
       this.playGame.status = Status[this.statusEnum]
@@ -59,7 +58,6 @@ export class PlayGameComponent implements OnInit {
       .subscribe(x => {
         if (x) {
           
-          this.playGame.email = x['email'];
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
@@ -80,7 +78,6 @@ export class PlayGameComponent implements OnInit {
     this.gameService.end(this.playGame)
       .subscribe(x => {
         if (x) {
-          this.playGame.email = x['email'];
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];
@@ -98,11 +95,9 @@ export class PlayGameComponent implements OnInit {
     this.router.navigate(['/game/home']);
   }
   playAgain(){
-    this.playGame.email = localStorage.getItem('email');
     this.gameService.play(this.playGame)
       .subscribe(x => {
         if (x) {
-          this.playGame.email = x['email'];
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];

@@ -26,7 +26,7 @@ export class HomeGameComponent implements OnInit {
   cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
   botsGame: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
   playerGame: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
-  createGame: PlayGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
+  createGame: PlayGame = {status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
   newPlayer: Player = {id:'',email:'',name:''};
   constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
     debugger
@@ -58,7 +58,6 @@ export class HomeGameComponent implements OnInit {
   }
   play(f) {
     debugger
-    this.createGame.email = localStorage.getItem('email')
     this.createGame.numberOfBots =f['numberOfBots'];
       this.gameService.play(this.createGame)
       .subscribe(x => {

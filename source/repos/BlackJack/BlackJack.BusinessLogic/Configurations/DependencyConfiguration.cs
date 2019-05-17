@@ -4,6 +4,7 @@ using BlackJack.BusinessLogic.Services;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.DataAccess.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BlackJack.BusinessLogic.Configurations
@@ -12,7 +13,7 @@ namespace BlackJack.BusinessLogic.Configurations
     {
         public static void AddDependencyConfiguration(this IServiceCollection services)
         {
-          
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IBotRepository, BotRepository>();
             services.AddTransient<IBotStepRepository, BotStepRepository>();
             services.AddTransient<ICardRepository, CardRepository>();

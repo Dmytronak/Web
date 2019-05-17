@@ -10,9 +10,11 @@ namespace BlackJack.BusinessLogic.Configurations
       
         public static void AddIdentityConfiguration(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
+         
         }
     }
 }

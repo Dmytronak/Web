@@ -15,17 +15,14 @@ export class HistoryService {
   constructor(private http: HttpClient, private configService: ConfigService, private router: Router) {
     this.baseUrl = configService.getApiURI();
    }
-   getGamesByUser(history:HistoryGame) {
-    let params = new HttpParams().set("email",history.email); 
-    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/allUserGames", { params:params })
+   getGamesByUser() {
+    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/allUserGames")
    }
    getPlayerSteps(history:PlayerSteps) {
-   
     let params = new HttpParams().set("gameId",history.gameId); 
     return this.http.get<HistoryGame[]>(this.baseUrl + "/history/playerSteps", { params:params })
    }
    getBotSteps(history:BotSteps) {
-    
     let params = new HttpParams().set("gameId",history.gameId); 
     return this.http.get<HistoryGame[]>(this.baseUrl + "/history/botSteps", { params:params })
    }

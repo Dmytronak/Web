@@ -20,9 +20,9 @@ namespace BlackJack.Controllers
         }
        
         [HttpGet]
-        public async Task<IActionResult> AllUserGames([FromQuery] GetAllGamesHistoryView model)
+        public async Task<IActionResult> AllUserGames()
         {
-           var response = await _historyService.GetAllGames(model);
+           var response = await _historyService.GetAllGames();
            return Ok(response);
         }
         [HttpGet]

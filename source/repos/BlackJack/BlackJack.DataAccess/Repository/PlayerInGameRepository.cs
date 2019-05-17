@@ -21,15 +21,6 @@ namespace BlackJack.DataAccess.Repository
                 .ToListAsync();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetByPlayerId(Guid playerId)
-        {
-            var result = await _dbSet
-                .Where(x => x.PlayerId == playerId)
-                .Include(x => x.Game)
-                .Include(x=>x.Player)
-                .ToListAsync();
-            return result;
-        }
         public async Task<List<PlayerInGame>> GetByUserId(string userId)
         {
             var result = await _dbSet
@@ -39,6 +30,14 @@ namespace BlackJack.DataAccess.Repository
                 .ToListAsync();
             return result;
         }
-
+        public async Task<PlayerInGame> GetActiveGameByUserId(string userId)
+        {
+            var result = await _dbSet
+                .Where(x => x.Player.UserId == userId)
+                .Include(x => x.Game)
+                .Where(x => x.Game.Status == Enums.StatusType.New || x.Game.Status == Enums.StatusType.Continue)
+                .FirstOrDefaultAsync();
+            return result;
+        }
     }
 }

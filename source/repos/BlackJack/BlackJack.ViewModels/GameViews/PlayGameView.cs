@@ -8,11 +8,7 @@ namespace BlackJack.ViewModels.GameViews
     public class PlayGameView
     {
    
-        [Required(ErrorMessage = "Numbers of bots is required")]
-        [Range(1, 5,ErrorMessage ="Range from 1 to 5")]
         public int NumberOfBots { get; set; }
-
-        public string Email { get; set; }
         public StatusType Status { get; set; }
         public string Winner { get; set; }
 

@@ -8,14 +8,13 @@ using System.Linq;
 using BlackJack.ViewModels.HistoryViews;
 using System;
 using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
 
 namespace BlackJack.BusinessLogic.Services
 {
 
     public class HistoryService : IHistoryService
     {
-        private readonly UserManager<User> _userManager;
+        protected readonly UserManager<User> _userManager;
         protected readonly IGameRepository _gameRepository;
         protected readonly IPlayerRepository _playerRepository;
         protected readonly IBotRepository _botRepository;
@@ -24,8 +23,9 @@ namespace BlackJack.BusinessLogic.Services
         protected readonly ICardRepository _cardRepository;
         protected readonly IBotInGameRepository _botInGameRepository;
         protected readonly IPlayerInGameRepository _playerInGameRepository;
-        public System.Security.Principal.IPrincipal User { get; set; }
-        public HistoryService(UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
+        protected readonly IHttpContextAccessor _httpContext;
+
+        public HistoryService(IHttpContextAccessor httpContext, UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, ICardRepository cardRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
             _userManager = userManager;
@@ -36,6 +36,7 @@ namespace BlackJack.BusinessLogic.Services
             _botStepRepository = botStepRepository;
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
+            _httpContext = httpContext;
         }
         public async Task<GetBotStepsHistoryView> BotSteps(Guid gameId)
         {
@@ -97,15 +98,10 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        public async Task<GetAllGamesHistoryView> GetAllGames(GetAllGamesHistoryView model)
+        public async Task<GetAllGamesHistoryView> GetAllGames()
         {
-           
-            if (model.Email == null)
-            {
-                throw new CustomServiceException("Email doesn`t exist");
-            }
-
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            var userId = _httpContext.HttpContext.User.Identity.Name;
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
                 throw new CustomServiceException("User doesn`t exist");
@@ -126,7 +122,6 @@ namespace BlackJack.BusinessLogic.Services
             }
             var response = new GetAllGamesHistoryView()
             {
-                Email = model.Email,
                 Games = gameViewItems
             };
             return response;

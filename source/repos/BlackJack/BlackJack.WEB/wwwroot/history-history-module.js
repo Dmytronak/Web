@@ -126,9 +126,8 @@ var UserGamesComponent = /** @class */ (function () {
         this.showPlayerTable = false;
         this.showBotTable = false;
         this.showMainTable = true;
-        this.email = localStorage.getItem('email');
         this.game = { id: '', numberOfBots: 0, status: '', winner: '' };
-        this.historyGames = { email: this.email, games: [this.game] };
+        this.historyGames = { games: [this.game] };
         this.playerStepsItem = { rank: 0, suit: 0 };
         this.playerSteps = { gameId: '', name: '', playerSteps: [this.playerStepsItem] };
         this.cards = { rank: 0, suit: 0 };
@@ -143,7 +142,7 @@ var UserGamesComponent = /** @class */ (function () {
     }
     UserGamesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.historyService.getGamesByUser(this.historyGames).subscribe(function (x) {
+        this.historyService.getGamesByUser().subscribe(function (x) {
             _this.historyGames.games = x['games'];
             _this.listCount = _this.historyGames.games.length;
             _this.historyGames.games.forEach(function (x) {
@@ -222,9 +221,8 @@ var HistoryService = /** @class */ (function () {
         this.baseUrl = '';
         this.baseUrl = configService.getApiURI();
     }
-    HistoryService.prototype.getGamesByUser = function (history) {
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("email", history.email);
-        return this.http.get(this.baseUrl + "/history/allUserGames", { params: params });
+    HistoryService.prototype.getGamesByUser = function () {
+        return this.http.get(this.baseUrl + "/history/allUserGames");
     };
     HistoryService.prototype.getPlayerSteps = function (history) {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", history.gameId);

@@ -6,7 +6,6 @@ namespace BlackJack.ViewModels.HistoryViews
 {
     public class GetAllGamesHistoryView
     {
-        public string Email { get; set; }
         public List<GameGetAllGamesHistoryViewItem> Games { get; set; }
 
         public GetAllGamesHistoryView()

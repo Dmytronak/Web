@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Services.Interfaces;
@@ -7,6 +8,7 @@ using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Enums;
 using BlackJack.DataAccess.Interfaces;
 using BlackJack.ViewModels.GameViews;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace BlackJack.BusinessLogic.Services
@@ -22,8 +24,9 @@ namespace BlackJack.BusinessLogic.Services
         protected readonly ICardRepository _cardRepository;
         protected readonly IBotInGameRepository _botInGameRepository;
         protected readonly IPlayerInGameRepository _playerInGameRepository;
+        protected readonly IHttpContextAccessor _httpContext;
 
-        public GameService(UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
+        public GameService(IHttpContextAccessor httpContext, UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, ICardRepository cardRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
             _userManager = userManager;
@@ -35,14 +38,17 @@ namespace BlackJack.BusinessLogic.Services
             _cardRepository = cardRepository;
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
+            _httpContext = httpContext;
         }
         public async Task<PlayGameView> GetActive()
         {
-            var activeGame = await _gameRepository.GetActiveGame();
-            if (activeGame == null)
+            var userId = _httpContext.HttpContext.User.Identity.Name;
+            var activeGameOfUser = await _playerInGameRepository.GetActiveGameByUserId(userId);
+            if (activeGameOfUser == null)
             {
                 throw new CustomServiceException("Active game is doesn`t exist");
             }
+            var activeGame = activeGameOfUser.Game;
             var playerStep = await _playerStepRepository.GetByGameId(activeGame.Id);
             var boSteps = await _botStepRepository.GetByGameId(activeGame.Id);
             var playerInGame = await _playerInGameRepository.GetByGameId(activeGame.Id);
@@ -53,7 +59,6 @@ namespace BlackJack.BusinessLogic.Services
             var winner = activeGame.Winner;
             var response = new PlayGameView();
             response.NumberOfBots = activeGame.NumberOfBots;
-            response.Email = user.Email;
             response.Status = status;
             response.Winner = winner;
             response.Player = new PlayerPlayGameViewItem()
@@ -90,14 +95,10 @@ namespace BlackJack.BusinessLogic.Services
             response.Bots.AddRange(botPlayGameViewItems);
             return response;
         }
-        public async Task<PlayGameView> Play(string email, int numberOfBots)
+        public async Task<PlayGameView> Play(int numberOfBots)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-            {
-                throw new CustomServiceException("User doesn`t exist!");
-            }
-            var player = await _playerRepository.GetByUserId(user.Id);
+            var userId = _httpContext.HttpContext.User.Identity.Name;
+            var player = await _playerRepository.GetByUserId(userId);
             var winner = "No one";
             var bots = await _botRepository.GetAll();
             if (bots.Count == 0)
@@ -153,7 +154,6 @@ namespace BlackJack.BusinessLogic.Services
                 ).ToList();
             var response = new PlayGameView();
             response.NumberOfBots = numberOfBots;
-            response.Email = email;
             response.Status = StatusType.New;
             response.Winner = winner;
             var cardPlayGameViewItems = new List<CardPlayGameViewItem>();
@@ -195,11 +195,14 @@ namespace BlackJack.BusinessLogic.Services
         public async Task<ContinueGameView> Continue()
         {
             var gameId = Guid.NewGuid();
-            var activeGame = await _gameRepository.GetActiveGame();
-            if (activeGame == null)
+            var userId = _httpContext.HttpContext.User.Identity.Name;
+            var activeGameOfUser = await _playerInGameRepository.GetActiveGameByUserId(userId);
+            if (activeGameOfUser == null)
             {
-                throw new CustomServiceException("Active game doesn`t exist!");
+                throw new CustomServiceException("Active game is doesn`t exist");
             }
+
+            var activeGame = activeGameOfUser.Game;
             gameId = activeGame.Id;
             var playerInGameDb = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameDb.Count == 0)
@@ -337,11 +340,13 @@ namespace BlackJack.BusinessLogic.Services
         public async Task<EndGameView> End()
         {
             var gameId = Guid.NewGuid();
-            var activeGame = await _gameRepository.GetActiveGame();
-            if (activeGame == null)
+            var userId = _httpContext.HttpContext.User.Identity.Name;
+            var activeGameOfUser = await _playerInGameRepository.GetActiveGameByUserId(userId);
+            if (activeGameOfUser == null)
             {
-                throw new CustomServiceException("Active game doesn`t exist!");
+                throw new CustomServiceException("Active game is doesn`t exist");
             }
+            var activeGame = activeGameOfUser.Game;
             gameId = activeGame.Id;
             var playerInGameDb = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameDb.Count == 0)

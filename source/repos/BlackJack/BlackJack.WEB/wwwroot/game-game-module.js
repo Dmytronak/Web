@@ -148,7 +148,7 @@ var HomeGameComponent = /** @class */ (function () {
         this.cardsGame = { rank: 0, suit: 0 };
         this.botsGame = { name: '', cards: [this.cardsGame] };
         this.playerGame = { name: '', cards: [this.cardsGame] };
-        this.createGame = { email: '', status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
+        this.createGame = { status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
         this.newPlayer = { id: '', email: '', name: '' };
         debugger;
         this.email = localStorage.getItem('email');
@@ -179,7 +179,6 @@ var HomeGameComponent = /** @class */ (function () {
     HomeGameComponent.prototype.play = function (f) {
         var _this = this;
         debugger;
-        this.createGame.email = localStorage.getItem('email');
         this.createGame.numberOfBots = f['numberOfBots'];
         this.gameService.play(this.createGame)
             .subscribe(function (x) {
@@ -265,7 +264,7 @@ var PlayGameComponent = /** @class */ (function () {
         this.cardsGame = { rank: 0, suit: 0 };
         this.bots = { name: '', cards: [this.cardsGame] };
         this.player = { name: '', cards: [this.cardsGame] };
-        this.playGame = { email: '', status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
+        this.playGame = { status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
     }
     PlayGameComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -277,7 +276,6 @@ var PlayGameComponent = /** @class */ (function () {
                 _this.error = errorMessage.message;
                 return _this.error;
             }
-            _this.playGame.email = x['email'];
             _this.playGame.numberOfBots = x['numberOfBots'];
             _this.statusEnum = x['status'];
             _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
@@ -299,7 +297,6 @@ var PlayGameComponent = /** @class */ (function () {
         this.gameService.continue(this.playGame)
             .subscribe(function (x) {
             if (x) {
-                _this.playGame.email = x['email'];
                 _this.statusEnum = x['status'];
                 _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
                 _this.playGame.winner = x['winner'];
@@ -320,7 +317,6 @@ var PlayGameComponent = /** @class */ (function () {
         this.gameService.end(this.playGame)
             .subscribe(function (x) {
             if (x) {
-                _this.playGame.email = x['email'];
                 _this.statusEnum = x['status'];
                 _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
                 _this.playGame.winner = x['winner'];
@@ -338,11 +334,9 @@ var PlayGameComponent = /** @class */ (function () {
     };
     PlayGameComponent.prototype.playAgain = function () {
         var _this = this;
-        this.playGame.email = localStorage.getItem('email');
         this.gameService.play(this.playGame)
             .subscribe(function (x) {
             if (x) {
-                _this.playGame.email = x['email'];
                 _this.statusEnum = x['status'];
                 _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
                 _this.playGame.winner = x['winner'];
@@ -459,7 +453,7 @@ var GameService = /** @class */ (function () {
     };
     GameService.prototype.play = function (game) {
         debugger;
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]().set("email", game.email).set("numberOfBots", game.numberOfBots.toString());
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]().set("numberOfBots", game.numberOfBots.toString());
         return this.http.post(this.baseUrl + "/game/playGame?" + params, '');
     };
     GameService.prototype.continue = function (game) {
