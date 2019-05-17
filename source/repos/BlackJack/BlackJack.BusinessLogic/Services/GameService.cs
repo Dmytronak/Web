@@ -114,8 +114,9 @@ namespace BlackJack.BusinessLogic.Services
                 Status = StatusType.New,
                 Winner = winner
             };
-            var deckOfCards = ShuffleDeckOfCards();
-            var deck = deckOfCards;
+            var gameId = game.Id;
+            var shuffledDeck = ShuffleDeckOfCards();
+            var deck = shuffledDeck;
             var playerCard = deck.ElementAt(0);
             deck.RemoveAt(0);
             var playerStep = new PlayerStep()
@@ -124,11 +125,10 @@ namespace BlackJack.BusinessLogic.Services
                 Suit = playerCard.Suit,
                 GameId = game.Id
             };
-            var gameId = game.Id;
             var cardForBots = new List<Card>();
             DistributeCardsToBots(botList, cardForBots, deck);
             var botsSteps = new List<BotStep>();
-            WriteCardsToBotSteps(botList, cardForBots, game, botsSteps, gameId);
+            AddCardsToBotSteps(botList, cardForBots, game, botsSteps, gameId);
             var playerInGame = new PlayerInGame()
             {
                 PlayerId = player.Id,
@@ -179,7 +179,6 @@ namespace BlackJack.BusinessLogic.Services
                     Suit = x.Suit
                 })
                 .ToList();
-
                 botPlayGameViewItems.Add(botPlayGameViewItem);
             }
             response.Bots.AddRange(botPlayGameViewItems);
@@ -261,7 +260,7 @@ namespace BlackJack.BusinessLogic.Services
                 .ToList();
             DistributeCardsToBots(botList, cardForBots, deck);
             var botsSteps = new List<BotStep>();
-            WriteCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
+            AddCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
             var botInGame = botsSteps
                 .Select(x => new BotInGame()
                 {
@@ -397,7 +396,7 @@ namespace BlackJack.BusinessLogic.Services
                 var cardForBots = new List<Card>();
                 DistributeCardsToBots(botList, cardForBots, deck);
                 var botsSteps = new List<BotStep>();
-                WriteCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
+                AddCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
 
                 var botInGame = botsSteps
                     .Select(x => new BotInGame()
@@ -598,7 +597,7 @@ namespace BlackJack.BusinessLogic.Services
                 cardForBots.Add(card);
             }
         }
-        private void WriteCardsToBotSteps(List<Bot> botList, List<Card> cardForBots, Game game, List<BotStep> botsSteps, Guid gameId)
+        private void AddCardsToBotSteps(List<Bot> botList, List<Card> cardForBots, Game game, List<BotStep> botsSteps, Guid gameId)
         {
             for (var i = 0; i < botList.Count; i++)
             {

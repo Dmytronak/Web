@@ -9,7 +9,6 @@ namespace BlackJack.BusinessLogic.Configurations
     {
         public static void AddDatabaseContextConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-         
             services.AddDbContext<ApplicationContext>(options =>
               options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
         }

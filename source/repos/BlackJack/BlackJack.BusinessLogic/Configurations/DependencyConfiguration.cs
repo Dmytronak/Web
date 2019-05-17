@@ -6,7 +6,6 @@ using BlackJack.DataAccess.Repositories.Interfaces;
 using BlackJack.DataAccess.Repositories.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BlackJack.BusinessLogic.Configurations
 {
