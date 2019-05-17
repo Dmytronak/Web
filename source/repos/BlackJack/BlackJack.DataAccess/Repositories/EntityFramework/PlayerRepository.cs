@@ -1,10 +1,10 @@
 ﻿using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Interfaces;
+using BlackJack.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BlackJack.DataAccess.Repository
+namespace BlackJack.DataAccess.Repositories.EntityFramework
 {
     public class PlayerRepository : BaseRepository<Player>, IPlayerRepository
     { 

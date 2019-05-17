@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Interfaces;
+using BlackJack.DataAccess.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using BlackJack.ViewModels.HistoryViews;

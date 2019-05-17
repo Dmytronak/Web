@@ -5,7 +5,7 @@ using BlackJack.ViewModels.AccountViews;
 using BlackJack.DataAccess.Entities;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.BusinessLogic.Providers.Interfaces;
-using BlackJack.DataAccess.Interfaces;
+using BlackJack.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlackJack.BusinessLogic.Services

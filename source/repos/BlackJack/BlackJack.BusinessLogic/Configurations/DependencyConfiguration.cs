@@ -2,10 +2,11 @@
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.BusinessLogic.Services;
 using BlackJack.BusinessLogic.Services.Interfaces;
-using BlackJack.DataAccess.Interfaces;
-using BlackJack.DataAccess.Repository;
+using BlackJack.DataAccess.Repositories.Interfaces;
+using BlackJack.DataAccess.Repositories.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace BlackJack.BusinessLogic.Configurations
 {

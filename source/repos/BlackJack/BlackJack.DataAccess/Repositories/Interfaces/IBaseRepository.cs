@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BlackJack.DataAccess.Dapper.Interfaces
+namespace BlackJack.DataAccess.Repositories.Interfaces
 {
     public interface IBaseRepository<TEntity> where TEntity : BaseEntity
     {

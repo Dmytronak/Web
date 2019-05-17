@@ -1,7 +1,7 @@
 ﻿using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Interfaces;
+using BlackJack.DataAccess.Repositories.Interfaces;
 
-namespace BlackJack.DataAccess.Repository
+namespace BlackJack.DataAccess.Repositories.EntityFramework
 {
     public class BotRepository: BaseRepository<Bot>, IBotRepository
     {

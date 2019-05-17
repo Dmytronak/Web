@@ -1,11 +1,11 @@
 ﻿using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Interfaces;
+using BlackJack.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace BlackJack.DataAccess.Repository
+namespace BlackJack.DataAccess.Repositories.EntityFramework
 {
     public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : BaseEntity
     {
