@@ -7,24 +7,24 @@ using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using BlackJack.BusinessLogic.Configurations;
 
 namespace BlackJack.BusinessLogic.Services
 {
 
     public class AccountService : IAccountService
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IJwtProvider _jwtProvider;
+        protected readonly SignInManager<User> _signInManager;
+        protected readonly UserManager<User> _userManager;
+        protected readonly IJwtProvider _jwtProvider;
         protected readonly IPlayerRepository _playerRepository;
-
         public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IJwtProvider jwtProvider, IPlayerRepository playerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtProvider = jwtProvider;
             _playerRepository = playerRepository;
-        }
+        }     
         public async Task<LoginAccountResponseView> Login(LoginAccountView model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);

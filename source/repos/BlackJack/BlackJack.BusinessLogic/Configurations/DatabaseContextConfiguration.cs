@@ -2,15 +2,19 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace BlackJack.BusinessLogic.Configurations
 {
-    public static class DatabaseContextConfiguration
+    public static class DatabaseContextConfiguration 
     {
+
         public static void AddDatabaseContextConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationContext>(options =>
-              options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            var connect = services.BuildServiceProvider().GetService<ConnectionStringConfiguration>();
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connect.ConnectionString()));
+            services.AddTransient<IDbConnection>((sp) => new SqlConnection(connect.ConnectionString()));
         }
     }
 }

@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using BlackJack.ViewModels.HistoryViews;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlackJack.Controllers
 {
     [Route("api/history/[action]")]
     [ApiController]
-
+    [Authorize]
     public class HistoryController : Controller
     {
         private readonly IHistoryService _historyService;

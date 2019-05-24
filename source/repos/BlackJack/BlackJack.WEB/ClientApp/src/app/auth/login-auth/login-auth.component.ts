@@ -56,8 +56,9 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
     }
     this.userService.login(this.user)
       .subscribe(x => {
-        let token = (<any>x).token;
-        localStorage.setItem("auth_token", token);
+        debugger
+        this.user.token = x['token'];
+        localStorage.setItem("auth_token", this.user.token);
         localStorage.setItem("email", this.user.email);
         this.userService._authNavStatusSource.next(true);
         this.userService.loggedIn = true;

@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace BlackJack.BusinessLogic.Services
 {
-
+    
     public class HistoryService : IHistoryService
     {
         protected readonly UserManager<User> _userManager;

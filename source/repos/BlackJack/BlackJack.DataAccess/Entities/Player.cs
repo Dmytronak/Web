@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper.Contrib.Extensions;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlackJack.DataAccess.Entities
@@ -9,6 +10,7 @@ namespace BlackJack.DataAccess.Entities
         
         public string UserId { get; set; }
         [ForeignKey("UserId")]
+        [Computed]
         public virtual User User { get; set; }
     }
 }

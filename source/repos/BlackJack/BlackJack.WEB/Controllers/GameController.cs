@@ -2,11 +2,13 @@
 using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.ViewModels.GameViews;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlackJack.Controllers
 {
     [Route("api/game/[action]")]
     [ApiController]
+    [Authorize]
     public class GameController : Controller
     {
         private readonly IGameService _gameService;

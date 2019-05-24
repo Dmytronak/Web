@@ -17,19 +17,16 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
             _context = context;
             _dbSet = _context.Set<TEntity>();
         }
-
-        public async Task CreateRange(List<TEntity> items)
-        {
-            await _dbSet.AddRangeAsync(items);
-            await _context.SaveChangesAsync();
-
-        }
-
         public async Task Create(TEntity item)
         {
             await _dbSet.AddAsync(item);
             await _context.SaveChangesAsync();
 
+        }
+        public async Task CreateRange(List<TEntity> items)
+        {
+            await _dbSet.AddRangeAsync(items);
+            await _context.SaveChangesAsync();
         }
 
         public async Task Remove(TEntity item)

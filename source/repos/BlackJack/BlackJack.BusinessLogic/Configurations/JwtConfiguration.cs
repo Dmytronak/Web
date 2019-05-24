@@ -14,8 +14,6 @@ namespace BlackJack.BusinessLogic.Configurations
     {
         public static void AddJwtConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-  
-
             var jwtOption = configuration.GetSection("Jwt").Get<JwtOption>();
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services

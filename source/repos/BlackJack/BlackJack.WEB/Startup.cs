@@ -19,6 +19,7 @@ namespace BlackJack
            
         }
         public IConfiguration Configuration { get; }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<CookiePolicyOptions>(options =>
@@ -26,14 +27,12 @@ namespace BlackJack
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddDatabaseContextConfiguration(Configuration);
+            services.AddOptions();
             services.AddDependencyConfiguration();
+            services.AddDatabaseContextConfiguration(Configuration);
+            services.AddOptionsConfiguration(Configuration);
             services.AddIdentityConfiguration();
             services.AddJwtConfiguration(Configuration);
-            services.AddOptions();
-            services.AddOptionsConfiguration(Configuration);
-
 
             services.AddMvc(options =>
             {
@@ -59,10 +58,11 @@ namespace BlackJack
             }
             
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseMiddleware(typeof(ExceptionMiddleware));
-
+      
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

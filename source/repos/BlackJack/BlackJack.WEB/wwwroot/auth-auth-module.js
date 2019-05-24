@@ -170,8 +170,9 @@ var LoginAuthComponent = /** @class */ (function () {
         }
         this.userService.login(this.user)
             .subscribe(function (x) {
-            var token = x.token;
-            localStorage.setItem("auth_token", token);
+            debugger;
+            _this.user.token = x['token'];
+            localStorage.setItem("auth_token", _this.user.token);
             localStorage.setItem("email", _this.user.email);
             _this.userService._authNavStatusSource.next(true);
             _this.userService.loggedIn = true;

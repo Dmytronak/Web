@@ -16,11 +16,9 @@ namespace BlackJack.BusinessLogic.Providers
     public class JwtProvider : IJwtProvider
     {
         private readonly IOptions<JwtOption> _options;
-        private readonly UserManager<User> _userManager;
-        public JwtProvider(IOptions<JwtOption> options, UserManager<User> userManager)
+        public JwtProvider(IOptions<JwtOption> options)
         {
             _options = options;
-            _userManager = userManager;
         }
         public async Task<string> GenerateJwtToken(User user)
         {
