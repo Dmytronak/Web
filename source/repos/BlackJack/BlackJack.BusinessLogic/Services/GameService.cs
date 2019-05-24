@@ -254,18 +254,10 @@ namespace BlackJack.BusinessLogic.Services
                 throw new CustomServiceException("Cards doesn`t exist!");
             }
             var cardForBots = new List<Card>();
-            var groupedBotsOfGame = botStepsExisted
-                  .Select(x => x.Bot)
-                  .GroupBy(x => x.Id)
-                  .ToList();
-            var botList = new List<Bot>();
-            foreach (var item in groupedBotsOfGame)
-            {
-                var bot = botStepsExisted.Select(x => x.Bot)
-                    .Where(x => x.Id == item.Key)
-                    .FirstOrDefault();
-                botList.Add(bot);
-            }
+            var botList = botStepsExisted
+                .GroupBy(x => x.BotId)
+                .Select(x => x.First().Bot)
+                .ToList();
             DistributeCardsToBots(botList, cardForBots, deck);
             var botsSteps = new List<BotStep>();
             AddCardsToBotSteps(botList, cardForBots, null, botsSteps, gameId);
@@ -275,6 +267,7 @@ namespace BlackJack.BusinessLogic.Services
                     GameId = gameId,
                     BotId = x.BotId,
                     Score = CountingCards(x.Rank)
+
                 })
                 .ToList();
             var bots = botInGameExisted
@@ -396,18 +389,10 @@ namespace BlackJack.BusinessLogic.Services
             var maxBotScore = botsScore.Max(x => x.Score);
             if (maxBotScore < 17)
             {
-                var groupedBotsOfGame = botStepExisted
-                .Select(x => x.Bot)
-                .GroupBy(x=>x.Id)
+                var botList = botStepExisted.GroupBy(x => x.BotId)
+                .Select(x => x.First().Bot)
                 .ToList();
-                var botList = new List<Bot>();
-                foreach (var item in groupedBotsOfGame)
-                {
-                    var bot = botStepExisted.Select(x => x.Bot)
-                        .Where(x => x.Id == item.Key)
-                        .FirstOrDefault();
-                    botList.Add(bot);
-                }
+
                 var cardForBots = new List<Card>();
                 DistributeCardsToBots(botList, cardForBots, deck);
                 var botsSteps = new List<BotStep>();
