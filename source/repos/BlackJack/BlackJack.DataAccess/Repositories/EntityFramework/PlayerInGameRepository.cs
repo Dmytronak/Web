@@ -30,7 +30,7 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
                 .ToListAsync();
             return result;
         }
-        public async Task<PlayerInGame> GetActiveGameByUserId(string userId)
+        public async Task<PlayerInGame> GetActiveByUserId(string userId)
         {
             var result = await _dbSet
                 .Where(x => x.Player.UserId == userId)

@@ -6,15 +6,11 @@ namespace BlackJack.BusinessLogic.Configurations
 {
     public class ConnectionStringConfiguration
     {
-        IConfiguration _configuration;
-        public ConnectionStringConfiguration(IConfiguration configuration)
+        public string ConnectionString(IConfiguration configuration)
         {
-            _configuration = configuration;
+            var response = configuration.GetConnectionString("DefaultConnection");
+            return response;
         }
-        public string ConnectionString()
-        {
-            var connectionString = _configuration.GetConnectionString("DefaultConnection");
-            return connectionString;
-        }
+       
     }
 }

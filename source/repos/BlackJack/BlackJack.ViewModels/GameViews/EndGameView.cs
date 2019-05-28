@@ -9,16 +9,16 @@ namespace BlackJack.ViewModels.GameViews
         public StatusType Status { get; set; }
         public string Winner { get; set; }
 
-        public PlayerEndGameViewItem Player { get; set; }
+        public PlayerEndGameView Player { get; set; }
         public List<BotEndGameViewItem> Bots { get; set; }
 
         public EndGameView()
         {
             Bots = new List<BotEndGameViewItem>();
-            Player = new PlayerEndGameViewItem();
+            Player = new PlayerEndGameView();
         }
     }
-    public class PlayerEndGameViewItem
+    public class PlayerEndGameView
     {
         public string Name { get; set; }
         public List<CardEndGameViewItem> Cards { get; set; }

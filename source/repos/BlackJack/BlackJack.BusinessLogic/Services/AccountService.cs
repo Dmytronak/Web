@@ -7,7 +7,6 @@ using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.BusinessLogic.Providers.Interfaces;
 using BlackJack.DataAccess.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using BlackJack.BusinessLogic.Configurations;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -35,8 +34,10 @@ namespace BlackJack.BusinessLogic.Services
             }
             var user = await _userManager.FindByEmailAsync(model.Email);
             var encodedJwt = await _jwtProvider.GenerateJwtToken(user);
-            var response = new LoginAccountResponseView();
-            response.Token = encodedJwt;
+            var response = new LoginAccountResponseView()
+            {
+                Token = encodedJwt
+            };
             return response;
         }
         public async Task<LoginAccountResponseView> Register(RegisterAccountView model)

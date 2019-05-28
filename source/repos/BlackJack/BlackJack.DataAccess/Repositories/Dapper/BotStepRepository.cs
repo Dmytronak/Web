@@ -17,15 +17,33 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<List<BotStep>> GetByGameId(Guid gameId)
         {
-            string sql = "SELECT * FROM BotSteps A INNER JOIN Bots B on A.BotId = B.Id WHERE A.GameId = @GameId";
-            var result = (await _connection.QueryAsync<BotStep, Bot, BotStep> (sql, (a, b) => { a.Bot = b; return a;} ,new { GameId = gameId })).ToList();
+            string sql = @"SELECT * 
+                         FROM BotSteps BS 
+                         INNER JOIN Bots B 
+                         ON BS.BotId = B.Id
+                         WHERE BS.GameId = @GameId";
+            var result = (await _connection.QueryAsync<BotStep, Bot, BotStep> 
+                (sql, (bs, b) => 
+                {
+                    bs.Bot = b;
+                    return bs;
+                }, new
+                {
+                    GameId = gameId
+                })).ToList();
             return result;
         }
 
         public async Task<List<BotStep>> GetByBotId(Guid botId)
         {
-            string sql = "SELECT * FROM BotSteps A WHERE A.BotId = @BotId";
-            var result = (await _connection.QueryAsync<BotStep>(sql, new { BotId = botId })).ToList();
+            string sql = @"SELECT * 
+                         FROM BotSteps BS 
+                         WHERE BS.BotId = @BotId";
+            var result = (await _connection.QueryAsync<BotStep>
+                (sql, new
+                {
+                    BotId = botId
+                })).ToList();
             return result;
         }
     }

@@ -4,7 +4,6 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,8 +16,14 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<List<Card>> GetByGameId(Guid gameId)
         {
-            string sql = "SELECT * FROM Cards A WHERE A.GameId = @GameId";
-            var result = (await _connection.QueryAsync<Card>(sql, new { GameId = gameId })).ToList();
+            string sql = @"SELECT * 
+                         FROM Cards C
+                         WHERE C.GameId = @GameId";
+            var result = (await _connection.QueryAsync<Card>
+                (sql, new
+                {
+                    GameId = gameId
+                })).ToList();
             return result;
         }
 

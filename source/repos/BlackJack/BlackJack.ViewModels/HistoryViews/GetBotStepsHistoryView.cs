@@ -11,16 +11,16 @@ namespace BlackJack.ViewModels.HistoryViews
 
         public GetBotStepsHistoryView()
         {
-            Bots= new List<BotGetBotStepsHistoryViewItem>();
+            Bots = new List<BotGetBotStepsHistoryViewItem>();
         }
     }
     public class BotGetBotStepsHistoryViewItem
     {
         public string Name { get; set; }
-        public List<CardBotStepsHistoryViewItem> Steps { get; set; }
+        public List<CardGetBotStepsHistoryViewItem> Steps { get; set; }
     }
- 
-    public class CardBotStepsHistoryViewItem
+
+    public class CardGetBotStepsHistoryViewItem
     {
         public CardRankType Rank { get; set; }
         public CardSuitType Suit { get; set; }

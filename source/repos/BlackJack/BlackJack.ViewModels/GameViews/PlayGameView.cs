@@ -7,21 +7,20 @@ namespace BlackJack.ViewModels.GameViews
 {
     public class PlayGameView
     {
-   
         public int NumberOfBots { get; set; }
         public StatusType Status { get; set; }
         public string Winner { get; set; }
 
-        public PlayerPlayGameViewItem Player { get; set; }
+        public PlayerPlayGameView Player { get; set; }
         public List<BotPlayGameViewItem> Bots { get; set; }
 
         public PlayGameView()
         {
-            Player = new PlayerPlayGameViewItem();
+            Player = new PlayerPlayGameView();
             Bots = new List<BotPlayGameViewItem>();
         }
     }
-    public class PlayerPlayGameViewItem
+    public class PlayerPlayGameView
     {
         public string Name { get; set; }
         public List<CardPlayGameViewItem> Cards { get; set; }

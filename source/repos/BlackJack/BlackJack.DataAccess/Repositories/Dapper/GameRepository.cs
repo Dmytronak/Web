@@ -11,5 +11,4 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         {
         }
     }
-
 }

@@ -13,8 +13,9 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddDatabaseContextConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             var connect = services.BuildServiceProvider().GetService<ConnectionStringConfiguration>();
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connect.ConnectionString()));
-            services.AddTransient<IDbConnection>((sp) => new SqlConnection(connect.ConnectionString()));
+            services.BuildServiceProvider().Dispose();
+            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connect.ConnectionString(configuration)));
+            services.AddTransient<IDbConnection>((sp) => new SqlConnection(connect.ConnectionString(configuration)));
         }
     }
 }

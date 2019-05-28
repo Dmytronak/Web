@@ -14,8 +14,14 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<Player> GetByUserId(string userId)
         {
-            string sql = "SELECT * FROM Players A WHERE A.UserId = @UserId";
-            var result = await _connection.QueryFirstOrDefaultAsync<Player>(sql, new { UserId = userId });
+            string sql = @"SELECT * 
+                         FROM Players P 
+                         WHERE P.UserId = @UserId";
+            var result = await _connection.QueryFirstOrDefaultAsync<Player>
+                (sql, new
+                {
+                    UserId = userId
+                });
             return result;
         }
 

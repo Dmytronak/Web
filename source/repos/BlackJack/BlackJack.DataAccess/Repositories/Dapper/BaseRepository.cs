@@ -19,10 +19,10 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task Create(TEntity item)
         {
-            await _connection.InsertAsync(item); 
+            await _connection.InsertAsync(item);
         }
         public async Task CreateRange(List<TEntity> items)
-        {
+        { 
             await _connection.InsertAsync(items);
         }
         public async Task<List<TEntity>> GetAll()
@@ -41,7 +41,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task RemoveRange(List<TEntity> items)
         {
-            await _connection.DeleteAsync(items);
+             _connection.Delete(items);
         }
         public async Task Update(TEntity item)
         {

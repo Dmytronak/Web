@@ -8,14 +8,14 @@ namespace BlackJack.ViewModels.HistoryViews
     {
         public Guid GameId { get; set; }
         public string Name { get; set; }
-        public List<PlayerGetPlayerStepsHistoryViewItem> PlayerSteps { get; set; }
+        public List<CardGetPlayerStepsHistoryViewItem> PlayerSteps { get; set; }
 
         public GetPlayerStepsHistoryView()
         {
-            PlayerSteps = new List<PlayerGetPlayerStepsHistoryViewItem>();
+            PlayerSteps = new List<CardGetPlayerStepsHistoryViewItem>();
         }
     }
-    public class PlayerGetPlayerStepsHistoryViewItem
+    public class CardGetPlayerStepsHistoryViewItem
     {
         public CardRankType Rank { get; set; }
         public CardSuitType Suit { get; set; }

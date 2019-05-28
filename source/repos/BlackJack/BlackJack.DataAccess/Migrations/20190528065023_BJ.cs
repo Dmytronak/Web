@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlackJack.DataAccess.Migrations
 {
-    public partial class Bj : Migration
+    public partial class BJ : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

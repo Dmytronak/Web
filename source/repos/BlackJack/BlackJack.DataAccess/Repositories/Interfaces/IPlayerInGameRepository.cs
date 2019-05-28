@@ -9,6 +9,6 @@ namespace BlackJack.DataAccess.Repositories.Interfaces
     {
         Task<List<PlayerInGame>> GetByGameId(Guid gameId);
         Task<List<PlayerInGame>> GetByUserId(string userId);
-        Task<PlayerInGame> GetActiveGameByUserId(string userId);
+        Task<PlayerInGame> GetActiveByUserId(string userId);
     }
 }
