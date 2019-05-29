@@ -434,10 +434,8 @@ namespace BlackJack.BusinessLogic.Services
                 await _botInGameRepository.CreateRange(botInGame);
                 botStepExisted.AddRange(botsSteps);
             }
-            GetkWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId); 
-            var response = new EndGameView();
-            response.Status = activeGame.Status;
-            response.Winner = activeGame.Winner;
+            GetkWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
+
             var groupedBotSteps = botStepExisted.GroupBy(x => x.BotId);
             var botEndGameViewItems = new List<BotEndGameViewItem>();
             foreach (var item in groupedBotSteps)
@@ -455,17 +453,22 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 botEndGameViewItems.Add(botEndGameViewItem);
             }
-            response.Bots.AddRange(botEndGameViewItems);
-            response.Player = new PlayerEndGameView()
+            var response = new EndGameView()
             {
-                Name = player.Name,
-                Cards = playerStepExisted
+                Status = activeGame.Status,
+                Winner = activeGame.Winner,
+                Player = new PlayerEndGameView()
+                {
+                    Name = player.Name,
+                    Cards = playerStepExisted
                     .Select(cardEndGameViewItem => new CardEndGameViewItem()
                     {
                         Rank = cardEndGameViewItem.Rank,
                         Suit = cardEndGameViewItem.Suit
                     })
                     .ToList()
+                },
+                Bots = botEndGameViewItems
             };
             await _gameRepository.Update(activeGame);
             return response;
