@@ -8,6 +8,12 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
+using Newtonsoft.Json.Linq;
+using System.IO;
+using Newtonsoft.Json;
+using BlackJack.BusinessLogic.Options;
+using System.Collections.Generic;
+using System;
 
 namespace BlackJack
 {
@@ -28,9 +34,9 @@ namespace BlackJack
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddOptions();
-            services.AddDependencyConfiguration();
-            services.AddDatabaseContextConfiguration(Configuration);
             services.AddOptionsConfiguration(Configuration);
+            services.AddDatabaseContextConfiguration(Configuration);
+            services.AddDependencyConfiguration(Configuration);
             services.AddIdentityConfiguration();
             services.AddJwtConfiguration(Configuration);
 

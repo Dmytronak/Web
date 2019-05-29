@@ -31,7 +31,6 @@ namespace BlackJack.Controllers
         [HttpPost]
         public async Task<IActionResult> ContinueGame()
         {
-
             var response = await _gameService.Continue(UserId());
             return Ok(response);
         }

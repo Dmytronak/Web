@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Linq;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace BlackJack.DataAccess.Repositories.Dapper
 {
@@ -41,7 +40,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task RemoveRange(List<TEntity> items)
         {
-             _connection.Delete(items);
+           await  _connection.DeleteAsync(items);
         }
         public async Task Update(TEntity item)
         {

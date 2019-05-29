@@ -280,12 +280,11 @@ namespace BlackJack.BusinessLogic.Services
                .ToList();
             var groupedBotInGame = botInGameExisted
                 .GroupBy(x => x.BotId);
-            var scoredBotValuesExisted = new List<BotInGame>();
-            scoredBotValuesExisted.AddRange(botInGame);
-            ScoreBotExistingPoint(scoredBotValuesExisted, groupedBotInGame, gameId);
-            var groupedBotsScore = scoredBotValuesExisted.GroupBy(x => x.BotId);
-            var botsScore = new List<BotInGame>();
-            CalculateScoreBotPoints(botsScore, groupedBotsScore, gameId);
+            var scoredBotExistedPoints = new List<BotInGame>();
+            scoredBotExistedPoints.AddRange(botInGame);
+            CalculateScoreBotExistingPoint(scoredBotExistedPoints, groupedBotInGame, gameId);
+            var groupedBotsScore = scoredBotExistedPoints.GroupBy(x => x.BotId);
+            var botsScore = GetCalculatedScoreBotPoints(groupedBotsScore, gameId);
             CheckWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
             await _cardRepository.RemoveRange(clearCards);
             var cardsOfGame = deck
@@ -384,17 +383,17 @@ namespace BlackJack.BusinessLogic.Services
                 .Distinct()
                 .ToList();
             var groupedBotInGame = botInGameExisted.GroupBy(x => x.BotId);
-            var scoredBotValuesExisted = new List<BotInGame>();
-            ScoreBotExistingPoint(scoredBotValuesExisted, groupedBotInGame, gameId);
-            var groupedBotsScore = scoredBotValuesExisted.GroupBy(x => x.BotId);
-            var botsScore = new List<BotInGame>();
-            CalculateScoreBotPoints(botsScore, groupedBotsScore, gameId);
+            var scoredBotExistedPoints = new List<BotInGame>();
+            CalculateScoreBotExistingPoint(scoredBotExistedPoints, groupedBotInGame, gameId);
+            var groupedBotsScore = scoredBotExistedPoints.GroupBy(x => x.BotId);
+            var botsScore = GetCalculatedScoreBotPoints(groupedBotsScore, gameId);
             var maxBotScore = botsScore.Max(x => x.Score);
             if (maxBotScore < 17)
             {
-                var botList = botStepExisted.GroupBy(x => x.BotId)
-                .Select(x => x.First().Bot)
-                .ToList();
+                var botList = botStepExisted
+                    .GroupBy(x => x.BotId)
+                    .Select(x => x.First().Bot)
+                    .ToList();
 
                 var botCards = new List<Card>();
                 DistributeCardsToBots(botList, botCards, deck);
@@ -410,7 +409,7 @@ namespace BlackJack.BusinessLogic.Services
 
                     })
                     .ToList();
-                scoredBotValuesExisted.AddRange(botInGame);
+                scoredBotExistedPoints.AddRange(botInGame);
                 var clearCards = await _cardRepository.GetByGameId(gameId);
                 if (clearCards.Count == 0)
                 {
@@ -425,9 +424,8 @@ namespace BlackJack.BusinessLogic.Services
                         Suit = x.Suit
                     })
                     .ToList();
-                groupedBotsScore = scoredBotValuesExisted.GroupBy(x => x.BotId);
-                botsScore = new List<BotInGame>();
-                CalculateScoreBotPoints(botsScore, groupedBotsScore, gameId);
+                groupedBotsScore = scoredBotExistedPoints.GroupBy(x => x.BotId);
+                botsScore = GetCalculatedScoreBotPoints(groupedBotsScore, gameId);
                 await _botStepRepository.CreateRange(botsSteps);
                 await _cardRepository.CreateRange(cardsOfGame);
                 await _botInGameRepository.CreateRange(botInGame);
@@ -614,17 +612,14 @@ namespace BlackJack.BusinessLogic.Services
                 botsSteps.Add(step);
             }
         }
-        private void CalculateScoreBotPoints(List<BotInGame> botsScore, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotsScore, Guid gameId)
+        private List<BotInGame> GetCalculatedScoreBotPoints(IEnumerable<IGrouping<Guid, BotInGame>> groupedBotsScore, Guid gameId)
         {
+            var result = new List<BotInGame>();
             foreach (var item in groupedBotsScore)
             {
-                var currentBotPoints = 0;
-                item.ToList()
-                    .ForEach(x =>
-                    {
-                        currentBotPoints += x.Score;
-                    });
-                var value = currentBotPoints;
+                var value = item.ToList()
+                    .Select(x => x.Score)
+                    .Sum();
                 var record = new BotInGame()
                 {
                     Score = value,
@@ -632,28 +627,24 @@ namespace BlackJack.BusinessLogic.Services
                     GameId = gameId
 
                 };
-                botsScore.Add(record);
+                result.Add(record);
             }
+            return result;
         }
-        private void ScoreBotExistingPoint(List<BotInGame> scoredBotValuesExisted, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotInGame, Guid gameId)
+        private void CalculateScoreBotExistingPoint(List<BotInGame> scoredBotExistedPoints, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotInGame, Guid gameId)
         {
             foreach (var item in groupedBotInGame)
             {
-                var currentBotPoints = 0;
-
-                item.ToList()
-                    .ForEach(x =>
-                    {
-                        currentBotPoints += x.Score;
-                    });
-                var value = currentBotPoints;
+                var value = item.ToList()
+                    .Select(x => x.Score)
+                    .Sum();
                 var record = new BotInGame()
                 {
                     Score = value,
                     BotId = item.Key,
                     GameId = gameId
                 };
-                scoredBotValuesExisted.Add(record);
+                scoredBotExistedPoints.Add(record);
             }
 
         }
