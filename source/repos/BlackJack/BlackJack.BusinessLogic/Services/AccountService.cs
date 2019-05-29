@@ -70,15 +70,16 @@ namespace BlackJack.BusinessLogic.Services
         public async Task<GetAllAccountView> GetAll()
         {
             var users = await _userManager.Users.ToListAsync();
-            var response = new GetAllAccountView();
-            response.Users = users
+            var response = new GetAllAccountView()
+            {
+                Users = users
                 .Select(x => new UserGetAllAccountViewItem()
                 {
                     Year = x.Year,
                     Email = x.Email
                 })
-                .ToList();
-
+                .ToList()
+            };
             return response;
         }
     }

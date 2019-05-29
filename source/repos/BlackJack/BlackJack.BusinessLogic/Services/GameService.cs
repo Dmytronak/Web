@@ -620,21 +620,14 @@ namespace BlackJack.BusinessLogic.Services
         }
         private List<BotInGame> GetCalculatedScoreBotPoints(IEnumerable<IGrouping<Guid, BotInGame>> groupedBotsScore, Guid gameId)
         {
-            var result = new List<BotInGame>();
-            foreach (var item in groupedBotsScore)
-            {
-                var value = item.ToList()
-                    .Select(x => x.Score)
-                    .Sum();
-                var record = new BotInGame()
+            var result = groupedBotsScore
+                .Select(x => new BotInGame()
                 {
-                    Score = value,
-                    BotId = item.Key,
+                    Score = x.Select(s=>s.Score).Sum(),
+                    BotId = x.FirstOrDefault().BotId,
                     GameId = gameId
-
-                };
-                result.Add(record);
-            }
+                })
+                .ToList();
             return result;
         }
         private void CalculateScoreBotExistingPoint(List<BotInGame> scoredBotExistedPoints, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotInGame, Guid gameId)
@@ -652,7 +645,6 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 scoredBotExistedPoints.Add(record);
             }
-
         }
     }
 }

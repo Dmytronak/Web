@@ -14,13 +14,13 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddDependencyConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             var assembly = typeof(DataAccess.ApplicationContext).Assembly;
-            var dependencyOption = configuration.GetSection(configuration.GetSection("ActiveRepository").Value).Get<List<DependencyOption>>();
-            foreach (var dep in dependencyOption)
+            var serviceOption = configuration.GetSection(configuration.GetSection("ActiveRepository").Value).Get<List<ServiceOption>>();
+            foreach (var option in serviceOption)
             {
                 services.Add(new ServiceDescriptor(
-                    serviceType: assembly.GetType(dep.ServiceType),
-                    implementationType: assembly.GetType(dep.ImplementationType),
-                    lifetime: dep.Lifetime));
+                    serviceType: assembly.GetType(option.ServiceType),
+                    implementationType: assembly.GetType(option.ImplementationType),
+                    lifetime: option.Lifetime));
             }
 
             services.AddTransient<IAccountService, AccountService>();
