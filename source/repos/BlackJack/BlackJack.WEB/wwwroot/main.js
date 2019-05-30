@@ -456,25 +456,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/user.service */ "./src/app/shared/services/user.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+
 
 
 
 
 
 var ErrorInterceptor = /** @class */ (function () {
-    function ErrorInterceptor(userService) {
+    function ErrorInterceptor(userService, router) {
         this.userService = userService;
+        this.router = router;
     }
     ErrorInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
         return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (err) {
             if (err.status === 401) {
                 _this.userService.logout();
-                location.reload(true);
+                _this.router.navigate['/home'];
             }
             if (err.status === 400) {
                 console.clear();
-                debugger;
                 var error_1 = err.error || err.statusText;
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
             }
@@ -484,7 +486,7 @@ var ErrorInterceptor = /** @class */ (function () {
     };
     ErrorInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
     ], ErrorInterceptor);
     return ErrorInterceptor;
 }());

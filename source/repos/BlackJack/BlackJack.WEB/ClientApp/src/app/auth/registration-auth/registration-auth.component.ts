@@ -57,14 +57,11 @@ export class RegistrationAuthComponent implements OnInit {
     this.isRequesting = true;
     this.user = Object.assign(this.registerForm, this.formGroup.value)
     let newUser = this.user.email;
-    debugger
     let duplicateUser = this.users.filter(x => { return x.email === newUser; }).length;
-    debugger
     if (this.formGroup.invalid) {
       return;
     }
     if (duplicateUser) {
-      debugger
       let errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' }
       throwError(new Error(errorMessage.message));
       this.error = errorMessage.message;
@@ -72,7 +69,6 @@ export class RegistrationAuthComponent implements OnInit {
     }
     this.userService.register(this.user)
       .subscribe(x => {
-        debugger
         if (x) {
           this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: this.user.email } });
         }
