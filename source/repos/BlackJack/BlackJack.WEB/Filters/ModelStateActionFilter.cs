@@ -19,9 +19,8 @@ namespace BlackJack.Filters
                 context.Result = new BadRequestObjectResult(
                     context.ModelState.Values
                     .Select(x => x.Errors)
-                    .First());
+                    .FirstOrDefault());
             }
-
         }
 
     }

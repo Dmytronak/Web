@@ -14,7 +14,6 @@ namespace BlackJack.BusinessLogic.Configurations
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationContext>()
                 .AddDefaultTokenProviders();
-         
         }
     }
 }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Dapper.Contrib.Extensions;
 using System.Linq;
 using System.Data;
+using System.Collections.Concurrent;
+using System.Reflection;
 
 namespace BlackJack.DataAccess.Repositories.Dapper
 {
@@ -16,12 +18,22 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         {
             _connection = connection;
         }
+        private static void ClearDapperCache()
+        {
+            var cache = typeof(SqlMapperExtensions).GetField("KeyProperties", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null)
+                as ConcurrentDictionary<RuntimeTypeHandle, IEnumerable<PropertyInfo>>;
+
+            cache?.Clear();
+        }
         public async Task Create(TEntity item)
         {
+            ClearDapperCache();
             await _connection.InsertAsync(item);
         }
+
         public async Task CreateRange(List<TEntity> items)
-        { 
+        {
+            ClearDapperCache();
             await _connection.InsertAsync(items);
         }
         public async Task<List<TEntity>> GetAll()
@@ -36,14 +48,17 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task Remove(TEntity item)
         {
+            ClearDapperCache();
             await _connection.DeleteAsync(item);
         }
         public async Task RemoveRange(List<TEntity> items)
         {
-           await  _connection.DeleteAsync(items);
+            ClearDapperCache();
+            await  _connection.DeleteAsync(items);
         }
         public async Task Update(TEntity item)
         {
+            ClearDapperCache();
             await _connection.UpdateAsync(item);
         }
     }

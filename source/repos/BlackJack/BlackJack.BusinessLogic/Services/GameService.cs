@@ -7,7 +7,6 @@ using BlackJack.DataAccess.Entities;
 using BlackJack.DataAccess.Enums;
 using BlackJack.DataAccess.Repositories.Interfaces;
 using BlackJack.ViewModels.GameViews;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 
 namespace BlackJack.BusinessLogic.Services
@@ -435,7 +434,6 @@ namespace BlackJack.BusinessLogic.Services
                 botStepExisted.AddRange(botsSteps);
             }
             GetkWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
-
             var groupedBotSteps = botStepExisted.GroupBy(x => x.BotId);
             var botEndGameViewItems = new List<BotEndGameViewItem>();
             foreach (var item in groupedBotSteps)
@@ -632,19 +630,15 @@ namespace BlackJack.BusinessLogic.Services
         }
         private void CalculateScoreBotExistingPoint(List<BotInGame> scoredBotExistedPoints, IEnumerable<IGrouping<Guid, BotInGame>> groupedBotInGame, Guid gameId)
         {
-            foreach (var item in groupedBotInGame)
-            {
-                var value = item.ToList()
-                    .Select(x => x.Score)
-                    .Sum();
-                var record = new BotInGame()
-                {
-                    Score = value,
-                    BotId = item.Key,
-                    GameId = gameId
-                };
-                scoredBotExistedPoints.Add(record);
-            }
+            var result = groupedBotInGame
+               .Select(x => new BotInGame()
+               {
+                   Score = x.Select(s => s.Score).Sum(),
+                   BotId = x.FirstOrDefault().BotId,
+                   GameId = gameId
+               })
+               .ToList();
+            scoredBotExistedPoints.AddRange(result);
         }
     }
 }
