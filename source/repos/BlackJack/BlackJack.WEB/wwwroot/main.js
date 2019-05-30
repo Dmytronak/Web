@@ -478,7 +478,7 @@ var ErrorInterceptor = /** @class */ (function () {
                 var error_1 = err.error || err.statusText;
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
             }
-            var error = err.error.message || err.statusText;
+            var error = err.error || err.statusText;
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
         }));
     };
