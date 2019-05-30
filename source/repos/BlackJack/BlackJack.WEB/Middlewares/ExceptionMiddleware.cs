@@ -37,15 +37,12 @@ namespace BlackJack.Middlewares
         }
 
         private static Task HandleExceptionAsync(HttpContext context, Exception ex, HttpStatusCode statusCode)
-        {
-            var result = JsonConvert.SerializeObject(new { error = ex.Message });
+        { 
+            var result = (int)statusCode >= 500 ? 
+                (JsonConvert.SerializeObject(new { error = "Status code: " + (int)statusCode + " , " + statusCode })) : 
+                (JsonConvert.SerializeObject(new { error = ex.Message }));
             context.Response.ContentType = "application/json";
-            if ((int)statusCode>=500)
-            {
-                result = JsonConvert.SerializeObject(new { error = "Status code: " + (int)statusCode +" , "+ "Internal Server Error" });
-                context.Response.ContentType = "application/json";
-                context.Response.StatusCode = (int)statusCode; 
-            }
+            context.Response.StatusCode = (int)statusCode;
             return context.Response.WriteAsync(result);
         }
     }

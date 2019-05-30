@@ -30,12 +30,6 @@ export class PlayGameComponent implements OnInit {
   ngOnInit() {
     this.gameService.getActiveGame()
     .subscribe(x => {
-      if(x['error']) {
-        this.haveActiveGame =false;
-        let errorMessage = { message: 'You havent active games! Play new game.' }
-        this.error = errorMessage.message;
-        return this.error;
-      }
       this.playGame.numberOfBots = x['numberOfBots'];
       this.statusEnum = x['status'];
       this.playGame.status = Status[this.statusEnum]
@@ -50,7 +44,9 @@ export class PlayGameComponent implements OnInit {
       }
     },
       err => {
-        return this.alertService.error(err);
+      
+          this.haveActiveGame =false
+          return this.error = err.error;
       });
   }
   continue() {

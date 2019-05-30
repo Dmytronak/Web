@@ -37,13 +37,10 @@ export class HomeGameComponent implements OnInit {
   ngOnInit() {
     this.gameService.getActiveGame()
     .subscribe(x => {
-      if(x['error']) {
-        return this.gameExisting = true;
-      }
       this.haveActiveGame = true;
     },
       err => {
-        this.error = err;
+        this.gameExisting = true;
       });
   }
   showInput() {

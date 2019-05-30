@@ -469,9 +469,14 @@ var ErrorInterceptor = /** @class */ (function () {
         var _this = this;
         return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (err) {
             if (err.status === 401) {
-                // auto logout if 401 response returned from api
                 _this.userService.logout();
                 location.reload(true);
+            }
+            if (err.status === 400) {
+                console.clear();
+                debugger;
+                var error_1 = err.error || err.statusText;
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
             }
             var error = err.error.message || err.statusText;
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);

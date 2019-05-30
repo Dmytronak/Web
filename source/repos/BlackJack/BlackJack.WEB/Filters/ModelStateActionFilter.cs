@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BlackJack.BusinessLogic.Common.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Linq;
@@ -16,10 +17,7 @@ namespace BlackJack.Filters
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(
-                    context.ModelState.Values
-                    .Select(x => x.Errors)
-                    .FirstOrDefault());
+                context.Result = new BadRequestObjectResult(context.ModelState.GetFirstError());
             }
         }
 

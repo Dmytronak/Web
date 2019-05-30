@@ -78,9 +78,7 @@ export class RegistrationAuthComponent implements OnInit {
         }
       },
         err => {
-          debugger
-
-          this.error = err;
+          this.error = err.error;
         }
 
       )

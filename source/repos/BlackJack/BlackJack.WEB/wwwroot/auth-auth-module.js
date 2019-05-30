@@ -179,8 +179,7 @@ var LoginAuthComponent = /** @class */ (function () {
             _this.router.navigate(["/game/home"]);
         }, function (err) {
             _this.userService.loggedIn = false;
-            if (err === 'Bad Request')
-                _this.error = "Invalid login or password";
+            _this.error = err.error;
         });
     };
     LoginAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -309,8 +308,7 @@ var RegistrationAuthComponent = /** @class */ (function () {
                 _this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: _this.user.email } });
             }
         }, function (err) {
-            debugger;
-            _this.error = err;
+            _this.error = err.error;
         });
     };
     RegistrationAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([

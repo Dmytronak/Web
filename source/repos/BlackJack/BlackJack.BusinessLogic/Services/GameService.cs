@@ -41,7 +41,7 @@ namespace BlackJack.BusinessLogic.Services
             var activeGameOfUser = await _playerInGameRepository.GetActiveByUserId(userId);
             if (activeGameOfUser == null)
             {
-                throw new CustomServiceException("Active game is doesn`t exist");
+                throw new CustomServiceException("Active game is doesn`t exist! Play new game.");
             }
             var activeGame = activeGameOfUser.Game;
             var playerStep = await _playerStepRepository.GetByGameId(activeGame.Id);
@@ -96,6 +96,10 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<PlayGameView> Play(int numberOfBots, string userId)
         {
+            if (numberOfBots <= 0)
+            {
+                throw new CustomServiceException("NumberOfBots is 0!");
+            }
             var player = await _playerRepository.GetByUserId(userId);
             var winner = "No one";
             var bots = await _botRepository.GetAll();
@@ -284,7 +288,7 @@ namespace BlackJack.BusinessLogic.Services
             CalculateScoreBotExistingPoint(scoredBotExistedPoints, groupedBotInGame, gameId);
             var groupedBotsScore = scoredBotExistedPoints.GroupBy(x => x.BotId);
             var botsScore = GetCalculatedScoreBotPoints(groupedBotsScore, gameId);
-            GetkWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
+            GetWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
             await _cardRepository.RemoveRange(clearCards);
             var cardsOfGame = deck
                 .Select(x => new Card()
@@ -433,7 +437,7 @@ namespace BlackJack.BusinessLogic.Services
                 await _botInGameRepository.CreateRange(botInGame);
                 botStepExisted.AddRange(botsSteps);
             }
-            GetkWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
+            GetWinner(botsScore, bots, status, winner, playerScore, player, activeGame, gameId);
             var groupedBotSteps = botStepExisted.GroupBy(x => x.BotId);
             var botEndGameViewItems = new List<BotEndGameViewItem>();
             foreach (var item in groupedBotSteps)
@@ -499,7 +503,7 @@ namespace BlackJack.BusinessLogic.Services
             }
             return value;
         }
-        private void GetkWinner(List<BotInGame> botsScore, List<Bot> bots, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
+        private void GetWinner(List<BotInGame> botsScore, List<Bot> bots, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
         {
             var groupBotScore = botsScore.GroupBy(x => x.BotId);
             var botScore = new List<BotInGame>();

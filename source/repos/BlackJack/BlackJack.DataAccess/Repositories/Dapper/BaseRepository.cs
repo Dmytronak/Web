@@ -22,7 +22,6 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         {
             var cache = typeof(SqlMapperExtensions).GetField("KeyProperties", BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null)
                 as ConcurrentDictionary<RuntimeTypeHandle, IEnumerable<PropertyInfo>>;
-
             cache?.Clear();
         }
         public async Task Create(TEntity item)

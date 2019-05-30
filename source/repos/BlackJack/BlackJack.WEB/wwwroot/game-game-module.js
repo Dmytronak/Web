@@ -158,12 +158,9 @@ var HomeGameComponent = /** @class */ (function () {
         var _this = this;
         this.gameService.getActiveGame()
             .subscribe(function (x) {
-            if (x['error']) {
-                return _this.gameExisting = true;
-            }
             _this.haveActiveGame = true;
         }, function (err) {
-            _this.error = err;
+            _this.gameExisting = true;
         });
     };
     HomeGameComponent.prototype.showInput = function () {
@@ -270,12 +267,6 @@ var PlayGameComponent = /** @class */ (function () {
         var _this = this;
         this.gameService.getActiveGame()
             .subscribe(function (x) {
-            if (x['error']) {
-                _this.haveActiveGame = false;
-                var errorMessage = { message: 'You havent active games! Play new game.' };
-                _this.error = errorMessage.message;
-                return _this.error;
-            }
             _this.playGame.numberOfBots = x['numberOfBots'];
             _this.statusEnum = x['status'];
             _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
@@ -289,7 +280,8 @@ var PlayGameComponent = /** @class */ (function () {
                 _this.gameExisting = false;
             }
         }, function (err) {
-            return _this.alertService.error(err);
+            _this.haveActiveGame = false;
+            return _this.error = err.error;
         });
     };
     PlayGameComponent.prototype.continue = function () {

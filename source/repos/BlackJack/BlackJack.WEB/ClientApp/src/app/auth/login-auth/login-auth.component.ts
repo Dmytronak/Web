@@ -68,8 +68,7 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
         err => {
          
           this.userService.loggedIn = false;
-          if(err==='Bad Request')
-          this.error = "Invalid login or password";
+          this.error = err.error;
        
         }
       )
