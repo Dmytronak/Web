@@ -473,7 +473,7 @@ var ErrorInterceptor = /** @class */ (function () {
         return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (err) {
             if (err.status === 401) {
                 _this.userService.logout();
-                _this.router.navigate['/home'];
+                _this.router.navigate(['']);
             }
             if (err.status === 400) {
                 console.clear();

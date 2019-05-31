@@ -200,14 +200,13 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<ContinueGameView> Continue(string userId)
         {
-            var gameId = Guid.NewGuid();
             var activeGameOfUser = await _playerInGameRepository.GetActiveByUserId(userId);
             if (activeGameOfUser == null)
             {
                 throw new CustomServiceException("Active game is doesn`t exist");
             }
             var activeGame = activeGameOfUser.Game;
-            gameId = activeGame.Id;
+            var gameId = activeGame.Id;
             var playerInGameExisted = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameExisted.Count == 0)
             {
@@ -345,14 +344,13 @@ namespace BlackJack.BusinessLogic.Services
         }
         public async Task<EndGameView> End(string userId)
         {
-            var gameId = Guid.NewGuid();
             var activeGameOfUser = await _playerInGameRepository.GetActiveByUserId(userId);
             if (activeGameOfUser == null)
             {
                 throw new CustomServiceException("Active game is doesn`t exist");
             }
             var activeGame = activeGameOfUser.Game;
-            gameId = activeGame.Id;
+            var gameId = activeGame.Id;
             var playerInGameExisted = await _playerInGameRepository.GetByGameId(gameId);
             if (playerInGameExisted.Count == 0)
             {

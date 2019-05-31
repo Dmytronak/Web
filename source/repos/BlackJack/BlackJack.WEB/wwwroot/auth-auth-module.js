@@ -288,14 +288,11 @@ var RegistrationAuthComponent = /** @class */ (function () {
         this.isRequesting = true;
         this.user = Object.assign(this.registerForm, this.formGroup.value);
         var newUser = this.user.email;
-        debugger;
         var duplicateUser = this.users.filter(function (x) { return x.email === newUser; }).length;
-        debugger;
         if (this.formGroup.invalid) {
             return;
         }
         if (duplicateUser) {
-            debugger;
             var errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' };
             Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(new Error(errorMessage.message));
             this.error = errorMessage.message;
@@ -303,7 +300,6 @@ var RegistrationAuthComponent = /** @class */ (function () {
         }
         this.userService.register(this.user)
             .subscribe(function (x) {
-            debugger;
             if (x) {
                 _this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: _this.user.email } });
             }
