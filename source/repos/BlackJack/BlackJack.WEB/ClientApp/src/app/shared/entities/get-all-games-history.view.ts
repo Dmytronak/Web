@@ -1,4 +1,4 @@
-export class HistoryGame {
+export class GetAllGamesHistoryView {
     games:GameGetAllGamesHistoryView[];
 }
 export class GameGetAllGamesHistoryView {

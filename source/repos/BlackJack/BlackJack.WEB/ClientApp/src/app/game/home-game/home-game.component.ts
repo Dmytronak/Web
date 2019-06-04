@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from 'src/app/shared/entities/player.view';
 import { Status } from 'src/app/shared/enums/status-type.enum.view';
-import { CardPlayGameViewItem, BotPlayGameViewItem, PlayerPlayGameViewItem, PlayGame } from 'src/app/shared/entities/play-game.view';
+import { CardGameViewItem, BotGameViewItem, PlayerGameView, GameView } from 'src/app/shared/entities/game.view';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
@@ -19,21 +19,12 @@ export class HomeGameComponent implements OnInit {
   brandNew: boolean;
   haveActiveGame:boolean= false;
   gameExisting:boolean = false;
-  public players: Player[];
-  public statusEnum: Status;
-  public playersDb: Player[];
-  public player: Player;
-  cardsGame: CardPlayGameViewItem = { rank: 0, suit: 0 };
-  botsGame: BotPlayGameViewItem = { name: '', cards: [this.cardsGame] }
-  playerGame: PlayerPlayGameViewItem = { name: '', cards: [this.cardsGame] }
-  createGame: PlayGame = {status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
-  newPlayer: Player = {id:'',email:'',name:''};
-  constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
-    debugger
-    this.email = localStorage.getItem('email');
-    this.player = { email: this.email, name: '', id: '' };
+  cardsGame: CardGameViewItem[];
+  botsGame: BotGameViewItem = { name: '', cards: this.cardsGame }
+  playerGame: PlayerGameView = { name: '', cards: this.cardsGame }
+  createGame: GameView = {status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
+  constructor(private gameService: GameService, private router: Router, private _formBuilder: FormBuilder) {
   }
-
   ngOnInit() {
     this.gameService.getActiveGame()
     .subscribe(x => {

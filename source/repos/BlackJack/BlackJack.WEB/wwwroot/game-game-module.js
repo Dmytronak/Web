@@ -128,31 +128,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/game.service */ "./src/app/shared/services/game.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/alert.service */ "./src/app/shared/services/alert.service.ts");
-
 
 
 
 
 
 var HomeGameComponent = /** @class */ (function () {
-    function HomeGameComponent(gameService, router, _formBuilder, alertService) {
+    function HomeGameComponent(gameService, router, _formBuilder) {
         this.gameService = gameService;
         this.router = router;
         this._formBuilder = _formBuilder;
-        this.alertService = alertService;
         this.email = '';
         this.error = '';
         this.haveActiveGame = false;
         this.gameExisting = false;
-        this.cardsGame = { rank: 0, suit: 0 };
-        this.botsGame = { name: '', cards: [this.cardsGame] };
-        this.playerGame = { name: '', cards: [this.cardsGame] };
+        this.botsGame = { name: '', cards: this.cardsGame };
+        this.playerGame = { name: '', cards: this.cardsGame };
         this.createGame = { status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
-        this.newPlayer = { id: '', email: '', name: '' };
-        debugger;
-        this.email = localStorage.getItem('email');
-        this.player = { email: this.email, name: '', id: '' };
     }
     HomeGameComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -193,7 +185,7 @@ var HomeGameComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home-game.component.html */ "./src/app/game/home-game/home-game.component.html"),
             styles: [__webpack_require__(/*! ./home-game.component.scss */ "./src/app/game/home-game/home-game.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"], src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__["AlertService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormBuilder"]])
     ], HomeGameComponent);
     return HomeGameComponent;
 }());
@@ -258,9 +250,8 @@ var PlayGameComponent = /** @class */ (function () {
         this.headBots = ['Bots'];
         this.headPlayerSteps = ['Player name', 'Player cards'];
         this.headElements = ['Number of bots', 'Status', 'Winner', ''];
-        this.cardsGame = { rank: 0, suit: 0 };
-        this.bots = { name: '', cards: [this.cardsGame] };
-        this.player = { name: '', cards: [this.cardsGame] };
+        this.bots = { name: '', cards: this.cardsGame };
+        this.player = { name: '', cards: this.cardsGame };
         this.playGame = { status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
     }
     PlayGameComponent.prototype.ngOnInit = function () {

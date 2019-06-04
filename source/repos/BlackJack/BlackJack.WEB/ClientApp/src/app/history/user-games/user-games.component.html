@@ -44,8 +44,8 @@
         </tr>
       </thead>
       <tbody>
-        <td>{{playerSteps.name}}</td>
-        <td colspan="" *ngFor="let d of playerSteps.playerSteps">
+        <td>{{getPlayerStepsHistory.name}}</td>
+        <td colspan="" *ngFor="let d of getPlayerStepsHistory.playerSteps">
           <img src="../../../assets/cards/{{d.rank}}_{{d.suit}}.svg">
         </td>
       </tbody>
@@ -62,7 +62,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let e of allBotSteps.bots">
+        <tr *ngFor="let e of getBotStepsHistory.bots">
           <td>{{e.name}}</td>
           <td *ngFor="let q of e.steps">
             <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
