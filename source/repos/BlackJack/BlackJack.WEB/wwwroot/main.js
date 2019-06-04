@@ -735,7 +735,7 @@ var SharedModule = /** @class */ (function () {
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _shared_routing_module__WEBPACK_IMPORTED_MODULE_4__["SharedRoutingModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"]
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
             ],
             exports: [
                 _main_header_shared_main_header_shared_component__WEBPACK_IMPORTED_MODULE_5__["MainHeaderSharedComponent"],

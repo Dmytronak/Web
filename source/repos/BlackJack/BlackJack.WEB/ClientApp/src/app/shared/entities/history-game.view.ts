@@ -1,5 +1,5 @@
 export class HistoryGame {
-    games:[GameGetAllGamesHistoryView];
+    games:GameGetAllGamesHistoryView[];
 }
 export class GameGetAllGamesHistoryView {
     id:string;

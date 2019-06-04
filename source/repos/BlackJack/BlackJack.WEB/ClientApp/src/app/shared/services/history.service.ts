@@ -16,14 +16,14 @@ export class HistoryService {
     this.baseUrl = configService.getApiURI();
    }
    getGamesByUser() {
-    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/allUserGames")
+    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/allUserGames");
    }
    getPlayerSteps(history:PlayerSteps) {
     let params = new HttpParams().set("gameId",history.gameId); 
-    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/playerSteps", { params:params })
+    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/playerSteps", { params:params });
    }
    getBotSteps(history:BotSteps) {
     let params = new HttpParams().set("gameId",history.gameId); 
-    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/botSteps", { params:params })
+    return this.http.get<HistoryGame[]>(this.baseUrl + "/history/botSteps", { params:params });
    }
 }

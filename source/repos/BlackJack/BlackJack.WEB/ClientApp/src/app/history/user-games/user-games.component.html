@@ -1,66 +1,77 @@
 <h2> History of user games</h2>
+<form>
+  <div class="form-group form-inline">
+    History search: <input class="form-control ml-2" type="text" [formControl]="filter" />
+  </div>
+</form>
 <div class="tableFixHead">
   <div *ngIf="showMainTable">
-      <table>
-          <thead class="thead-dark">
-            <tr>
-              <th scope="row" *ngFor="let head of headElements">{{head}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let x of historyGames.games | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize">
-              <td>{{x.numberOfBots}}</td>
-              <td>{{x.status}}</td>
-              <td>{{x.winner}}</td>
-              <td>
-                <button class="btn btn-info" (click)="bot(x)">
-                    <i class="fas fa-robot"></i>
-                </button>
-                <button class="btn btn-success" (click)="player(x)">
-                    <i class="fas fa-user"></i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <ngb-pagination [collectionSize]="listCount" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col" *ngFor="let head of headElements">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let x of games$ | async">
+          <td>
+            <ngb-highlight [result]="x.numberOfBots | number" [term]="filter.value"></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight [result]="x.status" [term]="filter.value"></ngb-highlight>
+          </td>
+          <td>
+            <ngb-highlight [result]="x.winner" [term]="filter.value"></ngb-highlight>
+          </td>
+          <td>
+            <button class="btn btn-info" (click)="bot(x)">
+              <i class="fas fa-robot"></i>
+            </button>
+            <button class="btn btn-success" (click)="player(x)">
+              <i class="fas fa-user"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ngb-pagination [collectionSize]="listCount | async" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
   </div>
   <div *ngIf="showPlayerTable">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th *ngFor="let head of headPlayerSteps">{{head}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <td>{{playerSteps.name}}</td>
-          <td colspan="" *ngFor="let d of playerSteps.playerSteps">
-            <img src="../../../assets/cards/{{d.rank}}_{{d.suit}}.svg">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th *ngFor="let head of headPlayerSteps">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td>{{playerSteps.name}}</td>
+        <td colspan="" *ngFor="let d of playerSteps.playerSteps">
+          <img src="../../../assets/cards/{{d.rank}}_{{d.suit}}.svg">
+        </td>
+      </tbody>
+    </table>
+    <button class="btn btn-danger" (click)="hideTable()">
+      <i class="fa fa-arrow-left"></i>
+    </button>
+  </div>
+  <div *ngIf="showBotTable">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th *ngFor="let head of headBots">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of allBotSteps.bots">
+          <td>{{e.name}}</td>
+          <td *ngFor="let q of e.steps">
+            <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
           </td>
-        </tbody>
-      </table>
-      <button class="btn btn-danger" (click)="hideTable()">
-        <i class="fa fa-arrow-left"></i>
-      </button>
-    </div>
-    <div *ngIf="showBotTable">
-      <table class="table">
-        <thead class="thead-dark">
-          <tr>
-            <th *ngFor="let head of headBots">{{head}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let e of allBotSteps.bots">
-            <td>{{e.name}}</td>
-            <td *ngFor="let q of e.steps">
-              <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="btn btn-danger" (click)="hideTable()">
-        <i class="fa fa-arrow-left"></i>
-      </button>
-    </div>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-danger" (click)="hideTable()">
+      <i class="fa fa-arrow-left"></i>
+    </button>
+  </div>
 </div>
