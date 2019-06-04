@@ -47,7 +47,6 @@ export class RegistrationAuthComponent implements OnInit {
       }
     this.userService.registerUsers().subscribe((user: User[]) => {
       this.users = user['users'];
-      console.log(this.users)
     }, error => error);
 
   }

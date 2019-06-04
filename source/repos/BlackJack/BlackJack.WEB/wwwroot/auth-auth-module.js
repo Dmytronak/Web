@@ -279,7 +279,6 @@ var RegistrationAuthComponent = /** @class */ (function () {
             };
         this.userService.registerUsers().subscribe(function (user) {
             _this.users = user['users'];
-            console.log(_this.users);
         }, function (error) { return error; });
     };
     RegistrationAuthComponent.prototype.registration = function () {
