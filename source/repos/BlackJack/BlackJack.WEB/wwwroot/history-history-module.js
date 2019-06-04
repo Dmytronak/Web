@@ -159,10 +159,10 @@ var UserGamesComponent = /** @class */ (function () {
         var _this = this;
         this.historyService.getGamesByUser().subscribe(function (x) {
             _this.historyGames.games = x['games'];
-            _this.games$ = _this.filter.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (text) { return _this.search(text, _this.pipe); }));
             _this.historyGames.games.forEach(function (x) {
                 x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
             });
+            _this.games$ = _this.filter.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (text) { return _this.search(text, _this.pipe); }));
         }, function (error) { return error; });
     };
     Object.defineProperty(UserGamesComponent.prototype, "page", {
