@@ -35,7 +35,7 @@ export class UserGamesComponent implements OnInit {
   gameGetAllGamesHistory: GameGetAllGamesHistoryView[];
   getAllGamesHistory: GetAllGamesHistoryView = { games: this.gameGetAllGamesHistory };
   cardGetPlayerStepsHistory: CardGetPlayerStepsHistoryViewItem[];
-  getPlayerStepsHistory: GetPlayerStepsHistoryView = { gameId: '', name: '', playerSteps: this.cardGetPlayerStepsHistory }
+  getPlayerStepsHistory: GetPlayerStepsHistoryView = { gameId: '', name: '', steps: this.cardGetPlayerStepsHistory }
   cardGetBotStepsHistory: CardGetBotStepsHistoryViewItem[];
   botGetBotStepsHistory: BotGetBotStepsHistoryViewItem = { name: '', steps: this.cardGetBotStepsHistory };
   getBotStepsHistory: GetBotStepsHistoryView = { gameId: '', bots: [this.botGetBotStepsHistory] };
@@ -98,7 +98,7 @@ export class UserGamesComponent implements OnInit {
     this.getPlayerStepsHistory.gameId = x.id;
     this.historyService.getPlayerSteps(this.getPlayerStepsHistory).subscribe(x => {
       this.getPlayerStepsHistory.name = x['name'];
-      this.getPlayerStepsHistory.playerSteps = x['playerSteps'];
+      this.getPlayerStepsHistory.steps = x['steps'];
     }, error => error);
     this.showPlayerTable = true;
     this.showBotTable = false;
@@ -108,7 +108,7 @@ export class UserGamesComponent implements OnInit {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;
-    this.getPlayerStepsHistory.playerSteps = null;
+    this.getPlayerStepsHistory.steps = null;
     this.getBotStepsHistory.bots = null;
   }
 }

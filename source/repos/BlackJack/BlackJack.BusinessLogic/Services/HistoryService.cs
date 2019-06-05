@@ -86,7 +86,7 @@ namespace BlackJack.BusinessLogic.Services
             {
                 Name = player.Name,
                 GameId = gameId,
-                PlayerSteps = playerSteps
+                Steps = playerSteps
                 .Select(cardGetPlayerStepsHistoryViewItem => new CardGetPlayerStepsHistoryViewItem()
                 {
                     Rank = cardGetPlayerStepsHistoryViewItem.Rank,

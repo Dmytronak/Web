@@ -14,7 +14,7 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddDependencyConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             var assembly = typeof(DataAccess.ApplicationContext).Assembly;
-            var serviceOption = configuration.GetSection(configuration.GetSection("ActiveRepository").Value).Get<List<ServiceOption>>();
+            var serviceOption = configuration.GetSection(configuration.GetSection("ActiveRepository").Value).Get<List<DatabaseOption>>();
             foreach (var option in serviceOption)
             {
                 services.Add(new ServiceDescriptor(

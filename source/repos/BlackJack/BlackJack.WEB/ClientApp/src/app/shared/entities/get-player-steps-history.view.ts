@@ -1,7 +1,7 @@
 export class GetPlayerStepsHistoryView{
     gameId:string;
     name:string;
-    playerSteps:CardGetPlayerStepsHistoryViewItem[];
+    steps:CardGetPlayerStepsHistoryViewItem[];
 }
 export class CardGetPlayerStepsHistoryViewItem{
     rank:number;

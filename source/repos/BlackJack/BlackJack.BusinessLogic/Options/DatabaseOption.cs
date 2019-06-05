@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace BlackJack.BusinessLogic.Options
 {
-    public class ServiceOption
+    public class DatabaseOption
     {
         public string ServiceType { get; set; }
         public string ImplementationType { get; set; }

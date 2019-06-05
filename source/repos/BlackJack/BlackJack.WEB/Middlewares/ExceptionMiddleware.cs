@@ -37,10 +37,10 @@ namespace BlackJack.Middlewares
         }
 
         private static Task HandleExceptionAsync(HttpContext context, Exception ex, HttpStatusCode statusCode)
-        { 
-            var result = (int)statusCode >= 500 ? 
-                (JsonConvert.SerializeObject(new { error = "Status code: " + (int)statusCode + " , " + statusCode })) : 
-                (JsonConvert.SerializeObject(new { error = ex.Message }));
+        {
+            var result = (int)statusCode >= 500 ?
+                ("Status code: " + statusCode) :
+                (ex.Message);
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)statusCode;
             return context.Response.WriteAsync(result);

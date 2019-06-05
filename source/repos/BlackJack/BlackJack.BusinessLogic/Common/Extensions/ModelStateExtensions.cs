@@ -8,11 +8,10 @@ namespace BlackJack.BusinessLogic.Common.Extensions
     {
         public static string GetFirstError(this ModelStateDictionary modelState)
         {
-            var result = modelState
+           var result =  modelState
                 .Values
-                .Select(x => x.Errors
-                .Select(d => d.ErrorMessage))
-                .FirstOrDefault()
+                .SelectMany(x => x.Errors
+                .Select(d =>d.ErrorMessage))
                 .FirstOrDefault();
             return result;
         }

@@ -272,7 +272,7 @@ var PlayGameComponent = /** @class */ (function () {
             }
         }, function (err) {
             _this.haveActiveGame = false;
-            return _this.error = err.error;
+            return _this.error = err;
         });
     };
     PlayGameComponent.prototype.continue = function () {
