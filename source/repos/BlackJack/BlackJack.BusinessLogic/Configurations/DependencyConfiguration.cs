@@ -4,8 +4,11 @@ using BlackJack.BusinessLogic.Services;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using BlackJack.BusinessLogic.Options;
+using BlackJack.DataAccess.Repositories.Interfaces;
+using entity = BlackJack.DataAccess.Repositories.EntityFramework;
+using dapper = BlackJack.DataAccess.Repositories.Dapper;
+using BlackJack.BusinessLogic.Helpers.Interfaces;
+using BlackJack.BusinessLogic.Helpers;
 
 namespace BlackJack.BusinessLogic.Configurations
 {
@@ -13,20 +16,36 @@ namespace BlackJack.BusinessLogic.Configurations
     {
         public static void AddDependencyConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            var assembly = typeof(DataAccess.ApplicationContext).Assembly;
-            var serviceOption = configuration.GetSection(configuration.GetSection("ActiveRepository").Value).Get<List<DatabaseOption>>();
-            foreach (var option in serviceOption)
+            var activeRepository = configuration.GetSection("ActiveRepository").Value;
+            if (activeRepository == "Dapper")
             {
-                services.Add(new ServiceDescriptor(
-                    serviceType: assembly.GetType(option.ServiceType),
-                    implementationType: assembly.GetType(option.ImplementationType),
-                    lifetime: option.Lifetime));
+                services.AddTransient<IBotRepository, dapper.BotRepository>();
+                services.AddTransient<IBotStepRepository, dapper.BotStepRepository>();
+                services.AddTransient<ICardRepository, dapper.CardRepository>();
+                services.AddTransient<IGameRepository, dapper.GameRepository>();
+                services.AddTransient<IPlayerRepository, dapper.PlayerRepository>();
+                services.AddTransient<IPlayerStepRepository, dapper.PlayerStepRepository>();
+                services.AddTransient<IBotInGameRepository, dapper.BotInGameRepository>();
+                services.AddTransient<IPlayerInGameRepository, dapper.PlayerInGameRepository>();
+            }
+            if (activeRepository == "Entity")
+            {
+                services.AddTransient<IBotRepository, entity.BotRepository>();
+                services.AddTransient<IBotStepRepository, entity.BotStepRepository>();
+                services.AddTransient<ICardRepository, entity.CardRepository>();
+                services.AddTransient<IGameRepository, entity.GameRepository>();
+                services.AddTransient<IPlayerRepository, entity.PlayerRepository>();
+                services.AddTransient<IPlayerStepRepository, entity.PlayerStepRepository>();
+                services.AddTransient<IBotInGameRepository, entity.BotInGameRepository>();
+                services.AddTransient<IPlayerInGameRepository, entity.PlayerInGameRepository>();
             }
 
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IGameService, GameService>();
             services.AddTransient<IHistoryService, HistoryService>();
             services.AddTransient<IJwtProvider, JwtProvider>();
+            services.AddTransient<ICardHelper, CardHelper>();
+
         }
     }
 }

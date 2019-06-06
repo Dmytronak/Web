@@ -432,20 +432,20 @@ var GameService = /** @class */ (function () {
         this.baseUrl = configService.getApiURI();
     }
     GameService.prototype.getActiveGame = function () {
-        return this.http.get(this.baseUrl + "/game/getActiveGame");
+        return this.http.get(this.baseUrl + "/game/getActive");
     };
     GameService.prototype.play = function (game) {
         debugger;
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpParams"]().set("numberOfBots", game.numberOfBots.toString());
-        return this.http.post(this.baseUrl + "/game/playGame?" + params, '');
+        return this.http.post(this.baseUrl + "/game/play?" + params, '');
     };
     GameService.prototype.continue = function (game) {
         debugger;
-        return this.http.post(this.baseUrl + "/game/continueGame", game);
+        return this.http.post(this.baseUrl + "/game/continue", game);
     };
     GameService.prototype.end = function (game) {
         debugger;
-        return this.http.post(this.baseUrl + "/game/endGame", game);
+        return this.http.post(this.baseUrl + "/game/end", game);
     };
     GameService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

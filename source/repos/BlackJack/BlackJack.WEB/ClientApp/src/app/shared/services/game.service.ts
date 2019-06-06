@@ -15,20 +15,20 @@ export class GameService {
 
   }
   getActiveGame() {
-    return this.http.get<GameView[]>(this.baseUrl + "/game/getActiveGame")
+    return this.http.get<GameView[]>(this.baseUrl + "/game/getActive")
   }
   play(game: GameView) {
     debugger
     let params = new HttpParams().set("numberOfBots",game.numberOfBots.toString()); 
-    return this.http.post(this.baseUrl + "/game/playGame?"+params,'')
+    return this.http.post(this.baseUrl + "/game/play?"+params,'')
   }
   continue(game: GameView) {
     debugger
-    return this.http.post(this.baseUrl + "/game/continueGame", game)
+    return this.http.post(this.baseUrl + "/game/continue", game)
   }
   end(game: GameView) {
     debugger
-    return this.http.post(this.baseUrl + "/game/endGame", game)
+    return this.http.post(this.baseUrl + "/game/end", game)
   }
 }
 

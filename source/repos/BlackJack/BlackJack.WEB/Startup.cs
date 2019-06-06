@@ -8,12 +8,6 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
-using Newtonsoft.Json.Linq;
-using System.IO;
-using Newtonsoft.Json;
-using BlackJack.BusinessLogic.Options;
-using System.Collections.Generic;
-using System;
 
 namespace BlackJack
 {
@@ -54,7 +48,7 @@ namespace BlackJack
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-                     
+
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
