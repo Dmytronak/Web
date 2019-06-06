@@ -15,9 +15,9 @@ interface State {
   pageSize: number;
 }
 @Component({
-  selector: 'app-user-games',
-  templateUrl: './user-games.component.html',
-  styleUrls: ['./user-games.component.scss'],
+  selector: 'app-games',
+  templateUrl: './games.component.html',
+  styleUrls: ['./games.component.scss'],
   providers: [DecimalPipe]
 })
 
@@ -41,8 +41,8 @@ export class UserGamesComponent implements OnInit {
   getBotStepsHistory: GetBotStepsHistoryView = { gameId: '', bots: [this.botGetBotStepsHistory] };
   listCount = new BehaviorSubject<number>(0);
   headBotSteps = ['Cards', '', '', ''];
-  headBots = ['Bot name', 'Steps', '', '', ''];
-  headPlayerSteps = ['Player name', 'Player steps', '', ''];
+  headBots = ['Bot name', 'Steps', '', '', '',''];
+  headPlayerSteps = ['Player name', 'Player steps', '', '','',''];
   headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   games$: Observable<GameGetAllGamesHistoryView[]>;
   filter = new FormControl('');

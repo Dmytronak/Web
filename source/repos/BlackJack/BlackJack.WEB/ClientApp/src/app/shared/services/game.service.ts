@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ConfigService } from '../configs/url.config';
-import { Router } from '@angular/router';
-import { HttpClient, HttpResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { GameView } from '../entities/game.view';
 
 
@@ -10,9 +9,8 @@ import { GameView } from '../entities/game.view';
 })
 export class GameService {
   baseUrl: string = '';
-  constructor(private http: HttpClient, private configService: ConfigService, private router: Router) {
-    this.baseUrl = configService.getApiURI();
-
+  constructor(private http: HttpClient) {
+    this.baseUrl = environment.baseUrl;
   }
   getActiveGame() {
     return this.http.get<GameView[]>(this.baseUrl + "/game/getActive")

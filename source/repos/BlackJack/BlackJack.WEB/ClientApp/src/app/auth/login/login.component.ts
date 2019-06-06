@@ -4,12 +4,11 @@ import { Subscription } from 'rxjs';
 import { User } from 'src/app/shared/entities/user.view';
 import { UserService } from 'src/app/shared/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
-  selector: 'app-login-auth',
-  templateUrl: './login-auth.component.html',
-  styleUrls: ['./login-auth.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginAuthComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;
@@ -17,17 +16,17 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
   brandNew: boolean;
   error: string;
   submitted: boolean = false;
-  credentials: User = { email: '', name:'',password: '',confirmPassword:'' ,year:0,token:''};
+  credentials: User = { email: '', name: '', password: '', confirmPassword: '', year: 0, token: '' };
   user: User;
 
   constructor(private userService: UserService, private router: Router,
-     private activatedRoute: ActivatedRoute, private _formBuilder: FormBuilder,private alertService: AlertService) {
+    private activatedRoute: ActivatedRoute, _formBuilder: FormBuilder) {
     this.userService.loggedIn = !!localStorage.getItem('auth_token');
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
-      'password': ['', [Validators.minLength(6),Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
+      'password': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
     });
-    
+
   }
 
   ngOnInit() {
@@ -46,8 +45,8 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
   }
 
 
-  login():User {
-   
+  login(): User {
+
     this.user = Object.assign(this.credentials, this.formGroup.value);
     this.submitted = true;
 
@@ -63,13 +62,13 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
         this.userService._authNavStatusSource.next(true);
         this.userService.loggedIn = true;
         this.router.navigate(["/game/home"]);
-       
+
       },
         err => {
-         
+
           this.userService.loggedIn = false;
           this.error = err.error;
-       
+
         }
       )
   }

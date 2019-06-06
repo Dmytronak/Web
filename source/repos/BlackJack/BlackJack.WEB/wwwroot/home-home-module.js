@@ -13,13 +13,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _main_home_main_home_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main-home/main-home.component */ "./src/app/home/main-home/main-home.component.ts");
+/* harmony import */ var _main_main_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main/main.component */ "./src/app/home/main/main.component.ts");
 
 
 
 
 var routes = [
-    { path: '', component: _main_home_main_home_component__WEBPACK_IMPORTED_MODULE_3__["MainHomeComponent"] },
+    { path: '', component: _main_main_component__WEBPACK_IMPORTED_MODULE_3__["MainHomeComponent"] },
 ];
 var HomeRoutingModule = /** @class */ (function () {
     function HomeRoutingModule() {
@@ -51,7 +51,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _home_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home-routing.module */ "./src/app/home/home-routing.module.ts");
-/* harmony import */ var _main_home_main_home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main-home/main-home.component */ "./src/app/home/main-home/main-home.component.ts");
+/* harmony import */ var _main_main_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main/main.component */ "./src/app/home/main/main.component.ts");
 
 
 
@@ -62,7 +62,7 @@ var HomeModule = /** @class */ (function () {
     }
     HomeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_main_home_main_home_component__WEBPACK_IMPORTED_MODULE_4__["MainHomeComponent"]],
+            declarations: [_main_main_component__WEBPACK_IMPORTED_MODULE_4__["MainHomeComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _home_routing_module__WEBPACK_IMPORTED_MODULE_3__["HomeRoutingModule"]
@@ -76,10 +76,10 @@ var HomeModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/home/main-home/main-home.component.html":
-/*!*********************************************************!*\
-  !*** ./src/app/home/main-home/main-home.component.html ***!
-  \*********************************************************/
+/***/ "./src/app/home/main/main.component.html":
+/*!***********************************************!*\
+  !*** ./src/app/home/main/main.component.html ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -87,21 +87,21 @@ module.exports = "<main role=\"main\">\n  <!-- Main jumbotron for a primary mark
 
 /***/ }),
 
-/***/ "./src/app/home/main-home/main-home.component.scss":
-/*!*********************************************************!*\
-  !*** ./src/app/home/main-home/main-home.component.scss ***!
-  \*********************************************************/
+/***/ "./src/app/home/main/main.component.scss":
+/*!***********************************************!*\
+  !*** ./src/app/home/main/main.component.scss ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvbWFpbi1ob21lL21haW4taG9tZS5jb21wb25lbnQuc2NzcyJ9 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvbWFpbi9tYWluLmNvbXBvbmVudC5zY3NzIn0= */"
 
 /***/ }),
 
-/***/ "./src/app/home/main-home/main-home.component.ts":
-/*!*******************************************************!*\
-  !*** ./src/app/home/main-home/main-home.component.ts ***!
-  \*******************************************************/
+/***/ "./src/app/home/main/main.component.ts":
+/*!*********************************************!*\
+  !*** ./src/app/home/main/main.component.ts ***!
+  \*********************************************/
 /*! exports provided: MainHomeComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -119,9 +119,9 @@ var MainHomeComponent = /** @class */ (function () {
     };
     MainHomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-main-home',
-            template: __webpack_require__(/*! ./main-home.component.html */ "./src/app/home/main-home/main-home.component.html"),
-            styles: [__webpack_require__(/*! ./main-home.component.scss */ "./src/app/home/main-home/main-home.component.scss")]
+            selector: 'app-main',
+            template: __webpack_require__(/*! ./main.component.html */ "./src/app/home/main/main.component.html"),
+            styles: [__webpack_require__(/*! ./main.component.scss */ "./src/app/home/main/main.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
     ], MainHomeComponent);

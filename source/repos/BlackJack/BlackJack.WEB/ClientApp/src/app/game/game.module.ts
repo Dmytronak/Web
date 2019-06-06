@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { GameRoutingModule } from './game-routing.module';
-import { HomeGameComponent } from './home-game/home-game.component';
-import { PlayGameComponent } from './play-game/play-game.component';
-import { RootGameComponent } from './root-game/root-game.component';
+import { HomeGameComponent } from './home/home.component';
+import { PlayGameComponent } from './play/play.component';
+import { RootGameComponent } from './root/root.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

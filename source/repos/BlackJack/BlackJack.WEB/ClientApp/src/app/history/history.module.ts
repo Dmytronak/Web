@@ -2,7 +2,7 @@ import { NgModule, Pipe } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 
 import { HistoryRoutingModule } from './history-routing.module';
-import { UserGamesComponent } from './user-games/user-games.component';
+import { UserGamesComponent } from './games/games.component';
 import { SharedModule } from '../shared/shared.module';
 
 @NgModule({

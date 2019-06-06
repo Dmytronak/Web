@@ -13,16 +13,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _login_auth_login_auth_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login-auth/login-auth.component */ "./src/app/auth/login-auth/login-auth.component.ts");
-/* harmony import */ var _registration_auth_registration_auth_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./registration-auth/registration-auth.component */ "./src/app/auth/registration-auth/registration-auth.component.ts");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login/login.component */ "./src/app/auth/login/login.component.ts");
+/* harmony import */ var _registration_registration_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./registration/registration.component */ "./src/app/auth/registration/registration.component.ts");
 
 
 
 
 
 var routes = [
-    { path: 'login', component: _login_auth_login_auth_component__WEBPACK_IMPORTED_MODULE_3__["LoginAuthComponent"] },
-    { path: 'register', component: _registration_auth_registration_auth_component__WEBPACK_IMPORTED_MODULE_4__["RegistrationAuthComponent"] }
+    { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginAuthComponent"] },
+    { path: 'register', component: _registration_registration_component__WEBPACK_IMPORTED_MODULE_4__["RegistrationAuthComponent"] }
 ];
 var AuthRoutingModule = /** @class */ (function () {
     function AuthRoutingModule() {
@@ -54,8 +54,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _auth_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth-routing.module */ "./src/app/auth/auth-routing.module.ts");
-/* harmony import */ var _login_auth_login_auth_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login-auth/login-auth.component */ "./src/app/auth/login-auth/login-auth.component.ts");
-/* harmony import */ var _registration_auth_registration_auth_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registration-auth/registration-auth.component */ "./src/app/auth/registration-auth/registration-auth.component.ts");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/auth/login/login.component.ts");
+/* harmony import */ var _registration_registration_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registration/registration.component */ "./src/app/auth/registration/registration.component.ts");
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
 
 
@@ -69,7 +69,7 @@ var AuthModule = /** @class */ (function () {
     }
     AuthModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_login_auth_login_auth_component__WEBPACK_IMPORTED_MODULE_4__["LoginAuthComponent"], _registration_auth_registration_auth_component__WEBPACK_IMPORTED_MODULE_5__["RegistrationAuthComponent"]],
+            declarations: [_login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginAuthComponent"], _registration_registration_component__WEBPACK_IMPORTED_MODULE_5__["RegistrationAuthComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _auth_routing_module__WEBPACK_IMPORTED_MODULE_3__["AuthRoutingModule"],
@@ -84,10 +84,10 @@ var AuthModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/auth/login-auth/login-auth.component.html":
-/*!***********************************************************!*\
-  !*** ./src/app/auth/login-auth/login-auth.component.html ***!
-  \***********************************************************/
+/***/ "./src/app/auth/login/login.component.html":
+/*!*************************************************!*\
+  !*** ./src/app/auth/login/login.component.html ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -95,21 +95,21 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-md-6 new-user-alert\">
 
 /***/ }),
 
-/***/ "./src/app/auth/login-auth/login-auth.component.scss":
-/*!***********************************************************!*\
-  !*** ./src/app/auth/login-auth/login-auth.component.scss ***!
-  \***********************************************************/
+/***/ "./src/app/auth/login/login.component.scss":
+/*!*************************************************!*\
+  !*** ./src/app/auth/login/login.component.scss ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9sb2dpbi1hdXRoL0M6XFxVc2Vyc1xcQW51aXRleC04NFxcZ2l0XFxXZWJcXHNvdXJjZVxccmVwb3NcXEJsYWNrSmFja1xcQmxhY2tKYWNrLldFQlxcQ2xpZW50QXBwL3NyY1xcYXBwXFxhdXRoXFxsb2dpbi1hdXRoXFxsb2dpbi1hdXRoLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQWlCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9hdXRoL2xvZ2luLWF1dGgvbG9naW4tYXV0aC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImRpdntcclxuICAgIG1hcmdpbi1ib3R0b206IDElOyBcclxufSJdfQ== */"
+module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9sb2dpbi9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcYXV0aFxcbG9naW5cXGxvZ2luLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQWlCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9hdXRoL2xvZ2luL2xvZ2luLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiZGl2e1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMSU7IFxyXG59Il19 */"
 
 /***/ }),
 
-/***/ "./src/app/auth/login-auth/login-auth.component.ts":
-/*!*********************************************************!*\
-  !*** ./src/app/auth/login-auth/login-auth.component.ts ***!
-  \*********************************************************/
+/***/ "./src/app/auth/login/login.component.ts":
+/*!***********************************************!*\
+  !*** ./src/app/auth/login/login.component.ts ***!
+  \***********************************************/
 /*! exports provided: LoginAuthComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -121,20 +121,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/alert.service */ "./src/app/shared/services/alert.service.ts");
-
 
 
 
 
 
 var LoginAuthComponent = /** @class */ (function () {
-    function LoginAuthComponent(userService, router, activatedRoute, _formBuilder, alertService) {
+    function LoginAuthComponent(userService, router, activatedRoute, _formBuilder) {
         this.userService = userService;
         this.router = router;
         this.activatedRoute = activatedRoute;
-        this._formBuilder = _formBuilder;
-        this.alertService = alertService;
         this.submitted = false;
         this.credentials = { email: '', name: '', password: '', confirmPassword: '', year: 0, token: '' };
         this.userService.loggedIn = !!localStorage.getItem('auth_token');
@@ -184,12 +180,12 @@ var LoginAuthComponent = /** @class */ (function () {
     };
     LoginAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-login-auth',
-            template: __webpack_require__(/*! ./login-auth.component.html */ "./src/app/auth/login-auth/login-auth.component.html"),
-            styles: [__webpack_require__(/*! ./login-auth.component.scss */ "./src/app/auth/login-auth/login-auth.component.scss")]
+            selector: 'app-login',
+            template: __webpack_require__(/*! ./login.component.html */ "./src/app/auth/login/login.component.html"),
+            styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/auth/login/login.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__["AlertService"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
     ], LoginAuthComponent);
     return LoginAuthComponent;
 }());
@@ -198,10 +194,10 @@ var LoginAuthComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/auth/registration-auth/registration-auth.component.html":
-/*!*************************************************************************!*\
-  !*** ./src/app/auth/registration-auth/registration-auth.component.html ***!
-  \*************************************************************************/
+/***/ "./src/app/auth/registration/registration.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/auth/registration/registration.component.html ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -209,21 +205,21 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Pleas
 
 /***/ }),
 
-/***/ "./src/app/auth/registration-auth/registration-auth.component.scss":
-/*!*************************************************************************!*\
-  !*** ./src/app/auth/registration-auth/registration-auth.component.scss ***!
-  \*************************************************************************/
+/***/ "./src/app/auth/registration/registration.component.scss":
+/*!***************************************************************!*\
+  !*** ./src/app/auth/registration/registration.component.scss ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9yZWdpc3RyYXRpb24tYXV0aC9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcYXV0aFxccmVnaXN0cmF0aW9uLWF1dGhcXHJlZ2lzdHJhdGlvbi1hdXRoLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQWlCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9hdXRoL3JlZ2lzdHJhdGlvbi1hdXRoL3JlZ2lzdHJhdGlvbi1hdXRoLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiZGl2e1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMSU7IFxyXG59Il19 */"
+module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9yZWdpc3RyYXRpb24vQzpcXFVzZXJzXFxBbnVpdGV4LTg0XFxnaXRcXFdlYlxcc291cmNlXFxyZXBvc1xcQmxhY2tKYWNrXFxCbGFja0phY2suV0VCXFxDbGllbnRBcHAvc3JjXFxhcHBcXGF1dGhcXHJlZ2lzdHJhdGlvblxccmVnaXN0cmF0aW9uLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQWlCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9hdXRoL3JlZ2lzdHJhdGlvbi9yZWdpc3RyYXRpb24uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJkaXZ7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxJTsgXHJcbn0iXX0= */"
 
 /***/ }),
 
-/***/ "./src/app/auth/registration-auth/registration-auth.component.ts":
-/*!***********************************************************************!*\
-  !*** ./src/app/auth/registration-auth/registration-auth.component.ts ***!
-  \***********************************************************************/
+/***/ "./src/app/auth/registration/registration.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/auth/registration/registration.component.ts ***!
+  \*************************************************************/
 /*! exports provided: RegistrationAuthComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -235,12 +231,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/alert.service */ "./src/app/shared/services/alert.service.ts");
-/* harmony import */ var src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/helpers/must-match.helper */ "./src/app/shared/helpers/must-match.helper.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/helpers/year-range.helper */ "./src/app/shared/helpers/year-range.helper.ts");
-
-
+/* harmony import */ var src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/helpers/must-match.helper */ "./src/app/shared/helpers/must-match.helper.ts");
+/* harmony import */ var src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/helpers/year-range.helper */ "./src/app/shared/helpers/year-range.helper.ts");
 
 
 
@@ -249,21 +241,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RegistrationAuthComponent = /** @class */ (function () {
-    function RegistrationAuthComponent(userService, router, _formBuilder, alertService) {
+    function RegistrationAuthComponent(userService, router, _formBuilder) {
         this.userService = userService;
         this.router = router;
         this._formBuilder = _formBuilder;
-        this.alertService = alertService;
         this.submitted = false;
         this.users = [];
         this.formGroup = _formBuilder.group({
             'email': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email],
             'name': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(15)],
-            'year': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4), src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_8__["YearRange"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^-?(0|[1-9]\d*)?$/)]],
+            'year': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4), src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_6__["YearRange"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^-?(0|[1-9]\d*)?$/)]],
             'password': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
             'confirmPassword': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
         }, {
-            validator: Object(src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_6__["MustMatch"])('password', 'confirmPassword')
+            validator: Object(src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_5__["MustMatch"])('password', 'confirmPassword')
         });
     }
     RegistrationAuthComponent.prototype.ngOnInit = function () {
@@ -293,9 +284,7 @@ var RegistrationAuthComponent = /** @class */ (function () {
         }
         if (duplicateUser) {
             var errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' };
-            Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["throwError"])(new Error(errorMessage.message));
-            this.error = errorMessage.message;
-            return this.alertService.error(errorMessage.message);
+            return this.error = errorMessage.message;
         }
         this.userService.register(this.user)
             .subscribe(function (x) {
@@ -308,11 +297,11 @@ var RegistrationAuthComponent = /** @class */ (function () {
     };
     RegistrationAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-registration-auth',
-            template: __webpack_require__(/*! ./registration-auth.component.html */ "./src/app/auth/registration-auth/registration-auth.component.html"),
-            styles: [__webpack_require__(/*! ./registration-auth.component.scss */ "./src/app/auth/registration-auth/registration-auth.component.scss")]
+            selector: 'app-registration',
+            template: __webpack_require__(/*! ./registration.component.html */ "./src/app/auth/registration/registration.component.html"),
+            styles: [__webpack_require__(/*! ./registration.component.scss */ "./src/app/auth/registration/registration.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], src_app_shared_services_alert_service__WEBPACK_IMPORTED_MODULE_5__["AlertService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
     ], RegistrationAuthComponent);
     return RegistrationAuthComponent;
 }());

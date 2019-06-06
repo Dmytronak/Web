@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-main-header-shared',
-  templateUrl: './main-header-shared.component.html',
-  styleUrls: ['./main-header-shared.component.scss']
+  selector: 'app-main-header',
+  templateUrl: './main-header.component.html',
+  styleUrls: ['./main-header.component.scss']
 })
 export class MainHeaderSharedComponent implements OnInit {
   public navbarCollapsed = true

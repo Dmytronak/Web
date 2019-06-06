@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { UserService } from '../services/user.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
-  selector: 'app-auth-header-shared',
-  templateUrl: './auth-header-shared.component.html',
-  styleUrls: ['./auth-header-shared.component.scss']
+  selector: 'app-auth-header',
+  templateUrl: './auth-header.component.html',
+  styleUrls: ['./auth-header.component.scss']
 })
 export class AuthHeaderSharedComponent implements OnInit {
 

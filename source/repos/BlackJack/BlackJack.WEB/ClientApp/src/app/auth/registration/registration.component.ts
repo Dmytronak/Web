@@ -3,15 +3,13 @@ import { User } from 'src/app/shared/entities/user.view';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/services/alert.service';
 import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
-import { throwError } from 'rxjs';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
 
 @Component({
-  selector: 'app-registration-auth',
-  templateUrl: './registration-auth.component.html',
-  styleUrls: ['./registration-auth.component.scss']
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.scss']
 })
 export class RegistrationAuthComponent implements OnInit {
 
@@ -23,7 +21,7 @@ export class RegistrationAuthComponent implements OnInit {
   public users: User[] = [];
   public user: User;
 
-  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder, private alertService: AlertService) {
+  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder) {
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
       'name': ['', Validators.maxLength(15)],
@@ -62,9 +60,7 @@ export class RegistrationAuthComponent implements OnInit {
     }
     if (duplicateUser) {
       let errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' }
-      throwError(new Error(errorMessage.message));
-      this.error = errorMessage.message;
-      return this.alertService.error(errorMessage.message);
+      return this.error = errorMessage.message;
     }
     this.userService.register(this.user)
       .subscribe(x => {

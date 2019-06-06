@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { UserService } from './shared/services/user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ConfigService } from './shared/configs/url.config';
 import { SharedModule } from './shared/shared.module';
 import { AuthGuard } from './shared/guards/onlyLoggedOutUsers.guard';
 import { AuthUsersGuard } from './shared/guards/onlyLoggedInUsers.guard';
@@ -26,7 +25,7 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     SharedModule,
 
   ],
-  providers: [UserService,ConfigService,AuthGuard,AuthUsersGuard,
+  providers: [UserService,AuthGuard,AuthUsersGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],

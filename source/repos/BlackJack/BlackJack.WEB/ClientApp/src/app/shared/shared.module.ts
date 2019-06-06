@@ -1,18 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SharedRoutingModule } from './shared-routing.module';
-import { MainHeaderSharedComponent } from './main-header-shared/main-header-shared.component';
-import { AuthHeaderSharedComponent } from './auth-header-shared/auth-header-shared.component';
-import { myFocus } from './directives/focus.directive';
+import { MainHeaderSharedComponent } from './components/layout/main-header/main-header.component';
+import { AuthHeaderSharedComponent } from './components/layout/auth-header/auth-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { RouterModule } from '@angular/router';
 @NgModule({
-  declarations: [myFocus,MainHeaderSharedComponent, AuthHeaderSharedComponent],
+  declarations: [MainHeaderSharedComponent, AuthHeaderSharedComponent],
   imports: [
     CommonModule,
-    SharedRoutingModule,
     NgbModule,
+    RouterModule
   ],
   exports:[ 
     MainHeaderSharedComponent,

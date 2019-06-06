@@ -3,12 +3,11 @@ import { Status } from 'src/app/shared/enums/status-type.enum.view';
 import { CardGameViewItem, BotGameViewItem, PlayerGameView, GameView } from 'src/app/shared/entities/game.view';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/shared/services/alert.service';
 
 @Component({
-  selector: 'app-play-game',
-  templateUrl: './play-game.component.html',
-  styleUrls: ['./play-game.component.scss']
+  selector: 'app-play',
+  templateUrl: './play.component.html',
+  styleUrls: ['./play.component.scss']
 })
 export class PlayGameComponent implements OnInit {
   error: string = '';
@@ -24,7 +23,7 @@ export class PlayGameComponent implements OnInit {
   player: PlayerGameView= { name: '', cards: this.cardsGame }
   playGame: GameView = { status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
 
-  constructor(private gameService: GameService,private router: Router,private alertService: AlertService) {
+  constructor(private gameService: GameService,private router: Router) {
   }
 
   ngOnInit() {
