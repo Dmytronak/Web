@@ -25,7 +25,7 @@ namespace BlackJack.BusinessLogic.Services
         protected readonly IPlayerInGameRepository _playerInGameRepository;
         protected readonly ICardHelper _cardHelper;
 
-        public GameService(UserManager<User> userManager, ICardHelper cardHelper,IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
+        public GameService(UserManager<User> userManager, ICardHelper cardHelper, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, ICardRepository cardRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
             _userManager = userManager;
@@ -59,7 +59,7 @@ namespace BlackJack.BusinessLogic.Services
             foreach (var item in groupedBotSteps)
             {
                 var currentBotName = botList.FirstOrDefault(x => x.Id == item.Key).Name;
-                if(currentBotName == null)
+                if (currentBotName == null)
                 {
                     throw new CustomServiceException("Bot is doesn`t exist");
                 }
@@ -529,7 +529,7 @@ namespace BlackJack.BusinessLogic.Services
             var result = calculatedBotScore;
             return result;
         }
-        private List<Card> GetCardsOfBots(List<Bot> botList,List<Card> deck)
+        private List<Card> GetCardsOfBots(List<Bot> botList, List<Card> deck)
         {
             var result = new List<Card>();
             for (var i = 0; i < botList.Count; i++)
@@ -569,7 +569,7 @@ namespace BlackJack.BusinessLogic.Services
             var result = groupedBotsScore
                 .Select(x => new BotInGame()
                 {
-                    Score = x.Select(s=>s.Score).Sum(),
+                    Score = x.Select(s => s.Score).Sum(),
                     BotId = x.FirstOrDefault().BotId,
                     GameId = gameId
                 })
