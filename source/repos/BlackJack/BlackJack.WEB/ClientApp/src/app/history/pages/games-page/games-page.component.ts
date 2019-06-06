@@ -15,9 +15,9 @@ interface State {
   pageSize: number;
 }
 @Component({
-  selector: 'app-games',
-  templateUrl: './games.component.html',
-  styleUrls: ['./games.component.scss'],
+  selector: 'app-games-page',
+  templateUrl: './games-page.component.html',
+  styleUrls: ['./games-page.component.scss'],
   providers: [DecimalPipe]
 })
 

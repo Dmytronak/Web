@@ -6,9 +6,9 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-login-page',
+  templateUrl: './login-page.component.html',
+  styleUrls: ['../../auth.component.scss']
 })
 export class LoginAuthComponent implements OnInit, OnDestroy {
   formGroup: FormGroup;

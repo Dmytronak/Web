@@ -13,16 +13,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./login/login.component */ "./src/app/auth/login/login.component.ts");
-/* harmony import */ var _registration_registration_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./registration/registration.component */ "./src/app/auth/registration/registration.component.ts");
+/* harmony import */ var _pages_login_page_login_page_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/login-page/login-page.component */ "./src/app/auth/pages/login-page/login-page.component.ts");
+/* harmony import */ var _pages_registration_page_registration_page_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/registration-page/registration-page.component */ "./src/app/auth/pages/registration-page/registration-page.component.ts");
+/* harmony import */ var _auth_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./auth.component */ "./src/app/auth/auth.component.ts");
+
 
 
 
 
 
 var routes = [
-    { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_3__["LoginAuthComponent"] },
-    { path: 'register', component: _registration_registration_component__WEBPACK_IMPORTED_MODULE_4__["RegistrationAuthComponent"] }
+    { path: '', component: _auth_component__WEBPACK_IMPORTED_MODULE_5__["AuthComponent"],
+        children: [{
+                path: 'login', component: _pages_login_page_login_page_component__WEBPACK_IMPORTED_MODULE_3__["LoginAuthComponent"]
+            },
+            { path: 'register', component: _pages_registration_page_registration_page_component__WEBPACK_IMPORTED_MODULE_4__["RegistrationAuthComponent"] }] },
 ];
 var AuthRoutingModule = /** @class */ (function () {
     function AuthRoutingModule() {
@@ -34,6 +39,62 @@ var AuthRoutingModule = /** @class */ (function () {
         })
     ], AuthRoutingModule);
     return AuthRoutingModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.component.html":
+/*!******************************************!*\
+  !*** ./src/app/auth/auth.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n  <router-outlet></router-outlet>\n  </div>\n</div>"
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.component.scss":
+/*!******************************************!*\
+  !*** ./src/app/auth/auth.component.scss ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcYXV0aFxcYXV0aC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFpQixFQUFBIiwiZmlsZSI6InNyYy9hcHAvYXV0aC9hdXRoLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiZGl2e1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMSU7IFxyXG59Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/auth/auth.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/auth/auth.component.ts ***!
+  \****************************************/
+/*! exports provided: AuthComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthComponent", function() { return AuthComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var AuthComponent = /** @class */ (function () {
+    function AuthComponent() {
+    }
+    AuthComponent.prototype.ngOnInit = function () {
+    };
+    AuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-auth',
+            template: __webpack_require__(/*! ./auth.component.html */ "./src/app/auth/auth.component.html"),
+            styles: [__webpack_require__(/*! ./auth.component.scss */ "./src/app/auth/auth.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], AuthComponent);
+    return AuthComponent;
 }());
 
 
@@ -54,9 +115,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _auth_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./auth-routing.module */ "./src/app/auth/auth-routing.module.ts");
-/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/auth/login/login.component.ts");
-/* harmony import */ var _registration_registration_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./registration/registration.component */ "./src/app/auth/registration/registration.component.ts");
+/* harmony import */ var _pages_login_page_login_page_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/login-page/login-page.component */ "./src/app/auth/pages/login-page/login-page.component.ts");
+/* harmony import */ var _pages_registration_page_registration_page_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/registration-page/registration-page.component */ "./src/app/auth/pages/registration-page/registration-page.component.ts");
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/shared/shared.module.ts");
+/* harmony import */ var _auth_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./auth.component */ "./src/app/auth/auth.component.ts");
+
 
 
 
@@ -69,7 +132,7 @@ var AuthModule = /** @class */ (function () {
     }
     AuthModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginAuthComponent"], _registration_registration_component__WEBPACK_IMPORTED_MODULE_5__["RegistrationAuthComponent"]],
+            declarations: [_pages_login_page_login_page_component__WEBPACK_IMPORTED_MODULE_4__["LoginAuthComponent"], _pages_registration_page_registration_page_component__WEBPACK_IMPORTED_MODULE_5__["RegistrationAuthComponent"], _auth_component__WEBPACK_IMPORTED_MODULE_7__["AuthComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _auth_routing_module__WEBPACK_IMPORTED_MODULE_3__["AuthRoutingModule"],
@@ -84,32 +147,21 @@ var AuthModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/auth/login/login.component.html":
-/*!*************************************************!*\
-  !*** ./src/app/auth/login/login.component.html ***!
-  \*************************************************/
+/***/ "./src/app/auth/pages/login-page/login-page.component.html":
+/*!*****************************************************************!*\
+  !*** ./src/app/auth/pages/login-page/login-page.component.html ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-6 new-user-alert\">\n    <div *ngIf=\"brandNew\" class=\"alert alert-success\" role=\"alert\">\n      <strong>All set!</strong> Please login with your account\n    </div>\n    <h2>Login</h2>\n  </div>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-md-6\">\n    <form [formGroup]=\"formGroup\" (ngSubmit)=\"login(formGroup.value)\">\n\n      <div class=\"formGroup\">\n        <label for=\"email\">Email</label>\n        <input type=\"text\" required name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n      </div>\n      <div\n        *ngIf=\"formGroup.controls['email'].invalid && (formGroup.controls['email'].dirty || formGroup.controls['email'].touched)\"\n        class=\"alert alert-danger\">\n        <div *ngIf=\"formGroup.controls['email'].errors.required\">\n          Email is required.\n        </div>\n        <div *ngIf=\"formGroup.controls['email'].errors.email\">\n          Email not validate\n        </div>\n\n      </div>\n      <div class=\"formGroup\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" class=\"form-control\" required name=\"password\" placeholder=\"Password\" formControlName=\"password\">\n      </div>\n      <div\n        *ngIf=\"formGroup.controls['password'].invalid && (formGroup.controls['password'].dirty || formGroup.controls['password'].touched)\"\n        class=\"alert alert-danger\">\n        <div *ngIf=\"formGroup.controls['password'].errors.required\">\n          Password is required.\n        </div>\n        <div *ngIf=\"formGroup.controls['password'].errors.minlength\">\n          Password minLength 6\n        </div>\n        <div *ngIf=\"formGroup.controls['password'].errors.pattern\">\n            Password not validate\n          </div>\n      </div>\n\n      <div class=\"formGroup\">\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"formGroup.invalid\">Login</button>\n      </div>\n\n      <div *ngIf=\"error\" class=\"alert alert-danger\" role=\"alert\">\n        <strong>Oops!</strong> {{error}}\n      </div>\n\n    </form>\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6 new-user-alert\">\n    <div *ngIf=\"brandNew\" class=\"alert alert-success\" role=\"alert\">\n      <strong>All set!</strong> Please login with your account\n    </div>\n    <h2>Login</h2>\n  </div>\n</div>\n\n\n<form [formGroup]=\"formGroup\" (ngSubmit)=\"login(formGroup.value)\">\n\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" required name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['email'].invalid && (formGroup.controls['email'].dirty || formGroup.controls['email'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['email'].errors.required\">\n      Email is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['email'].errors.email\">\n      Email not validate\n    </div>\n\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" required name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['password'].invalid && (formGroup.controls['password'].dirty || formGroup.controls['password'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['password'].errors.required\">\n      Password is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['password'].errors.minlength\">\n      Password minLength 6\n    </div>\n    <div *ngIf=\"formGroup.controls['password'].errors.pattern\">\n      Password not validate\n    </div>\n  </div>\n\n  <div class=\"formGroup\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"formGroup.invalid\">Login</button>\n  </div>\n\n  <div *ngIf=\"error\" class=\"alert alert-danger\" role=\"alert\">\n    <strong>Oops!</strong> {{error}}\n  </div>\n\n</form>"
 
 /***/ }),
 
-/***/ "./src/app/auth/login/login.component.scss":
-/*!*************************************************!*\
-  !*** ./src/app/auth/login/login.component.scss ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9sb2dpbi9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcYXV0aFxcbG9naW5cXGxvZ2luLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQWlCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9hdXRoL2xvZ2luL2xvZ2luLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiZGl2e1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMSU7IFxyXG59Il19 */"
-
-/***/ }),
-
-/***/ "./src/app/auth/login/login.component.ts":
-/*!***********************************************!*\
-  !*** ./src/app/auth/login/login.component.ts ***!
-  \***********************************************/
+/***/ "./src/app/auth/pages/login-page/login-page.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/auth/pages/login-page/login-page.component.ts ***!
+  \***************************************************************/
 /*! exports provided: LoginAuthComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -180,9 +232,9 @@ var LoginAuthComponent = /** @class */ (function () {
     };
     LoginAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-login',
-            template: __webpack_require__(/*! ./login.component.html */ "./src/app/auth/login/login.component.html"),
-            styles: [__webpack_require__(/*! ./login.component.scss */ "./src/app/auth/login/login.component.scss")]
+            selector: 'app-login-page',
+            template: __webpack_require__(/*! ./login-page.component.html */ "./src/app/auth/pages/login-page/login-page.component.html"),
+            styles: [__webpack_require__(/*! ../../auth.component.scss */ "./src/app/auth/auth.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
             _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
@@ -194,32 +246,21 @@ var LoginAuthComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/auth/registration/registration.component.html":
-/*!***************************************************************!*\
-  !*** ./src/app/auth/registration/registration.component.html ***!
-  \***************************************************************/
+/***/ "./src/app/auth/pages/registration-page/registration-page.component.html":
+/*!*******************************************************************************!*\
+  !*** ./src/app/auth/pages/registration-page/registration-page.component.html ***!
+  \*******************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Please enter your information</h2>\n  </div>\n</div>\n\n<div class=\"row\">\n  <div class=\"col-md-6\">\n    <form [formGroup]=\"formGroup\" (ngSubmit)=\"registration(formGroup.value)\">\n\n      <div class=\"formGroup\">\n        <label for=\"email\">Email</label>\n        <input type=\"text\" required name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n      </div>\n      <div\n        *ngIf=\"formGroup.controls['email'].invalid && (formGroup.controls['email'].dirty || formGroup.controls['email'].touched)\"\n        class=\"alert alert-danger\">\n        <div *ngIf=\"formGroup.controls['email'].errors.required\">\n          Email is required.\n        </div>\n        <div *ngIf=\"formGroup.controls['email'].errors.email\">\n          Email not validate\n        </div>\n      </div>\n      <div class=\"formGroup\">\n          <label for=\"nmae\">Name</label>\n          <input type=\"text\" required name=\"name\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n        </div>\n        <div\n          *ngIf=\"formGroup.controls['name'].invalid && (formGroup.controls['name'].dirty || formGroup.controls['name'].touched)\"\n          class=\"alert alert-danger\">\n          <div *ngIf=\"formGroup.controls['name'].errors.required\">\n            Name is required.\n          </div>\n          <div *ngIf=\"formGroup.controls['name'].errors.maxlength\">\n            Name max Length 15\n          </div>\n        </div>\n      <div class=\"formGroup\">\n        <label for=\"year\">Year</label>\n        <input type=\"text\" class=\"form-control\" required name=\"year\" placeholder=\"Year\" formControlName=\"year\">\n      </div>\n      <div\n        *ngIf=\"formGroup.controls['year'].invalid && (formGroup.controls['year'].dirty || formGroup.controls['year'].touched)\"\n        class=\"alert alert-danger\">\n        <div *ngIf=\"formGroup.controls['year'].errors.required\">\n          year is required.\n        </div>\n        <div *ngIf=\"formGroup.controls['year'].errors.minlength\">\n          year min min Length 4\n        </div>\n        <div *ngIf=\"formGroup.controls['year'].errors.maxlength\">\n          year min max Length 4\n        </div>\n        <div *ngIf=\"formGroup.controls['year'].errors.pattern\">\n            ONLY NUMB ERROR\n          </div>\n          <div *ngIf=\"formGroup.controls['year'].errors.ageRange\">\n          Year range from 1920 to 2019\n          </div>\n          <div *ngIf=\"formGroup.controls['year'].errors.adultRange\">\n           You don`t adult enough\n          </div>\n          \n      </div>\n      <div class=\"formGroup\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" required class=\"form-control\" name=\"password\" placeholder=\"Password\"\n          formControlName=\"password\">\n      </div>\n      <div\n        *ngIf=\"formGroup.controls['password'].invalid && (formGroup.controls['password'].dirty || formGroup.controls['password'].touched)\"\n        class=\"alert alert-danger\">\n        <div *ngIf=\"formGroup.controls['password'].errors.required\">\n          Password is required.\n        </div>\n        <div *ngIf=\"formGroup.controls['password'].errors.minlength\">\n          Password minLength 6\n        </div>\n        <div *ngIf=\"formGroup.controls['password'].errors.pattern\">\n          Password not validate\n        </div>\n      </div>\n\n      <div class=\"formGroup\">\n        <label for=\"confirmPassword\">Confirm password</label>\n        <input type=\"password\" required class=\"form-control\" name=\"confirmPassword\" placeholder=\"Confirm password\"\n          formControlName=\"confirmPassword\">\n      </div>\n      <div\n        *ngIf=\"formGroup.controls['confirmPassword'].invalid && (formGroup.controls['confirmPassword'].dirty || formGroup.controls['confirmPassword'].touched)\"\n        class=\"alert alert-danger\">\n        <div *ngIf=\"formGroup.controls['confirmPassword'].errors.required\">\n          Password is required.\n        </div>\n        <div *ngIf=\"formGroup.controls['confirmPassword'].errors.minlength\">\n          Password min Length 6\n        </div>\n        <div *ngIf=\"formGroup.controls['confirmPassword'].errors.pattern\">\n          Password not validate\n        </div>\n        <div *ngIf=\"formGroup.controls['confirmPassword'].errors.mustMatch\">\n          Passwords must match\n        </div>\n      </div>\n      <div class=\"formGroup\">\n        <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"formGroup.invalid\">Register</button>\n      </div>\n\n      <div *ngIf=\"error\" class=\"alert alert-danger\" role=\"alert\">\n        <strong>Oops!</strong> {{error}}\n      </div>\n\n    </form>\n\n  </div>\n</div>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Please enter your information</h2>\n  </div>\n</div>\n<form [formGroup]=\"formGroup\" (ngSubmit)=\"registration(formGroup.value)\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" required name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['email'].invalid && (formGroup.controls['email'].dirty || formGroup.controls['email'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['email'].errors.required\">\n      Email is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['email'].errors.email\">\n      Email not validate\n    </div>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"nmae\">Name</label>\n    <input type=\"text\" required name=\"name\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['name'].invalid && (formGroup.controls['name'].dirty || formGroup.controls['name'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['name'].errors.required\">\n      Name is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['name'].errors.maxlength\">\n      Name max Length 15\n    </div>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"year\">Year</label>\n    <input type=\"text\" class=\"form-control\" required name=\"year\" placeholder=\"Year\" formControlName=\"year\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['year'].invalid && (formGroup.controls['year'].dirty || formGroup.controls['year'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['year'].errors.required\">\n      year is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['year'].errors.minlength\">\n      year min min Length 4\n    </div>\n    <div *ngIf=\"formGroup.controls['year'].errors.maxlength\">\n      year min max Length 4\n    </div>\n    <div *ngIf=\"formGroup.controls['year'].errors.pattern\">\n      ONLY NUMB ERROR\n    </div>\n    <div *ngIf=\"formGroup.controls['year'].errors.ageRange\">\n      Year range from 1920 to 2019\n    </div>\n    <div *ngIf=\"formGroup.controls['year'].errors.adultRange\">\n      You don`t adult enough\n    </div>\n\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" required class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['password'].invalid && (formGroup.controls['password'].dirty || formGroup.controls['password'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['password'].errors.required\">\n      Password is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['password'].errors.minlength\">\n      Password minLength 6\n    </div>\n    <div *ngIf=\"formGroup.controls['password'].errors.pattern\">\n      Password not validate\n    </div>\n  </div>\n\n  <div class=\"formGroup\">\n    <label for=\"confirmPassword\">Confirm password</label>\n    <input type=\"password\" required class=\"form-control\" name=\"confirmPassword\" placeholder=\"Confirm password\"\n      formControlName=\"confirmPassword\">\n  </div>\n  <div\n    *ngIf=\"formGroup.controls['confirmPassword'].invalid && (formGroup.controls['confirmPassword'].dirty || formGroup.controls['confirmPassword'].touched)\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"formGroup.controls['confirmPassword'].errors.required\">\n      Password is required.\n    </div>\n    <div *ngIf=\"formGroup.controls['confirmPassword'].errors.minlength\">\n      Password min Length 6\n    </div>\n    <div *ngIf=\"formGroup.controls['confirmPassword'].errors.pattern\">\n      Password not validate\n    </div>\n    <div *ngIf=\"formGroup.controls['confirmPassword'].errors.mustMatch\">\n      Passwords must match\n    </div>\n  </div>\n  <div class=\"formGroup\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"formGroup.invalid\">Register</button>\n  </div>\n\n  <div *ngIf=\"error\" class=\"alert alert-danger\" role=\"alert\">\n    <strong>Oops!</strong> {{error}}\n  </div>\n\n</form>"
 
 /***/ }),
 
-/***/ "./src/app/auth/registration/registration.component.scss":
-/*!***************************************************************!*\
-  !*** ./src/app/auth/registration/registration.component.scss ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9yZWdpc3RyYXRpb24vQzpcXFVzZXJzXFxBbnVpdGV4LTg0XFxnaXRcXFdlYlxcc291cmNlXFxyZXBvc1xcQmxhY2tKYWNrXFxCbGFja0phY2suV0VCXFxDbGllbnRBcHAvc3JjXFxhcHBcXGF1dGhcXHJlZ2lzdHJhdGlvblxccmVnaXN0cmF0aW9uLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksaUJBQWlCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9hdXRoL3JlZ2lzdHJhdGlvbi9yZWdpc3RyYXRpb24uY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJkaXZ7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxJTsgXHJcbn0iXX0= */"
-
-/***/ }),
-
-/***/ "./src/app/auth/registration/registration.component.ts":
-/*!*************************************************************!*\
-  !*** ./src/app/auth/registration/registration.component.ts ***!
-  \*************************************************************/
+/***/ "./src/app/auth/pages/registration-page/registration-page.component.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/auth/pages/registration-page/registration-page.component.ts ***!
+  \*****************************************************************************/
 /*! exports provided: RegistrationAuthComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -297,9 +338,9 @@ var RegistrationAuthComponent = /** @class */ (function () {
     };
     RegistrationAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-registration',
-            template: __webpack_require__(/*! ./registration.component.html */ "./src/app/auth/registration/registration.component.html"),
-            styles: [__webpack_require__(/*! ./registration.component.scss */ "./src/app/auth/registration/registration.component.scss")]
+            selector: 'app-registration-page',
+            template: __webpack_require__(/*! ./registration-page.component.html */ "./src/app/auth/pages/registration-page/registration-page.component.html"),
+            styles: [__webpack_require__(/*! ../../auth.component.scss */ "./src/app/auth/auth.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
     ], RegistrationAuthComponent);

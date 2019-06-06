@@ -5,9 +5,9 @@ import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-play',
-  templateUrl: './play.component.html',
-  styleUrls: ['./play.component.scss']
+  selector: 'app-play-page',
+  templateUrl: './play-page.component.html',
+  styleUrls: ['./play-page.component.scss']
 })
 export class PlayGameComponent implements OnInit {
   error: string = '';

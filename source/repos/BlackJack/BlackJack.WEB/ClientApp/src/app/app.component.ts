@@ -20,5 +20,4 @@ export class AppComponent {
   ngOnInit() {
     this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
   }
-
 }

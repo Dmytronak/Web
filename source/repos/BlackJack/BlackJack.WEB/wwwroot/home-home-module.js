@@ -13,13 +13,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _main_main_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./main/main.component */ "./src/app/home/main/main.component.ts");
+/* harmony import */ var _home_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home.component */ "./src/app/home/home.component.ts");
 
 
 
 
 var routes = [
-    { path: '', component: _main_main_component__WEBPACK_IMPORTED_MODULE_3__["MainHomeComponent"] },
+    { path: '', component: _home_component__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"] },
 ];
 var HomeRoutingModule = /** @class */ (function () {
     function HomeRoutingModule() {
@@ -31,6 +31,62 @@ var HomeRoutingModule = /** @class */ (function () {
         })
     ], HomeRoutingModule);
     return HomeRoutingModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/home/home.component.html":
+/*!******************************************!*\
+  !*** ./src/app/home/home.component.html ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<app-main-page></app-main-page>"
+
+/***/ }),
+
+/***/ "./src/app/home/home.component.scss":
+/*!******************************************!*\
+  !*** ./src/app/home/home.component.scss ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvaG9tZS5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/home/home.component.ts":
+/*!****************************************!*\
+  !*** ./src/app/home/home.component.ts ***!
+  \****************************************/
+/*! exports provided: HomeComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HomeComponent", function() { return HomeComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var HomeComponent = /** @class */ (function () {
+    function HomeComponent() {
+    }
+    HomeComponent.prototype.ngOnInit = function () {
+    };
+    HomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-home',
+            template: __webpack_require__(/*! ./home.component.html */ "./src/app/home/home.component.html"),
+            styles: [__webpack_require__(/*! ./home.component.scss */ "./src/app/home/home.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], HomeComponent);
+    return HomeComponent;
 }());
 
 
@@ -51,7 +107,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _home_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home-routing.module */ "./src/app/home/home-routing.module.ts");
-/* harmony import */ var _main_main_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main/main.component */ "./src/app/home/main/main.component.ts");
+/* harmony import */ var _home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home.component */ "./src/app/home/home.component.ts");
+/* harmony import */ var _pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/main-page/main-page.component */ "./src/app/home/pages/main-page/main-page.component.ts");
+
 
 
 
@@ -62,7 +120,7 @@ var HomeModule = /** @class */ (function () {
     }
     HomeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_main_main_component__WEBPACK_IMPORTED_MODULE_4__["MainHomeComponent"]],
+            declarations: [_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"], _pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__["MainPageComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _home_routing_module__WEBPACK_IMPORTED_MODULE_3__["HomeRoutingModule"]
@@ -76,56 +134,56 @@ var HomeModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/home/main/main.component.html":
-/*!***********************************************!*\
-  !*** ./src/app/home/main/main.component.html ***!
-  \***********************************************/
+/***/ "./src/app/home/pages/main-page/main-page.component.html":
+/*!***************************************************************!*\
+  !*** ./src/app/home/pages/main-page/main-page.component.html ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<main role=\"main\">\n  <!-- Main jumbotron for a primary marketing message or call to action -->\n  <div class=\"jumbotron\">\n    <div class=\"container\"  >\n      <h5 >BlackJackClient</h5>\n      <a class=\"btn btn-primary btn-lg \"style = \"margin-right: 1%\" href=\"#\" role=\"button\" routerLink=\"/auth/register\">Register</a> <a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\" routerLink=\"/auth/login\">Login</a>\n    </div>\n  </div>\n</main>"
+module.exports = "<main role=\"main\">\n  <div class=\"jumbotron\">\n    <div class=\"container\"  >\n      <h5 >BlackJackClient</h5>\n      <a class=\"btn btn-primary btn-lg \"style = \"margin-right: 1%\" href=\"#\" role=\"button\" routerLink=\"/auth/register\">Register</a> <a class=\"btn btn-primary btn-lg\" href=\"#\" role=\"button\" routerLink=\"/auth/login\">Login</a>\n    </div>\n  </div>\n</main>"
 
 /***/ }),
 
-/***/ "./src/app/home/main/main.component.scss":
-/*!***********************************************!*\
-  !*** ./src/app/home/main/main.component.scss ***!
-  \***********************************************/
+/***/ "./src/app/home/pages/main-page/main-page.component.scss":
+/*!***************************************************************!*\
+  !*** ./src/app/home/pages/main-page/main-page.component.scss ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvbWFpbi9tYWluLmNvbXBvbmVudC5zY3NzIn0= */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2hvbWUvcGFnZXMvbWFpbi1wYWdlL21haW4tcGFnZS5jb21wb25lbnQuc2NzcyJ9 */"
 
 /***/ }),
 
-/***/ "./src/app/home/main/main.component.ts":
-/*!*********************************************!*\
-  !*** ./src/app/home/main/main.component.ts ***!
-  \*********************************************/
-/*! exports provided: MainHomeComponent */
+/***/ "./src/app/home/pages/main-page/main-page.component.ts":
+/*!*************************************************************!*\
+  !*** ./src/app/home/pages/main-page/main-page.component.ts ***!
+  \*************************************************************/
+/*! exports provided: MainPageComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainHomeComponent", function() { return MainHomeComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MainPageComponent", function() { return MainPageComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 
 
-var MainHomeComponent = /** @class */ (function () {
-    function MainHomeComponent() {
+var MainPageComponent = /** @class */ (function () {
+    function MainPageComponent() {
     }
-    MainHomeComponent.prototype.ngOnInit = function () {
+    MainPageComponent.prototype.ngOnInit = function () {
     };
-    MainHomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    MainPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
-            selector: 'app-main',
-            template: __webpack_require__(/*! ./main.component.html */ "./src/app/home/main/main.component.html"),
-            styles: [__webpack_require__(/*! ./main.component.scss */ "./src/app/home/main/main.component.scss")]
+            selector: 'app-main-page',
+            template: __webpack_require__(/*! ./main-page.component.html */ "./src/app/home/pages/main-page/main-page.component.html"),
+            styles: [__webpack_require__(/*! ./main-page.component.scss */ "./src/app/home/pages/main-page/main-page.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
-    ], MainHomeComponent);
-    return MainHomeComponent;
+    ], MainPageComponent);
+    return MainPageComponent;
 }());
 
 

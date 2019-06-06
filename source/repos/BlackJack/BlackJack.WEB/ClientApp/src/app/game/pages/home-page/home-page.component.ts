@@ -4,9 +4,9 @@ import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-home-page',
+  templateUrl: './home-page.component.html',
+  styleUrls: ['./home-page.component.scss']
 })
 export class HomeGameComponent implements OnInit {
   email: string = '';

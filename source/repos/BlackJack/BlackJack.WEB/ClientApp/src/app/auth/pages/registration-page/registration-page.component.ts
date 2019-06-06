@@ -7,9 +7,9 @@ import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
 
 @Component({
-  selector: 'app-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  selector: 'app-registration-page',
+  templateUrl: './registration-page.component.html',
+  styleUrls: ['../../auth.component.scss']
 })
 export class RegistrationAuthComponent implements OnInit {
 
