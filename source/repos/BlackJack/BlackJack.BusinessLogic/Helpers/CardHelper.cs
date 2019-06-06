@@ -18,7 +18,7 @@ namespace BlackJack.BusinessLogic.Helpers
             var suits = Enum.GetValues(typeof(CardSuitType))
                 .Cast<CardSuitType>()
                 .ToList();
-            var deck = suits
+            var response = suits
                 .SelectMany(s => ranks
                 .Select(c => new Card()
                 {
@@ -26,8 +26,8 @@ namespace BlackJack.BusinessLogic.Helpers
                     Rank = (CardRankType)c
                 }))
                 .ToList();
-            deck = deck.OrderBy(x => Guid.NewGuid()).ToList();
-            return deck;
+            response = response.OrderBy(x => Guid.NewGuid()).ToList();
+            return response;
         }
     }
 }
