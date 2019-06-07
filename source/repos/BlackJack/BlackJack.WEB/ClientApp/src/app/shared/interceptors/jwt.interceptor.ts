@@ -3,18 +3,17 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable } from 'rxjs';
 
 import { UserService } from '../services/user.service';
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
-    
     token: string = '';
-    
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService, private localStorageService: LocalStorageService ) {
     }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // add authorization header with jwt token if availabled
         if (this.userService.isLoggedIn()) {
-            this.token = localStorage.getItem('auth_token');
+            this.token = this.localStorageService.getItem('auth_token');
             request = request.clone({
                 setHeaders: { 
                     Authorization: `Bearer ${this.token}`

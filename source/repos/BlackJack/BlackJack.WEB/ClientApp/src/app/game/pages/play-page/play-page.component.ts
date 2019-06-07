@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Status } from 'src/app/shared/enums/status-type.enum.view';
-import { CardGameViewItem, BotGameViewItem, PlayerGameView, GameView } from 'src/app/shared/entities/game.view';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
+import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
+import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
+import { PlayGameView, BotPlayGameViewItem } from 'src/app/shared/entities/game/play-game.view';
 
 @Component({
   selector: 'app-play-page',
@@ -12,54 +14,40 @@ import { Router } from '@angular/router';
 export class PlayGameComponent implements OnInit {
   error: string = '';
   gameExisting: boolean = false;
-  haveActiveGame:boolean = false;
-  public statusEnum: Status;
-  headBotSteps= ['Cards'];
-  headBots= ['Bots'];
-  headPlayerSteps = ['Player name','Player cards'];
+  haveActiveGame: boolean = false;
+  headBotSteps = ['Cards'];
+  headBots = ['Bots'];
+  headPlayerSteps = ['Player name', 'Player cards'];
   headElements = ['Number of bots', 'Status', 'Winner', ''];
-  cardsGame: CardGameViewItem[];
-  bots: BotGameViewItem = { name: '', cards: this.cardsGame }
-  player: PlayerGameView= { name: '', cards: this.cardsGame }
-  playGame: GameView = { status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
-
-  constructor(private gameService: GameService,private router: Router) {
+  playGame: PlayGameView;
+  constructor(private gameService: GameService, private router: Router) {
   }
 
   ngOnInit() {
     this.gameService.getActiveGame()
-    .subscribe(x => {
-      this.playGame.numberOfBots = x['numberOfBots'];
-      this.statusEnum = x['status'];
-      this.playGame.status = Status[this.statusEnum]
-      this.playGame.winner = x['winner'];
-      this.playGame.player.name = x['player'].name;
-      this.playGame.player.cards = x['player'].cards;
-      this.playGame.bots = x['bots'];
-      this.gameExisting = true;
-      this.haveActiveGame = true;
-      if (this.playGame.winner !== 'No one') {
-        this.gameExisting = false;
-      }
-    },
-      err => {
-      
-          this.haveActiveGame =false
+      .subscribe((x: PlayGameView) => {
+        this.playGame = x;
+        this.playGame.status = Status[x.status];
+        this.gameExisting = true;
+        this.haveActiveGame = true;
+        if (this.playGame.winner !== 'No one') {
+          this.gameExisting = false;
+        }
+      },
+        err => {
+          this.haveActiveGame = false
           return this.error = err;
-      });
+        });
   }
   continue() {
-    this.gameService.continue(this.playGame)
-      .subscribe(x => {
+    this.gameService.continue()
+      .subscribe((x: ContinueGameView) => {
         if (x) {
-          this.statusEnum = x['status'];
-          this.playGame.status = Status[this.statusEnum]
-          this.playGame.winner = x['winner'];
-          this.playGame.player.name = x['player'].name;
-          this.playGame.player.cards = x['player'].cards;
-          this.playGame.bots = x['bots'];
+          this.playGame.player.cards = x.player.cards;
+          this.playGame.status = Status[x.status];
+          this.playGame.bots = x.bots;
           this.gameExisting = true;
-          if (this.playGame.winner !== 'No one') {
+          if (x.winner !== 'No one') {
             this.gameExisting = false;
           }
         }
@@ -69,15 +57,12 @@ export class PlayGameComponent implements OnInit {
         });
   }
   end() {
-    this.gameService.end(this.playGame)
-      .subscribe(x => {
+    this.gameService.end()
+      .subscribe((x: EndGameView) => {
         if (x) {
-          this.statusEnum = x['status'];
-          this.playGame.status = Status[this.statusEnum]
-          this.playGame.winner = x['winner'];
-          this.playGame.player.name = x['player'].name;
-          this.playGame.player.cards = x['player'].cards;
-          this.playGame.bots = x['bots'];
+          this.playGame.player.cards = x.player.cards;
+          this.playGame.status = Status[x.status];
+          this.playGame.bots = x.bots;
           this.gameExisting = false;
         }
       },
@@ -85,25 +70,21 @@ export class PlayGameComponent implements OnInit {
           this.error = err;
         });
   }
-  backToHome(){
+  backToHome() {
     this.router.navigate(['/game/home']);
   }
-  playAgain(){
-    this.gameService.play(this.playGame)
-      .subscribe(x => {
+  playAgain() {
+    let numberOfBots = this.playGame.numberOfBots;
+    this.gameService.play(numberOfBots)
+      .subscribe((x: PlayGameView) => {
         if (x) {
-          this.statusEnum = x['status'];
-          this.playGame.status = Status[this.statusEnum]
-          this.playGame.winner = x['winner'];
-          this.playGame.player.name = x['player'].name;
-          this.playGame.player.cards = x['player'].cards;
-          this.playGame.bots = x['bots'];
+          this.playGame = x;
+          this.playGame.status = Status[x['status']]
           this.gameExisting = true;
         }
       },
         err => {
           this.error = err;
         });
-
   }
 }

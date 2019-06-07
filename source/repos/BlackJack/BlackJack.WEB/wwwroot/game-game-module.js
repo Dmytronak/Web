@@ -195,9 +195,6 @@ var HomeGameComponent = /** @class */ (function () {
         this.error = '';
         this.haveActiveGame = false;
         this.gameExisting = false;
-        this.botsGame = { name: '', cards: this.cardsGame };
-        this.playerGame = { name: '', cards: this.cardsGame };
-        this.createGame = { status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
     }
     HomeGameComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -220,9 +217,7 @@ var HomeGameComponent = /** @class */ (function () {
     };
     HomeGameComponent.prototype.play = function (x) {
         var _this = this;
-        debugger;
-        this.createGame.numberOfBots = x['numberOfBots'];
-        this.gameService.play(this.createGame)
+        this.gameService.play(x['numberOfBots'])
             .subscribe(function (x) {
             if (x) {
                 _this.router.navigate(['/game/play']);
@@ -299,21 +294,13 @@ var PlayGameComponent = /** @class */ (function () {
         this.headBots = ['Bots'];
         this.headPlayerSteps = ['Player name', 'Player cards'];
         this.headElements = ['Number of bots', 'Status', 'Winner', ''];
-        this.bots = { name: '', cards: this.cardsGame };
-        this.player = { name: '', cards: this.cardsGame };
-        this.playGame = { status: '', winner: '', numberOfBots: 0, player: this.player, bots: [this.bots] };
     }
     PlayGameComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.gameService.getActiveGame()
             .subscribe(function (x) {
-            _this.playGame.numberOfBots = x['numberOfBots'];
-            _this.statusEnum = x['status'];
-            _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
-            _this.playGame.winner = x['winner'];
-            _this.playGame.player.name = x['player'].name;
-            _this.playGame.player.cards = x['player'].cards;
-            _this.playGame.bots = x['bots'];
+            _this.playGame = x;
+            _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
             _this.gameExisting = true;
             _this.haveActiveGame = true;
             if (_this.playGame.winner !== 'No one') {
@@ -326,17 +313,14 @@ var PlayGameComponent = /** @class */ (function () {
     };
     PlayGameComponent.prototype.continue = function () {
         var _this = this;
-        this.gameService.continue(this.playGame)
+        this.gameService.continue()
             .subscribe(function (x) {
             if (x) {
-                _this.statusEnum = x['status'];
-                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
-                _this.playGame.winner = x['winner'];
-                _this.playGame.player.name = x['player'].name;
-                _this.playGame.player.cards = x['player'].cards;
-                _this.playGame.bots = x['bots'];
+                _this.playGame.player.cards = x.player.cards;
+                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
+                _this.playGame.bots = x.bots;
                 _this.gameExisting = true;
-                if (_this.playGame.winner !== 'No one') {
+                if (x.winner !== 'No one') {
                     _this.gameExisting = false;
                 }
             }
@@ -346,15 +330,12 @@ var PlayGameComponent = /** @class */ (function () {
     };
     PlayGameComponent.prototype.end = function () {
         var _this = this;
-        this.gameService.end(this.playGame)
+        this.gameService.end()
             .subscribe(function (x) {
             if (x) {
-                _this.statusEnum = x['status'];
-                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
-                _this.playGame.winner = x['winner'];
-                _this.playGame.player.name = x['player'].name;
-                _this.playGame.player.cards = x['player'].cards;
-                _this.playGame.bots = x['bots'];
+                _this.playGame.player.cards = x.player.cards;
+                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
+                _this.playGame.bots = x.bots;
                 _this.gameExisting = false;
             }
         }, function (err) {
@@ -366,15 +347,12 @@ var PlayGameComponent = /** @class */ (function () {
     };
     PlayGameComponent.prototype.playAgain = function () {
         var _this = this;
-        this.gameService.play(this.playGame)
+        var numberOfBots = this.playGame.numberOfBots;
+        this.gameService.play(numberOfBots)
             .subscribe(function (x) {
             if (x) {
-                _this.statusEnum = x['status'];
-                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][_this.statusEnum];
-                _this.playGame.winner = x['winner'];
-                _this.playGame.player.name = x['player'].name;
-                _this.playGame.player.cards = x['player'].cards;
-                _this.playGame.bots = x['bots'];
+                _this.playGame = x;
+                _this.playGame.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x['status']];
                 _this.gameExisting = true;
             }
         }, function (err) {
@@ -423,18 +401,15 @@ var GameService = /** @class */ (function () {
     GameService.prototype.getActiveGame = function () {
         return this.http.get(this.baseUrl + "/game/getActive");
     };
-    GameService.prototype.play = function (game) {
-        debugger;
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]().set("numberOfBots", game.numberOfBots.toString());
+    GameService.prototype.play = function (x) {
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]().set("numberOfBots", x);
         return this.http.post(this.baseUrl + "/game/play?" + params, '');
     };
-    GameService.prototype.continue = function (game) {
-        debugger;
-        return this.http.post(this.baseUrl + "/game/continue", game);
+    GameService.prototype.continue = function () {
+        return this.http.post(this.baseUrl + "/game/continue", '');
     };
-    GameService.prototype.end = function (game) {
-        debugger;
-        return this.http.post(this.baseUrl + "/game/end", game);
+    GameService.prototype.end = function () {
+        return this.http.post(this.baseUrl + "/game/end", '');
     };
     GameService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

@@ -199,10 +199,6 @@ var UserGamesComponent = /** @class */ (function () {
         this.showPlayerTable = false;
         this.showBotTable = false;
         this.showMainTable = true;
-        this.getAllGamesHistory = { games: this.gameGetAllGamesHistory };
-        this.getPlayerStepsHistory = { gameId: '', name: '', steps: this.cardGetPlayerStepsHistory };
-        this.botGetBotStepsHistory = { name: '', steps: this.cardGetBotStepsHistory };
-        this.getBotStepsHistory = { gameId: '', bots: [this.botGetBotStepsHistory] };
         this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](0);
         this.headBotSteps = ['Cards', '', '', ''];
         this.headBots = ['Bot name', 'Steps', '', '', '', ''];
@@ -213,7 +209,7 @@ var UserGamesComponent = /** @class */ (function () {
     UserGamesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.historyService.getGamesByUser().subscribe(function (x) {
-            _this.getAllGamesHistory.games = x['games'];
+            _this.getAllGamesHistory = x;
             _this.getAllGamesHistory.games.forEach(function (x) {
                 x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
             });
@@ -248,11 +244,10 @@ var UserGamesComponent = /** @class */ (function () {
         this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](result.length);
         return result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
     };
-    UserGamesComponent.prototype.bot = function (x) {
+    UserGamesComponent.prototype.bot = function (f) {
         var _this = this;
-        this.getBotStepsHistory.gameId = x.id;
-        this.historyService.getBotSteps(this.getBotStepsHistory).subscribe(function (x) {
-            _this.getBotStepsHistory.bots = x['bots'];
+        this.historyService.getBotSteps(f).subscribe(function (x) {
+            _this.getBotStepsHistory = x;
         }, function (error) { return error; });
         this.showBotTable = true;
         this.showPlayerTable = false;
@@ -260,10 +255,8 @@ var UserGamesComponent = /** @class */ (function () {
     };
     UserGamesComponent.prototype.player = function (x) {
         var _this = this;
-        this.getPlayerStepsHistory.gameId = x.id;
-        this.historyService.getPlayerSteps(this.getPlayerStepsHistory).subscribe(function (x) {
-            _this.getPlayerStepsHistory.name = x['name'];
-            _this.getPlayerStepsHistory.steps = x['steps'];
+        this.historyService.getPlayerSteps(x).subscribe(function (x) {
+            _this.getPlayerStepsHistory = x;
         }, function (error) { return error; });
         this.showPlayerTable = true;
         this.showBotTable = false;
@@ -319,12 +312,12 @@ var HistoryService = /** @class */ (function () {
     HistoryService.prototype.getGamesByUser = function () {
         return this.http.get(this.baseUrl + "/history/allUserGames");
     };
-    HistoryService.prototype.getPlayerSteps = function (history) {
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", history.gameId);
+    HistoryService.prototype.getPlayerSteps = function (x) {
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", x.id);
         return this.http.get(this.baseUrl + "/history/playerSteps", { params: params });
     };
-    HistoryService.prototype.getBotSteps = function (history) {
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", history.gameId);
+    HistoryService.prototype.getBotSteps = function (x) {
+        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", x.id);
         return this.http.get(this.baseUrl + "/history/botSteps", { params: params });
     };
     HistoryService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([

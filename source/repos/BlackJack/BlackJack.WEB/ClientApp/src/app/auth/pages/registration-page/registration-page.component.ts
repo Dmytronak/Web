@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/shared/entities/user.view';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
 import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
+import { UserGetAllAccountViewItem } from 'src/app/shared/entities/auth/get-all-account.view';
+import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
 
 @Component({
   selector: 'app-registration-page',
@@ -16,10 +17,10 @@ export class RegistrationAuthComponent implements OnInit {
   error: string;
   isRequesting: boolean;
   submitted: boolean = false;
-  public registerForm: User;
+  public registerForm: RegisterAccountView;
   formGroup: FormGroup;
-  public users: User[] = [];
-  public user: User;
+  public userGetAllAccounts: UserGetAllAccountViewItem[];
+  public registerAccount: RegisterAccountView;
 
   constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder) {
     this.formGroup = _formBuilder.group({
@@ -41,10 +42,9 @@ export class RegistrationAuthComponent implements OnInit {
         year: 0,
         password: '',
         confirmPassword: '',
-        token: '',
       }
-    this.userService.registerUsers().subscribe((user: User[]) => {
-      this.users = user['users'];
+    this.userService.registerUsers().subscribe(x => {
+      this.userGetAllAccounts = x['users'];
     }, error => error);
 
   }
@@ -52,9 +52,9 @@ export class RegistrationAuthComponent implements OnInit {
   registration() {
     this.submitted = true;
     this.isRequesting = true;
-    this.user = Object.assign(this.registerForm, this.formGroup.value)
-    let newUser = this.user.email;
-    let duplicateUser = this.users.filter(x => { return x.email === newUser; }).length;
+    this.registerAccount = Object.assign(this.registerForm, this.formGroup.value)
+    let newUser = this.registerAccount.email;
+    let duplicateUser = this.userGetAllAccounts.filter(x => { return x.email === newUser; }).length;
     if (this.formGroup.invalid) {
       return;
     }
@@ -62,10 +62,10 @@ export class RegistrationAuthComponent implements OnInit {
       let errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' }
       return this.error = errorMessage.message;
     }
-    this.userService.register(this.user)
+    this.userService.register(this.registerAccount)
       .subscribe(x => {
         if (x) {
-          this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: this.user.email } });
+          this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: this.registerAccount.email } });
         }
       },
         err => {

@@ -259,19 +259,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/user.service */ "./src/app/shared/services/user.service.ts");
+/* harmony import */ var src_app_shared_services_local_storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/local-storage.service */ "./src/app/shared/services/local-storage.service.ts");
+
 
 
 
 var AuthHeaderSharedComponent = /** @class */ (function () {
-    function AuthHeaderSharedComponent(userService) {
+    function AuthHeaderSharedComponent(userService, localStorageService) {
         this.userService = userService;
+        this.localStorageService = localStorageService;
         this.email = '';
     }
     AuthHeaderSharedComponent.prototype.logout = function () {
         this.userService.logout();
     };
     AuthHeaderSharedComponent.prototype.ngOnInit = function () {
-        this.email = localStorage.getItem('email');
+        this.email = this.localStorageService.getItem('email');
     };
     AuthHeaderSharedComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -279,7 +282,7 @@ var AuthHeaderSharedComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./auth-header.component.html */ "./src/app/shared/components/layout/auth-header/auth-header.component.html"),
             styles: [__webpack_require__(/*! ./auth-header.component.scss */ "./src/app/shared/components/layout/auth-header/auth-header.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], src_app_shared_services_local_storage_service__WEBPACK_IMPORTED_MODULE_3__["LocalStorageService"]])
     ], AuthHeaderSharedComponent);
     return AuthHeaderSharedComponent;
 }());
@@ -494,18 +497,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/user.service */ "./src/app/shared/services/user.service.ts");
+/* harmony import */ var _services_local_storage_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/local-storage.service */ "./src/app/shared/services/local-storage.service.ts");
+
 
 
 
 var JwtInterceptor = /** @class */ (function () {
-    function JwtInterceptor(userService) {
+    function JwtInterceptor(userService, localStorageService) {
         this.userService = userService;
+        this.localStorageService = localStorageService;
         this.token = '';
     }
     JwtInterceptor.prototype.intercept = function (request, next) {
         // add authorization header with jwt token if availabled
         if (this.userService.isLoggedIn()) {
-            this.token = localStorage.getItem('auth_token');
+            this.token = this.localStorageService.getItem('auth_token');
             request = request.clone({
                 setHeaders: {
                     Authorization: "Bearer " + this.token
@@ -516,9 +522,51 @@ var JwtInterceptor = /** @class */ (function () {
     };
     JwtInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"], _services_local_storage_service__WEBPACK_IMPORTED_MODULE_3__["LocalStorageService"]])
     ], JwtInterceptor);
     return JwtInterceptor;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/services/local-storage.service.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/shared/services/local-storage.service.ts ***!
+  \**********************************************************/
+/*! exports provided: LocalStorageService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LocalStorageService", function() { return LocalStorageService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+var LocalStorageService = /** @class */ (function () {
+    function LocalStorageService() {
+    }
+    LocalStorageService.prototype.getItem = function (key) {
+        var result = JSON.parse(localStorage.getItem(key));
+        return result;
+    };
+    LocalStorageService.prototype.setItem = function (key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    };
+    LocalStorageService.prototype.removeItem = function (key) {
+        localStorage.removeItem(key);
+    };
+    LocalStorageService.prototype.clear = function () {
+        localStorage.clear();
+    };
+    LocalStorageService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        })
+    ], LocalStorageService);
+    return LocalStorageService;
 }());
 
 
@@ -540,39 +588,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var _local_storage_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./local-storage.service */ "./src/app/shared/services/local-storage.service.ts");
+
 
 
 
 
 
 var UserService = /** @class */ (function () {
-    function UserService(http) {
+    function UserService(http, localStorageService) {
         this.http = http;
+        this.localStorageService = localStorageService;
         this.baseUrl = '';
-        this.usersReg = [];
         // Observable navItem source
         this._authNavStatusSource = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
         // Observable navItem stream
         this.authNavStatus$ = this._authNavStatusSource.asObservable();
         this.loggedIn = false;
-        this.loggedIn = !!localStorage.getItem('auth_token');
-        // ?? not sure if this the best way to broadcast the status but seems to resolve issue on page refresh where auth status is lost in
-        // header component resulting in authed user nav links disappearing despite the fact user is still logged in
+        this.loggedIn = !!this.localStorageService.getItem('auth_token');
         this._authNavStatusSource.next(this.loggedIn);
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseUrl;
     }
-    UserService.prototype.register = function (user) {
-        return this.http.post(this.baseUrl + "/account/register", user);
+    UserService.prototype.register = function (registerAccount) {
+        return this.http.post(this.baseUrl + "/account/register", registerAccount);
     };
     UserService.prototype.registerUsers = function () {
         return this.http.get(this.baseUrl + "/account/register");
     };
-    UserService.prototype.login = function (user) {
-        return this.http.post(this.baseUrl + "/account/login", user);
+    UserService.prototype.login = function (loginAccount) {
+        return this.http.post(this.baseUrl + "/account/login", loginAccount);
     };
     UserService.prototype.logout = function () {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('email');
+        this.localStorageService.removeItem('auth_token');
+        this.localStorageService.removeItem('email');
         this.loggedIn = false;
         this._authNavStatusSource.next(false);
     };
@@ -581,7 +629,7 @@ var UserService = /** @class */ (function () {
     };
     UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _local_storage_service__WEBPACK_IMPORTED_MODULE_5__["LocalStorageService"]])
     ], UserService);
     return UserService;
 }());

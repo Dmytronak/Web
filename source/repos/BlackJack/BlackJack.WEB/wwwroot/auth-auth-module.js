@@ -173,19 +173,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_shared_services_local_storage_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/local-storage.service */ "./src/app/shared/services/local-storage.service.ts");
+
 
 
 
 
 
 var LoginAuthComponent = /** @class */ (function () {
-    function LoginAuthComponent(userService, router, activatedRoute, _formBuilder) {
+    function LoginAuthComponent(userService, localStorageService, router, activatedRoute, _formBuilder) {
         this.userService = userService;
+        this.localStorageService = localStorageService;
         this.router = router;
         this.activatedRoute = activatedRoute;
         this.submitted = false;
-        this.credentials = { email: '', name: '', password: '', confirmPassword: '', year: 0, token: '' };
-        this.userService.loggedIn = !!localStorage.getItem('auth_token');
+        this.credentials = { email: '', password: '' };
+        this.loginAccountResponse = { token: '' };
+        debugger;
+        this.userService.loggedIn = !!this.localStorageService.getItem('auth_token');
         this.formGroup = _formBuilder.group({
             'email': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email],
             'password': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
@@ -211,17 +216,17 @@ var LoginAuthComponent = /** @class */ (function () {
     });
     LoginAuthComponent.prototype.login = function () {
         var _this = this;
-        this.user = Object.assign(this.credentials, this.formGroup.value);
+        this.loginAccount = Object.assign(this.credentials, this.formGroup.value);
         this.submitted = true;
         if (this.formGroup.invalid) {
             return;
         }
-        this.userService.login(this.user)
+        this.userService.login(this.loginAccount)
             .subscribe(function (x) {
             debugger;
-            _this.user.token = x['token'];
-            localStorage.setItem("auth_token", _this.user.token);
-            localStorage.setItem("email", _this.user.email);
+            _this.loginAccountResponse.token = x['token'];
+            _this.localStorageService.setItem("auth_token", _this.loginAccountResponse.token);
+            _this.localStorageService.setItem("email", _this.loginAccount.email);
             _this.userService._authNavStatusSource.next(true);
             _this.userService.loggedIn = true;
             _this.router.navigate(["/game/home"]);
@@ -236,7 +241,7 @@ var LoginAuthComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./login-page.component.html */ "./src/app/auth/pages/login-page/login-page.component.html"),
             styles: [__webpack_require__(/*! ../../auth.component.scss */ "./src/app/auth/auth.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], src_app_shared_services_local_storage_service__WEBPACK_IMPORTED_MODULE_5__["LocalStorageService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
             _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"]])
     ], LoginAuthComponent);
     return LoginAuthComponent;
@@ -287,7 +292,6 @@ var RegistrationAuthComponent = /** @class */ (function () {
         this.router = router;
         this._formBuilder = _formBuilder;
         this.submitted = false;
-        this.users = [];
         this.formGroup = _formBuilder.group({
             'email': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email],
             'name': ['', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(15)],
@@ -307,19 +311,18 @@ var RegistrationAuthComponent = /** @class */ (function () {
                 year: 0,
                 password: '',
                 confirmPassword: '',
-                token: '',
             };
-        this.userService.registerUsers().subscribe(function (user) {
-            _this.users = user['users'];
+        this.userService.registerUsers().subscribe(function (x) {
+            _this.userGetAllAccounts = x['users'];
         }, function (error) { return error; });
     };
     RegistrationAuthComponent.prototype.registration = function () {
         var _this = this;
         this.submitted = true;
         this.isRequesting = true;
-        this.user = Object.assign(this.registerForm, this.formGroup.value);
-        var newUser = this.user.email;
-        var duplicateUser = this.users.filter(function (x) { return x.email === newUser; }).length;
+        this.registerAccount = Object.assign(this.registerForm, this.formGroup.value);
+        var newUser = this.registerAccount.email;
+        var duplicateUser = this.userGetAllAccounts.filter(function (x) { return x.email === newUser; }).length;
         if (this.formGroup.invalid) {
             return;
         }
@@ -327,10 +330,10 @@ var RegistrationAuthComponent = /** @class */ (function () {
             var errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' };
             return this.error = errorMessage.message;
         }
-        this.userService.register(this.user)
+        this.userService.register(this.registerAccount)
             .subscribe(function (x) {
             if (x) {
-                _this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: _this.user.email } });
+                _this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: _this.registerAccount.email } });
             }
         }, function (err) {
             _this.error = err.error;
@@ -361,16 +364,13 @@ var RegistrationAuthComponent = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MustMatch", function() { return MustMatch; });
-// custom validator to check that two fields match
 function MustMatch(controlName, matchingControlName) {
     return function (formGroup) {
         var control = formGroup.controls[controlName];
         var matchingControl = formGroup.controls[matchingControlName];
         if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-            // return if another validator has already found an error on the matchingControl
             return;
         }
-        // set error on matchingControl if validation fails
         if (control.value !== matchingControl.value) {
             matchingControl.setErrors({ mustMatch: true });
         }
@@ -393,7 +393,6 @@ function MustMatch(controlName, matchingControlName) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "YearRange", function() { return YearRange; });
-// custom validator to check that two fields match
 function YearRange(control) {
     var maxYear = 2019;
     var minYear = 1920;

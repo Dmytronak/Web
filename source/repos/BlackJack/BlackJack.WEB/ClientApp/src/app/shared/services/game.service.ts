@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { GameView } from '../entities/game.view';
-
+import { PlayGameView } from '../entities/game/play-game.view';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +12,17 @@ export class GameService {
     this.baseUrl = environment.baseUrl;
   }
   getActiveGame() {
-    return this.http.get<GameView[]>(this.baseUrl + "/game/getActive")
+    return this.http.get<PlayGameView>(this.baseUrl + "/game/getActive")
   }
-  play(game: GameView) {
-    debugger
-    let params = new HttpParams().set("numberOfBots",game.numberOfBots.toString()); 
+  play(x) {
+    let params = new HttpParams().set("numberOfBots",x); 
     return this.http.post(this.baseUrl + "/game/play?"+params,'')
   }
-  continue(game: GameView) {
-    debugger
-    return this.http.post(this.baseUrl + "/game/continue", game)
+  continue() {
+    return this.http.post(this.baseUrl + "/game/continue", '')
   }
-  end(game: GameView) {
-    debugger
-    return this.http.post(this.baseUrl + "/game/end", game)
+  end() {
+    return this.http.post(this.baseUrl + "/game/end", '')
   }
 }
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CardGameViewItem, BotGameViewItem, PlayerGameView, GameView } from 'src/app/shared/entities/game.view';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 
@@ -15,10 +14,6 @@ export class HomeGameComponent implements OnInit {
   brandNew: boolean;
   haveActiveGame:boolean= false;
   gameExisting:boolean = false;
-  cardsGame: CardGameViewItem[];
-  botsGame: BotGameViewItem = { name: '', cards: this.cardsGame }
-  playerGame: PlayerGameView = { name: '', cards: this.cardsGame }
-  createGame: GameView = {status: '0', winner: '', numberOfBots: 0, player: this.playerGame, bots: [this.botsGame] };
   constructor(private gameService: GameService, private router: Router) {
   }
   ngOnInit() {
@@ -41,9 +36,7 @@ export class HomeGameComponent implements OnInit {
     this.brandNew = false;
   }
   play(x) {
-    debugger
-    this.createGame.numberOfBots =x['numberOfBots'];
-      this.gameService.play(this.createGame)
+      this.gameService.play(x['numberOfBots'])
       .subscribe(x => {
         if (x) {
           this.router.navigate(['/game/play']);

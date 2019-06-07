@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { GetAllGamesHistoryView } from '../entities/get-all-games-history.view';
-import { GetPlayerStepsHistoryView } from '../entities/get-player-steps-history.view';
-import { GetBotStepsHistoryView } from '../entities/get-bot-steps-history.view';
+import { GetAllGamesHistoryView } from '../entities/history/get-all-games-history.view';
+import { GetPlayerStepsHistoryView } from '../entities/history/get-player-steps-history.view';
+import { GetBotStepsHistoryView } from '../entities/history/get-bot-steps-history.view';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +15,14 @@ export class HistoryService {
     this.baseUrl = environment.baseUrl;
    }
    getGamesByUser() {
-    return this.http.get<GetAllGamesHistoryView[]>(this.baseUrl + "/history/allUserGames");
+    return this.http.get<GetAllGamesHistoryView>(this.baseUrl + "/history/allUserGames");
    }
-   getPlayerSteps(history:GetPlayerStepsHistoryView) {
-    let params = new HttpParams().set("gameId",history.gameId); 
-    return this.http.get<GetAllGamesHistoryView[]>(this.baseUrl + "/history/playerSteps", { params:params });
+   getPlayerSteps(x) {
+    let params = new HttpParams().set("gameId",x.id); 
+    return this.http.get<GetPlayerStepsHistoryView>(this.baseUrl + "/history/playerSteps", { params:params });
    }
-   getBotSteps(history:GetBotStepsHistoryView) {
-    let params = new HttpParams().set("gameId",history.gameId); 
-    return this.http.get<GetAllGamesHistoryView[]>(this.baseUrl + "/history/botSteps", { params:params });
+   getBotSteps(x) {
+    let params = new HttpParams().set("gameId",x.id); 
+    return this.http.get<GetBotStepsHistoryView>(this.baseUrl + "/history/botSteps", { params:params });
    }
 }

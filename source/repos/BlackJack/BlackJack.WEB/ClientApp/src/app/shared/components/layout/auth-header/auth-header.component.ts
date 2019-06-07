@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../../../services/user.service';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 
 @Component({
   selector: 'app-auth-header',
@@ -13,7 +14,7 @@ export class AuthHeaderSharedComponent implements OnInit {
   subscription: Subscription;
   email: string = '';
  
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,private localStorageService: LocalStorageService) {
 
   }
   logout() {
@@ -21,6 +22,6 @@ export class AuthHeaderSharedComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.email = localStorage.getItem('email');
+    this.email = this.localStorageService.getItem('email');
   }
 }
