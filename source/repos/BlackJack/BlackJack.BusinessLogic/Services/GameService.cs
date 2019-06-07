@@ -469,8 +469,8 @@ namespace BlackJack.BusinessLogic.Services
             if (notBustedBots.Count > 0)
             {
                 var maxBotScore = notBustedBots.Max(x => x.Score);
-                var bot = notBustedBots.FirstOrDefault(x => x.Score == maxBotScore);
-                var profileWinnerBot = botList.FirstOrDefault(x => x.Id == bot.BotId);
+                var botWinner = notBustedBots.FirstOrDefault(x => x.Score == maxBotScore);
+                var bot = botList.FirstOrDefault(x => x.Id == botWinner.BotId);
 
                 if (playerScore == maxBotScore && status == StatusType.End)
                 {
@@ -485,12 +485,12 @@ namespace BlackJack.BusinessLogic.Services
                 if (playerScore > 21 && status == StatusType.Continue || playerScore < maxBotScore && status == StatusType.End)
                 {
                     status = StatusType.End;
-                    winner = profileWinnerBot.Name;
+                    winner = bot.Name;
                 }
                 if (maxBotScore == 21 || playerScore > 21 && maxBotScore == 21)
                 {
                     status = StatusType.Blackjack;
-                    winner = profileWinnerBot.Name;
+                    winner = bot.Name;
                 }
             }
             if (notBustedBots.Count == 0)
