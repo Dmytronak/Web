@@ -1,5 +1,4 @@
 ﻿using BlackJack.DataAccess.Enums;
-using System;
 using System.Collections.Generic;
 
 namespace BlackJack.ViewModels.GameViews

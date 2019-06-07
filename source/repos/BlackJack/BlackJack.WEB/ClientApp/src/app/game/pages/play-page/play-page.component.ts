@@ -52,7 +52,6 @@ export class PlayGameComponent implements OnInit {
     this.gameService.continue(this.playGame)
       .subscribe(x => {
         if (x) {
-          
           this.statusEnum = x['status'];
           this.playGame.status = Status[this.statusEnum]
           this.playGame.winner = x['winner'];

@@ -23,10 +23,10 @@ export class HomeGameComponent implements OnInit {
   }
   ngOnInit() {
     this.gameService.getActiveGame()
-    .subscribe(() => {
+    .subscribe(x => {
       this.haveActiveGame = true;
     },
-      () => {
+      err => {
         this.gameExisting = true;
       });
   }
@@ -40,13 +40,12 @@ export class HomeGameComponent implements OnInit {
     this.showForm = false;
     this.brandNew = false;
   }
-  play(f) {
+  play(x) {
     debugger
-    this.createGame.numberOfBots =f['numberOfBots'];
+    this.createGame.numberOfBots =x['numberOfBots'];
       this.gameService.play(this.createGame)
       .subscribe(x => {
         if (x) {
-          debugger
           this.router.navigate(['/game/play']);
         }
       },

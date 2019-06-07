@@ -1,6 +1,4 @@
-﻿using BlackJack.DataAccess.Entities;
-using BlackJack.DataAccess.Enums;
-using System;
+﻿using BlackJack.DataAccess.Enums;
 using System.Collections.Generic;
 
 namespace BlackJack.ViewModels.GameViews

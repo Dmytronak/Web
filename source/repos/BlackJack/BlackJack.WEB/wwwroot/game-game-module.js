@@ -202,9 +202,9 @@ var HomeGameComponent = /** @class */ (function () {
     HomeGameComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.gameService.getActiveGame()
-            .subscribe(function () {
+            .subscribe(function (x) {
             _this.haveActiveGame = true;
-        }, function () {
+        }, function (err) {
             _this.gameExisting = true;
         });
     };
@@ -218,14 +218,13 @@ var HomeGameComponent = /** @class */ (function () {
         this.showForm = false;
         this.brandNew = false;
     };
-    HomeGameComponent.prototype.play = function (f) {
+    HomeGameComponent.prototype.play = function (x) {
         var _this = this;
         debugger;
-        this.createGame.numberOfBots = f['numberOfBots'];
+        this.createGame.numberOfBots = x['numberOfBots'];
         this.gameService.play(this.createGame)
             .subscribe(function (x) {
             if (x) {
-                debugger;
                 _this.router.navigate(['/game/play']);
             }
         }, function (err) {
