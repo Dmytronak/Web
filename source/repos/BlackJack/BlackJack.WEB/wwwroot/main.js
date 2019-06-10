@@ -474,6 +474,7 @@ var ErrorInterceptor = /** @class */ (function () {
             if (err.status === 400) {
                 console.clear();
                 var error_1 = err.error || err.statusText;
+                _this.toastr.clear();
                 _this.toastr.info(err.error);
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
             }
