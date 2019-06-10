@@ -25,7 +25,7 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
         }
       });
   }
-  ngOnInit() {
+  ngOnInit():void {
     this.loginForm = this.formBuilder.group({
       'email': ['', [Validators.required, Validators.email]],
       'password': ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
@@ -43,7 +43,7 @@ export class LoginAuthComponent implements OnInit, OnDestroy {
     }
     this.userService.login(this.loginForm.value);
   }
-  ngOnDestroy() {
+  ngOnDestroy():void {
     this.subscription.unsubscribe();
   }
 }
