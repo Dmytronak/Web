@@ -6,6 +6,7 @@ import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
 import { UserGetAllAccountViewItem } from 'src/app/shared/entities/auth/get-all-account.view';
 import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-registration-page',
@@ -22,7 +23,7 @@ export class RegistrationAuthComponent implements OnInit {
   public userGetAllAccounts: UserGetAllAccountViewItem[];
   public registerAccount: RegisterAccountView;
 
-  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder) {
+  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder,private readonly toastr: ToastrService) {
     this.formGroup = _formBuilder.group({
       'email': ['', Validators.email],
       'name': ['', Validators.maxLength(15)],
@@ -59,8 +60,8 @@ export class RegistrationAuthComponent implements OnInit {
       return;
     }
     if (duplicateUser) {
-      let errorMessage = { status: 422, message: 'Username "' + newUser + '" is already taken' }
-      return this.error = errorMessage.message;
+      let errorMessage = { message: 'Username "' + newUser + '" is already taken' };
+      return this.toastr.error( errorMessage.message);
     }
     this.userService.register(this.registerAccount)
       .subscribe(x => {

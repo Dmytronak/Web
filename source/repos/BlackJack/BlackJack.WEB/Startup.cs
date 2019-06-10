@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BlackJack
 {
@@ -39,7 +40,10 @@ namespace BlackJack
                 options.Filters.Add(typeof(ModelStateActionFilter));
 
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "BlackJack API", Version = "v1" });
+            });
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -48,7 +52,11 @@ namespace BlackJack
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlackJack API API V1");
+            });
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -61,7 +69,6 @@ namespace BlackJack
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
-
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

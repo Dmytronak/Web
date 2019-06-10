@@ -36,7 +36,6 @@ export class PlayGameComponent implements OnInit {
       },
         err => {
           this.haveActiveGame = false
-          return this.error = err;
         });
   }
   continue() {

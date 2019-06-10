@@ -58,10 +58,8 @@
         </table>
     </div>
 </div>
-<div *ngIf="error" class="alert alert-danger" role="alert">
-    <strong>Oops!</strong> {{error}}
-</div>
-<div *ngIf="error">
+
+<div *ngIf="!haveActiveGame">
     <p><label>Back to home : </label></p>
     <button class="btn btn-success" (click)="backToHome()"><i
         class="fa fa-arrow-left"></i></button>

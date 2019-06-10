@@ -13,10 +13,10 @@ namespace BlackJack.BusinessLogic.Services
 
     public class AccountService : IAccountService
     {
-        protected readonly SignInManager<User> _signInManager;
-        protected readonly UserManager<User> _userManager;
-        protected readonly IJwtProvider _jwtProvider;
-        protected readonly IPlayerRepository _playerRepository;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IJwtProvider _jwtProvider;
+        private readonly IPlayerRepository _playerRepository;
         public AccountService(UserManager<User> userManager, SignInManager<User> signInManager, IJwtProvider jwtProvider, IPlayerRepository playerRepository)
         {
             _userManager = userManager;

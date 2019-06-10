@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AuthGuard } from './shared/guards/onlyLoggedOutUsers.guard';
-import { AuthUsersGuard } from './shared/guards/onlyLoggedInUsers.guard';
+import { AuthGuard } from './shared/guards/only-logged-out-users.guard';
+import { AuthUsersGuard } from './shared/guards/only-logged-in-users.guard';
 
 const routes: Routes = [
   {path: 'home',loadChildren: './home/home.module#HomeModule',canActivate: [AuthUsersGuard]},

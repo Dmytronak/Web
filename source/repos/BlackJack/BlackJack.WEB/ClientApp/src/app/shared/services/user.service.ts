@@ -6,22 +6,21 @@ import { LocalStorageService } from './local-storage.service';
 import { RegisterAccountView } from '../entities/auth/register-account.view';
 import { UserGetAllAccountViewItem } from '../entities/auth/get-all-account.view';
 import { LoginAccountView } from '../entities/auth/login-account.view';
+import { LoginAccountResponseView } from '../entities/auth/login-account-response.view';
+import { Router } from '@angular/router';
 
 @Injectable()
 
 export class UserService  {
 
   baseUrl: string = '';
-  // Observable navItem source
-  _authNavStatusSource = new BehaviorSubject<boolean>(false);
-  // Observable navItem stream
-  authNavStatus$ = this._authNavStatusSource.asObservable();
-
+  authNavStatusSource = new BehaviorSubject<boolean>(false);
+  authNavStatus$ = this.authNavStatusSource.asObservable();
   loggedIn = false;
 
-  constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
+  constructor(private http: HttpClient, private localStorageService: LocalStorageService,private readonly router: Router) {
     this.loggedIn = !!this.localStorageService.getItem('auth_token');
-    this._authNavStatusSource.next(this.loggedIn);
+    this.authNavStatusSource.next(this.loggedIn);
     this.baseUrl = environment.baseUrl;
   }
 
@@ -33,13 +32,23 @@ export class UserService  {
   }
 
   login(loginAccount: LoginAccountView) {
-    return this.http.post(this.baseUrl + "/account/login", loginAccount);
+    let response = this.http.post(this.baseUrl + "/account/login", loginAccount)
+    .subscribe((x:LoginAccountResponseView) => {
+      if (x) {
+        this.localStorageService.setItem("auth_token", x.token);
+        this.localStorageService.setItem("email", loginAccount.email);
+        this.loggedIn = true;
+        this.authNavStatusSource.next(true);
+        this.router.navigate(["/game/home"]);
+      }
+    });
+    return response;
   }
   logout() {
     this.localStorageService.removeItem('auth_token');
     this.localStorageService.removeItem('email');
     this.loggedIn = false;
-    this._authNavStatusSource.next(false);
+    this.authNavStatusSource.next(false);
   }
   isLoggedIn() {
     return this.loggedIn;

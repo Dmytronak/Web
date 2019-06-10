@@ -8,10 +8,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
   templateUrl: './auth-header.component.html',
   styleUrls: ['./auth-header.component.scss']
 })
-export class AuthHeaderSharedComponent implements OnInit {
-
-  status: boolean;
-  subscription: Subscription;
+export class AuthHeaderComponent implements OnInit {
   email: string = '';
  
   constructor(private userService: UserService,private localStorageService: LocalStorageService) {

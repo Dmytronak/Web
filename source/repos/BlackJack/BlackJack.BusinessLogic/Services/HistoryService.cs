@@ -14,15 +14,15 @@ namespace BlackJack.BusinessLogic.Services
     
     public class HistoryService : IHistoryService
     {
-        protected readonly UserManager<User> _userManager;
-        protected readonly IGameRepository _gameRepository;
-        protected readonly IPlayerRepository _playerRepository;
-        protected readonly IBotRepository _botRepository;
-        protected readonly IPlayerStepRepository _playerStepRepository;
-        protected readonly IBotStepRepository _botStepRepository;
-        protected readonly ICardRepository _cardRepository;
-        protected readonly IBotInGameRepository _botInGameRepository;
-        protected readonly IPlayerInGameRepository _playerInGameRepository;
+        private readonly UserManager<User> _userManager;
+        private readonly IGameRepository _gameRepository;
+        private readonly IPlayerRepository _playerRepository;
+        private readonly IBotRepository _botRepository;
+        private readonly IPlayerStepRepository _playerStepRepository;
+        private readonly IBotStepRepository _botStepRepository;
+        private readonly ICardRepository _cardRepository;
+        private readonly IBotInGameRepository _botInGameRepository;
+        private readonly IPlayerInGameRepository _playerInGameRepository;
 
         public HistoryService(UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, ICardRepository cardRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)

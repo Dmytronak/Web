@@ -6,11 +6,11 @@ import { UserService } from './shared/services/user.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
-import { AuthGuard } from './shared/guards/onlyLoggedOutUsers.guard';
-import { AuthUsersGuard } from './shared/guards/onlyLoggedInUsers.guard';
+import { AuthGuard } from './shared/guards/only-logged-out-users.guard';
+import { AuthUsersGuard } from './shared/guards/only-logged-in-users.guard';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-
+    BrowserAnimationsModule
   ],
   providers: [UserService,AuthGuard,AuthUsersGuard,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

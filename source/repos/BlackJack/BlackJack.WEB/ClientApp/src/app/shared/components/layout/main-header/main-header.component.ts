@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './main-header.component.html',
   styleUrls: ['./main-header.component.scss']
 })
-export class MainHeaderSharedComponent implements OnInit {
+export class MainHeaderComponent implements OnInit {
   public navbarCollapsed = true
   constructor() { }
 

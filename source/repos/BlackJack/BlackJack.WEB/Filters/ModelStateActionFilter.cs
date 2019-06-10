@@ -17,7 +17,8 @@ namespace BlackJack.Filters
         {
             if (!context.ModelState.IsValid)
             {
-                context.Result = new BadRequestObjectResult(context.ModelState.GetFirstError());
+                var message = context.ModelState.GetFirstError();
+                context.Result = new BadRequestObjectResult(message);
             }
         }
 
