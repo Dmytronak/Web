@@ -284,7 +284,19 @@ var RegistrationAuthComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.toastrService = toastrService;
         this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
-        this.registerForm = formBuilder.group({
+    }
+    RegistrationAuthComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.initForms();
+        this.userService.registerUsers()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (x) {
+            debugger;
+            _this.getAllAccounts = x;
+        });
+    };
+    RegistrationAuthComponent.prototype.initForms = function () {
+        this.registerForm = this.formBuilder.group({
             'email': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]],
             'name': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(15)]],
             'year': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4), src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_6__["YearRange"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^-?(0|[1-9]\d*)?$/)]],
@@ -292,14 +304,6 @@ var RegistrationAuthComponent = /** @class */ (function () {
             'confirmPassword': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
         }, {
             validator: Object(src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_5__["MustMatch"])('password', 'confirmPassword')
-        });
-    }
-    RegistrationAuthComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.registerUsers()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
-            _this.userGetAllAccounts = x['users'];
         });
     };
     RegistrationAuthComponent.prototype.hasErrors = function (name) {
@@ -314,7 +318,7 @@ var RegistrationAuthComponent = /** @class */ (function () {
             password: this.registerForm.value['password'],
             confirmPassword: this.registerForm.value['confirmPassword'],
         };
-        var duplicateUser = this.userGetAllAccounts
+        var duplicateUser = this.getAllAccounts.users
             .filter(function (x) {
             return x.email === registerAccount.email;
         })

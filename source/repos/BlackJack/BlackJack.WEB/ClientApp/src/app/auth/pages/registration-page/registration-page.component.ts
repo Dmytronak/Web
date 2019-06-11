@@ -4,7 +4,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
 import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
-import { UserGetAllAccountViewItem } from 'src/app/shared/entities/auth/get-all-account.view';
+import { UserGetAllAccountViewItem, GetAllAccountView } from 'src/app/shared/entities/auth/get-all-account.view';
 import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -17,12 +17,23 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class RegistrationAuthComponent implements OnInit {
   private registerForm: FormGroup;
-  private userGetAllAccounts: UserGetAllAccountViewItem[];
+  private getAllAccounts: GetAllAccountView;
   private componetDestroyed: Subject<boolean> = new Subject<boolean>();
   
   constructor(private readonly userService: UserService, private readonly router: Router, private readonly formBuilder: FormBuilder,
     private readonly toastrService: ToastrService) {
-    this.registerForm = formBuilder.group({
+  }
+  ngOnInit() {
+    this.initForms();
+    this.userService.registerUsers()
+    .pipe(takeUntil(this.componetDestroyed))
+    .subscribe(x => {
+      debugger
+      this.getAllAccounts = x;
+    });
+  }
+  private initForms(): void{
+    this.registerForm = this.formBuilder.group({
       'email': ['', [Validators.required,Validators.email]],
       'name': ['', [Validators.required,Validators.maxLength(15)]],
       'year': ['', [Validators.required,Validators.minLength(4),YearRange, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
@@ -31,13 +42,6 @@ export class RegistrationAuthComponent implements OnInit {
     }, {
         validator: MustMatch('password', 'confirmPassword')
       });
-  }
-  ngOnInit() {
-    this.userService.registerUsers()
-    .pipe(takeUntil(this.componetDestroyed))
-    .subscribe(x => {
-      this.userGetAllAccounts = x['users'];
-    });
   }
   private hasErrors(name:string): boolean {
     return this.registerForm.get(name).invalid && (this.registerForm.get(name).dirty || this.registerForm.get(name).touched);
@@ -50,7 +54,7 @@ export class RegistrationAuthComponent implements OnInit {
       password:this.registerForm.value['password'],
       confirmPassword:this.registerForm.value['confirmPassword'],
     };
-    let duplicateUser = this.userGetAllAccounts
+    let duplicateUser = this.getAllAccounts.users
     .filter(x => { 
       return x.email === registerAccount.email; 
     })
