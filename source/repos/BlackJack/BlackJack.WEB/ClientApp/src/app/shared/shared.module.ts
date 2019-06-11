@@ -6,14 +6,13 @@ import { AuthHeaderComponent } from './components/layout/auth-header/auth-header
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
-
 @NgModule({
   declarations: [MainHeaderComponent, AuthHeaderComponent],
   imports: [
     CommonModule,
     NgbModule,
     RouterModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot()
   ],
   exports:[ 
     MainHeaderComponent,

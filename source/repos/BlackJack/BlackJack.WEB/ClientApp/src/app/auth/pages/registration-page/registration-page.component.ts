@@ -7,6 +7,8 @@ import { YearRange } from 'src/app/shared/helpers/year-range.helper';
 import { UserGetAllAccountViewItem } from 'src/app/shared/entities/auth/get-all-account.view';
 import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
 import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-registration-page',
@@ -14,66 +16,63 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['../../auth.component.scss']
 })
 export class RegistrationAuthComponent implements OnInit {
-
-  error: string;
-  isRequesting: boolean;
-  submitted: boolean = false;
-  public registerForm: RegisterAccountView;
-  formGroup: FormGroup;
-  public userGetAllAccounts: UserGetAllAccountViewItem[];
-  public registerAccount: RegisterAccountView;
-
-  constructor(private userService: UserService, private router: Router, private _formBuilder: FormBuilder,private readonly toastr: ToastrService) {
-    this.formGroup = _formBuilder.group({
-      'email': ['', Validators.email],
-      'name': ['', Validators.maxLength(15)],
-      'year': ['', [Validators.minLength(4),YearRange, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      'password': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
-      'confirmPassword': ['', [Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
+  private registerForm: FormGroup;
+  private userGetAllAccounts: UserGetAllAccountViewItem[];
+  private componetDestroyed: Subject<boolean> = new Subject<boolean>();
+  
+  constructor(private readonly userService: UserService, private readonly router: Router, private readonly formBuilder: FormBuilder,
+    private readonly toastrService: ToastrService) {
+    this.registerForm = formBuilder.group({
+      'email': ['', [Validators.required,Validators.email]],
+      'name': ['', [Validators.required,Validators.maxLength(15)]],
+      'year': ['', [Validators.required,Validators.minLength(4),YearRange, Validators.maxLength(4), Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
+      'password': ['', [Validators.required,Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
+      'confirmPassword': ['', [Validators.required,Validators.minLength(6), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
     }, {
         validator: MustMatch('password', 'confirmPassword')
       });
   }
-
   ngOnInit() {
-    this.registerForm =
-      {
-        email: '',
-        name:'',
-        year: 0,
-        password: '',
-        confirmPassword: '',
-      }
-    this.userService.registerUsers().subscribe(x => {
+    this.userService.registerUsers()
+    .pipe(takeUntil(this.componetDestroyed))
+    .subscribe(x => {
       this.userGetAllAccounts = x['users'];
-    }, error => error);
-
+    });
   }
-
-  registration() {
-    this.submitted = true;
-    this.isRequesting = true;
-    this.registerAccount = Object.assign(this.registerForm, this.formGroup.value)
-    let newUser = this.registerAccount.email;
-    let duplicateUser = this.userGetAllAccounts.filter(x => { return x.email === newUser; }).length;
-    if (this.formGroup.invalid) {
+  private hasErrors(name:string): boolean {
+    return this.registerForm.get(name).invalid && (this.registerForm.get(name).dirty || this.registerForm.get(name).touched);
+  }
+  private registration() {
+    let registerAccount: RegisterAccountView = {
+      email:this.registerForm.value['email'],
+      name:this.registerForm.value['name'],
+      year:this.registerForm.value['year'],
+      password:this.registerForm.value['password'],
+      confirmPassword:this.registerForm.value['confirmPassword'],
+    };
+    let duplicateUser = this.userGetAllAccounts
+    .filter(x => { 
+      return x.email === registerAccount.email; 
+    })
+    .length;
+    if (duplicateUser) {
+      let errorMessage = { message: 'Username "' + registerAccount.email + '" is already taken' };
+      return this.toastrService.warning(errorMessage.message);
+    }
+    if (this.registerForm.invalid) {
       return;
     }
-    if (duplicateUser) {
-      let errorMessage = { message: 'Username "' + newUser + '" is already taken' };
-      return this.toastr.error( errorMessage.message);
-    }
-    this.userService.register(this.registerAccount)
+    this.userService.register(registerAccount)
+      .pipe(takeUntil(this.componetDestroyed))
       .subscribe(x => {
         if (x) {
-          this.router.navigate(['/auth/login'], { queryParams: { brandNew: true, email: this.registerAccount.email } });
+          this.toastrService.success('Email '+registerAccount.email +' is successfully register.','All set!');
+          this.router.navigate(['/auth/login']);
         }
-      },
-        err => {
-          this.error = err.error;
-        }
-
-      )
+      })
+  }
+  ngOnDestroy() {
+    this.componetDestroyed.next(true);
   }
 }
 

@@ -141,7 +141,7 @@ var AppComponent = /** @class */ (function () {
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.subscription = this.userService.authNavStatus$.subscribe(function (status) { return _this.status = status; });
+        this.userService.authNavStatus.subscribe(function (status) { return _this.status = status; });
     };
     AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -462,6 +462,9 @@ var ErrorInterceptor = /** @class */ (function () {
         this.userService = userService;
         this.router = router;
         this.toastr = toastr;
+        this.options = this.toastr.toastrConfig;
+        this.options.preventDuplicates = true;
+        this.options.progressBar = true;
     }
     ErrorInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
@@ -469,17 +472,16 @@ var ErrorInterceptor = /** @class */ (function () {
             if (err.status === 401) {
                 _this.userService.logout();
                 _this.router.navigate(['']);
-                _this.toastr.error(err.error);
+                _this.toastr.warning(err.error || err.statusText);
             }
             if (err.status === 400) {
                 console.clear();
                 var error_1 = err.error || err.statusText;
-                _this.toastr.clear();
-                _this.toastr.info(err.error);
+                _this.toastr.info(error_1);
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
             }
             var error = err.error || err.statusText;
-            _this.toastr.error(err.error);
+            _this.toastr.error(error);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
         }));
     };
@@ -599,7 +601,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _local_storage_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./local-storage.service */ "./src/app/shared/services/local-storage.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 
 
 
@@ -608,37 +610,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var UserService = /** @class */ (function () {
-    function UserService(http, localStorageService, router) {
+    function UserService(http, localStorageService) {
         this.http = http;
         this.localStorageService = localStorageService;
-        this.router = router;
         this.baseUrl = '';
         this.authNavStatusSource = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
-        this.authNavStatus$ = this.authNavStatusSource.asObservable();
         this.loggedIn = false;
+        this.authNavStatus = this.authNavStatusSource.asObservable();
         this.loggedIn = !!this.localStorageService.getItem('auth_token');
         this.authNavStatusSource.next(this.loggedIn);
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseUrl;
     }
     UserService.prototype.register = function (registerAccount) {
-        return this.http.post(this.baseUrl + "/account/register", registerAccount);
+        return this.http.post(this.baseUrl + "/account/register", registerAccount)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) {
+            return x;
+        }));
     };
     UserService.prototype.registerUsers = function () {
         return this.http.get(this.baseUrl + "/account/register");
     };
     UserService.prototype.login = function (loginAccount) {
         var _this = this;
-        var response = this.http.post(this.baseUrl + "/account/login", loginAccount)
-            .subscribe(function (x) {
+        return this.http.post(this.baseUrl + "/account/login", loginAccount)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) {
             if (x) {
-                _this.localStorageService.setItem("auth_token", x.token);
-                _this.localStorageService.setItem("email", loginAccount.email);
-                _this.loggedIn = true;
-                _this.authNavStatusSource.next(true);
-                _this.router.navigate(["/game/home"]);
+                _this.authentication(x.token, loginAccount.email);
             }
-        });
-        return response;
+            return x;
+        }));
     };
     UserService.prototype.logout = function () {
         this.localStorageService.removeItem('auth_token');
@@ -646,12 +646,18 @@ var UserService = /** @class */ (function () {
         this.loggedIn = false;
         this.authNavStatusSource.next(false);
     };
+    UserService.prototype.authentication = function (token, email) {
+        this.localStorageService.setItem("auth_token", token);
+        this.localStorageService.setItem("email", email);
+        this.loggedIn = true;
+        this.authNavStatusSource.next(true);
+    };
     UserService.prototype.isLoggedIn = function () {
         return this.loggedIn;
     };
     UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _local_storage_service__WEBPACK_IMPORTED_MODULE_5__["LocalStorageService"], _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _local_storage_service__WEBPACK_IMPORTED_MODULE_5__["LocalStorageService"]])
     ], UserService);
     return UserService;
 }());
@@ -698,7 +704,7 @@ var SharedModule = /** @class */ (function () {
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_7__["RouterModule"],
-                ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"].forRoot(),
+                ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"].forRoot()
             ],
             exports: [
                 _components_layout_main_header_main_header_component__WEBPACK_IMPORTED_MODULE_4__["MainHeaderComponent"],

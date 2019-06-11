@@ -3,103 +3,103 @@
     <h2>Please enter your information</h2>
   </div>
 </div>
-<form [formGroup]="formGroup" (ngSubmit)="registration(formGroup.value)">
+<form [formGroup]="registerForm" (ngSubmit)="registration()">
   <div class="formGroup">
     <label for="email">Email</label>
-    <input type="text" required name="email" class="form-control" placeholder="Email" formControlName="email">
+    <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
   <div
-    *ngIf="formGroup.controls['email'].invalid && (formGroup.controls['email'].dirty || formGroup.controls['email'].touched)"
+    *ngIf="hasErrors(['email'])"
     class="alert alert-danger">
-    <div *ngIf="formGroup.controls['email'].errors.required">
+    <div *ngIf="registerForm.controls['email'].errors.required">
       Email is required.
     </div>
-    <div *ngIf="formGroup.controls['email'].errors.email">
+    <div *ngIf="registerForm.controls['email'].errors.email">
       Email not validate
     </div>
   </div>
   <div class="formGroup">
     <label for="nmae">Name</label>
-    <input type="text" required name="name" class="form-control" placeholder="Name" formControlName="name">
+    <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
   </div>
   <div
-    *ngIf="formGroup.controls['name'].invalid && (formGroup.controls['name'].dirty || formGroup.controls['name'].touched)"
+    *ngIf="hasErrors(['name'])"
     class="alert alert-danger">
-    <div *ngIf="formGroup.controls['name'].errors.required">
+    <div *ngIf="registerForm.controls['name'].errors.required">
       Name is required.
     </div>
-    <div *ngIf="formGroup.controls['name'].errors.maxlength">
+    <div *ngIf="registerForm.controls['name'].errors.maxlength">
       Name max Length 15
     </div>
   </div>
   <div class="formGroup">
     <label for="year">Year</label>
-    <input type="text" class="form-control" required name="year" placeholder="Year" formControlName="year">
+    <input type="text" class="form-control" name="year" placeholder="Year" formControlName="year">
   </div>
   <div
-    *ngIf="formGroup.controls['year'].invalid && (formGroup.controls['year'].dirty || formGroup.controls['year'].touched)"
+   *ngIf="hasErrors(['year'])"
     class="alert alert-danger">
-    <div *ngIf="formGroup.controls['year'].errors.required">
+    <div *ngIf="registerForm.controls['year'].errors.required">
       year is required.
     </div>
-    <div *ngIf="formGroup.controls['year'].errors.minlength">
+    <div *ngIf="registerForm.controls['year'].errors.minlength">
       year min min Length 4
     </div>
-    <div *ngIf="formGroup.controls['year'].errors.maxlength">
+    <div *ngIf="registerForm.controls['year'].errors.maxlength">
       year min max Length 4
     </div>
-    <div *ngIf="formGroup.controls['year'].errors.pattern">
+    <div *ngIf="registerForm.controls['year'].errors.pattern">
       ONLY NUMB ERROR
     </div>
-    <div *ngIf="formGroup.controls['year'].errors.ageRange">
+    <div *ngIf="registerForm.controls['year'].errors.ageRange">
       Year range from 1920 to 2019
     </div>
-    <div *ngIf="formGroup.controls['year'].errors.adultRange">
+    <div *ngIf="registerForm.controls['year'].errors.adultRange">
       You don`t adult enough
     </div>
 
   </div>
   <div class="formGroup">
     <label for="password">Password</label>
-    <input type="password" required class="form-control" name="password" placeholder="Password"
+    <input type="password" class="form-control" name="password" placeholder="Password"
       formControlName="password">
   </div>
   <div
-    *ngIf="formGroup.controls['password'].invalid && (formGroup.controls['password'].dirty || formGroup.controls['password'].touched)"
+  *ngIf="hasErrors(['password'])"
     class="alert alert-danger">
-    <div *ngIf="formGroup.controls['password'].errors.required">
+    <div *ngIf="registerForm.controls['password'].errors.required">
       Password is required.
     </div>
-    <div *ngIf="formGroup.controls['password'].errors.minlength">
+    <div *ngIf="registerForm.controls['password'].errors.minlength">
       Password minLength 6
     </div>
-    <div *ngIf="formGroup.controls['password'].errors.pattern">
+    <div *ngIf="registerForm.controls['password'].errors.pattern">
       Password not validate
     </div>
   </div>
 
   <div class="formGroup">
     <label for="confirmPassword">Confirm password</label>
-    <input type="password" required class="form-control" name="confirmPassword" placeholder="Confirm password"
+    <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password"
       formControlName="confirmPassword">
   </div>
   <div
-    *ngIf="formGroup.controls['confirmPassword'].invalid && (formGroup.controls['confirmPassword'].dirty || formGroup.controls['confirmPassword'].touched)"
+  *ngIf="hasErrors(['confirmPassword'])"
     class="alert alert-danger">
-    <div *ngIf="formGroup.controls['confirmPassword'].errors.required">
+    <div *ngIf="registerForm.controls['confirmPassword'].errors.required">
       Password is required.
     </div>
-    <div *ngIf="formGroup.controls['confirmPassword'].errors.minlength">
+    <div *ngIf="registerForm.controls['confirmPassword'].errors.minlength">
       Password min Length 6
     </div>
-    <div *ngIf="formGroup.controls['confirmPassword'].errors.pattern">
+    <div *ngIf="registerForm.controls['confirmPassword'].errors.pattern">
       Password not validate
     </div>
-    <div *ngIf="formGroup.controls['confirmPassword'].errors.mustMatch">
+    <div *ngIf="registerForm.controls['confirmPassword'].errors.mustMatch">
       Passwords must match
     </div>
   </div>
   <div class="formGroup">
-    <button type="submit" class="btn btn-primary" [disabled]="formGroup.invalid">Register</button>
+    <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
   </div>
 </form>

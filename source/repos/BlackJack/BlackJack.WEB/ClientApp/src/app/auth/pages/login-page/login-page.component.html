@@ -4,12 +4,12 @@
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
   <div
-    *ngIf="getErrors(['email'])"
+    *ngIf="hasErrors(['email'])"
     class="alert alert-danger">
-    <div *ngIf="getControl(['email']).errors.required">
+    <div *ngIf="loginForm.get(['email']).errors.required">
       Email is required.
     </div>
-    <div *ngIf="getControl(['email']).errors.email">
+    <div *ngIf="loginForm.get(['email']).errors.email">
       Email not validate
     </div>
   </div>
@@ -19,15 +19,15 @@
       formControlName="password">
   </div>
   <div
-    *ngIf="getErrors(['password'])"
+    *ngIf="hasErrors(['password'])"
     class="alert alert-danger">
-    <div *ngIf="getControl(['password']).errors.required">
+    <div *ngIf="loginForm.get(['password']).errors.required">
       Password is required.
     </div>
-    <div *ngIf="getControl(['password']).errors.minlength">
+    <div *ngIf="loginForm.get(['password']).errors.minlength">
       Password minLength 6
     </div>
-    <div *ngIf="getControl(['password']).errors.pattern">
+    <div *ngIf="loginForm.get(['password']).errors.pattern">
       Password not validate
     </div>
   </div>

@@ -9,15 +9,12 @@ import { UserService } from './shared/services/user.service';
 })
 export class AppComponent {
   title: string = 'BlackJackClient';
-  snapshot: string;
   status: boolean;
-  subscription:Subscription;
-  
   constructor(private userService:UserService) {   
    
    }
    
   ngOnInit() {
-    this.subscription = this.userService.authNavStatus$.subscribe(status => this.status = status);
+     this.userService.authNavStatus.subscribe(status => this.status = status);
   }
 }
