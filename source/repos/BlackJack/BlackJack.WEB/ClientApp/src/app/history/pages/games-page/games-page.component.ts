@@ -1,19 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Status } from 'src/app/shared/enums/status-type.enum.view';
 import { GameGetAllGamesHistoryView, GetAllGamesHistoryView } from 'src/app/shared/entities/history/get-all-games-history.view';
-import { CardGetPlayerStepsHistoryViewItem, GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
-import { CardGetBotStepsHistoryViewItem, BotGetBotStepsHistoryViewItem, GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
+import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
+import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
 import { HistoryService } from 'src/app/shared/services/history.service';
 import { PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
-import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-
-interface State {
-  page: number;
-  pageSize: number;
-}
+import { Observable, BehaviorSubject, Subject, of, interval, ReplaySubject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
+import { TableStateHistoryView } from 'src/app/shared/entities/history/table-state-history.view';
 @Component({
   selector: 'app-games-page',
   templateUrl: './games-page.component.html',
@@ -22,56 +18,54 @@ interface State {
 })
 
 export class UserGamesComponent implements OnInit {
-  private _search = new Subject<void>();
-  private _state: State = {
-    page: 1,
-    pageSize: 8
-  };
-  error: string = ''
-  showPlayerTable = false;
-  showBotTable = false;
-  showMainTable = true;
-  public statusEnum: Status;
-  getAllGamesHistory: GetAllGamesHistoryView;
-  getPlayerStepsHistory: GetPlayerStepsHistoryView;
-  getBotStepsHistory: GetBotStepsHistoryView;
-  listCount = new BehaviorSubject<number>(0);
-  headBotSteps = ['Cards', '', '', ''];
-  headBots = ['Bot name', 'Steps', '', '', '', ''];
-  headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
-  headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-  games$: Observable<GameGetAllGamesHistoryView[]>;
-  filter = new FormControl('');
+  private tableState: TableStateHistoryView = {page: 1, pageSize: 8};
+  private showPlayerTable = false;
+  private showBotTable = false;
+  private showMainTable = true;
+  private statusEnum: Status;
+  private searchOnTable = new Subject<void>();
+  private componetDestroyed: Subject<boolean> = new Subject<boolean>();
+  private playerStepsSubject = new ReplaySubject<GetPlayerStepsHistoryView>(1);
+  private botStepsSubject = new ReplaySubject<GetBotStepsHistoryView>(1);
+  private games: Observable<GameGetAllGamesHistoryView[]>;
+  private playerSteps: Observable<GetPlayerStepsHistoryView> = this.playerStepsSubject.asObservable();
+  private botSteps: Observable<GetBotStepsHistoryView> = this.botStepsSubject.asObservable();
+  private getAllGamesHistory: GetAllGamesHistoryView;
+  private listCount = new BehaviorSubject<number>(0);
+  private headBotSteps = ['Cards', '', '', ''];
+  private headBots = ['Bot name', 'Steps', '', '', '', ''];
+  private headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
+  private headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
+  private filter = new FormControl('');
+
+  private get page() { return this.tableState.page; }
+  private get pageSize() { return this.tableState.pageSize; }
+  private set page(page: number) { this.pagination({ page }); }
+  private set pageSize(pageSize: number) { this.pagination({ pageSize }); }
+
   constructor(private historyService: HistoryService, private pipe: DecimalPipe) {
   }
   ngOnInit() {
-    this.historyService.getGamesByUser().subscribe(x => {
-      this.getAllGamesHistory = x;
-      this.getAllGamesHistory.games.forEach(x => {
+    this.initTable();
+  }
+  private initTable():void{
+    this.historyService.getGamesByUser()
+    .pipe(takeUntil(this.componetDestroyed))
+    .subscribe((x:GetAllGamesHistoryView) => {
+      x.games.forEach(x => {
         x.status = Status[x.status];
       });
-      this.games$ = this.filter.valueChanges.pipe(
-        startWith(''),
-        map(text => this.search(text, this.pipe))
-      );
-    }, error => error);
+      this.getAllGamesHistory = x;
+      this.games = this.filterOfTable();
+    }); 
   }
-
-  get page() { return this._state.page; }
-  get pageSize() { return this._state.pageSize; }
-
-  set page(page: number) { this._set({ page }); }
-  set pageSize(pageSize: number) { this._set({ pageSize }); }
-
-  private _set(patch: Partial<State>) {
-    Object.assign(this._state, patch);
-    this._search.next();
-    this.games$ = this.filter.valueChanges.pipe(
+  private filterOfTable():Observable<GameGetAllGamesHistoryView[]>{
+    return this.filter.valueChanges.pipe(
       startWith(''),
       map(text => this.search(text, this.pipe))
     );
   }
-  search(text: string, pipe: PipeTransform): GameGetAllGamesHistoryView[] {
+  private search(text: string, pipe: PipeTransform): GameGetAllGamesHistoryView[] {
     let result = this.getAllGamesHistory.games.filter(x => {
       const term = text.toLowerCase();
       return x.status.toLowerCase().includes(term)
@@ -79,29 +73,42 @@ export class UserGamesComponent implements OnInit {
         || x.winner.toLowerCase().includes(term);
     });
     this.listCount = new BehaviorSubject<number>(result.length);
-    return result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+    let response = result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+    return response;
   }
-  bot(f) {
-    this.historyService.getBotSteps(f).subscribe(x => {
-      this.getBotStepsHistory = x;
-    }, error => error);
+  private pagination(patch: Partial<TableStateHistoryView>) {
+    Object.assign(this.tableState, patch);
+    this.searchOnTable.next();
+    this.games = this.filterOfTable();
+  }
+  private bot(id):void {
+    this.historyService.getBotSteps(id)
+    .pipe(takeUntil(this.componetDestroyed))
+    .subscribe(x => {
+      this.botStepsSubject.next(x);
+    });
     this.showBotTable = true;
     this.showPlayerTable = false;
     this.showMainTable = false;
   }
-  player(x) {
-    this.historyService.getPlayerSteps(x).subscribe(x => {
-      this.getPlayerStepsHistory = x;
-    }, error => error);
+  private player(id):void {
+   this.historyService.getPlayerSteps(id)
+   .pipe(takeUntil(this.componetDestroyed))
+   .subscribe(x => {
+    this.playerStepsSubject.next(x);
+    });
     this.showPlayerTable = true;
     this.showBotTable = false;
     this.showMainTable = false;
   }
-  hideTable() {
+  private hideTable():void {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;
-    this.getPlayerStepsHistory.steps = null;
-    this.getBotStepsHistory.bots = null;
+    this.botStepsSubject.next(null);
+    this.playerStepsSubject.next(null);
+  }
+  ngOnDestroy() {
+    this.componetDestroyed.next(true);
   }
 }

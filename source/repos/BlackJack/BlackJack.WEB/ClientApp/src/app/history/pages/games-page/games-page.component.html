@@ -5,7 +5,7 @@
   </div>
 </form>
 <div class="tableFixHead">
-  <div *ngIf="showMainTable">
+  <div [hidden]="!showMainTable">
     <table>
       <thead>
         <tr>
@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let x of games$ | async">
+        <tr *ngFor="let x of games | async">
           <td>
             <ngb-highlight [result]="x.numberOfBots | number" [term]="filter.value"></ngb-highlight>
           </td>
@@ -44,8 +44,8 @@
         </tr>
       </thead>
       <tbody>
-        <td>{{getPlayerStepsHistory.name}}</td>
-        <td colspan="" *ngFor="let d of getPlayerStepsHistory.steps">
+        <td>{{(playerSteps | async)?.name}}</td>
+        <td colspan="" *ngFor="let d of (playerSteps | async)?.steps">
           <img src="../../../assets/cards/{{d.rank}}_{{d.suit}}.svg">
         </td>
       </tbody>
@@ -62,7 +62,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let e of getBotStepsHistory.bots">
+        <tr *ngFor="let e of (botSteps | async)?.bots">
           <td>{{e.name}}</td>
           <td *ngFor="let q of e.steps">
             <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">

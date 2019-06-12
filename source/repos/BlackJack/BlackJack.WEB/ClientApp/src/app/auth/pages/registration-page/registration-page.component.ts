@@ -4,7 +4,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
 import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
-import { UserGetAllAccountViewItem, GetAllAccountView } from 'src/app/shared/entities/auth/get-all-account.view';
+import { GetAllAccountView } from 'src/app/shared/entities/auth/get-all-account.view';
 import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -28,7 +28,6 @@ export class RegistrationAuthComponent implements OnInit {
     this.userService.registerUsers()
     .pipe(takeUntil(this.componetDestroyed))
     .subscribe(x => {
-      debugger
       this.getAllAccounts = x;
     });
   }
@@ -46,7 +45,7 @@ export class RegistrationAuthComponent implements OnInit {
   private hasErrors(name:string): boolean {
     return this.registerForm.get(name).invalid && (this.registerForm.get(name).dirty || this.registerForm.get(name).touched);
   }
-  private registration() {
+  private registration():void {
     let registerAccount: RegisterAccountView = {
       email:this.registerForm.value['email'],
       name:this.registerForm.value['name'],
@@ -61,7 +60,7 @@ export class RegistrationAuthComponent implements OnInit {
     .length;
     if (duplicateUser) {
       let errorMessage = { message: 'Username "' + registerAccount.email + '" is already taken' };
-      return this.toastrService.warning(errorMessage.message);
+      this.toastrService.warning(errorMessage.message);
     }
     if (this.registerForm.invalid) {
       return;

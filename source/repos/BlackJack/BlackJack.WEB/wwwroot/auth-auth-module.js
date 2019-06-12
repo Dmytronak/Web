@@ -291,7 +291,6 @@ var RegistrationAuthComponent = /** @class */ (function () {
         this.userService.registerUsers()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            debugger;
             _this.getAllAccounts = x;
         });
     };
@@ -325,7 +324,7 @@ var RegistrationAuthComponent = /** @class */ (function () {
             .length;
         if (duplicateUser) {
             var errorMessage = { message: 'Username "' + registerAccount.email + '" is already taken' };
-            return this.toastrService.warning(errorMessage.message);
+            this.toastrService.warning(errorMessage.message);
         }
         if (this.registerForm.invalid) {
             return;

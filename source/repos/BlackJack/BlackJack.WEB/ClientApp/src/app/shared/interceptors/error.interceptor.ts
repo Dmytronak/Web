@@ -4,15 +4,11 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { ToastrService, GlobalConfig} from 'ngx-toastr';
+import { ToastrConfig } from '../configs/toastr.config';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    private options: GlobalConfig;
-    constructor(private readonly userService: UserService, private readonly router: Router, private readonly toastr:ToastrService) {
-        this.options = this.toastr.toastrConfig;
-        this.options.preventDuplicates = true;
-        this.options.progressBar = true;
+    constructor(private readonly userService: UserService, private readonly router: Router, private readonly toastr:ToastrConfig) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

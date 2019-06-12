@@ -351,6 +351,51 @@ var MainHeaderComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/shared/configs/toastr.config.ts":
+/*!*************************************************!*\
+  !*** ./src/app/shared/configs/toastr.config.ts ***!
+  \*************************************************/
+/*! exports provided: ToastrConfig */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToastrConfig", function() { return ToastrConfig; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+var ToastrConfig = /** @class */ (function () {
+    function ToastrConfig(toastr) {
+        this.toastr = toastr;
+        this.options = this.toastr.toastrConfig;
+        this.options.preventDuplicates = true;
+        this.options.progressBar = true;
+    }
+    ToastrConfig.prototype.error = function (error) {
+        return this.toastr.error(error);
+    };
+    ToastrConfig.prototype.info = function (error) {
+        return this.toastr.info(error);
+    };
+    ToastrConfig.prototype.warning = function (error) {
+        return this.toastr.warning(error);
+    };
+    ToastrConfig = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [ngx_toastr__WEBPACK_IMPORTED_MODULE_1__["ToastrService"]])
+    ], ToastrConfig);
+    return ToastrConfig;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/guards/only-logged-in-users.guard.ts":
 /*!*************************************************************!*\
   !*** ./src/app/shared/guards/only-logged-in-users.guard.ts ***!
@@ -449,7 +494,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../services/user.service */ "./src/app/shared/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var _configs_toastr_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../configs/toastr.config */ "./src/app/shared/configs/toastr.config.ts");
 
 
 
@@ -462,9 +507,6 @@ var ErrorInterceptor = /** @class */ (function () {
         this.userService = userService;
         this.router = router;
         this.toastr = toastr;
-        this.options = this.toastr.toastrConfig;
-        this.options.preventDuplicates = true;
-        this.options.progressBar = true;
     }
     ErrorInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
@@ -487,7 +529,7 @@ var ErrorInterceptor = /** @class */ (function () {
     };
     ErrorInterceptor = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"], ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"], _configs_toastr_config__WEBPACK_IMPORTED_MODULE_6__["ToastrConfig"]])
     ], ErrorInterceptor);
     return ErrorInterceptor;
 }());
