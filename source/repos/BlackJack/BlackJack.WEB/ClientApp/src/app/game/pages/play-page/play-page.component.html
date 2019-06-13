@@ -6,18 +6,25 @@
                     <th colspan="6">New Game</th>
                 </tr>
                 <tr>
-                    <th> <label>Game status : {{ playGame.status }}</label></th>
-                    <th> <label>Winner : {{ playGame.winner }} </label></th>
                     <th>
-                        <div *ngIf="gameExisting">
-                            <button class="btn btn-success" (click)="continue()"><i
-                                    class="fas fa-plus"></i></button>
+                        <label *ngIf="playStatus">Game status : {{ (playView | async)?.status }}</label>
+                        <label *ngIf="continueStatus">Game status : {{ (continueView | async)?.status }}</label>
+                        <label *ngIf="endStatus">Game status : {{ (endView | async)?.status }}</label>
+                    </th>
+                    <th>
+                        <label *ngIf="playStatus">Winner : {{ (playView | async)?.winner }} </label>
+                        <label *ngIf="continueStatus">Winner : {{ (continueView | async)?.winner }} </label>
+                        <label *ngIf="endStatus">Winner : {{ (endView | async)?.winner }} </label>
+
+                    </th>
+                    <th>
+                        <div *ngIf="game">
+                            <button class="btn btn-success" (click)="continue()"><i class="fas fa-plus"></i></button>
                             <button class="btn btn-danger" (click)="end()"><i class="fas fa-times"></i></button>
                             <button class="btn btn-info" (click)="backToHome()"><i
                                     class="fa fa-arrow-left"></i></button>
                         </div>
-                        <div *ngIf="!gameExisting">
-                            <button class="btn btn-primary" (click)="playAgain()">Play again with the same parametrs?</button>
+                        <div *ngIf="!game">
                             <button class="btn btn-info" (click)="backToHome()"><i
                                     class="fa fa-arrow-left"></i></button>
                         </div>
@@ -25,42 +32,76 @@
                 </tr>
             </thead>
         </table>
-<div>
-</div>
+        <div>
+        </div>
         <table class="table">
             <thead class="thead-dark">
                 <th *ngFor="let head of headPlayerSteps">{{head}}</th>
                 <th colspan="4"></th>
             </thead>
             <tbody>
-                <tr><th>{{playGame.player.name}}</th>
-                <td>
-                    <tr *ngFor="let q of playGame.player.cards">
-                            <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                <tr>
+                    <th *ngIf="playStatus">{{ (playView | async)?.player.status }}</th>
+                    <th *ngIf="continueStatus">{{ (continueView | async)?.player.status }}</th>
+                    <th *ngIf="endStatus">{{ (endView | async)?.player.status }}</th>
+                    <td *ngIf="playStatus">
+                <tr *ngFor="let q of (playView | async)?.player.cards">
+                    <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                </tr>
+                </td>
+                <td *ngIf="continueStatus">
+                    <tr *ngFor="let q of (continueView | async)?.player.cards">
+                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
                     </tr>
                 </td>
-            </tr>
+                <td *ngIf="endStatus">
+                    <tr *ngFor="let q of (endView | async)?.player.cards">
+                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                    </tr>
+                </td>
+                </tr>
             </tbody>
             <thead class="thead-dark">
                 <th colspan="8" *ngFor="let head of headBots">{{head}}</th>
             </thead>
-            <thead class="thead-dark">
-                <th *ngFor="let e of playGame.bots">{{e.name}}</th>
+            <thead class="thead-dark" *ngIf="playStatus">
+                <th *ngFor="let e of (playView | async)?.bots">{{e.name}}</th>
                 <th colspan="8"></th>
             </thead>
-                <tbody>
-                    <td *ngFor="let e of playGame.bots">
-                        <tr *ngFor="let q of e.cards">
-                            <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
-                        </tr>
-                    </td>
-                </tbody>
+            <thead class="thead-dark" *ngIf="continueStatus">
+                <th *ngFor="let e of (continueView | async)?.bots">{{e.name}}</th>
+                <th colspan="8"></th>
+            </thead>
+            <thead class="thead-dark" *ngIf="endStatus">
+                <th *ngFor="let e of (endView | async)?.bots">{{e.name}}</th>
+                <th colspan="8"></th>
+            </thead>
+
+            <tbody *ngIf="playStatus">
+                <td *ngFor="let e of (playView | async)?.bots">
+                    <tr *ngFor="let q of e.cards">
+                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                    </tr>
+                </td>
+            </tbody>
+            <tbody *ngIf="continueStatus">
+                <td *ngFor="let e of (continueView | async)?.bots">
+                    <tr *ngFor="let q of e.cards">
+                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                    </tr>
+                </td>
+            </tbody>
+            <tbody *ngIf="endStatus">
+                <td *ngFor="let e of (endView | async)?.bots">
+                    <tr *ngFor="let q of e.cards">
+                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                    </tr>
+                </td>
+            </tbody>
         </table>
     </div>
 </div>
-
 <div *ngIf="!haveActiveGame">
     <p><label>Back to home : </label></p>
-    <button class="btn btn-success" (click)="backToHome()"><i
-        class="fa fa-arrow-left"></i></button>
+    <button class="btn btn-success" (click)="backToHome()"><i class="fa fa-arrow-left"></i></button>
 </div>

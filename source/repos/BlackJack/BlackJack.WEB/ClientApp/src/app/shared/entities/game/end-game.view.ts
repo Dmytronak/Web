@@ -1,5 +1,4 @@
 export class EndGameView {
-    numberOfBots: number;
     status: string;
     winner: string;
     player:PlayerEndGameView;

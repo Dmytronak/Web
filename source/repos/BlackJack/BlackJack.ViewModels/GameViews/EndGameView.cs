@@ -7,7 +7,6 @@ namespace BlackJack.ViewModels.GameViews
     {
         public StatusType Status { get; set; }
         public string Winner { get; set; }
-
         public PlayerEndGameView Player { get; set; }
         public List<BotEndGameViewItem> Bots { get; set; }
 

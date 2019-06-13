@@ -4,7 +4,9 @@ import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
 import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
-import { PlayGameView, BotPlayGameViewItem } from 'src/app/shared/entities/game/play-game.view';
+import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-play-page',
@@ -12,78 +14,78 @@ import { PlayGameView, BotPlayGameViewItem } from 'src/app/shared/entities/game/
   styleUrls: ['./play-page.component.scss']
 })
 export class PlayGameComponent implements OnInit {
-  error: string = '';
-  gameExisting: boolean = false;
-  haveActiveGame: boolean = false;
-  headBotSteps = ['Cards'];
-  headBots = ['Bots'];
-  headPlayerSteps = ['Player name', 'Player cards'];
-  headElements = ['Number of bots', 'Status', 'Winner', ''];
-  playGame: PlayGameView;
+  private componetDestroyed: Subject<boolean> = new Subject<boolean>();
+  private playStatus: boolean = false;
+  private continueStatus: boolean = false;
+  private endStatus: boolean = false;
+  private game: boolean = false;
+  private haveActiveGame: boolean = false;
+  private readonly headBotSteps = ['Cards'];
+  private readonly headBots = ['Bots'];
+  private readonly headPlayerSteps = ['Player name', 'Player cards'];
+  private readonly headElements = ['Number of bots', 'Status', 'Winner', ''];
+  private endSubject = new BehaviorSubject<EndGameView>(new EndGameView);
+  private endView: Observable<EndGameView> = this.endSubject.asObservable();
+  private continueSubject = new BehaviorSubject<ContinueGameView>(new ContinueGameView);
+  private continueView: Observable<ContinueGameView> = this.continueSubject.asObservable();
+  private playSubject = new BehaviorSubject<PlayGameView>(new PlayGameView);
+  private playView: Observable<PlayGameView> = this.playSubject.asObservable();
+
   constructor(private gameService: GameService, private router: Router) {
   }
 
   ngOnInit() {
+    this.gameInit();
+  }
+  private gameInit(): void {
     this.gameService.getActiveGame()
+      .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: PlayGameView) => {
-        this.playGame = x;
-        this.playGame.status = Status[x.status];
-        this.gameExisting = true;
+        x.status = Status[x.status];
+        this.game = true;
         this.haveActiveGame = true;
-        if (this.playGame.winner !== 'No one') {
-          this.gameExisting = false;
+        if (x.winner !== 'No one') {
+          this.game = false;
         }
-      },
-        err => {
-          this.haveActiveGame = false
-        });
+        this.playStatus = true;
+        this.playSubject.next(x);
+      }, 
+      errorForStatus => {
+        this.haveActiveGame = false;
+      });
   }
-  continue() {
+  private continue(): void {
     this.gameService.continue()
+      .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: ContinueGameView) => {
-        if (x) {
-          this.playGame.player.cards = x.player.cards;
-          this.playGame.status = Status[x.status];
-          this.playGame.bots = x.bots;
-          this.gameExisting = true;
-          if (x.winner !== 'No one') {
-            this.gameExisting = false;
-          }
+        x.status = Status[x['status']]
+        this.game = true;
+        if (x.winner !== 'No one') {
+          this.game = false;
+          this.playStatus = false;
+          this.continueStatus = true;
+          this.endStatus = false;
+          this.continueSubject.next(x);
         }
-      },
-        err => {
-          this.error = err;
-        });
+      });
+
   }
-  end() {
+  private end(): void {
     this.gameService.end()
+      .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: EndGameView) => {
-        if (x) {
-          this.playGame.player.cards = x.player.cards;
-          this.playGame.status = Status[x.status];
-          this.playGame.bots = x.bots;
-          this.gameExisting = false;
-        }
-      },
-        err => {
-          this.error = err;
-        });
+        x.status = Status[x['status']]
+        this.game = false;
+        this.playStatus = false;
+        this.continueStatus = false;
+        this.endStatus = true;
+        this.endSubject.next(x);
+      });
   }
-  backToHome() {
+  backToHome(): void {
     this.router.navigate(['/game/home']);
   }
-  playAgain() {
-    let numberOfBots = this.playGame.numberOfBots;
-    this.gameService.play(numberOfBots)
-      .subscribe((x: PlayGameView) => {
-        if (x) {
-          this.playGame = x;
-          this.playGame.status = Status[x['status']]
-          this.gameExisting = true;
-        }
-      },
-        err => {
-          this.error = err;
-        });
+  ngOnDestroy() {
+    this.componetDestroyed.next(true);
   }
 }

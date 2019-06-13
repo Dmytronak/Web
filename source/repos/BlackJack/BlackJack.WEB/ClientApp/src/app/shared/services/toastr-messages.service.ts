@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
   })
-export class ToastrConfig {
+export class ToastrMessagesService {
     private options: GlobalConfig;
     constructor(private readonly toastr:ToastrService) {
         this.options = this.toastr.toastrConfig;
@@ -19,5 +19,8 @@ export class ToastrConfig {
     }
     warning(error:string): ActiveToast<any>{
       return this.toastr.warning(error);
-    }
+    } 
+    success(error:string): ActiveToast<any>{
+        return this.toastr.success(error);
+      }
 }

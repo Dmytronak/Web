@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HistoryService {
-  baseUrl: string = '';
-  constructor(private http: HttpClient) {
+  private baseUrl: string = '';
+  constructor(private readonly http: HttpClient) {
     this.baseUrl = environment.baseUrl;
    }
    getGamesByUser():Observable<GetAllGamesHistoryView>{

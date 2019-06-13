@@ -145,7 +145,7 @@ var HistoryModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2> History of user games</h2>\r\n<form>\r\n  <div class=\"form-group form-inline\">\r\n    History search: <input class=\"form-control ml-2\" type=\"text\" [formControl]=\"filter\" />\r\n  </div>\r\n</form>\r\n<div class=\"tableFixHead\">\r\n  <div [hidden]=\"!showMainTable\">\r\n    <table>\r\n      <thead>\r\n        <tr>\r\n          <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <tr *ngFor=\"let x of games | async\">\r\n          <td>\r\n            <ngb-highlight [result]=\"x.numberOfBots | number\" [term]=\"filter.value\"></ngb-highlight>\r\n          </td>\r\n          <td>\r\n            <ngb-highlight [result]=\"x.status\" [term]=\"filter.value\"></ngb-highlight>\r\n          </td>\r\n          <td>\r\n            <ngb-highlight [result]=\"x.winner\" [term]=\"filter.value\"></ngb-highlight>\r\n          </td>\r\n          <td>\r\n            <button class=\"btn btn-info\" (click)=\"bot(x)\">\r\n              <i class=\"fas fa-robot\"></i>\r\n            </button>\r\n            <button class=\"btn btn-success\" (click)=\"player(x)\">\r\n              <i class=\"fas fa-user\"></i>\r\n            </button>\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n    <ngb-pagination [collectionSize]=\"listCount | async\" [(page)]=\"page\" [pageSize]=\"pageSize\" [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n  </div>\r\n  <div *ngIf=\"showPlayerTable\">\r\n    <table class=\"table\">\r\n      <thead class=\"thead-dark\">\r\n        <tr>\r\n          <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <td>{{(playerSteps | async)?.name}}</td>\r\n        <td colspan=\"\" *ngFor=\"let d of (playerSteps | async)?.steps\">\r\n          <img src=\"../../../assets/cards/{{d.rank}}_{{d.suit}}.svg\">\r\n        </td>\r\n      </tbody>\r\n    </table>\r\n    <button class=\"btn btn-danger\" (click)=\"hideTable()\">\r\n      <i class=\"fa fa-arrow-left\"></i>\r\n    </button>\r\n  </div>\r\n  <div *ngIf=\"showBotTable\">\r\n    <table class=\"table\">\r\n      <thead class=\"thead-dark\">\r\n        <tr>\r\n          <th *ngFor=\"let head of headBots\">{{head}}</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <tr *ngFor=\"let e of (botSteps | async)?.bots\">\r\n          <td>{{e.name}}</td>\r\n          <td *ngFor=\"let q of e.steps\">\r\n            <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n    <button class=\"btn btn-danger\" (click)=\"hideTable()\">\r\n      <i class=\"fa fa-arrow-left\"></i>\r\n    </button>\r\n  </div>\r\n</div>"
+module.exports = "<h2> History of user games</h2>\r\n<form>\r\n  <div class=\"form-group form-inline\">\r\n    History search: <input class=\"form-control ml-2\" type=\"text\" [formControl]=\"filter\" />\r\n  </div>\r\n</form>\r\n<div class=\"tableFixHead\">\r\n  <div [hidden]=\"!showMainTable\">\r\n   \r\n        <table>\r\n            <thead>\r\n              <tr>\r\n                <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let x of games | async\">\r\n                <td>\r\n                  <ngb-highlight [result]=\"x.numberOfBots | number\" [term]=\"filter.value\"></ngb-highlight>\r\n                </td>\r\n                <td>\r\n                  <ngb-highlight [result]=\"x.status\" [term]=\"filter.value\"></ngb-highlight>\r\n                </td>\r\n                <td>\r\n                  <ngb-highlight [result]=\"x.winner\" [term]=\"filter.value\"></ngb-highlight>\r\n                </td>\r\n                <td>\r\n                  <button class=\"btn btn-info\" (click)=\"bot(x)\">\r\n                    <i class=\"fas fa-robot\"></i>\r\n                  </button>\r\n                  <button class=\"btn btn-success\" (click)=\"player(x)\">\r\n                    <i class=\"fas fa-user\"></i>\r\n                  </button>\r\n                </td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n          <ngb-pagination [collectionSize]=\"listCount | async\" [(page)]=\"page\" [pageSize]=\"pageSize\" [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n  </div>\r\n  <div *ngIf=\"showPlayerTable\">\r\n    <table class=\"table\">\r\n      <thead class=\"thead-dark\">\r\n        <tr>\r\n          <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <td>{{(playerSteps | async)?.name}}</td>\r\n        <td colspan=\"\" *ngFor=\"let d of (playerSteps | async)?.steps\">\r\n          <img src=\"../../../assets/cards/{{d.rank}}_{{d.suit}}.svg\">\r\n        </td>\r\n      </tbody>\r\n    </table>\r\n    <button class=\"btn btn-danger\" (click)=\"hideTable()\">\r\n      <i class=\"fa fa-arrow-left\"></i>\r\n    </button>\r\n  </div>\r\n  <div *ngIf=\"showBotTable\">\r\n    <table class=\"table\">\r\n      <thead class=\"thead-dark\">\r\n        <tr>\r\n          <th *ngFor=\"let head of headBots\">{{head}}</th>\r\n        </tr>\r\n      </thead>\r\n      <tbody>\r\n        <tr *ngFor=\"let e of (botSteps | async)?.bots\">\r\n          <td>{{e.name}}</td>\r\n          <td *ngFor=\"let q of e.steps\">\r\n            <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n          </td>\r\n        </tr>\r\n      </tbody>\r\n    </table>\r\n    <button class=\"btn btn-danger\" (click)=\"hideTable()\">\r\n      <i class=\"fa fa-arrow-left\"></i>\r\n    </button>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -173,11 +173,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
-/* harmony import */ var src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/history.service */ "./src/app/shared/services/history.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_entities_history_get_player_steps_history_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/entities/history/get-player-steps-history.view */ "./src/app/shared/entities/history/get-player-steps-history.view.ts");
+/* harmony import */ var src_app_shared_entities_history_get_bot_steps_history_view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/entities/history/get-bot-steps-history.view */ "./src/app/shared/entities/history/get-bot-steps-history.view.ts");
+/* harmony import */ var src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/history.service */ "./src/app/shared/services/history.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
+
 
 
 
@@ -194,18 +198,18 @@ var UserGamesComponent = /** @class */ (function () {
         this.showPlayerTable = false;
         this.showBotTable = false;
         this.showMainTable = true;
-        this.searchOnTable = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
-        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
-        this.playerStepsSubject = new rxjs__WEBPACK_IMPORTED_MODULE_6__["ReplaySubject"](1);
-        this.botStepsSubject = new rxjs__WEBPACK_IMPORTED_MODULE_6__["ReplaySubject"](1);
+        this.searchOnTable = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
+        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
+        this.playerStepsSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_history_get_player_steps_history_view__WEBPACK_IMPORTED_MODULE_3__["GetPlayerStepsHistoryView"]);
+        this.botStepsSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_history_get_bot_steps_history_view__WEBPACK_IMPORTED_MODULE_4__["GetBotStepsHistoryView"]);
         this.playerSteps = this.playerStepsSubject.asObservable();
         this.botSteps = this.botStepsSubject.asObservable();
-        this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](0);
+        this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](0);
         this.headBotSteps = ['Cards', '', '', ''];
         this.headBots = ['Bot name', 'Steps', '', '', '', ''];
         this.headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
         this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-        this.filter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
+        this.filter = new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('');
     }
     Object.defineProperty(UserGamesComponent.prototype, "page", {
         get: function () { return this.tableState.page; },
@@ -225,7 +229,7 @@ var UserGamesComponent = /** @class */ (function () {
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
         this.historyService.getGamesByUser()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             x.games.forEach(function (x) {
                 x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
@@ -236,7 +240,7 @@ var UserGamesComponent = /** @class */ (function () {
     };
     UserGamesComponent.prototype.filterOfTable = function () {
         var _this = this;
-        return this.filter.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])(''), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (text) { return _this.search(text, _this.pipe); }));
+        return this.filter.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["startWith"])(this.filter.value), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (text) { return _this.search(text, _this.pipe); }));
     };
     UserGamesComponent.prototype.search = function (text, pipe) {
         var result = this.getAllGamesHistory.games.filter(function (x) {
@@ -245,7 +249,7 @@ var UserGamesComponent = /** @class */ (function () {
                 || pipe.transform(x.numberOfBots).includes(term)
                 || x.winner.toLowerCase().includes(term);
         });
-        this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](result.length);
+        this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](result.length);
         var response = result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
         return response;
     };
@@ -257,7 +261,7 @@ var UserGamesComponent = /** @class */ (function () {
     UserGamesComponent.prototype.bot = function (id) {
         var _this = this;
         this.historyService.getBotSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.botStepsSubject.next(x);
         });
@@ -268,7 +272,7 @@ var UserGamesComponent = /** @class */ (function () {
     UserGamesComponent.prototype.player = function (id) {
         var _this = this;
         this.historyService.getPlayerSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.playerStepsSubject.next(x);
         });
@@ -290,12 +294,73 @@ var UserGamesComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-games-page',
             template: __webpack_require__(/*! ./games-page.component.html */ "./src/app/history/pages/games-page/games-page.component.html"),
-            providers: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["DecimalPipe"]],
+            providers: [_angular_common__WEBPACK_IMPORTED_MODULE_6__["DecimalPipe"]],
             styles: [__webpack_require__(/*! ./games-page.component.scss */ "./src/app/history/pages/games-page/games-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_3__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["DecimalPipe"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_5__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_6__["DecimalPipe"]])
     ], UserGamesComponent);
     return UserGamesComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/entities/history/get-bot-steps-history.view.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/shared/entities/history/get-bot-steps-history.view.ts ***!
+  \***********************************************************************/
+/*! exports provided: GetBotStepsHistoryView, BotGetBotStepsHistoryViewItem, CardGetBotStepsHistoryViewItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetBotStepsHistoryView", function() { return GetBotStepsHistoryView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotGetBotStepsHistoryViewItem", function() { return BotGetBotStepsHistoryViewItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetBotStepsHistoryViewItem", function() { return CardGetBotStepsHistoryViewItem; });
+var GetBotStepsHistoryView = /** @class */ (function () {
+    function GetBotStepsHistoryView() {
+    }
+    return GetBotStepsHistoryView;
+}());
+
+var BotGetBotStepsHistoryViewItem = /** @class */ (function () {
+    function BotGetBotStepsHistoryViewItem() {
+    }
+    return BotGetBotStepsHistoryViewItem;
+}());
+
+var CardGetBotStepsHistoryViewItem = /** @class */ (function () {
+    function CardGetBotStepsHistoryViewItem() {
+    }
+    return CardGetBotStepsHistoryViewItem;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/entities/history/get-player-steps-history.view.ts":
+/*!**************************************************************************!*\
+  !*** ./src/app/shared/entities/history/get-player-steps-history.view.ts ***!
+  \**************************************************************************/
+/*! exports provided: GetPlayerStepsHistoryView, CardGetPlayerStepsHistoryViewItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetPlayerStepsHistoryView", function() { return GetPlayerStepsHistoryView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetPlayerStepsHistoryViewItem", function() { return CardGetPlayerStepsHistoryViewItem; });
+var GetPlayerStepsHistoryView = /** @class */ (function () {
+    function GetPlayerStepsHistoryView() {
+    }
+    return GetPlayerStepsHistoryView;
+}());
+
+var CardGetPlayerStepsHistoryViewItem = /** @class */ (function () {
+    function CardGetPlayerStepsHistoryViewItem() {
+    }
+    return CardGetPlayerStepsHistoryViewItem;
 }());
 
 

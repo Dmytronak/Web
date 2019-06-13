@@ -1,8 +1,8 @@
 <div>
-    <form #f="ngForm" class="form-group">
+    <form [formGroup]="playGameForm" (ngSubmit)="play()">
         <div>
             <label for="numberOfBots">Numbers Of Bots: </label>
-            <select class="form-control"name="numberOfBots" ngModel>
+            <select class="form-control" name="numberOfBots" formControlName="numberOfBots" placeholder="NumberOfBots">
                 <option value="" disabled>Choose a number</option>
                 <option>1</option>
                 <option>2</option>
@@ -10,20 +10,12 @@
                 <option>4</option>
                 <option>5</option>
             </select>
-    
         </div>
+            <div class="playGameForm" *ngIf="playStatus">
+                <button type="submit" class="btn btn-primary">Play Game</button>
+            </div>
     </form>
-    
-    <div *ngIf="gameExisting">
-       <button class="btn btn-primary" (click)="play(f.value)">Play Game</button>
-    </div>
-
-    <div *ngIf="haveActiveGame">
-      <label> You have active game already, you can`t start new</label>
-      <br>
-        <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
-    </div>
-    <div *ngIf="error" class="alert alert-danger" role="alert">
-        <strong>Oops!</strong> {{error}}
-    </div>
+    <div *ngIf="continueStatus">
+            <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
+        </div>
 </div>

@@ -4,11 +4,11 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
-import { ToastrConfig } from '../configs/toastr.config';
+import { ToastrMessagesService } from '../services/toastr-messages.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-    constructor(private readonly userService: UserService, private readonly router: Router, private readonly toastr:ToastrConfig) {
+    constructor(private readonly userService: UserService, private readonly router: Router, private readonly toastr:ToastrMessagesService) {
     }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

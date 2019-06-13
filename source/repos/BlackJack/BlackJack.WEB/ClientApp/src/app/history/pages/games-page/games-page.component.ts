@@ -25,17 +25,17 @@ export class UserGamesComponent implements OnInit {
   private statusEnum: Status;
   private searchOnTable = new Subject<void>();
   private componetDestroyed: Subject<boolean> = new Subject<boolean>();
-  private playerStepsSubject = new ReplaySubject<GetPlayerStepsHistoryView>(1);
-  private botStepsSubject = new ReplaySubject<GetBotStepsHistoryView>(1);
+  private playerStepsSubject = new BehaviorSubject<GetPlayerStepsHistoryView>(new GetPlayerStepsHistoryView );
+  private botStepsSubject = new BehaviorSubject<GetBotStepsHistoryView>(new GetBotStepsHistoryView);
   private games: Observable<GameGetAllGamesHistoryView[]>;
   private playerSteps: Observable<GetPlayerStepsHistoryView> = this.playerStepsSubject.asObservable();
   private botSteps: Observable<GetBotStepsHistoryView> = this.botStepsSubject.asObservable();
   private getAllGamesHistory: GetAllGamesHistoryView;
   private listCount = new BehaviorSubject<number>(0);
-  private headBotSteps = ['Cards', '', '', ''];
-  private headBots = ['Bot name', 'Steps', '', '', '', ''];
-  private headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
-  private headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
+  private readonly headBotSteps = ['Cards', '', '', ''];
+  private readonly headBots = ['Bot name', 'Steps', '', '', '', ''];
+  private readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
+  private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   private filter = new FormControl('');
 
   private get page() { return this.tableState.page; }
@@ -43,7 +43,7 @@ export class UserGamesComponent implements OnInit {
   private set page(page: number) { this.pagination({ page }); }
   private set pageSize(pageSize: number) { this.pagination({ pageSize }); }
 
-  constructor(private historyService: HistoryService, private pipe: DecimalPipe) {
+  constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe) {
   }
   ngOnInit() {
     this.initTable();
@@ -61,7 +61,7 @@ export class UserGamesComponent implements OnInit {
   }
   private filterOfTable():Observable<GameGetAllGamesHistoryView[]>{
     return this.filter.valueChanges.pipe(
-      startWith(''),
+      startWith(this.filter.value),
       map(text => this.search(text, this.pipe))
     );
   }

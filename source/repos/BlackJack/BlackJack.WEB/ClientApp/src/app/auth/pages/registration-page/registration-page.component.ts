@@ -6,9 +6,9 @@ import { MustMatch } from 'src/app/shared/helpers/must-match.helper';
 import { YearRange } from 'src/app/shared/helpers/year-range.helper';
 import { GetAllAccountView } from 'src/app/shared/entities/auth/get-all-account.view';
 import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
-import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ToastrMessagesService } from 'src/app/shared/services/toastr-messages.service';
 
 @Component({
   selector: 'app-registration-page',
@@ -21,7 +21,7 @@ export class RegistrationAuthComponent implements OnInit {
   private componetDestroyed: Subject<boolean> = new Subject<boolean>();
   
   constructor(private readonly userService: UserService, private readonly router: Router, private readonly formBuilder: FormBuilder,
-    private readonly toastrService: ToastrService) {
+    private readonly toastrService: ToastrMessagesService) {
   }
   ngOnInit() {
     this.initForms();
@@ -69,7 +69,7 @@ export class RegistrationAuthComponent implements OnInit {
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe(x => {
         if (x) {
-          this.toastrService.success('Email '+registerAccount.email +' is successfully register.','All set!');
+          this.toastrService.success('All set! Email '+registerAccount.email +' is successfully register.');
           this.router.navigate(['/auth/login']);
         }
       })

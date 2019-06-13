@@ -264,9 +264,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/helpers/must-match.helper */ "./src/app/shared/helpers/must-match.helper.ts");
 /* harmony import */ var src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/helpers/year-range.helper */ "./src/app/shared/helpers/year-range.helper.ts");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/shared/services/toastr-messages.service */ "./src/app/shared/services/toastr-messages.service.ts");
 
 
 
@@ -283,13 +283,13 @@ var RegistrationAuthComponent = /** @class */ (function () {
         this.router = router;
         this.formBuilder = formBuilder;
         this.toastrService = toastrService;
-        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
+        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
     }
     RegistrationAuthComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.initForms();
         this.userService.registerUsers()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.getAllAccounts = x;
         });
@@ -330,10 +330,10 @@ var RegistrationAuthComponent = /** @class */ (function () {
             return;
         }
         this.userService.register(registerAccount)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             if (x) {
-                _this.toastrService.success('Email ' + registerAccount.email + ' is successfully register.', 'All set!');
+                _this.toastrService.success('All set! Email ' + registerAccount.email + ' is successfully register.');
                 _this.router.navigate(['/auth/login']);
             }
         });
@@ -348,7 +348,7 @@ var RegistrationAuthComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ../../auth.component.scss */ "./src/app/auth/auth.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_7__["ToastrService"]])
+            src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_9__["ToastrMessagesService"]])
     ], RegistrationAuthComponent);
     return RegistrationAuthComponent;
 }());
