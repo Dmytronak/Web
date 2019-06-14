@@ -4,23 +4,26 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
   })
+
 export class ToastrMessagesService {
     private options: GlobalConfig;
     constructor(private readonly toastr:ToastrService) {
         this.options = this.toastr.toastrConfig;
-        this.options.preventDuplicates = true;
         this.options.progressBar = true;
+        this.options.closeButton = true;
+        this.options.preventDuplicates = true;
+        this.options.countDuplicates = true;
     }
-    error(error:string) : ActiveToast<any>{
-        return this.toastr.error(error);
+    error(message:string) : ActiveToast<any>{
+        return this.toastr.error(message,'Error!');
     }
-    info(error:string): ActiveToast<any>{
-        return this.toastr.info(error);
+    info(message:string): ActiveToast<any>{
+        return this.toastr.info(message,'Info!');
     }
-    warning(error:string): ActiveToast<any>{
-      return this.toastr.warning(error);
+    warning(message:string): ActiveToast<any>{
+      return this.toastr.warning(message,'Warning!');
     } 
-    success(error:string): ActiveToast<any>{
-        return this.toastr.success(error);
+    success(message:string): ActiveToast<any>{
+        return this.toastr.success(message,'Sucsess!');
       }
 }

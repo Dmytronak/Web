@@ -90,7 +90,7 @@ export class UserGamesComponent implements OnInit {
   private player(id):void {
    this.playerSteps = this.historyService.getPlayerSteps(id)
    .pipe(takeUntil(this.componetDestroyed));
-   this.playerSteps.subscribe();
+    this.playerSteps.subscribe();
     this.showPlayerTable = true;
     this.showBotTable = false;
     this.showMainTable = false;

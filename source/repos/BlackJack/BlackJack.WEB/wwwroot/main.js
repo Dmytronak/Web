@@ -602,20 +602,22 @@ var ToastrMessagesService = /** @class */ (function () {
     function ToastrMessagesService(toastr) {
         this.toastr = toastr;
         this.options = this.toastr.toastrConfig;
-        this.options.preventDuplicates = true;
         this.options.progressBar = true;
+        this.options.closeButton = true;
+        this.options.preventDuplicates = true;
+        this.options.countDuplicates = true;
     }
-    ToastrMessagesService.prototype.error = function (error) {
-        return this.toastr.error(error);
+    ToastrMessagesService.prototype.error = function (message) {
+        return this.toastr.error(message, 'Error!');
     };
-    ToastrMessagesService.prototype.info = function (error) {
-        return this.toastr.info(error);
+    ToastrMessagesService.prototype.info = function (message) {
+        return this.toastr.info(message, 'Info!');
     };
-    ToastrMessagesService.prototype.warning = function (error) {
-        return this.toastr.warning(error);
+    ToastrMessagesService.prototype.warning = function (message) {
+        return this.toastr.warning(message, 'Warning!');
     };
-    ToastrMessagesService.prototype.success = function (error) {
-        return this.toastr.success(error);
+    ToastrMessagesService.prototype.success = function (message) {
+        return this.toastr.success(message, 'Sucsess!');
     };
     ToastrMessagesService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
