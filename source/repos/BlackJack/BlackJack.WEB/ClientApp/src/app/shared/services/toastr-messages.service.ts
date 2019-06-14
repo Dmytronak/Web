@@ -18,7 +18,7 @@ export class ToastrMessagesService {
         return this.toastr.error(message,'Error!');
     }
     info(message:string): ActiveToast<any>{
-        return this.toastr.info(message,'Info!');
+        return this.toastr.info(message,'Dear user!');
     }
     warning(message:string): ActiveToast<any>{
       return this.toastr.warning(message,'Warning!');

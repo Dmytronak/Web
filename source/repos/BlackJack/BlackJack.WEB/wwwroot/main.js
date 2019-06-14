@@ -611,7 +611,7 @@ var ToastrMessagesService = /** @class */ (function () {
         return this.toastr.error(message, 'Error!');
     };
     ToastrMessagesService.prototype.info = function (message) {
-        return this.toastr.info(message, 'Info!');
+        return this.toastr.info(message, 'Dear user!');
     };
     ToastrMessagesService.prototype.warning = function (message) {
         return this.toastr.warning(message, 'Warning!');

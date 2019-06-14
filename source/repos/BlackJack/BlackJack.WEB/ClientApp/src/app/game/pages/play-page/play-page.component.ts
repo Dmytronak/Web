@@ -15,7 +15,7 @@ import { takeUntil, map } from 'rxjs/operators';
 })
 export class PlayGameComponent implements OnInit {
   private componetDestroyed: Subject<boolean> = new Subject<boolean>();
-  private numberOfBots:number;
+  private numberOfBots: number;
   private playStatus: boolean = false;
   private continueStatus: boolean = false;
   private endStatus: boolean = false;
@@ -51,10 +51,10 @@ export class PlayGameComponent implements OnInit {
         }
         this.playStatus = true;
         this.playSubject.next(x);
-      }, 
-      errorForStatus => {
-        this.haveActiveGame = false;
-      });
+      },
+        errorForStatus => {
+          this.haveActiveGame = false;
+        });
   }
   private continue(): void {
     this.gameService.continue()
@@ -87,6 +87,7 @@ export class PlayGameComponent implements OnInit {
   playAgain() {
     let numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
+      .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: PlayGameView) => {
         x.status = Status[x.status];
         this.game = true;
@@ -99,7 +100,7 @@ export class PlayGameComponent implements OnInit {
         this.playStatus = true;
         this.playSubject.next(x);
       });
-    }
+  }
   backToHome(): void {
     this.router.navigate(['/game/home']);
   }
