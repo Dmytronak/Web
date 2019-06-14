@@ -25,11 +25,9 @@ export class UserGamesComponent implements OnInit {
   private statusEnum: Status;
   private searchOnTable = new Subject<void>();
   private componetDestroyed: Subject<boolean> = new Subject<boolean>();
-  private playerStepsSubject = new BehaviorSubject<GetPlayerStepsHistoryView>(new GetPlayerStepsHistoryView );
-  private botStepsSubject = new BehaviorSubject<GetBotStepsHistoryView>(new GetBotStepsHistoryView);
   private games: Observable<GameGetAllGamesHistoryView[]>;
-  private playerSteps: Observable<GetPlayerStepsHistoryView> = this.playerStepsSubject.asObservable();
-  private botSteps: Observable<GetBotStepsHistoryView> = this.botStepsSubject.asObservable();
+  private playerSteps: Observable<GetPlayerStepsHistoryView>;
+  private botSteps: Observable<GetBotStepsHistoryView>;
   private getAllGamesHistory: GetAllGamesHistoryView;
   private listCount = new BehaviorSubject<number>(0);
   private readonly headBotSteps = ['Cards', '', '', ''];
@@ -82,21 +80,17 @@ export class UserGamesComponent implements OnInit {
     this.games = this.filterOfTable();
   }
   private bot(id):void {
-    this.historyService.getBotSteps(id)
-    .pipe(takeUntil(this.componetDestroyed))
-    .subscribe(x => {
-      this.botStepsSubject.next(x);
-    });
+    this.botSteps = this.historyService.getBotSteps(id)
+    .pipe(takeUntil(this.componetDestroyed));
+    this.botSteps.subscribe();
     this.showBotTable = true;
     this.showPlayerTable = false;
     this.showMainTable = false;
   }
   private player(id):void {
-   this.historyService.getPlayerSteps(id)
-   .pipe(takeUntil(this.componetDestroyed))
-   .subscribe(x => {
-    this.playerStepsSubject.next(x);
-    });
+   this.playerSteps = this.historyService.getPlayerSteps(id)
+   .pipe(takeUntil(this.componetDestroyed));
+   this.playerSteps.subscribe();
     this.showPlayerTable = true;
     this.showBotTable = false;
     this.showMainTable = false;
@@ -105,8 +99,6 @@ export class UserGamesComponent implements OnInit {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;
-    this.botStepsSubject.next(null);
-    this.playerStepsSubject.next(null);
   }
   ngOnDestroy() {
     this.componetDestroyed.next(true);

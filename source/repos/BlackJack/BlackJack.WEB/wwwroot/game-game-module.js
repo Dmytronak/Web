@@ -263,7 +263,7 @@ var HomeGameComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"haveActiveGame\">\r\n    <div class=\"row\">\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <tr>\r\n                    <th colspan=\"6\">New Game</th>\r\n                </tr>\r\n                <tr>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Game status : {{ (playView | async)?.status }}</label>\r\n                        <label *ngIf=\"continueStatus\">Game status : {{ (continueView | async)?.status }}</label>\r\n                        <label *ngIf=\"endStatus\">Game status : {{ (endView | async)?.status }}</label>\r\n                    </th>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Winner : {{ (playView | async)?.winner }} </label>\r\n                        <label *ngIf=\"continueStatus\">Winner : {{ (continueView | async)?.winner }} </label>\r\n                        <label *ngIf=\"endStatus\">Winner : {{ (endView | async)?.winner }} </label>\r\n\r\n                    </th>\r\n                    <th>\r\n                        <div *ngIf=\"game\">\r\n                            <button class=\"btn btn-success\" (click)=\"continue()\"><i class=\"fas fa-plus\"></i></button>\r\n                            <button class=\"btn btn-danger\" (click)=\"end()\"><i class=\"fas fa-times\"></i></button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                        <div *ngIf=\"!game\">\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                    </th>\r\n                </tr>\r\n            </thead>\r\n        </table>\r\n        <div>\r\n        </div>\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\r\n                <th colspan=\"4\"></th>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <th *ngIf=\"playStatus\">{{ (playView | async)?.player.status }}</th>\r\n                    <th *ngIf=\"continueStatus\">{{ (continueView | async)?.player.status }}</th>\r\n                    <th *ngIf=\"endStatus\">{{ (endView | async)?.player.status }}</th>\r\n                    <td *ngIf=\"playStatus\">\r\n                <tr *ngFor=\"let q of (playView | async)?.player.cards\">\r\n                    <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                </tr>\r\n                </td>\r\n                <td *ngIf=\"continueStatus\">\r\n                    <tr *ngFor=\"let q of (continueView | async)?.player.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n                <td *ngIf=\"endStatus\">\r\n                    <tr *ngFor=\"let q of (endView | async)?.player.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n                </tr>\r\n            </tbody>\r\n            <thead class=\"thead-dark\">\r\n                <th colspan=\"8\" *ngFor=\"let head of headBots\">{{head}}</th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"playStatus\">\r\n                <th *ngFor=\"let e of (playView | async)?.bots\">{{e.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"continueStatus\">\r\n                <th *ngFor=\"let e of (continueView | async)?.bots\">{{e.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"endStatus\">\r\n                <th *ngFor=\"let e of (endView | async)?.bots\">{{e.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n\r\n            <tbody *ngIf=\"playStatus\">\r\n                <td *ngFor=\"let e of (playView | async)?.bots\">\r\n                    <tr *ngFor=\"let q of e.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"continueStatus\">\r\n                <td *ngFor=\"let e of (continueView | async)?.bots\">\r\n                    <tr *ngFor=\"let q of e.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"endStatus\">\r\n                <td *ngFor=\"let e of (endView | async)?.bots\">\r\n                    <tr *ngFor=\"let q of e.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!haveActiveGame\">\r\n    <p><label>Back to home : </label></p>\r\n    <button class=\"btn btn-success\" (click)=\"backToHome()\"><i class=\"fa fa-arrow-left\"></i></button>\r\n</div>"
+module.exports = "<div *ngIf=\"haveActiveGame\">\r\n    <div class=\"row\">\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <tr>\r\n                    <th colspan=\"6\">New Game</th>\r\n                </tr>\r\n                <tr>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Game status : {{ (playView | async)?.status }}</label>\r\n                        <label *ngIf=\"continueStatus\">Game status : {{ (continueView | async)?.status }}</label>\r\n                        <label *ngIf=\"endStatus\">Game status : {{ (endView | async)?.status }}</label>\r\n                    </th>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Winner : {{ (playView | async)?.winner }} </label>\r\n                        <label *ngIf=\"continueStatus\">Winner : {{ (continueView | async)?.winner }} </label>\r\n                        <label *ngIf=\"endStatus\">Winner : {{ (endView | async)?.winner }} </label>\r\n\r\n                    </th>\r\n                    <th>\r\n                        <div *ngIf=\"game\">\r\n                            <button class=\"btn btn-success\" (click)=\"continue()\"><i class=\"fas fa-plus\"></i></button>\r\n                            <button class=\"btn btn-danger\" (click)=\"end()\"><i class=\"fas fa-times\"></i></button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                        <div *ngIf=\"!game\">\r\n                            <button class=\"btn btn-primary\" (click)=\"playAgain()\">Play again with the same parametrs?</button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                    </th>\r\n                </tr>\r\n            </thead>\r\n        </table>\r\n        <div>\r\n        </div>\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\r\n                <th colspan=\"4\"></th>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <th *ngIf=\"playStatus\">{{ (playView | async)?.player.status }}</th>\r\n                    <th *ngIf=\"continueStatus\">{{ (continueView | async)?.player.status }}</th>\r\n                    <th *ngIf=\"endStatus\">{{ (endView | async)?.player.status }}</th>\r\n                    <td *ngIf=\"playStatus\">\r\n                <tr *ngFor=\"let q of (playView | async)?.player.cards\">\r\n                    <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                </tr>\r\n                </td>\r\n                <td *ngIf=\"continueStatus\">\r\n                    <tr *ngFor=\"let q of (continueView | async)?.player.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n                <td *ngIf=\"endStatus\">\r\n                    <tr *ngFor=\"let q of (endView | async)?.player.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n                </tr>\r\n            </tbody>\r\n            <thead class=\"thead-dark\">\r\n                <th colspan=\"8\" *ngFor=\"let head of headBots\">{{head}}</th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"playStatus\">\r\n                <th *ngFor=\"let e of (playView | async)?.bots\">{{e.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"continueStatus\">\r\n                <th *ngFor=\"let e of (continueView | async)?.bots\">{{e.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"endStatus\">\r\n                <th *ngFor=\"let e of (endView | async)?.bots\">{{e.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n\r\n            <tbody *ngIf=\"playStatus\">\r\n                <td *ngFor=\"let e of (playView | async)?.bots\">\r\n                    <tr *ngFor=\"let q of e.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"continueStatus\">\r\n                <td *ngFor=\"let e of (continueView | async)?.bots\">\r\n                    <tr *ngFor=\"let q of e.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"endStatus\">\r\n                <td *ngFor=\"let e of (endView | async)?.bots\">\r\n                    <tr *ngFor=\"let q of e.cards\">\r\n                        <img src=\"../../../assets/cards/{{q.rank}}_{{q.suit}}.svg\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!haveActiveGame\">\r\n    <p><label>Back to home : </label></p>\r\n    <button class=\"btn btn-success\" (click)=\"backToHome()\"><i class=\"fa fa-arrow-left\"></i></button>\r\n</div>"
 
 /***/ }),
 
@@ -330,7 +330,6 @@ var PlayGameComponent = /** @class */ (function () {
         this.playView = this.playSubject.asObservable();
     }
     PlayGameComponent.prototype.ngOnInit = function () {
-        debugger;
         this.gameInit();
     };
     PlayGameComponent.prototype.gameInit = function () {
@@ -338,6 +337,7 @@ var PlayGameComponent = /** @class */ (function () {
         this.gameService.getActiveGame()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
+            _this.numberOfBots = x.numberOfBots;
             x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
             _this.game = true;
             _this.haveActiveGame = true;
@@ -355,31 +355,44 @@ var PlayGameComponent = /** @class */ (function () {
         this.gameService.continue()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            if (x) {
-                x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x['status']];
-                _this.game = true;
-                if (x.winner !== 'No one') {
-                    _this.game = false;
-                }
-                _this.playStatus = false;
-                _this.continueStatus = true;
-                _this.endStatus = false;
-                _this.continueSubject.next(x);
+            x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x['status']];
+            _this.game = true;
+            if (x.winner !== 'No one') {
+                _this.game = false;
             }
+            _this.playStatus = false;
+            _this.continueStatus = true;
+            _this.endStatus = false;
+            _this.continueSubject.next(x);
         });
     };
     PlayGameComponent.prototype.end = function () {
         var _this = this;
         this.gameService.end()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            if (x) {
-                x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x['status']];
-                _this.game = false;
-            }
+            x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x['status']];
+            _this.game = false;
             _this.playStatus = false;
             _this.continueStatus = false;
             _this.endStatus = true;
             _this.endSubject.next(x);
+        });
+    };
+    PlayGameComponent.prototype.playAgain = function () {
+        var _this = this;
+        var numberOfBots = this.numberOfBots;
+        this.gameService.play(numberOfBots)
+            .subscribe(function (x) {
+            x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
+            _this.game = true;
+            _this.haveActiveGame = true;
+            if (x.winner !== 'No one') {
+                _this.game = false;
+            }
+            _this.endStatus = false;
+            _this.playStatus = true;
+            _this.playSubject.next(x);
         });
     };
     PlayGameComponent.prototype.backToHome = function () {

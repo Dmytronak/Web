@@ -15,6 +15,7 @@ import { takeUntil, map } from 'rxjs/operators';
 })
 export class PlayGameComponent implements OnInit {
   private componetDestroyed: Subject<boolean> = new Subject<boolean>();
+  private numberOfBots:number;
   private playStatus: boolean = false;
   private continueStatus: boolean = false;
   private endStatus: boolean = false;
@@ -41,6 +42,7 @@ export class PlayGameComponent implements OnInit {
     this.gameService.getActiveGame()
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: PlayGameView) => {
+        this.numberOfBots = x.numberOfBots;
         x.status = Status[x.status];
         this.game = true;
         this.haveActiveGame = true;
@@ -62,11 +64,11 @@ export class PlayGameComponent implements OnInit {
         this.game = true;
         if (x.winner !== 'No one') {
           this.game = false;
-          this.playStatus = false;
-          this.continueStatus = true;
-          this.endStatus = false;
-          this.continueSubject.next(x);
         }
+        this.playStatus = false;
+        this.continueStatus = true;
+        this.endStatus = false;
+        this.continueSubject.next(x);
       });
 
   }
@@ -82,6 +84,21 @@ export class PlayGameComponent implements OnInit {
         this.endSubject.next(x);
       });
   }
+  playAgain() {
+    let numberOfBots = this.numberOfBots
+    this.gameService.play(numberOfBots)
+      .subscribe((x: PlayGameView) => {
+        x.status = Status[x.status];
+        this.game = true;
+        this.haveActiveGame = true;
+        if (x.winner !== 'No one') {
+          this.game = false;
+        }
+        this.endStatus = false;
+        this.playStatus = true;
+        this.playSubject.next(x);
+      });
+    }
   backToHome(): void {
     this.router.navigate(['/game/home']);
   }
