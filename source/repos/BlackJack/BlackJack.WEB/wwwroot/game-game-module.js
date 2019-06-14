@@ -390,6 +390,7 @@ var PlayGameComponent = /** @class */ (function () {
             if (x.winner !== 'No one') {
                 _this.game = false;
             }
+            _this.continueStatus = false;
             _this.endStatus = false;
             _this.playStatus = true;
             _this.playSubject.next(x);

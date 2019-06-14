@@ -35,7 +35,7 @@
               </tr>
             </tbody>
           </table>
-          <ngb-pagination [collectionSize]="listCount | async" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+          <ngb-pagination [collectionSize]="listCount | async" [(page)]="page" [pageSize]="pageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
   </div>
   <div *ngIf="showPlayerTable">
     <table class="table">

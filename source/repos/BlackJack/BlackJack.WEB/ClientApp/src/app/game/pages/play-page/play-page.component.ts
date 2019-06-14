@@ -85,7 +85,7 @@ export class PlayGameComponent implements OnInit {
       });
   }
   playAgain() {
-    let numberOfBots = this.numberOfBots
+    let numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .subscribe((x: PlayGameView) => {
         x.status = Status[x.status];
@@ -94,6 +94,7 @@ export class PlayGameComponent implements OnInit {
         if (x.winner !== 'No one') {
           this.game = false;
         }
+        this.continueStatus = false;
         this.endStatus = false;
         this.playStatus = true;
         this.playSubject.next(x);

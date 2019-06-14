@@ -381,7 +381,7 @@ namespace BlackJack.BusinessLogic.Services
             var scoredBotExistedPoints = GetCalculatedBotExistingPoint(botInGame, botInGameExisted, gameId);
             var botsScore = GetCalculatedScoreBotPoints(scoredBotExistedPoints, gameId);
             var maxBotScore = botsScore.Max(x => x.Score);
-            if (maxBotScore < 17)
+            if (maxBotScore < 16)
             {
                 var botsCards = GetCardsOfBots(botList, deck);
                 var botsSteps = GetBotSteps(botList, botsCards, gameId);
@@ -472,7 +472,7 @@ namespace BlackJack.BusinessLogic.Services
                 var botWinner = notBustedBots.FirstOrDefault(x => x.Score == maxBotScore);
                 var bot = botList.FirstOrDefault(x => x.Id == botWinner.BotId);
 
-                if (playerScore == maxBotScore && status == StatusType.End)
+                if (playerScore == maxBotScore && status == StatusType.End || playerScore == 21 && maxBotScore == 21)
                 {
                     status = StatusType.End;
                     winner = StatusType.Draw.ToString();
@@ -491,6 +491,11 @@ namespace BlackJack.BusinessLogic.Services
                 {
                     status = StatusType.Blackjack;
                     winner = bot.Name;
+                }
+                if (playerScore == 21)
+                {
+                    status = StatusType.Blackjack;
+                    winner = player.Name;
                 }
             }
             if (notBustedBots.Count == 0)
