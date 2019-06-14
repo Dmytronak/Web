@@ -84,7 +84,7 @@ export class PlayGameComponent implements OnInit {
         this.endSubject.next(x);
       });
   }
-  playAgain() {
+  private playAgain():void {
     let numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
