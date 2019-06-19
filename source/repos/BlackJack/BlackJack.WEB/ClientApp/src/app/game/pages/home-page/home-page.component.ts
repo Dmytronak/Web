@@ -26,7 +26,7 @@ export class HomeGameComponent implements OnInit {
    this.gameService.getActiveGame()
     .pipe(takeUntil(this.componetDestroyed))
     .subscribe(x => {
-      this.toastrService.info('You have active game! Click continue to play');
+      this.toastrService.info('You have active game! Click continue to play',x.player.name);
         this.continueStatus = true;
     },errorForStatus=>{ 
       this.playStatus = true;

@@ -340,13 +340,13 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
             .find(function (user) { return user.email === registerAccount.email; });
         if (isExistUser) {
             var errorMessage = { message: "Username " + registerAccount.email + " is already taken" };
-            this.toastrService.warning(errorMessage.message);
+            this.toastrService.warning(errorMessage.message, 'Info');
         }
         if (!isExistUser) {
             this.userService.register(registerAccount)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
                 .subscribe(function (response) {
-                _this.toastrService.success("All set! Email " + registerAccount.email + " is successfully register.");
+                _this.toastrService.success("Email " + registerAccount.email + " is successfully register.", 'All set!');
                 _this.router.navigate(['/auth/login']);
             });
         }

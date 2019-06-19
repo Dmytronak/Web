@@ -213,7 +213,7 @@ var HomeGameComponent = /** @class */ (function () {
         this.gameService.getActiveGame()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            _this.toastrService.info('You have active game! Click continue to play');
+            _this.toastrService.info('You have active game! Click continue to play', x.player.name);
             _this.continueStatus = true;
         }, function (errorForStatus) {
             _this.playStatus = true;

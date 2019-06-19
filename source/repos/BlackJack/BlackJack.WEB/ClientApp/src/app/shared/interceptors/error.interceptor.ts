@@ -16,16 +16,16 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 401) {
                 this.userService.logout();
                 this.router.navigate(['']);
-                this.toastr.warning(err.error || err.statusText); 
+                this.toastr.warning(err.error || err.statusText,err.status); 
             }   
             if (err.status === 400) {
                console.clear();
                const error = err.error || err.statusText;
-               this.toastr.info(error);  
+               this.toastr.info(error,err.statusText);  
                return throwError(error);
             }
             const error = err.error || err.statusText;
-            this.toastr.error(error); 
+            this.toastr.error(error,err.status); 
             return throwError(error);
         }))
     }

@@ -531,16 +531,16 @@ var ErrorInterceptor = /** @class */ (function () {
             if (err.status === 401) {
                 _this.userService.logout();
                 _this.router.navigate(['']);
-                _this.toastr.warning(err.error || err.statusText);
+                _this.toastr.warning(err.error || err.statusText, err.status);
             }
             if (err.status === 400) {
                 console.clear();
                 var error_1 = err.error || err.statusText;
-                _this.toastr.info(error_1);
+                _this.toastr.info(error_1, err.statusText);
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
             }
             var error = err.error || err.statusText;
-            _this.toastr.error(error);
+            _this.toastr.error(error, err.status);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
         }));
     };
@@ -668,17 +668,17 @@ var ToastrMessagesService = /** @class */ (function () {
         this.options.preventDuplicates = true;
         this.options.countDuplicates = true;
     }
-    ToastrMessagesService.prototype.error = function (message) {
-        return this.toastr.error(message, 'Error!');
+    ToastrMessagesService.prototype.error = function (message, title) {
+        return this.toastr.error(message, title);
     };
-    ToastrMessagesService.prototype.info = function (message) {
-        return this.toastr.info(message, 'Dear user!');
+    ToastrMessagesService.prototype.info = function (message, title) {
+        return this.toastr.info(message, title);
     };
-    ToastrMessagesService.prototype.warning = function (message) {
-        return this.toastr.warning(message, 'Warning!');
+    ToastrMessagesService.prototype.warning = function (message, title) {
+        return this.toastr.warning(message, title);
     };
-    ToastrMessagesService.prototype.success = function (message) {
-        return this.toastr.success(message, 'Sucsess!');
+    ToastrMessagesService.prototype.success = function (message, title) {
+        return this.toastr.success(message, title);
     };
     ToastrMessagesService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
@@ -743,7 +743,7 @@ var UserService = /** @class */ (function () {
         return this.http.post(this.baseUrl + "/account/login", loginAccount)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) {
             if (x) {
-                _this.authentication(x.token, loginAccount.email);
+                _this.completeAuthentication(x.token, loginAccount.email);
             }
             return x;
         }));
@@ -754,7 +754,7 @@ var UserService = /** @class */ (function () {
         this.loggedIn = false;
         this.authNavStatusSource.next(false);
     };
-    UserService.prototype.authentication = function (token, email) {
+    UserService.prototype.completeAuthentication = function (token, email) {
         this.localStorageService.setItem("auth_token", token);
         this.localStorageService.setItem("email", email);
         this.loggedIn = true;
