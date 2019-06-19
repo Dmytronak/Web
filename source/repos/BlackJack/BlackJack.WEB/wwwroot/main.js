@@ -227,6 +227,68 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/shared/components/base/base.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/shared/components/base/base.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  base works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/shared/components/base/base.component.scss":
+/*!************************************************************!*\
+  !*** ./src/app/shared/components/base/base.component.scss ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2Jhc2UvYmFzZS5jb21wb25lbnQuc2NzcyJ9 */"
+
+/***/ }),
+
+/***/ "./src/app/shared/components/base/base.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/shared/components/base/base.component.ts ***!
+  \**********************************************************/
+/*! exports provided: BaseComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BaseComponent", function() { return BaseComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+
+
+
+var BaseComponent = /** @class */ (function () {
+    function BaseComponent() {
+        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+    }
+    BaseComponent.prototype.ngOnInit = function () {
+    };
+    BaseComponent.prototype.ngOnDestroy = function () {
+        this.componetDestroyed.next(true);
+    };
+    BaseComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-base',
+            template: __webpack_require__(/*! ./base.component.html */ "./src/app/shared/components/base/base.component.html"),
+            styles: [__webpack_require__(/*! ./base.component.scss */ "./src/app/shared/components/base/base.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], BaseComponent);
+    return BaseComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/shared/components/layout/auth-header/auth-header.component.html":
 /*!*********************************************************************************!*\
   !*** ./src/app/shared/components/layout/auth-header/auth-header.component.html ***!
@@ -732,6 +794,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 /* harmony import */ var _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./validators/validator/validator.component */ "./src/app/shared/validators/validator/validator.component.ts");
+/* harmony import */ var _components_base_base_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+
 
 
 
@@ -747,7 +811,7 @@ var SharedModule = /** @class */ (function () {
     }
     SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_components_layout_main_header_main_header_component__WEBPACK_IMPORTED_MODULE_4__["MainHeaderComponent"], _components_layout_auth_header_auth_header_component__WEBPACK_IMPORTED_MODULE_5__["AuthHeaderComponent"], _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__["ValidatorComponent"]],
+            declarations: [_components_layout_main_header_main_header_component__WEBPACK_IMPORTED_MODULE_4__["MainHeaderComponent"], _components_layout_auth_header_auth_header_component__WEBPACK_IMPORTED_MODULE_5__["AuthHeaderComponent"], _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__["ValidatorComponent"], _components_base_base_component__WEBPACK_IMPORTED_MODULE_10__["BaseComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
@@ -760,7 +824,8 @@ var SharedModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
-                _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__["ValidatorComponent"]
+                _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__["ValidatorComponent"],
+                _components_base_base_component__WEBPACK_IMPORTED_MODULE_10__["BaseComponent"]
             ]
         })
     ], SharedModule);

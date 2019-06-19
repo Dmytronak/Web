@@ -7,8 +7,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { ValidatorComponent } from './validators/validator/validator.component';
+import { BaseComponent } from './components/base/base.component';
 @NgModule({
-  declarations: [MainHeaderComponent, AuthHeaderComponent, ValidatorComponent],
+  declarations: [MainHeaderComponent, AuthHeaderComponent, ValidatorComponent, BaseComponent],
   imports: [
     CommonModule,
     NgbModule,
@@ -21,7 +22,8 @@ import { ValidatorComponent } from './validators/validator/validator.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ValidatorComponent
+    ValidatorComponent,
+    BaseComponent
   ]
 })
 export class SharedModule { }
