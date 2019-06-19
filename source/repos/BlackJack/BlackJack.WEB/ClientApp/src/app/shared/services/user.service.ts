@@ -38,7 +38,7 @@ export class UserService {
     return this.http.post(this.baseUrl + "/account/login", loginAccount)
       .pipe(map((x: LoginAccountResponseView) => {
         if (x) {
-          this.authentication(x.token, loginAccount.email);
+          this.completeAuthentication(x.token, loginAccount.email);
         }
         return x;
       }));
@@ -49,7 +49,7 @@ export class UserService {
     this.loggedIn = false;
     this.authNavStatusSource.next(false);
   }
-  authentication(token: string, email: string): void {
+  completeAuthentication(token: string, email: string): void {
     this.localStorageService.setItem("auth_token", token);
     this.localStorageService.setItem("email", email);
     this.loggedIn = true;
