@@ -23,7 +23,7 @@ namespace BlackJack.Controllers
             return Ok(response);
         }
         [HttpGet]
-        public async Task<GetAllAccountView> Register()
+        public async Task<GetAllAccountView> GetAll()
         {
             var response =  await _accountService.GetAll();
             return response;

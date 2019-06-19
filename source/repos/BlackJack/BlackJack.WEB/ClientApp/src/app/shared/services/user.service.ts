@@ -30,8 +30,8 @@ export class UserService {
       return x;
     }));
   }
-  registerUsers(): Observable<GetAllAccountView> {
-    return this.http.get<GetAllAccountView>(this.baseUrl + "/account/register");
+  getAll(): Observable<GetAllAccountView> {
+    return this.http.get<GetAllAccountView>(this.baseUrl + "/account/getall");
   }
 
   login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {

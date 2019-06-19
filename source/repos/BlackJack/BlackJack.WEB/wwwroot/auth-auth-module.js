@@ -63,7 +63,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n  <router-out
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcYXV0aFxcYXV0aC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFpQixFQUFBIiwiZmlsZSI6InNyYy9hcHAvYXV0aC9hdXRoLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiZGl2e1xyXG4gICAgbWFyZ2luLWJvdHRvbTogMSU7IFxyXG59Il19 */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2F1dGgvYXV0aC5jb21wb25lbnQuc2NzcyJ9 */"
 
 /***/ }),
 
@@ -84,15 +84,12 @@ __webpack_require__.r(__webpack_exports__);
 var AuthComponent = /** @class */ (function () {
     function AuthComponent() {
     }
-    AuthComponent.prototype.ngOnInit = function () {
-    };
     AuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-auth',
             template: __webpack_require__(/*! ./auth.component.html */ "./src/app/auth/auth.component.html"),
             styles: [__webpack_require__(/*! ./auth.component.scss */ "./src/app/auth/auth.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], AuthComponent);
     return AuthComponent;
 }());
@@ -154,7 +151,18 @@ var AuthModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form [formGroup]=\"loginForm\" (ngSubmit)=\"login()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div\n    *ngIf=\"hasErrors(['email'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"loginForm.get(['email']).errors.required\">\n      Email is required.\n    </div>\n    <div *ngIf=\"loginForm.get(['email']).errors.email\">\n      Email not validate\n    </div>\n  </div>\n  <div class=\"loginForm\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div\n    *ngIf=\"hasErrors(['password'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"loginForm.get(['password']).errors.required\">\n      Password is required.\n    </div>\n    <div *ngIf=\"loginForm.get(['password']).errors.minlength\">\n      Password minLength 6\n    </div>\n    <div *ngIf=\"loginForm.get(['password']).errors.pattern\">\n      Password not validate\n    </div>\n  </div>\n  <div class=\"loginForm\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"loginForm.invalid\">Login</button>\n  </div>\n</form>"
+module.exports = "<form [formGroup]=\"loginForm\" (ngSubmit)=\"login()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div>\n    <app-validator [control]=\"loginForm.get('email')\"></app-validator>\n  </div>\n\n  <div class=\"loginForm\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div>\n    <app-validator [control]=\"loginForm.get('password')\"></app-validator>\n  </div>\n  <div class=\"loginForm\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"loginForm.invalid\">Login</button>\n  </div>\n</form>"
+
+/***/ }),
+
+/***/ "./src/app/auth/pages/login-page/login-page.component.scss":
+/*!*****************************************************************!*\
+  !*** ./src/app/auth/pages/login-page/login-page.component.scss ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9wYWdlcy9sb2dpbi1wYWdlL0M6XFxVc2Vyc1xcQW51aXRleC04NFxcZ2l0XFxXZWJcXHNvdXJjZVxccmVwb3NcXEJsYWNrSmFja1xcQmxhY2tKYWNrLldFQlxcQ2xpZW50QXBwL3NyY1xcYXBwXFxhdXRoXFxwYWdlc1xcbG9naW4tcGFnZVxcbG9naW4tcGFnZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFpQixFQUFBIiwiZmlsZSI6InNyYy9hcHAvYXV0aC9wYWdlcy9sb2dpbi1wYWdlL2xvZ2luLXBhZ2UuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJkaXZ7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAxJTsgXHJcbn0iXX0= */"
 
 /***/ }),
 
@@ -175,6 +183,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_validators_password_validator__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/validators/password.validator */ "./src/app/shared/validators/password.validator.ts");
+
 
 
 
@@ -188,34 +198,29 @@ var LoginAuthComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.router = router;
         this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        this.initForms();
     }
     LoginAuthComponent.prototype.ngOnInit = function () {
-        this.initForms();
     };
     LoginAuthComponent.prototype.initForms = function () {
         this.loginForm = this.formBuilder.group({
             'email': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]],
-            'password': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
+            'password': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), src_app_shared_validators_password_validator__WEBPACK_IMPORTED_MODULE_7__["passwordValidation"]]],
         });
-    };
-    LoginAuthComponent.prototype.hasErrors = function (name) {
-        return this.loginForm.get(name).invalid && (this.loginForm.get(name).dirty || this.loginForm.get(name).touched);
     };
     LoginAuthComponent.prototype.login = function () {
         var _this = this;
-        var loginAccount = {
-            email: this.loginForm.controls['email'].value,
-            password: this.loginForm.controls['password'].value
-        };
         if (this.loginForm.invalid) {
             return;
         }
+        var loginAccount = Object.assign({
+            email: this.loginForm.controls['email'].value,
+            password: this.loginForm.controls['password'].value
+        });
         this.userService.login(loginAccount)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
-            if (x) {
-                _this.router.navigate(["/game/home"]);
-            }
+            .subscribe(function (response) {
+            _this.router.navigate(["/game/home"]);
         });
     };
     LoginAuthComponent.prototype.ngOnDestroy = function () {
@@ -225,7 +230,7 @@ var LoginAuthComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-login-page',
             template: __webpack_require__(/*! ./login-page.component.html */ "./src/app/auth/pages/login-page/login-page.component.html"),
-            styles: [__webpack_require__(/*! ../../auth.component.scss */ "./src/app/auth/auth.component.scss")]
+            styles: [__webpack_require__(/*! ./login-page.component.scss */ "./src/app/auth/pages/login-page/login-page.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
     ], LoginAuthComponent);
@@ -243,7 +248,18 @@ var LoginAuthComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Please enter your information</h2>\n  </div>\n</div>\n<form [formGroup]=\"registerForm\" (ngSubmit)=\"registration()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div\n    *ngIf=\"hasErrors(['email'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"registerForm.controls['email'].errors.required\">\n      Email is required.\n    </div>\n    <div *ngIf=\"registerForm.controls['email'].errors.email\">\n      Email not validate\n    </div>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"nmae\">Name</label>\n    <input type=\"text\" name=\"name\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  </div>\n  <div\n    *ngIf=\"hasErrors(['name'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"registerForm.controls['name'].errors.required\">\n      Name is required.\n    </div>\n    <div *ngIf=\"registerForm.controls['name'].errors.maxlength\">\n      Name max Length 15\n    </div>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"year\">Year</label>\n    <input type=\"text\" class=\"form-control\" name=\"year\" placeholder=\"Year\" formControlName=\"year\">\n  </div>\n  <div\n   *ngIf=\"hasErrors(['year'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"registerForm.controls['year'].errors.required\">\n      year is required.\n    </div>\n    <div *ngIf=\"registerForm.controls['year'].errors.minlength\">\n      year min min Length 4\n    </div>\n    <div *ngIf=\"registerForm.controls['year'].errors.maxlength\">\n      year min max Length 4\n    </div>\n    <div *ngIf=\"registerForm.controls['year'].errors.pattern\">\n      ONLY NUMB ERROR\n    </div>\n    <div *ngIf=\"registerForm.controls['year'].errors.ageRange\">\n      Year range from 1920 to 2019\n    </div>\n    <div *ngIf=\"registerForm.controls['year'].errors.adultRange\">\n      You don`t adult enough\n    </div>\n\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div\n  *ngIf=\"hasErrors(['password'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"registerForm.controls['password'].errors.required\">\n      Password is required.\n    </div>\n    <div *ngIf=\"registerForm.controls['password'].errors.minlength\">\n      Password minLength 6\n    </div>\n    <div *ngIf=\"registerForm.controls['password'].errors.pattern\">\n      Password not validate\n    </div>\n  </div>\n\n  <div class=\"formGroup\">\n    <label for=\"confirmPassword\">Confirm password</label>\n    <input type=\"password\" class=\"form-control\" name=\"confirmPassword\" placeholder=\"Confirm password\"\n      formControlName=\"confirmPassword\">\n  </div>\n  <div\n  *ngIf=\"hasErrors(['confirmPassword'])\"\n    class=\"alert alert-danger\">\n    <div *ngIf=\"registerForm.controls['confirmPassword'].errors.required\">\n      Password is required.\n    </div>\n    <div *ngIf=\"registerForm.controls['confirmPassword'].errors.minlength\">\n      Password min Length 6\n    </div>\n    <div *ngIf=\"registerForm.controls['confirmPassword'].errors.pattern\">\n      Password not validate\n    </div>\n    <div *ngIf=\"registerForm.controls['confirmPassword'].errors.mustMatch\">\n      Passwords must match\n    </div>\n  </div>\n  <div class=\"formGroup\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"registerForm.invalid\">Register</button>\n  </div>\n</form>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Please enter your information</h2>\n  </div>\n</div>\n<form [formGroup]=\"registerForm\" (ngSubmit)=\"register()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('email')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"name\">Name</label>\n    <input type=\"text\" name=\"name\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('name')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"year\">Year</label>\n    <input type=\"text\" class=\"form-control\" name=\"year\" placeholder=\"Year\" formControlName=\"year\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('year')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('password')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"confirmPassword\">Confirm password</label>\n    <input type=\"password\" class=\"form-control\" name=\"confirmPassword\" placeholder=\"Confirm password\"\n      formControlName=\"confirmPassword\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('confirmPassword')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"registerForm.invalid\">Register</button>\n  </div>\n</form>"
+
+/***/ }),
+
+/***/ "./src/app/auth/pages/registration-page/registration-page.component.scss":
+/*!*******************************************************************************!*\
+  !*** ./src/app/auth/pages/registration-page/registration-page.component.scss ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "div {\n  margin-bottom: 1%; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvYXV0aC9wYWdlcy9yZWdpc3RyYXRpb24tcGFnZS9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcYXV0aFxccGFnZXNcXHJlZ2lzdHJhdGlvbi1wYWdlXFxyZWdpc3RyYXRpb24tcGFnZS5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFpQixFQUFBIiwiZmlsZSI6InNyYy9hcHAvYXV0aC9wYWdlcy9yZWdpc3RyYXRpb24tcGFnZS9yZWdpc3RyYXRpb24tcGFnZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImRpdntcclxuICAgIG1hcmdpbi1ib3R0b206IDElOyBcclxufSJdfQ== */"
 
 /***/ }),
 
@@ -262,11 +278,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/helpers/must-match.helper */ "./src/app/shared/helpers/must-match.helper.ts");
-/* harmony import */ var src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/helpers/year-range.helper */ "./src/app/shared/helpers/year-range.helper.ts");
+/* harmony import */ var src_app_shared_validators_must_match_validator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/validators/must-match.validator */ "./src/app/shared/validators/must-match.validator.ts");
+/* harmony import */ var src_app_shared_validators_year_range_validator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/validators/year-range.validator */ "./src/app/shared/validators/year-range.validator.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/shared/services/toastr-messages.service */ "./src/app/shared/services/toastr-messages.service.ts");
+/* harmony import */ var src_app_shared_validators_password_validator__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/shared/validators/password.validator */ "./src/app/shared/validators/password.validator.ts");
+
 
 
 
@@ -284,59 +302,53 @@ var RegistrationAuthComponent = /** @class */ (function () {
         this.formBuilder = formBuilder;
         this.toastrService = toastrService;
         this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
+        this.initForms();
     }
     RegistrationAuthComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.initForms();
-        this.userService.registerUsers()
+        this.userService.getAll()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
-            _this.getAllAccounts = x;
+            .subscribe(function (response) {
+            _this.accoutsModel = response;
         });
     };
     RegistrationAuthComponent.prototype.initForms = function () {
         this.registerForm = this.formBuilder.group({
             'email': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].email]],
             'name': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(15)]],
-            'year': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4), src_app_shared_helpers_year_range_helper__WEBPACK_IMPORTED_MODULE_6__["YearRange"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^-?(0|[1-9]\d*)?$/)]],
-            'password': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
-            'confirmPassword': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/)]],
+            'year': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4), src_app_shared_validators_year_range_validator__WEBPACK_IMPORTED_MODULE_6__["yearRange"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(4), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^-?(0|[1-9]\d*)?$/)]],
+            'password': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), src_app_shared_validators_password_validator__WEBPACK_IMPORTED_MODULE_10__["passwordValidation"]]],
+            'confirmPassword': ['', [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6), src_app_shared_validators_password_validator__WEBPACK_IMPORTED_MODULE_10__["passwordValidation"]]],
         }, {
-            validator: Object(src_app_shared_helpers_must_match_helper__WEBPACK_IMPORTED_MODULE_5__["MustMatch"])('password', 'confirmPassword')
+            validator: Object(src_app_shared_validators_must_match_validator__WEBPACK_IMPORTED_MODULE_5__["mustMatch"])('password', 'confirmPassword')
         });
     };
-    RegistrationAuthComponent.prototype.hasErrors = function (name) {
-        return this.registerForm.get(name).invalid && (this.registerForm.get(name).dirty || this.registerForm.get(name).touched);
-    };
-    RegistrationAuthComponent.prototype.registration = function () {
+    RegistrationAuthComponent.prototype.register = function () {
         var _this = this;
-        var registerAccount = {
+        if (this.registerForm.invalid) {
+            return;
+        }
+        var registerAccount = Object.assign({
             email: this.registerForm.value['email'],
             name: this.registerForm.value['name'],
             year: this.registerForm.value['year'],
             password: this.registerForm.value['password'],
             confirmPassword: this.registerForm.value['confirmPassword'],
-        };
-        var duplicateUser = this.getAllAccounts.users
-            .filter(function (x) {
-            return x.email === registerAccount.email;
-        })
-            .length;
-        if (duplicateUser) {
-            var errorMessage = { message: 'Username "' + registerAccount.email + '" is already taken' };
+        });
+        var isExistUser = !!this.accoutsModel.users
+            .find(function (user) { return user.email === registerAccount.email; });
+        if (isExistUser) {
+            var errorMessage = { message: "Username " + registerAccount.email + " is already taken" };
             this.toastrService.warning(errorMessage.message);
         }
-        if (this.registerForm.invalid) {
-            return;
-        }
-        this.userService.register(registerAccount)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
-            if (x) {
-                _this.toastrService.success('All set! Email ' + registerAccount.email + ' is successfully register.');
+        if (!isExistUser) {
+            this.userService.register(registerAccount)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
+                .subscribe(function (response) {
+                _this.toastrService.success("All set! Email " + registerAccount.email + " is successfully register.");
                 _this.router.navigate(['/auth/login']);
-            }
-        });
+            });
+        }
     };
     RegistrationAuthComponent.prototype.ngOnDestroy = function () {
         this.componetDestroyed.next(true);
@@ -345,7 +357,7 @@ var RegistrationAuthComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-registration-page',
             template: __webpack_require__(/*! ./registration-page.component.html */ "./src/app/auth/pages/registration-page/registration-page.component.html"),
-            styles: [__webpack_require__(/*! ../../auth.component.scss */ "./src/app/auth/auth.component.scss")]
+            styles: [__webpack_require__(/*! ./registration-page.component.scss */ "./src/app/auth/pages/registration-page/registration-page.component.scss")]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
             src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_9__["ToastrMessagesService"]])
@@ -357,17 +369,17 @@ var RegistrationAuthComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/shared/helpers/must-match.helper.ts":
-/*!*****************************************************!*\
-  !*** ./src/app/shared/helpers/must-match.helper.ts ***!
-  \*****************************************************/
-/*! exports provided: MustMatch */
+/***/ "./src/app/shared/validators/must-match.validator.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/shared/validators/must-match.validator.ts ***!
+  \***********************************************************/
+/*! exports provided: mustMatch */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MustMatch", function() { return MustMatch; });
-function MustMatch(controlName, matchingControlName) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mustMatch", function() { return mustMatch; });
+function mustMatch(controlName, matchingControlName) {
     return function (formGroup) {
         var control = formGroup.controls[controlName];
         var matchingControl = formGroup.controls[matchingControlName];
@@ -386,17 +398,38 @@ function MustMatch(controlName, matchingControlName) {
 
 /***/ }),
 
-/***/ "./src/app/shared/helpers/year-range.helper.ts":
-/*!*****************************************************!*\
-  !*** ./src/app/shared/helpers/year-range.helper.ts ***!
-  \*****************************************************/
-/*! exports provided: YearRange */
+/***/ "./src/app/shared/validators/password.validator.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/shared/validators/password.validator.ts ***!
+  \*********************************************************/
+/*! exports provided: passwordValidation */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "YearRange", function() { return YearRange; });
-function YearRange(control) {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "passwordValidation", function() { return passwordValidation; });
+function passwordValidation(control) {
+    var regexp = new RegExp(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).*$/);
+    if (!regexp.test(control.value)) {
+        return { 'passwordValidation': true };
+    }
+    return null;
+}
+
+
+/***/ }),
+
+/***/ "./src/app/shared/validators/year-range.validator.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/shared/validators/year-range.validator.ts ***!
+  \***********************************************************/
+/*! exports provided: yearRange */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "yearRange", function() { return yearRange; });
+function yearRange(control) {
     var maxYear = 2019;
     var minYear = 1920;
     if (control.value > maxYear || control.value < minYear) {

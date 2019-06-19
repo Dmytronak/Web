@@ -383,6 +383,7 @@ var PlayGameComponent = /** @class */ (function () {
         var _this = this;
         var numberOfBots = this.numberOfBots;
         this.gameService.play(numberOfBots)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
             _this.game = true;

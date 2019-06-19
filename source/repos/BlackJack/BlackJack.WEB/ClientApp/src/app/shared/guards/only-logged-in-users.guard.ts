@@ -3,14 +3,14 @@ import { Router, CanActivate } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 @Injectable()
-export class AuthUsersGuard implements CanActivate {
+export class OnlyLoggedIn implements CanActivate {
   constructor(private user: UserService,private router: Router) {}
 
   canActivate() {
 
-    if(this.user.isLoggedIn())
+    if(!this.user.isLoggedIn())
     {
-       this.router.navigate(['/game/home']);
+       this.router.navigate(['/home']);
        return false;
 
     }

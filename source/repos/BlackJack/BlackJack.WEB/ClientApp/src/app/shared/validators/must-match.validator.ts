@@ -1,6 +1,6 @@
 import { FormGroup } from '@angular/forms';
 
-export function MustMatch(controlName: string, matchingControlName: string) {
+export function mustMatch(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
         const matchingControl = formGroup.controls[matchingControlName];

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { UserService } from './shared/services/user.service';
 
 @Component({
@@ -11,7 +10,6 @@ export class AppComponent {
   title: string = 'BlackJackClient';
   status: boolean;
   constructor(private userService:UserService) {   
-   
    }
    
   ngOnInit() {

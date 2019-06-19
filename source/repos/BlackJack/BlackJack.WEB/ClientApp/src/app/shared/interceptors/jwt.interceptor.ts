@@ -11,7 +11,6 @@ export class JwtInterceptor implements HttpInterceptor {
     constructor(private userService: UserService, private localStorageService: LocalStorageService ) {
     }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        // add authorization header with jwt token if availabled
         if (this.userService.isLoggedIn()) {
             this.token = this.localStorageService.getItem('auth_token');
             request = request.clone({

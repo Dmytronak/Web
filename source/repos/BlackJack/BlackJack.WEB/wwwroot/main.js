@@ -73,10 +73,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [
-    { path: 'home', loadChildren: './home/home.module#HomeModule', canActivate: [_shared_guards_only_logged_in_users_guard__WEBPACK_IMPORTED_MODULE_4__["AuthUsersGuard"]] },
-    { path: 'auth', loadChildren: './auth/auth.module#AuthModule', canActivate: [_shared_guards_only_logged_in_users_guard__WEBPACK_IMPORTED_MODULE_4__["AuthUsersGuard"]] },
-    { path: 'game', loadChildren: './game/game.module#GameModule', canActivate: [_shared_guards_only_logged_out_users_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]] },
-    { path: 'history', loadChildren: './history/history.module#HistoryModule', canActivate: [_shared_guards_only_logged_out_users_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]] },
+    { path: 'home', loadChildren: './home/home.module#HomeModule', canActivate: [_shared_guards_only_logged_out_users_guard__WEBPACK_IMPORTED_MODULE_3__["OnlyLoggedOut"]] },
+    { path: 'auth', loadChildren: './auth/auth.module#AuthModule', canActivate: [_shared_guards_only_logged_out_users_guard__WEBPACK_IMPORTED_MODULE_3__["OnlyLoggedOut"]] },
+    { path: 'game', loadChildren: './game/game.module#GameModule', canActivate: [_shared_guards_only_logged_in_users_guard__WEBPACK_IMPORTED_MODULE_4__["OnlyLoggedIn"]] },
+    { path: 'history', loadChildren: './history/history.module#HistoryModule', canActivate: [_shared_guards_only_logged_in_users_guard__WEBPACK_IMPORTED_MODULE_4__["OnlyLoggedIn"]] },
     { path: 'shared', loadChildren: './shared/shared.module#SharedModule' },
     { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
@@ -213,7 +213,7 @@ var AppModule = /** @class */ (function () {
                 _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__["SharedModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_13__["BrowserAnimationsModule"]
             ],
-            providers: [_shared_services_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"], _shared_guards_only_logged_out_users_guard__WEBPACK_IMPORTED_MODULE_9__["AuthGuard"], _shared_guards_only_logged_in_users_guard__WEBPACK_IMPORTED_MODULE_10__["AuthUsersGuard"],
+            providers: [_shared_services_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"], _shared_guards_only_logged_out_users_guard__WEBPACK_IMPORTED_MODULE_9__["OnlyLoggedOut"], _shared_guards_only_logged_in_users_guard__WEBPACK_IMPORTED_MODULE_10__["OnlyLoggedIn"],
                 { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HTTP_INTERCEPTORS"], useClass: _shared_interceptors_jwt_interceptor__WEBPACK_IMPORTED_MODULE_11__["JwtInterceptor"], multi: true },
                 { provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HTTP_INTERCEPTORS"], useClass: _shared_interceptors_error_interceptor__WEBPACK_IMPORTED_MODULE_12__["ErrorInterceptor"], multi: true },
             ],
@@ -355,12 +355,12 @@ var MainHeaderComponent = /** @class */ (function () {
 /*!*************************************************************!*\
   !*** ./src/app/shared/guards/only-logged-in-users.guard.ts ***!
   \*************************************************************/
-/*! exports provided: AuthUsersGuard */
+/*! exports provided: OnlyLoggedIn */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthUsersGuard", function() { return AuthUsersGuard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OnlyLoggedIn", function() { return OnlyLoggedIn; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
@@ -369,23 +369,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var AuthUsersGuard = /** @class */ (function () {
-    function AuthUsersGuard(user, router) {
+var OnlyLoggedIn = /** @class */ (function () {
+    function OnlyLoggedIn(user, router) {
         this.user = user;
         this.router = router;
     }
-    AuthUsersGuard.prototype.canActivate = function () {
-        if (this.user.isLoggedIn()) {
-            this.router.navigate(['/game/home']);
+    OnlyLoggedIn.prototype.canActivate = function () {
+        if (!this.user.isLoggedIn()) {
+            this.router.navigate(['/home']);
             return false;
         }
         return true;
     };
-    AuthUsersGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    OnlyLoggedIn = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
-    ], AuthUsersGuard);
-    return AuthUsersGuard;
+    ], OnlyLoggedIn);
+    return OnlyLoggedIn;
 }());
 
 
@@ -396,12 +396,12 @@ var AuthUsersGuard = /** @class */ (function () {
 /*!**************************************************************!*\
   !*** ./src/app/shared/guards/only-logged-out-users.guard.ts ***!
   \**************************************************************/
-/*! exports provided: AuthGuard */
+/*! exports provided: OnlyLoggedOut */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "OnlyLoggedOut", function() { return OnlyLoggedOut; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
@@ -410,23 +410,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var AuthGuard = /** @class */ (function () {
-    function AuthGuard(user, router) {
+var OnlyLoggedOut = /** @class */ (function () {
+    function OnlyLoggedOut(user, router) {
         this.user = user;
         this.router = router;
     }
-    AuthGuard.prototype.canActivate = function () {
-        if (!this.user.isLoggedIn()) {
-            this.router.navigate(['/home']);
+    OnlyLoggedOut.prototype.canActivate = function () {
+        if (this.user.isLoggedIn()) {
+            this.router.navigate(['/game/home']);
             return false;
         }
         return true;
     };
-    AuthGuard = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    OnlyLoggedOut = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
-    ], AuthGuard);
-    return AuthGuard;
+    ], OnlyLoggedOut);
+    return OnlyLoggedOut;
 }());
 
 
@@ -518,7 +518,6 @@ var JwtInterceptor = /** @class */ (function () {
         this.token = '';
     }
     JwtInterceptor.prototype.intercept = function (request, next) {
-        // add authorization header with jwt token if availabled
         if (this.userService.isLoggedIn()) {
             this.token = this.localStorageService.getItem('auth_token');
             request = request.clone({
@@ -674,8 +673,8 @@ var UserService = /** @class */ (function () {
             return x;
         }));
     };
-    UserService.prototype.registerUsers = function () {
-        return this.http.get(this.baseUrl + "/account/register");
+    UserService.prototype.getAll = function () {
+        return this.http.get(this.baseUrl + "/account/getall");
     };
     UserService.prototype.login = function (loginAccount) {
         var _this = this;
@@ -732,6 +731,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./validators/validator/validator.component */ "./src/app/shared/validators/validator/validator.component.ts");
+
 
 
 
@@ -746,7 +747,7 @@ var SharedModule = /** @class */ (function () {
     }
     SharedModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_components_layout_main_header_main_header_component__WEBPACK_IMPORTED_MODULE_4__["MainHeaderComponent"], _components_layout_auth_header_auth_header_component__WEBPACK_IMPORTED_MODULE_5__["AuthHeaderComponent"]],
+            declarations: [_components_layout_main_header_main_header_component__WEBPACK_IMPORTED_MODULE_4__["MainHeaderComponent"], _components_layout_auth_header_auth_header_component__WEBPACK_IMPORTED_MODULE_5__["AuthHeaderComponent"], _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__["ValidatorComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
@@ -759,10 +760,88 @@ var SharedModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
+                _validators_validator_validator_component__WEBPACK_IMPORTED_MODULE_9__["ValidatorComponent"]
             ]
         })
     ], SharedModule);
     return SharedModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/validators/validator/validator.component.html":
+/*!**********************************************************************!*\
+  !*** ./src/app/shared/validators/validator/validator.component.html ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div *ngIf=\"hasErrors()\" class=\"validator\">\n  <ng-container *ngIf=\"control?.errors?.required\">\n    <p>{{getControlName()}} is required!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.email\">\n    <p> email is not valid!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.minlength\">\n    <p>{{getControlName()}} min length not valid!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.maxlength\">\n     <p>{{getControlName()}} max length not valid! </p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.pattern\">\n    <p>{{getControlName()}} is not valid!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.passwordValidation\">\n    <p>{{getControlName()}} is not valid!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.mustMatch\">\n    <p>{{getControlName()}} must match!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.ageRange\">\n    <p>Year range from 1920 to 2019!</p>\n  </ng-container>\n  <ng-container *ngIf=\"control?.errors?.adultRange\">\n    <p>You don`t adult enough!</p>\n  </ng-container>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/shared/validators/validator/validator.component.scss":
+/*!**********************************************************************!*\
+  !*** ./src/app/shared/validators/validator/validator.component.scss ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "div.validator {\n  margin-top: 5px;\n  min-height: 18px; }\n  div.validator p {\n    color: #8b0000;\n    font-size: 16px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL3ZhbGlkYXRvcnMvdmFsaWRhdG9yL0M6XFxVc2Vyc1xcQW51aXRleC04NFxcZ2l0XFxXZWJcXHNvdXJjZVxccmVwb3NcXEJsYWNrSmFja1xcQmxhY2tKYWNrLldFQlxcQ2xpZW50QXBwL3NyY1xcYXBwXFxzaGFyZWRcXHZhbGlkYXRvcnNcXHZhbGlkYXRvclxcdmFsaWRhdG9yLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBZTtFQUNmLGdCQUFnQixFQUFBO0VBRnBCO0lBS00sY0FBYztJQUNkLGVBQWUsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC92YWxpZGF0b3JzL3ZhbGlkYXRvci92YWxpZGF0b3IuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyJkaXYudmFsaWRhdG9yIHtcclxuICAgIG1hcmdpbi10b3A6IDVweDtcclxuICAgIG1pbi1oZWlnaHQ6IDE4cHg7XHJcbiAgXHJcbiAgICBwIHtcclxuICAgICAgY29sb3I6ICM4YjAwMDA7XHJcbiAgICAgIGZvbnQtc2l6ZTogMTZweDtcclxuICAgIH1cclxuICB9Il19 */"
+
+/***/ }),
+
+/***/ "./src/app/shared/validators/validator/validator.component.ts":
+/*!********************************************************************!*\
+  !*** ./src/app/shared/validators/validator/validator.component.ts ***!
+  \********************************************************************/
+/*! exports provided: ValidatorComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValidatorComponent", function() { return ValidatorComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+
+
+
+var ValidatorComponent = /** @class */ (function () {
+    function ValidatorComponent() {
+    }
+    ValidatorComponent.prototype.hasErrors = function () {
+        return this.control.invalid && (this.control.dirty || this.control.touched);
+    };
+    ValidatorComponent.prototype.ngOnInit = function () {
+    };
+    ValidatorComponent.prototype.getControlName = function () {
+        var controlName = null;
+        var parent = this.control['parent'];
+        if (parent instanceof _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]) {
+            for (var name_1 in parent.controls) {
+                if (this.control === parent.controls[name_1]) {
+                    controlName = name_1;
+                }
+            }
+        }
+        return controlName;
+    };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"])
+    ], ValidatorComponent.prototype, "control", void 0);
+    ValidatorComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-validator',
+            template: __webpack_require__(/*! ./validator.component.html */ "./src/app/shared/validators/validator/validator.component.html"),
+            styles: [__webpack_require__(/*! ./validator.component.scss */ "./src/app/shared/validators/validator/validator.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+    ], ValidatorComponent);
+    return ValidatorComponent;
 }());
 
 

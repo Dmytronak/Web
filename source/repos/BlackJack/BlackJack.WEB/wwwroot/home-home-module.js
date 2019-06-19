@@ -76,15 +76,12 @@ __webpack_require__.r(__webpack_exports__);
 var HomeComponent = /** @class */ (function () {
     function HomeComponent() {
     }
-    HomeComponent.prototype.ngOnInit = function () {
-    };
     HomeComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-home',
             template: __webpack_require__(/*! ./home.component.html */ "./src/app/home/home.component.html"),
             styles: [__webpack_require__(/*! ./home.component.scss */ "./src/app/home/home.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], HomeComponent);
     return HomeComponent;
 }());

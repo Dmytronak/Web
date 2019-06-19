@@ -7,7 +7,7 @@ import { HistoryService } from 'src/app/shared/services/history.service';
 import { PipeTransform } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { FormControl } from '@angular/forms';
-import { Observable, BehaviorSubject, Subject, of, interval, ReplaySubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { TableStateHistoryView } from 'src/app/shared/entities/history/table-state-history.view';
 @Component({
@@ -30,8 +30,8 @@ export class UserGamesComponent implements OnInit {
   private botSteps: Observable<GetBotStepsHistoryView>;
   private getAllGamesHistory: GetAllGamesHistoryView;
   private listCount = new BehaviorSubject<number>(0);
-  private readonly headBotSteps = ['Cards', '', '', ''];
-  private readonly headBots = ['Bot name', 'Steps', '', '', '', ''];
+  private readonly headBotSteps = ['Cards', '', '', '','', '', ''];
+  private readonly headBots = ['Bot name', 'Steps', '', '', '', '', '', ''];
   private readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   private filter = new FormControl('');

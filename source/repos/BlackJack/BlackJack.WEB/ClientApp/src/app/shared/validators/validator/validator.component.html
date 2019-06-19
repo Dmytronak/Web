@@ -1,0 +1,29 @@
+<div *ngIf="hasErrors()" class="validator">
+  <ng-container *ngIf="control?.errors?.required">
+    <p>{{getControlName()}} is required!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.email">
+    <p> email is not valid!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.minlength">
+    <p>{{getControlName()}} min length not valid!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.maxlength">
+     <p>{{getControlName()}} max length not valid! </p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.pattern">
+    <p>{{getControlName()}} is not valid!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.passwordValidation">
+    <p>{{getControlName()}} is not valid!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.mustMatch">
+    <p>{{getControlName()}} must match!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.ageRange">
+    <p>Year range from 1920 to 2019!</p>
+  </ng-container>
+  <ng-container *ngIf="control?.errors?.adultRange">
+    <p>You don`t adult enough!</p>
+  </ng-container>
+</div>

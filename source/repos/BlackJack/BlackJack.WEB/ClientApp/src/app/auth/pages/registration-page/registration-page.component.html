@@ -3,101 +3,43 @@
     <h2>Please enter your information</h2>
   </div>
 </div>
-<form [formGroup]="registerForm" (ngSubmit)="registration()">
+<form [formGroup]="registerForm" (ngSubmit)="register()">
   <div class="formGroup">
     <label for="email">Email</label>
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
-  <div
-    *ngIf="hasErrors(['email'])"
-    class="alert alert-danger">
-    <div *ngIf="registerForm.controls['email'].errors.required">
-      Email is required.
-    </div>
-    <div *ngIf="registerForm.controls['email'].errors.email">
-      Email not validate
-    </div>
+  <div>
+    <app-validator [control]="registerForm.get('email')"></app-validator>
   </div>
   <div class="formGroup">
-    <label for="nmae">Name</label>
+    <label for="name">Name</label>
     <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
   </div>
-  <div
-    *ngIf="hasErrors(['name'])"
-    class="alert alert-danger">
-    <div *ngIf="registerForm.controls['name'].errors.required">
-      Name is required.
-    </div>
-    <div *ngIf="registerForm.controls['name'].errors.maxlength">
-      Name max Length 15
-    </div>
+  <div>
+    <app-validator [control]="registerForm.get('name')"></app-validator>
   </div>
   <div class="formGroup">
     <label for="year">Year</label>
     <input type="text" class="form-control" name="year" placeholder="Year" formControlName="year">
   </div>
-  <div
-   *ngIf="hasErrors(['year'])"
-    class="alert alert-danger">
-    <div *ngIf="registerForm.controls['year'].errors.required">
-      year is required.
-    </div>
-    <div *ngIf="registerForm.controls['year'].errors.minlength">
-      year min min Length 4
-    </div>
-    <div *ngIf="registerForm.controls['year'].errors.maxlength">
-      year min max Length 4
-    </div>
-    <div *ngIf="registerForm.controls['year'].errors.pattern">
-      ONLY NUMB ERROR
-    </div>
-    <div *ngIf="registerForm.controls['year'].errors.ageRange">
-      Year range from 1920 to 2019
-    </div>
-    <div *ngIf="registerForm.controls['year'].errors.adultRange">
-      You don`t adult enough
-    </div>
-
+  <div>
+    <app-validator [control]="registerForm.get('year')"></app-validator>
   </div>
   <div class="formGroup">
     <label for="password">Password</label>
     <input type="password" class="form-control" name="password" placeholder="Password"
       formControlName="password">
   </div>
-  <div
-  *ngIf="hasErrors(['password'])"
-    class="alert alert-danger">
-    <div *ngIf="registerForm.controls['password'].errors.required">
-      Password is required.
-    </div>
-    <div *ngIf="registerForm.controls['password'].errors.minlength">
-      Password minLength 6
-    </div>
-    <div *ngIf="registerForm.controls['password'].errors.pattern">
-      Password not validate
-    </div>
+  <div>
+    <app-validator [control]="registerForm.get('password')"></app-validator>
   </div>
-
   <div class="formGroup">
     <label for="confirmPassword">Confirm password</label>
     <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password"
       formControlName="confirmPassword">
   </div>
-  <div
-  *ngIf="hasErrors(['confirmPassword'])"
-    class="alert alert-danger">
-    <div *ngIf="registerForm.controls['confirmPassword'].errors.required">
-      Password is required.
-    </div>
-    <div *ngIf="registerForm.controls['confirmPassword'].errors.minlength">
-      Password min Length 6
-    </div>
-    <div *ngIf="registerForm.controls['confirmPassword'].errors.pattern">
-      Password not validate
-    </div>
-    <div *ngIf="registerForm.controls['confirmPassword'].errors.mustMatch">
-      Passwords must match
-    </div>
+  <div>
+    <app-validator [control]="registerForm.get('confirmPassword')"></app-validator>
   </div>
   <div class="formGroup">
     <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
