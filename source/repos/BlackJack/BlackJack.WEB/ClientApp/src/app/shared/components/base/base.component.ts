@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss']
 })
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnInit, OnDestroy {
   protected componetDestroyed: Subject<boolean> = new Subject<boolean>();
   constructor() {
   }

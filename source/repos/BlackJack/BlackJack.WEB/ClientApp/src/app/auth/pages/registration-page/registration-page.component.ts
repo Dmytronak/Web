@@ -17,7 +17,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
   templateUrl: './registration-page.component.html',
   styleUrls: ['./registration-page.component.scss']
 })
-export class RegistrationAuthComponent extends BaseComponent implements OnInit {
+export class RegistrationAuthComponent extends BaseComponent {
   private registerForm: FormGroup;
   private accoutsModel: GetAllAccountView;
   constructor(private readonly userService: UserService, private readonly router: Router, private readonly formBuilder: FormBuilder,

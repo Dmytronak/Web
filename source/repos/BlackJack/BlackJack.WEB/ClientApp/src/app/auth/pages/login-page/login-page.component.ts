@@ -12,9 +12,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginAuthComponent
-  extends BaseComponent
-  implements OnInit, OnDestroy {
+export class LoginAuthComponent extends BaseComponent {
   private loginForm: FormGroup;
   constructor(private readonly userService: UserService, private readonly formBuilder: FormBuilder, private readonly router: Router) {
     super();
