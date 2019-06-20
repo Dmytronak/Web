@@ -400,9 +400,6 @@ var PlayGameComponent = /** @class */ (function (_super) {
     PlayGameComponent.prototype.backToHome = function () {
         this.router.navigate(['/game/home']);
     };
-    PlayGameComponent.prototype.ngOnDestroy = function () {
-        this.componetDestroyed.next(true);
-    };
     PlayGameComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-play-page',

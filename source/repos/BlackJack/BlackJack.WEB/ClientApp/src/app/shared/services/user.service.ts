@@ -43,7 +43,7 @@ export class UserService {
     this.loggedIn = false;
     this.authNavStatusSource.next(false);
   }
-  public completeAuthentication(token: string, email: string): void {
+  private completeAuthentication(token: string, email: string): void {
     this.localStorageService.setItem("auth_token", token);
     this.localStorageService.setItem("email", email);
     this.loggedIn = true;

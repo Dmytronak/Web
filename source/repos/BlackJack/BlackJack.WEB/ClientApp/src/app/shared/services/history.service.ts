@@ -14,14 +14,14 @@ export class HistoryService {
   constructor(private readonly http: HttpClient) {
     this.baseUrl = environment.baseUrl;
    }
-   getGamesByUser():Observable<GetAllGamesHistoryView>{
+   public getGamesByUser():Observable<GetAllGamesHistoryView>{
      return this.http.get<GetAllGamesHistoryView>(`${this.baseUrl}/history/allUserGames`);
    }
-   getPlayerSteps(x): Observable<GetPlayerStepsHistoryView> {
+   public getPlayerSteps(x): Observable<GetPlayerStepsHistoryView> {
     let params = new HttpParams().set("gameId",x.id); 
     return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/playerSteps`, { params:params });
    }
-   getBotSteps(x): Observable<GetBotStepsHistoryView>{
+   public getBotSteps(x): Observable<GetBotStepsHistoryView>{
     let params = new HttpParams().set("gameId",x.id); 
     return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/botSteps`, { params:params });
    }

@@ -14,16 +14,16 @@ export class ToastrMessagesService {
         this.options.preventDuplicates = true;
         this.options.countDuplicates = true;
     }
-    error(message:string,title:string) : ActiveToast<any>{
+    public error(message:string,title:string) : ActiveToast<any>{
         return this.toastr.error(message,title);
     }
-    info(message:string,title:string): ActiveToast<any>{
+    public info(message:string,title:string): ActiveToast<any>{
         return this.toastr.info(message,title);
     }
-    warning(message:string,title:string): ActiveToast<any>{
+    public warning(message:string,title:string): ActiveToast<any>{
       return this.toastr.warning(message,title);
     } 
-    success(message:string,title:string): ActiveToast<any>{
+    public success(message:string,title:string): ActiveToast<any>{
         return this.toastr.success(message,title);
       }
 }
