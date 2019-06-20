@@ -179,7 +179,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
+/* harmony import */ var src_app_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var src_app_shared_validators_password_validator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/validators/password.validator */ "./src/app/shared/validators/password.validator.ts");
@@ -194,9 +194,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var LoginAuthComponent = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](LoginAuthComponent, _super);
-    function LoginAuthComponent(userService, formBuilder, router) {
+    function LoginAuthComponent(authService, formBuilder, router) {
         var _this = _super.call(this) || this;
-        _this.userService = userService;
+        _this.authService = authService;
         _this.formBuilder = formBuilder;
         _this.router = router;
         _this.initForms();
@@ -219,7 +219,7 @@ var LoginAuthComponent = /** @class */ (function (_super) {
             email: this.loginForm.controls['email'].value,
             password: this.loginForm.controls['password'].value
         });
-        this.userService.login(loginAccount)
+        this.authService.login(loginAccount)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (response) {
             _this.router.navigate(["/game/home"]);
@@ -231,7 +231,7 @@ var LoginAuthComponent = /** @class */ (function (_super) {
             template: __webpack_require__(/*! ./login-page.component.html */ "./src/app/auth/pages/login-page/login-page.component.html"),
             styles: [__webpack_require__(/*! ./login-page.component.scss */ "./src/app/auth/pages/login-page/login-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], LoginAuthComponent);
     return LoginAuthComponent;
 }(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_7__["BaseComponent"]));
@@ -275,7 +275,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/user.service */ "./src/app/shared/services/user.service.ts");
+/* harmony import */ var src_app_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/auth.service */ "./src/app/shared/services/auth.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var src_app_shared_validators_must_match_validator__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/validators/must-match.validator */ "./src/app/shared/validators/must-match.validator.ts");
 /* harmony import */ var src_app_shared_validators_year_range_validator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/validators/year-range.validator */ "./src/app/shared/validators/year-range.validator.ts");
@@ -296,9 +296,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var RegistrationAuthComponent = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](RegistrationAuthComponent, _super);
-    function RegistrationAuthComponent(userService, router, formBuilder, toastrService) {
+    function RegistrationAuthComponent(authService, router, formBuilder, toastrService) {
         var _this = _super.call(this) || this;
-        _this.userService = userService;
+        _this.authService = authService;
         _this.router = router;
         _this.formBuilder = formBuilder;
         _this.toastrService = toastrService;
@@ -307,7 +307,7 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
     }
     RegistrationAuthComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.userService.getAll()
+        this.authService.getAll()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (response) {
             _this.accoutsModel = response;
@@ -343,7 +343,7 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
             this.toastrService.warning(errorMessage.message, 'Warning');
         }
         if (!isExistUser) {
-            this.userService.register(registerAccount)
+            this.authService.register(registerAccount)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
                 .subscribe(function (response) {
                 _this.toastrService.success("Email " + registerAccount.email + " is successfully register.", 'All set!');
@@ -357,7 +357,7 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
             template: __webpack_require__(/*! ./registration-page.component.html */ "./src/app/auth/pages/registration-page/registration-page.component.html"),
             styles: [__webpack_require__(/*! ./registration-page.component.scss */ "./src/app/auth/pages/registration-page/registration-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
             src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_8__["ToastrMessagesService"]])
     ], RegistrationAuthComponent);
     return RegistrationAuthComponent;

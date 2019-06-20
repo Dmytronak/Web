@@ -84,15 +84,12 @@ __webpack_require__.r(__webpack_exports__);
 var GameComponent = /** @class */ (function () {
     function GameComponent() {
     }
-    GameComponent.prototype.ngOnInit = function () {
-    };
     GameComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-game',
             template: __webpack_require__(/*! ./game.component.html */ "./src/app/game/game.component.html"),
             styles: [__webpack_require__(/*! ./game.component.scss */ "./src/app/game/game.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], GameComponent);
     return GameComponent;
 }());
@@ -154,7 +151,7 @@ var GameModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <form [formGroup]=\"playGameForm\" (ngSubmit)=\"play()\">\r\n        <div>\r\n            <label for=\"numberOfBots\">Numbers Of Bots: </label>\r\n            <select class=\"form-control\" name=\"numberOfBots\" formControlName=\"numberOfBots\" placeholder=\"NumberOfBots\">\r\n                <option value=\"\" disabled>Choose a number</option>\r\n                <option>1</option>\r\n                <option>2</option>\r\n                <option>3</option>\r\n                <option>4</option>\r\n                <option>5</option>\r\n            </select>\r\n        </div>\r\n            <div class=\"playGameForm\" *ngIf=\"playStatus\">\r\n                <button type=\"submit\" class=\"btn btn-primary\">Play Game</button>\r\n            </div>\r\n    </form>\r\n    <div *ngIf=\"continueStatus\">\r\n            <button class=\"btn btn-success\" (click)=\"continueActiveGame()\">Continue active</button>\r\n        </div>\r\n</div>"
+module.exports = "<div>\r\n    <form [formGroup]=\"playGameForm\" (ngSubmit)=\"play()\">\r\n        <div>\r\n            <label for=\"numberOfBots\">Numbers Of Bots: </label>\r\n            <select class=\"form-control\" name=\"numberOfBots\" formControlName=\"numberOfBots\" placeholder=\"NumberOfBots\">\r\n                <option value=\"\" disabled>Choose a number</option>\r\n                <option *ngFor=\"let bot of botNumbers\">{{bot}}</option>\r\n            </select>\r\n        </div>\r\n            <div class=\"playGameForm\" *ngIf=\"playStatus\">\r\n                <button type=\"submit\" class=\"btn btn-primary\">Play Game</button>\r\n            </div>\r\n    </form>\r\n    <div *ngIf=\"continueStatus\">\r\n            <button class=\"btn btn-success\" (click)=\"continueActiveGame()\">Continue active</button>\r\n        </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -205,6 +202,7 @@ var HomeGameComponent = /** @class */ (function (_super) {
         _this.formBuilder = formBuilder;
         _this.continueStatus = false;
         _this.playStatus = false;
+        _this.botNumbers = [1, 2, 3, 4, 5];
         _this.initForms();
         return _this;
     }

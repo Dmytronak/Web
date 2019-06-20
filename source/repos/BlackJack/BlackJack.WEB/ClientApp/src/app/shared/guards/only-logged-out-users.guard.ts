@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable()
 export class OnlyLoggedOut implements CanActivate {
-  constructor(private user: UserService,private router: Router) {}
+  constructor(private authService: AuthService,private router: Router) {}
 
   canActivate() {
 
-    if(this.user.isLoggedIn())
+    if(this.authService.isLoggedIn())
     {
        this.router.navigate(['/game/home']);
        return false;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from 'src/app/shared/services/user.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import { mustMatch } from 'src/app/shared/validators/must-match.validator';
 import { yearRange } from 'src/app/shared/validators/year-range.validator';
@@ -20,13 +20,13 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
 export class RegistrationAuthComponent extends BaseComponent {
   private registerForm: FormGroup;
   private accoutsModel: GetAllAccountView;
-  constructor(private readonly userService: UserService, private readonly router: Router, private readonly formBuilder: FormBuilder,
+  constructor(private readonly authService: AuthService, private readonly router: Router, private readonly formBuilder: FormBuilder,
     private readonly toastrService: ToastrMessagesService) {
     super();
     this.initForms();
   }
   ngOnInit() {
-    this.userService.getAll()
+    this.authService.getAll()
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((response: GetAllAccountView) => {
         this.accoutsModel = response;
@@ -61,7 +61,7 @@ export class RegistrationAuthComponent extends BaseComponent {
       this.toastrService.warning(errorMessage.message,'Warning');
     }
     if (!isExistUser) {
-      this.userService.register(registerAccount)
+      this.authService.register(registerAccount)
         .pipe(takeUntil(this.componetDestroyed))
         .subscribe((response: LoginAccountResponseView) => {
           this.toastrService.success(`Email ${registerAccount.email} is successfully register.`,'All set!');

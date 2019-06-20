@@ -15,17 +15,17 @@ export class GameService {
   constructor(private readonly http: HttpClient) {
     this.baseUrl = environment.baseUrl;
   }
-  getActiveGame():Observable<PlayGameView> {
+  public getActiveGame():Observable<PlayGameView> {
     return this.http.get<PlayGameView>(`${this.baseUrl}/game/getActive`);
   }
-  play(x):Observable<PlayGameView> {
-    let params = new HttpParams().set("numberOfBots",x); 
+  public play(x):Observable<PlayGameView> {
+    const params = new HttpParams().set("numberOfBots",x); 
     return this.http.get<PlayGameView>(`${this.baseUrl}/game/play?${params}`);
   }
-  continue():Observable<ContinueGameView> {
+  public continue():Observable<ContinueGameView> {
     return this.http.get<ContinueGameView>(`${this.baseUrl}/game/continue`);
   }
-  end():Observable<EndGameView> {
+  public end():Observable<EndGameView> {
     return this.http.get<EndGameView>(`${this.baseUrl}/game/end`);
   }
 }

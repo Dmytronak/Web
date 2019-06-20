@@ -11,7 +11,7 @@ import { map, filter } from 'rxjs/operators';
 
 @Injectable()
 
-export class UserService {
+export class AuthService {
   private readonly baseUrl: string = '';
   private readonly authNavStatusSource = new BehaviorSubject<boolean>(false);
   private loggedIn = false;

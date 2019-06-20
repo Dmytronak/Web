@@ -4,11 +4,7 @@
             <label for="numberOfBots">Numbers Of Bots: </label>
             <select class="form-control" name="numberOfBots" formControlName="numberOfBots" placeholder="NumberOfBots">
                 <option value="" disabled>Choose a number</option>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
+                <option *ngFor="let bot of botNumbers">{{bot}}</option>
             </select>
         </div>
             <div class="playGameForm" *ngIf="playStatus">

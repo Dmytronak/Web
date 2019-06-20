@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UserService } from './shared/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -8,11 +7,5 @@ import { UserService } from './shared/services/user.service';
 })
 export class AppComponent {
   title: string = 'BlackJackClient';
-  status: boolean;
-  constructor(private userService:UserService) {   
-   }
-   
-  ngOnInit() {
-     this.userService.authNavStatus.subscribe(status => this.status = status);
-  }
+  constructor() {}
 }

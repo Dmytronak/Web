@@ -15,6 +15,7 @@ export class HomeGameComponent extends BaseComponent {
   private playGameForm: FormGroup;
   private continueStatus:boolean = false;
   private playStatus:boolean = false;
+  private botNumbers:number[] =[1,2,3,4,5];
   constructor(private readonly gameService: GameService, private readonly router: Router,private readonly toastrService: ToastrMessagesService,
     private readonly formBuilder: FormBuilder) {
       super();
