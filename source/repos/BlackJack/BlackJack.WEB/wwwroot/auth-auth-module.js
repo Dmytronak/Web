@@ -340,7 +340,7 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
             .find(function (user) { return user.email === registerAccount.email; });
         if (isExistUser) {
             var errorMessage = { message: "Username " + registerAccount.email + " is already taken" };
-            this.toastrService.warning(errorMessage.message, 'Info');
+            this.toastrService.warning(errorMessage.message, 'Warning');
         }
         if (!isExistUser) {
             this.userService.register(registerAccount)

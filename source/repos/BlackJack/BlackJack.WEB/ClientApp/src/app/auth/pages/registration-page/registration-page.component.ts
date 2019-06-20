@@ -58,7 +58,7 @@ export class RegistrationAuthComponent extends BaseComponent {
       .find((user: UserGetAllAccountViewItem) => user.email === registerAccount.email);
     if (isExistUser) {
       let errorMessage = { message: `Username ${registerAccount.email} is already taken` };
-      this.toastrService.warning(errorMessage.message,'Info');
+      this.toastrService.warning(errorMessage.message,'Warning');
     }
     if (!isExistUser) {
       this.userService.register(registerAccount)
