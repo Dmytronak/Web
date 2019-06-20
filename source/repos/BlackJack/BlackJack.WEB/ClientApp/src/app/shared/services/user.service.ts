@@ -23,13 +23,13 @@ export class UserService {
     this.baseUrl = environment.baseUrl;
   }
 
-  register(registerAccount: RegisterAccountView): Observable<LoginAccountResponseView> {
+  public register(registerAccount: RegisterAccountView): Observable<LoginAccountResponseView> {
     return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/register`, registerAccount);
   }
-  getAll(): Observable<GetAllAccountView> {
+  public getAll(): Observable<GetAllAccountView> {
     return this.http.get<GetAllAccountView>(`${this.baseUrl}/account/getall`);
   }
-  login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
+  public login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
     return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount)
       .pipe(filter((response: LoginAccountResponseView)=>response.token !==''),
       map((response: LoginAccountResponseView) => {
@@ -37,19 +37,19 @@ export class UserService {
       return response;
     })); 
   }
-  logout(): void {
+  public logout(): void {
     this.localStorageService.removeItem('auth_token');
     this.localStorageService.removeItem('email');
     this.loggedIn = false;
     this.authNavStatusSource.next(false);
   }
-  completeAuthentication(token: string, email: string): void {
+  public completeAuthentication(token: string, email: string): void {
     this.localStorageService.setItem("auth_token", token);
     this.localStorageService.setItem("email", email);
     this.loggedIn = true;
     this.authNavStatusSource.next(true);
   }
-  isLoggedIn(): boolean {
+  public isLoggedIn(): boolean {
     return this.loggedIn;
   }
 }

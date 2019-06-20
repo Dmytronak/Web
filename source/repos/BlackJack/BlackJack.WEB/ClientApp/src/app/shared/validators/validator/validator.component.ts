@@ -13,9 +13,9 @@ export class ValidatorComponent implements OnInit {
   private hasErrors(): boolean {
     return this.control.invalid && (this.control.dirty || this.control.touched);
   }
-  public ngOnInit(): void {
+  ngOnInit(): void {
   }
-  public getControlName(): string {
+  private getControlName(): string {
       let controlName = null;
       const parent = this.control['parent'];
       if (parent instanceof FormGroup) {
