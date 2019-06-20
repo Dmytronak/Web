@@ -19,7 +19,7 @@ namespace BlackJack.Controllers
           
         }
         [HttpGet]
-        public async Task<GetPlayGameView> GetPlay([FromQuery]int numberOfBots)
+        public async Task<GetPlayGameView> GetPlay([FromQuery] int numberOfBots)
         {
             var response =  await _gameService.GetPlay(numberOfBots, UserId());
             return response;

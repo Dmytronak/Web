@@ -563,9 +563,8 @@ var GameService = /** @class */ (function () {
     GameService.prototype.getActiveGame = function () {
         return this.http.get(this.baseUrl + "/game/getActive");
     };
-    GameService.prototype.play = function (x) {
-        var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]().set("numberOfBots", x);
-        return this.http.get(this.baseUrl + "/game/getPlay?" + params);
+    GameService.prototype.play = function (value) {
+        return this.http.get(this.baseUrl + "/game/getPlay?numberOfBots=" + value);
     };
     GameService.prototype.continue = function () {
         return this.http.get(this.baseUrl + "/game/getContinue");

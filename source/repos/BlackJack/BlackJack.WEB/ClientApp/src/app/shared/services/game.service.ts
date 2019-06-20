@@ -18,9 +18,8 @@ export class GameService {
   public getActiveGame():Observable<GetPlayGameView> {
     return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getActive`);
   }
-  public play(x):Observable<GetPlayGameView> {
-    const params = new HttpParams().set("numberOfBots",x); 
-    return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getPlay?${params}`);
+  public play(value:number):Observable<GetPlayGameView> {
+    return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getPlay?numberOfBots=${value}`);
   }
   public continue():Observable<GetContinueGameView> {
     return this.http.get<GetContinueGameView>(`${this.baseUrl}/game/getContinue`);
