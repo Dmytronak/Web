@@ -141,8 +141,7 @@ var AppComponent = /** @class */ (function () {
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], AppComponent);
     return AppComponent;
 }());
@@ -392,15 +391,12 @@ var LoggedOutHeaderComponent = /** @class */ (function () {
     function LoggedOutHeaderComponent() {
         this.navbarCollapsed = true;
     }
-    LoggedOutHeaderComponent.prototype.ngOnInit = function () {
-    };
     LoggedOutHeaderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-logged-out-header',
             template: __webpack_require__(/*! ./logged-out-header.component.html */ "./src/app/shared/components/layout/logged-out-header/logged-out-header.component.html"),
             styles: [__webpack_require__(/*! ./logged-out-header.component.scss */ "./src/app/shared/components/layout/logged-out-header/logged-out-header.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], LoggedOutHeaderComponent);
     return LoggedOutHeaderComponent;
 }());

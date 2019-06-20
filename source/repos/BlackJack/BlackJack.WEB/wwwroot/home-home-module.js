@@ -170,15 +170,12 @@ __webpack_require__.r(__webpack_exports__);
 var MainPageComponent = /** @class */ (function () {
     function MainPageComponent() {
     }
-    MainPageComponent.prototype.ngOnInit = function () {
-    };
     MainPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-main-page',
             template: __webpack_require__(/*! ./main-page.component.html */ "./src/app/home/pages/main-page/main-page.component.html"),
             styles: [__webpack_require__(/*! ./main-page.component.scss */ "./src/app/home/pages/main-page/main-page.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], MainPageComponent);
     return MainPageComponent;
 }());

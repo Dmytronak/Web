@@ -76,15 +76,12 @@ __webpack_require__.r(__webpack_exports__);
 var HistoryComponent = /** @class */ (function () {
     function HistoryComponent() {
     }
-    HistoryComponent.prototype.ngOnInit = function () {
-    };
     HistoryComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-history',
             template: __webpack_require__(/*! ./history.component.html */ "./src/app/history/history.component.html"),
             styles: [__webpack_require__(/*! ./history.component.scss */ "./src/app/history/history.component.scss")]
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [])
+        })
     ], HistoryComponent);
     return HistoryComponent;
 }());

@@ -5,11 +5,6 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './logged-out-header.component.html',
   styleUrls: ['./logged-out-header.component.scss']
 })
-export class LoggedOutHeaderComponent implements OnInit {
+export class LoggedOutHeaderComponent{
   public navbarCollapsed = true
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }
