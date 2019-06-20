@@ -18,30 +18,21 @@ export class UserService {
   private loggedIn = false;
   authNavStatus = this.authNavStatusSource.asObservable();
 
-  constructor(private readonly http: HttpClient, private readonly localStorageService: LocalStorageService, ) {
+  constructor(private readonly http: HttpClient, private readonly localStorageService: LocalStorageService) {
     this.loggedIn = !!this.localStorageService.getItem('auth_token');
     this.authNavStatusSource.next(this.loggedIn);
     this.baseUrl = environment.baseUrl;
   }
 
   register(registerAccount: RegisterAccountView): Observable<LoginAccountResponseView> {
-    return this.http.post(this.baseUrl + "/account/register", registerAccount)
-    .pipe(map((x: LoginAccountResponseView) => {
-      return x;
-    }));
+    return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/register`, registerAccount);
   }
   getAll(): Observable<GetAllAccountView> {
-    return this.http.get<GetAllAccountView>(this.baseUrl + "/account/getall");
+    return this.http.get<GetAllAccountView>(`${this.baseUrl}/account/getall`);
   }
 
   login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
-    return this.http.post(this.baseUrl + "/account/login", loginAccount)
-      .pipe(map((x: LoginAccountResponseView) => {
-        if (x) {
-          this.completeAuthentication(x.token, loginAccount.email);
-        }
-        return x;
-      }));
+    return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount);
   }
   logout(): void {
     this.localStorageService.removeItem('auth_token');
