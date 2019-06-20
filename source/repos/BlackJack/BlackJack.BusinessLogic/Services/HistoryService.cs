@@ -36,7 +36,7 @@ namespace BlackJack.BusinessLogic.Services
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
         }
-        public async Task<GetBotStepsHistoryView> BotSteps(Guid gameId)
+        public async Task<GetBotStepsHistoryView> GetBotSteps(Guid gameId)
         {
             var botSteps = await _botStepRepository.GetByGameId(gameId);
             if (botSteps.Count == 0)
@@ -68,7 +68,7 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        public async Task<GetPlayerStepsHistoryView> PlayerStep(Guid gameId)
+        public async Task<GetPlayerStepsHistoryView> GetPlayerStep(Guid gameId)
         {
             var playerSteps = await _playerStepRepository.GetByGameId(gameId);
             if (playerSteps.Count == 0)

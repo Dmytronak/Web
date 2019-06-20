@@ -4,6 +4,7 @@ using BlackJack.BusinessLogic.Services.Interfaces;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using BlackJack.WEB.Controllers;
+using BlackJack.ViewModels.HistoryViews;
 
 namespace BlackJack.Controllers
 {
@@ -18,22 +19,22 @@ namespace BlackJack.Controllers
             _historyService = historyService;
         }
         [HttpGet]
-        public async Task<IActionResult> AllUserGames()
+        public async Task<GetAllGamesHistoryView> AllUserGames()
         {
            var response = await _historyService.GetAllGames(UserId());
-           return Ok(response);
+           return response;
         }
         [HttpGet]
-        public async Task<IActionResult> PlayerSteps([FromQuery] Guid gameId)
+        public async Task<GetPlayerStepsHistoryView> GetPlayerSteps([FromQuery] Guid gameId)
         {
-            var response = await _historyService.PlayerStep(gameId);
-            return Ok(response);
+            var response = await _historyService.GetPlayerStep(gameId);
+            return response;
         }
         [HttpGet]
-        public async Task<IActionResult> BotSteps([FromQuery] Guid gameId)
+        public async Task<GetBotStepsHistoryView> GetBotSteps([FromQuery] Guid gameId)
         {
-            var response = await _historyService.BotSteps(gameId);
-            return Ok(response);
+            var response = await _historyService.GetBotSteps(gameId);
+            return response;
         }
 
     }

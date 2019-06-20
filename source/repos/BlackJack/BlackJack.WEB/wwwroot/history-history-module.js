@@ -319,11 +319,11 @@ var HistoryService = /** @class */ (function () {
     };
     HistoryService.prototype.getPlayerSteps = function (x) {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", x.id);
-        return this.http.get(this.baseUrl + "/history/playerSteps", { params: params });
+        return this.http.get(this.baseUrl + "/history/getPlayerSteps", { params: params });
     };
     HistoryService.prototype.getBotSteps = function (x) {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("gameId", x.id);
-        return this.http.get(this.baseUrl + "/history/botSteps", { params: params });
+        return this.http.get(this.baseUrl + "/history/getBotSteps", { params: params });
     };
     HistoryService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

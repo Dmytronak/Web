@@ -19,10 +19,10 @@ export class HistoryService {
    }
    public getPlayerSteps(x): Observable<GetPlayerStepsHistoryView> {
     let params = new HttpParams().set("gameId",x.id); 
-    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/playerSteps`, { params:params });
+    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/getPlayerSteps`, { params:params });
    }
    public getBotSteps(x): Observable<GetBotStepsHistoryView>{
     let params = new HttpParams().set("gameId",x.id); 
-    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/botSteps`, { params:params });
+    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/getBotSteps`, { params:params });
    }
 }
