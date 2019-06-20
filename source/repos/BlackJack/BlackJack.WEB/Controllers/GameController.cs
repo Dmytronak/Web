@@ -24,7 +24,7 @@ namespace BlackJack.Controllers
             var response =  await _gameService.Play(numberOfBots, UserId());
             return Ok(response);
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Continue()
         {
             var response = await _gameService.Continue(UserId());
@@ -36,7 +36,7 @@ namespace BlackJack.Controllers
             var response = await _gameService.GetActive(UserId());
             return response;
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> End()
         {
             var response = await _gameService.End(UserId());

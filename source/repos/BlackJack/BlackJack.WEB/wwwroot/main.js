@@ -730,10 +730,7 @@ var UserService = /** @class */ (function () {
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseUrl;
     }
     UserService.prototype.register = function (registerAccount) {
-        return this.http.post(this.baseUrl + "/account/register", registerAccount)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) {
-            return x;
-        }));
+        return this.http.post(this.baseUrl + "/account/register", registerAccount);
     };
     UserService.prototype.getAll = function () {
         return this.http.get(this.baseUrl + "/account/getall");
@@ -741,10 +738,9 @@ var UserService = /** @class */ (function () {
     UserService.prototype.login = function (loginAccount) {
         var _this = this;
         return this.http.post(this.baseUrl + "/account/login", loginAccount)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["filter"])(function (x) { return x.token !== ''; }))
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["map"])(function (x) {
-            if (x) {
-                _this.completeAuthentication(x.token, loginAccount.email);
-            }
+            _this.completeAuthentication(x.token, loginAccount.email);
             return x;
         }));
     };

@@ -7,7 +7,7 @@ import { RegisterAccountView } from '../entities/auth/register-account.view';
 import { GetAllAccountView } from '../entities/auth/get-all-account.view';
 import { LoginAccountView } from '../entities/auth/login-account.view';
 import { LoginAccountResponseView } from '../entities/auth/login-account-response.view';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 
 @Injectable()
 
@@ -32,7 +32,12 @@ export class UserService {
   }
 
   login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
-    return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount);
+    return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount)
+      .pipe(filter((x: LoginAccountResponseView)=>x.token !==''))
+      .pipe(map((x: LoginAccountResponseView) => {
+        this.completeAuthentication(x.token, loginAccount.email);
+      return x;
+    }));
   }
   logout(): void {
     this.localStorageService.removeItem('auth_token');

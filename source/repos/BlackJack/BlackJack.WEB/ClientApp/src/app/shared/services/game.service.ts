@@ -16,26 +16,17 @@ export class GameService {
     this.baseUrl = environment.baseUrl;
   }
   getActiveGame():Observable<PlayGameView> {
-    return this.http.get<PlayGameView>(this.baseUrl + "/game/getActive");
+    return this.http.get<PlayGameView>(`${this.baseUrl}/game/getActive`);
   }
   play(x):Observable<PlayGameView> {
     let params = new HttpParams().set("numberOfBots",x); 
-    return this.http.post(this.baseUrl + "/game/play?"+params,'')
-    .pipe(map((x: PlayGameView) => {
-      return x;
-    }));
+    return this.http.post<PlayGameView>(`${this.baseUrl}/game/play?${params}`,'');
   }
   continue():Observable<ContinueGameView> {
-    return this.http.post(this.baseUrl + "/game/continue", '')
-    .pipe(map((x: ContinueGameView) => {
-      return x;
-    }));
+    return this.http.get<ContinueGameView>(`${this.baseUrl}/game/continue`);
   }
   end():Observable<EndGameView> {
-    return this.http.post(this.baseUrl + "/game/end", '')
-    .pipe(map((x: EndGameView) => {
-      return x;
-    }));;
+    return this.http.get<EndGameView>(`${this.baseUrl}/game/end`);
   }
 }
 

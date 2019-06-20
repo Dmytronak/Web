@@ -555,8 +555,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-
 
 
 
@@ -572,23 +570,13 @@ var GameService = /** @class */ (function () {
     };
     GameService.prototype.play = function (x) {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]().set("numberOfBots", x);
-        return this.http.post(this.baseUrl + "/game/play?" + params, '')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (x) {
-            return x;
-        }));
+        return this.http.post(this.baseUrl + "/game/play?" + params, '');
     };
     GameService.prototype.continue = function () {
-        return this.http.post(this.baseUrl + "/game/continue", '')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (x) {
-            return x;
-        }));
+        return this.http.get(this.baseUrl + "/game/continue");
     };
     GameService.prototype.end = function () {
-        return this.http.post(this.baseUrl + "/game/end", '')
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (x) {
-            return x;
-        }));
-        ;
+        return this.http.get(this.baseUrl + "/game/end");
     };
     GameService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
