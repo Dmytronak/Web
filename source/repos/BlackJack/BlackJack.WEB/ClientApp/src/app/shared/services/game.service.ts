@@ -3,7 +3,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { GetPlayGameView } from '../entities/game/get-play-game.view';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { GetContinueGameView } from '../entities/game/get-continue-game.view.';
 import { GetEndGameView } from '../entities/game/get-end-game.view';
 
@@ -18,8 +17,9 @@ export class GameService {
   public getActiveGame():Observable<GetPlayGameView> {
     return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getActive`);
   }
-  public play(value:number):Observable<GetPlayGameView> {
-    return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getPlay?numberOfBots=${value}`);
+  public play(numberOfBots):Observable<GetPlayGameView> {
+    const data = {numberOfBots: numberOfBots};
+    return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getPlay`,{params:data});
   }
   public continue():Observable<GetContinueGameView> {
     return this.http.get<GetContinueGameView>(`${this.baseUrl}/game/getContinue`);

@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { TableStateHistoryView } from 'src/app/shared/entities/history/table-state-history.view';
+import { BaseComponent } from 'src/app/shared/components/base/base.component';
 @Component({
   selector: 'app-games-page',
   templateUrl: './games-page.component.html',
@@ -17,14 +18,13 @@ import { TableStateHistoryView } from 'src/app/shared/entities/history/table-sta
   providers: [DecimalPipe]
 })
 
-export class UserGamesComponent implements OnInit {
+export class UserGamesComponent extends BaseComponent {
   private tableState: TableStateHistoryView = {page: 1, pageSize: 8};
   private showPlayerTable = false;
   private showBotTable = false;
   private showMainTable = true;
   private statusEnum: Status;
   private searchOnTable = new Subject<void>();
-  private componetDestroyed: Subject<boolean> = new Subject<boolean>();
   private games: Observable<GameGetAllGamesHistoryView[]>;
   private playerSteps: Observable<GetPlayerStepsHistoryView>;
   private botSteps: Observable<GetBotStepsHistoryView>;
@@ -35,13 +35,13 @@ export class UserGamesComponent implements OnInit {
   private readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   private filter = new FormControl('');
-
   private get page() { return this.tableState.page; }
   private get pageSize() { return this.tableState.pageSize; }
   private set page(page: number) { this.pagination({ page }); }
   private set pageSize(pageSize: number) { this.pagination({ pageSize }); }
 
   constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe) {
+    super();
   }
   ngOnInit() {
     this.initTable();
@@ -64,14 +64,14 @@ export class UserGamesComponent implements OnInit {
     );
   }
   private search(text: string, pipe: PipeTransform): GameGetAllGamesHistoryView[] {
-    let result = this.getAllGamesHistory.games.filter(x => {
+    const result = this.getAllGamesHistory.games.filter(x => {
       const term = text.toLowerCase();
       return x.status.toLowerCase().includes(term)
         || pipe.transform(x.numberOfBots).includes(term)
         || x.winner.toLowerCase().includes(term);
     });
     this.listCount = new BehaviorSubject<number>(result.length);
-    let response = result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
+    const response = result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
     return response;
   }
   private pagination(patch: Partial<TableStateHistoryView>) {
@@ -99,8 +99,5 @@ export class UserGamesComponent implements OnInit {
     this.showPlayerTable = false;
     this.showBotTable = false;
     this.showMainTable = true;
-  }
-  ngOnDestroy() {
-    this.componetDestroyed.next(true);
   }
 }

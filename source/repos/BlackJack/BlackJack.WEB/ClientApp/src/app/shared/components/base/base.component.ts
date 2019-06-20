@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
+import { CardGetPlayGameViewItem } from '../../entities/game/get-play-game.view';
 
 @Component({
   selector: 'app-base',
@@ -11,7 +12,10 @@ export class BaseComponent implements OnInit, OnDestroy {
   constructor() {
   }
 
-  public ngOnInit(): void {
+ ngOnInit(): void {
+  }
+  public getCardLink(card:CardGetPlayGameViewItem):string {
+    return `assets/cards/${card.rank}_${card.suit}.svg`
   }
   ngOnDestroy() {
     this.componetDestroyed.next(true);

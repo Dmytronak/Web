@@ -46,18 +46,18 @@
                     <th *ngIf="continueStatus">{{ (continueView | async)?.player.status }}</th>
                     <th *ngIf="endStatus">{{ (endView | async)?.player.status }}</th>
                     <td *ngIf="playStatus">
-                <tr *ngFor="let q of (playView | async)?.player.cards">
-                    <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                <tr *ngFor="let step of (playView | async)?.player.cards">
+                    <img [src]="getCardLink(step)">
                 </tr>
                 </td>
                 <td *ngIf="continueStatus">
-                    <tr *ngFor="let q of (continueView | async)?.player.cards">
-                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                    <tr *ngFor="let step of (continueView | async)?.player.cards">
+                        <img [src]="getCardLink(step)">
                     </tr>
                 </td>
                 <td *ngIf="endStatus">
-                    <tr *ngFor="let q of (endView | async)?.player.cards">
-                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                    <tr *ngFor="let step of (endView | async)?.player.cards">
+                      <img [src]="getCardLink(step)">
                     </tr>
                 </td>
                 </tr>
@@ -66,36 +66,36 @@
                 <th colspan="8" *ngFor="let head of headBots">{{head}}</th>
             </thead>
             <thead class="thead-dark" *ngIf="playStatus">
-                <th *ngFor="let e of (playView | async)?.bots">{{e.name}}</th>
+                <th *ngFor="let bot of (playView | async)?.bots">{{bot.name}}</th>
                 <th colspan="8"></th>
             </thead>
             <thead class="thead-dark" *ngIf="continueStatus">
-                <th *ngFor="let e of (continueView | async)?.bots">{{e.name}}</th>
+                <th *ngFor="let bot of (continueView | async)?.bots">{{bot.name}}</th>
                 <th colspan="8"></th>
             </thead>
             <thead class="thead-dark" *ngIf="endStatus">
-                <th *ngFor="let e of (endView | async)?.bots">{{e.name}}</th>
+                <th *ngFor="let bot of (endView | async)?.bots">{{bot.name}}</th>
                 <th colspan="8"></th>
             </thead>
 
             <tbody *ngIf="playStatus">
-                <td *ngFor="let e of (playView | async)?.bots">
-                    <tr *ngFor="let q of e.cards">
-                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                <td *ngFor="let bot of (playView | async)?.bots">
+                    <tr *ngFor="let step of bot.cards">
+                      <img [src]="getCardLink(step)">
                     </tr>
                 </td>
             </tbody>
             <tbody *ngIf="continueStatus">
-                <td *ngFor="let e of (continueView | async)?.bots">
-                    <tr *ngFor="let q of e.cards">
-                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                <td *ngFor="let bot of (continueView | async)?.bots">
+                    <tr *ngFor="let step of bot.cards">
+                        <img [src]="getCardLink(step)">
                     </tr>
                 </td>
             </tbody>
             <tbody *ngIf="endStatus">
-                <td *ngFor="let e of (endView | async)?.bots">
-                    <tr *ngFor="let q of e.cards">
-                        <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+                <td *ngFor="let bot of (endView | async)?.bots">
+                    <tr *ngFor="let step of bot.cards">
+                        <img [src]="getCardLink(step)">
                     </tr>
                 </td>
             </tbody>

@@ -14,21 +14,21 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let x of games | async">
+              <tr *ngFor="let game of games | async">
                 <td>
-                  <ngb-highlight [result]="x.numberOfBots | number" [term]="filter.value"></ngb-highlight>
+                  <ngb-highlight [result]="game.numberOfBots | number" [term]="filter.value"></ngb-highlight>
                 </td>
                 <td>
-                  <ngb-highlight [result]="x.status" [term]="filter.value"></ngb-highlight>
+                  <ngb-highlight [result]="game.status" [term]="filter.value"></ngb-highlight>
                 </td>
                 <td>
-                  <ngb-highlight [result]="x.winner" [term]="filter.value"></ngb-highlight>
+                  <ngb-highlight [result]="game.winner" [term]="filter.value"></ngb-highlight>
                 </td>
                 <td>
-                  <button class="btn btn-info" (click)="bot(x)">
+                  <button class="btn btn-info" (click)="bot(game)">
                     <i class="fas fa-robot"></i>
                   </button>
-                  <button class="btn btn-success" (click)="player(x)">
+                  <button class="btn btn-success" (click)="player(game)">
                     <i class="fas fa-user"></i>
                   </button>
                 </td>
@@ -46,8 +46,8 @@
       </thead>
       <tbody>
         <td>{{(playerSteps | async)?.name}}</td>
-        <td colspan="" *ngFor="let d of (playerSteps | async)?.steps">
-          <img src="../../../assets/cards/{{d.rank}}_{{d.suit}}.svg">
+        <td colspan="" *ngFor="let step of (playerSteps | async)?.steps">
+          <img [src]="getCardLink(step)">
         </td>
       </tbody>
     </table>
@@ -63,10 +63,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let e of (botSteps | async)?.bots">
-          <td>{{e.name}}</td>
-          <td *ngFor="let q of e.steps">
-            <img src="../../../assets/cards/{{q.rank}}_{{q.suit}}.svg">
+        <tr *ngFor="let botStep of (botSteps | async)?.bots">
+          <td>{{botStep.name}}</td>
+          <td *ngFor="let step of botStep.steps">
+              <img [src]="getCardLink(step)">
           </td>
         </tr>
       </tbody>

@@ -17,12 +17,12 @@ export class HistoryService {
    public getGamesByUser():Observable<GetAllGamesHistoryView>{
      return this.http.get<GetAllGamesHistoryView>(`${this.baseUrl}/history/allUserGames`);
    }
-   public getPlayerSteps(x): Observable<GetPlayerStepsHistoryView> {
-    let params = new HttpParams().set("gameId",x.id); 
-    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/getPlayerSteps`, { params:params });
+   public getPlayerSteps(game): Observable<GetPlayerStepsHistoryView> {
+    const data = {gameId:game.id}; 
+    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/getPlayerSteps`, { params:data });
    }
-   public getBotSteps(x): Observable<GetBotStepsHistoryView>{
-    let params = new HttpParams().set("gameId",x.id); 
-    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/getBotSteps`, { params:params });
+   public getBotSteps(game): Observable<GetBotStepsHistoryView>{
+    const data = {gameId:game.id};
+    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/getBotSteps`, { params:data });
    }
 }

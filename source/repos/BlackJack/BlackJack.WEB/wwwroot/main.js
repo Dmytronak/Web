@@ -264,6 +264,9 @@ var BaseComponent = /** @class */ (function () {
     }
     BaseComponent.prototype.ngOnInit = function () {
     };
+    BaseComponent.prototype.getCardLink = function (card) {
+        return "assets/cards/" + card.rank + "_" + card.suit + ".svg";
+    };
     BaseComponent.prototype.ngOnDestroy = function () {
         this.componetDestroyed.next(true);
     };
