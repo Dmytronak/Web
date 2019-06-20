@@ -20,7 +20,7 @@ export class GameService {
   }
   play(x):Observable<PlayGameView> {
     let params = new HttpParams().set("numberOfBots",x); 
-    return this.http.post<PlayGameView>(`${this.baseUrl}/game/play?${params}`,'');
+    return this.http.get<PlayGameView>(`${this.baseUrl}/game/play?${params}`);
   }
   continue():Observable<ContinueGameView> {
     return this.http.get<ContinueGameView>(`${this.baseUrl}/game/continue`);

@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrMessagesService } from 'src/app/shared/services/toastr-messages.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomeGameComponent implements OnInit {
+export class HomeGameComponent extends BaseComponent {
   private playGameForm: FormGroup;
-  private componetDestroyed: Subject<boolean> = new Subject<boolean>();
   private continueStatus:boolean = false;
   private playStatus:boolean = false;
   constructor(private readonly gameService: GameService, private readonly router: Router,private readonly toastrService: ToastrMessagesService,
     private readonly formBuilder: FormBuilder) {
+      super();
+      this.initForms();
   }
   ngOnInit() {
-    this.initForms();
   }
   private initForms():void{
    this.gameService.getActiveGame()
@@ -39,17 +39,11 @@ export class HomeGameComponent implements OnInit {
     this.router.navigate(["/game/play"]);
   }
   private play():void {
-    let numberOfBots: number;
-    numberOfBots = this.playGameForm.controls['numberOfBots'].value;
+    const numberOfBots:number = this.playGameForm.value['numberOfBots'];
       this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe(x => {
-        if (x) {
           this.router.navigate(['/game/play']);
-        }
       });
-  }
-  ngOnDestroy() {
-    this.componetDestroyed.next(true);
   }
 }

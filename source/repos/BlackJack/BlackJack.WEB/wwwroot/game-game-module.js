@@ -183,10 +183,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/game.service */ "./src/app/shared/services/game.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/services/toastr-messages.service */ "./src/app/shared/services/toastr-messages.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/toastr-messages.service */ "./src/app/shared/services/toastr-messages.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
 
 
 
@@ -195,23 +195,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var HomeGameComponent = /** @class */ (function () {
+var HomeGameComponent = /** @class */ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](HomeGameComponent, _super);
     function HomeGameComponent(gameService, router, toastrService, formBuilder) {
-        this.gameService = gameService;
-        this.router = router;
-        this.toastrService = toastrService;
-        this.formBuilder = formBuilder;
-        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
-        this.continueStatus = false;
-        this.playStatus = false;
+        var _this = _super.call(this) || this;
+        _this.gameService = gameService;
+        _this.router = router;
+        _this.toastrService = toastrService;
+        _this.formBuilder = formBuilder;
+        _this.continueStatus = false;
+        _this.playStatus = false;
+        _this.initForms();
+        return _this;
     }
     HomeGameComponent.prototype.ngOnInit = function () {
-        this.initForms();
     };
     HomeGameComponent.prototype.initForms = function () {
         var _this = this;
         this.gameService.getActiveGame()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.toastrService.info('You have active game! Click continue to play', x.player.name);
             _this.continueStatus = true;
@@ -227,18 +229,12 @@ var HomeGameComponent = /** @class */ (function () {
     };
     HomeGameComponent.prototype.play = function () {
         var _this = this;
-        var numberOfBots;
-        numberOfBots = this.playGameForm.controls['numberOfBots'].value;
+        var numberOfBots = this.playGameForm.value['numberOfBots'];
         this.gameService.play(numberOfBots)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            if (x) {
-                _this.router.navigate(['/game/play']);
-            }
+            _this.router.navigate(['/game/play']);
         });
-    };
-    HomeGameComponent.prototype.ngOnDestroy = function () {
-        this.componetDestroyed.next(true);
     };
     HomeGameComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -246,11 +242,11 @@ var HomeGameComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./home-page.component.html */ "./src/app/game/pages/home-page/home-page.component.html"),
             styles: [__webpack_require__(/*! ./home-page.component.scss */ "./src/app/game/pages/home-page/home-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_6__["ToastrMessagesService"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormBuilder"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"], src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_5__["ToastrMessagesService"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormBuilder"]])
     ], HomeGameComponent);
     return HomeGameComponent;
-}());
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_7__["BaseComponent"]));
 
 
 
@@ -298,6 +294,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/entities/game/play-game.view */ "./src/app/shared/entities/game/play-game.view.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
 
 
 
@@ -308,29 +305,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var PlayGameComponent = /** @class */ (function () {
+
+var PlayGameComponent = /** @class */ (function (_super) {
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](PlayGameComponent, _super);
     function PlayGameComponent(gameService, router) {
-        this.gameService = gameService;
-        this.router = router;
-        this.componetDestroyed = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
-        this.playStatus = false;
-        this.continueStatus = false;
-        this.endStatus = false;
-        this.game = false;
-        this.haveActiveGame = false;
-        this.headBotSteps = ['Cards'];
-        this.headBots = ['Bots'];
-        this.headPlayerSteps = ['Player name', 'Player cards'];
-        this.headElements = ['Number of bots', 'Status', 'Winner', ''];
-        this.endSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_end_game_view__WEBPACK_IMPORTED_MODULE_6__["EndGameView"]);
-        this.endView = this.endSubject.asObservable();
-        this.continueSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_continue_game_view___WEBPACK_IMPORTED_MODULE_5__["ContinueGameView"]);
-        this.continueView = this.continueSubject.asObservable();
-        this.playSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_7__["PlayGameView"]);
-        this.playView = this.playSubject.asObservable();
+        var _this = _super.call(this) || this;
+        _this.gameService = gameService;
+        _this.router = router;
+        _this.playStatus = false;
+        _this.continueStatus = false;
+        _this.endStatus = false;
+        _this.game = false;
+        _this.haveActiveGame = false;
+        _this.headBotSteps = ['Cards'];
+        _this.headBots = ['Bots'];
+        _this.headPlayerSteps = ['Player name', 'Player cards'];
+        _this.headElements = ['Number of bots', 'Status', 'Winner', ''];
+        _this.endSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_end_game_view__WEBPACK_IMPORTED_MODULE_6__["EndGameView"]);
+        _this.endView = _this.endSubject.asObservable();
+        _this.continueSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_continue_game_view___WEBPACK_IMPORTED_MODULE_5__["ContinueGameView"]);
+        _this.continueView = _this.continueSubject.asObservable();
+        _this.playSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_7__["PlayGameView"]);
+        _this.playView = _this.playSubject.asObservable();
+        _this.gameInit();
+        return _this;
     }
     PlayGameComponent.prototype.ngOnInit = function () {
-        this.gameInit();
     };
     PlayGameComponent.prototype.gameInit = function () {
         var _this = this;
@@ -412,7 +412,7 @@ var PlayGameComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_3__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], PlayGameComponent);
     return PlayGameComponent;
-}());
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_10__["BaseComponent"]));
 
 
 
@@ -570,7 +570,7 @@ var GameService = /** @class */ (function () {
     };
     GameService.prototype.play = function (x) {
         var params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpParams"]().set("numberOfBots", x);
-        return this.http.post(this.baseUrl + "/game/play?" + params, '');
+        return this.http.get(this.baseUrl + "/game/play?" + params);
     };
     GameService.prototype.continue = function () {
         return this.http.get(this.baseUrl + "/game/continue");

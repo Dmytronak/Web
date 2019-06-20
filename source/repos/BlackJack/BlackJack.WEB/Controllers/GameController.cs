@@ -18,7 +18,7 @@ namespace BlackJack.Controllers
             _gameService = gameService;
           
         }
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> Play([FromQuery]int numberOfBots)
         {
             var response =  await _gameService.Play(numberOfBots, UserId());

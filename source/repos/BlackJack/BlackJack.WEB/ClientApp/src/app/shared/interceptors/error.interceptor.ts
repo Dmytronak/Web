@@ -13,18 +13,17 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
+            const error = err.error || err.statusText;
             if (err.status === 401) {
                 this.userService.logout();
                 this.router.navigate(['']);
-                this.toastr.warning(err.error || err.statusText,err.status); 
+                this.toastr.warning(error,err.status); 
             }   
             if (err.status === 400) {
                console.clear();
-               const error = err.error || err.statusText;
                this.toastr.info(error,err.statusText);  
                return throwError(error);
             }
-            const error = err.error || err.statusText;
             this.toastr.error(error,err.status); 
             return throwError(error);
         }))

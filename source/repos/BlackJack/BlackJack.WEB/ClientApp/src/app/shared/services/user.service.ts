@@ -12,7 +12,6 @@ import { map, filter } from 'rxjs/operators';
 @Injectable()
 
 export class UserService {
-
   private readonly baseUrl: string = '';
   private readonly authNavStatusSource = new BehaviorSubject<boolean>(false);
   private loggedIn = false;
@@ -30,7 +29,6 @@ export class UserService {
   getAll(): Observable<GetAllAccountView> {
     return this.http.get<GetAllAccountView>(`${this.baseUrl}/account/getall`);
   }
-
   login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
     return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount)
       .pipe(filter((response: LoginAccountResponseView)=>response.token !==''),

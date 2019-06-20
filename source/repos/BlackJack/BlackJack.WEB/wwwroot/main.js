@@ -528,18 +528,17 @@ var ErrorInterceptor = /** @class */ (function () {
     ErrorInterceptor.prototype.intercept = function (request, next) {
         var _this = this;
         return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(function (err) {
+            var error = err.error || err.statusText;
             if (err.status === 401) {
                 _this.userService.logout();
                 _this.router.navigate(['']);
-                _this.toastr.warning(err.error || err.statusText, err.status);
+                _this.toastr.warning(error, err.status);
             }
             if (err.status === 400) {
                 console.clear();
-                var error_1 = err.error || err.statusText;
-                _this.toastr.info(error_1, err.statusText);
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error_1);
+                _this.toastr.info(error, err.statusText);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
             }
-            var error = err.error || err.statusText;
             _this.toastr.error(error, err.status);
             return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error);
         }));
@@ -577,14 +576,13 @@ var JwtInterceptor = /** @class */ (function () {
     function JwtInterceptor(userService, localStorageService) {
         this.userService = userService;
         this.localStorageService = localStorageService;
-        this.token = '';
     }
     JwtInterceptor.prototype.intercept = function (request, next) {
         if (this.userService.isLoggedIn()) {
-            this.token = this.localStorageService.getItem('auth_token');
+            var token = this.localStorageService.getItem('auth_token');
             request = request.clone({
                 setHeaders: {
-                    Authorization: "Bearer " + this.token
+                    Authorization: "Bearer " + token
                 }
             });
         }

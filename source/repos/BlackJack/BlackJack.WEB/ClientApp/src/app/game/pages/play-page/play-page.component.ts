@@ -5,16 +5,16 @@ import { Router } from '@angular/router';
 import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
 import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
 import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { takeUntil, map } from 'rxjs/operators';
+import { Observable, BehaviorSubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
 @Component({
   selector: 'app-play-page',
   templateUrl: './play-page.component.html',
   styleUrls: ['./play-page.component.scss']
 })
-export class PlayGameComponent implements OnInit {
-  private componetDestroyed: Subject<boolean> = new Subject<boolean>();
+export class PlayGameComponent extends BaseComponent {
   private numberOfBots: number;
   private playStatus: boolean = false;
   private continueStatus: boolean = false;
@@ -33,10 +33,10 @@ export class PlayGameComponent implements OnInit {
   private playView: Observable<PlayGameView> = this.playSubject.asObservable();
 
   constructor(private gameService: GameService, private router: Router) {
-  }
-
-  ngOnInit() {
+    super();
     this.gameInit();
+  }
+  ngOnInit() {
   }
   private gameInit(): void {
     this.gameService.getActiveGame()
@@ -85,7 +85,7 @@ export class PlayGameComponent implements OnInit {
       });
   }
   private playAgain():void {
-    let numberOfBots = this.numberOfBots;
+    const numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: PlayGameView) => {
@@ -103,8 +103,5 @@ export class PlayGameComponent implements OnInit {
   }
   backToHome(): void {
     this.router.navigate(['/game/home']);
-  }
-  ngOnDestroy() {
-    this.componetDestroyed.next(true);
   }
 }
