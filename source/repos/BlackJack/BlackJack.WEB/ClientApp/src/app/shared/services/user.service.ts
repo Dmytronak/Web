@@ -33,11 +33,11 @@ export class UserService {
 
   login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
     return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount)
-      .pipe(filter((x: LoginAccountResponseView)=>x.token !==''))
-      .pipe(map((x: LoginAccountResponseView) => {
-        this.completeAuthentication(x.token, loginAccount.email);
-      return x;
-    }));
+      .pipe(filter((response: LoginAccountResponseView)=>response.token !==''),
+      map((response: LoginAccountResponseView) => {
+        this.completeAuthentication(response.token, loginAccount.email);
+      return response;
+    })); 
   }
   logout(): void {
     this.localStorageService.removeItem('auth_token');
