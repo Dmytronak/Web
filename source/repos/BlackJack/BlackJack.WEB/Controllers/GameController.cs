@@ -19,28 +19,28 @@ namespace BlackJack.Controllers
           
         }
         [HttpGet]
-        public async Task<IActionResult> Play([FromQuery]int numberOfBots)
+        public async Task<GetPlayGameView> GetPlay([FromQuery]int numberOfBots)
         {
-            var response =  await _gameService.Play(numberOfBots, UserId());
-            return Ok(response);
+            var response =  await _gameService.GetPlay(numberOfBots, UserId());
+            return response;
         }
         [HttpGet]
-        public async Task<IActionResult> Continue()
+        public async Task<GetContinueGameView> GetContinue()
         {
-            var response = await _gameService.Continue(UserId());
-            return Ok(response);
+            var response = await _gameService.GetContinue(UserId());
+            return response;
         }
         [HttpGet]
-        public async Task<PlayGameView> GetActive()
+        public async Task<GetPlayGameView> GetActive()
         {
             var response = await _gameService.GetActive(UserId());
             return response;
         }
         [HttpGet]
-        public async Task<IActionResult> End()
+        public async Task<GetEndGameView> GetEnd()
         {
-            var response = await _gameService.End(UserId());
-            return Ok(response);
+            var response = await _gameService.GetEnd(UserId());
+            return response;
         }
 
     }

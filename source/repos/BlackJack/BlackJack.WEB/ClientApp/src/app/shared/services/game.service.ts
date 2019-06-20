@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PlayGameView } from '../entities/game/play-game.view';
+import { GetPlayGameView } from '../entities/game/get-play-game.view';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ContinueGameView } from '../entities/game/continue-game.view.';
-import { EndGameView } from '../entities/game/end-game.view';
+import { GetContinueGameView } from '../entities/game/get-continue-game.view.';
+import { GetEndGameView } from '../entities/game/get-end-game.view';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +15,18 @@ export class GameService {
   constructor(private readonly http: HttpClient) {
     this.baseUrl = environment.baseUrl;
   }
-  public getActiveGame():Observable<PlayGameView> {
-    return this.http.get<PlayGameView>(`${this.baseUrl}/game/getActive`);
+  public getActiveGame():Observable<GetPlayGameView> {
+    return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getActive`);
   }
-  public play(x):Observable<PlayGameView> {
+  public play(x):Observable<GetPlayGameView> {
     const params = new HttpParams().set("numberOfBots",x); 
-    return this.http.get<PlayGameView>(`${this.baseUrl}/game/play?${params}`);
+    return this.http.get<GetPlayGameView>(`${this.baseUrl}/game/getPlay?${params}`);
   }
-  public continue():Observable<ContinueGameView> {
-    return this.http.get<ContinueGameView>(`${this.baseUrl}/game/continue`);
+  public continue():Observable<GetContinueGameView> {
+    return this.http.get<GetContinueGameView>(`${this.baseUrl}/game/getContinue`);
   }
-  public end():Observable<EndGameView> {
-    return this.http.get<EndGameView>(`${this.baseUrl}/game/end`);
+  public end():Observable<GetEndGameView> {
+    return this.http.get<GetEndGameView>(`${this.baseUrl}/game/getEnd`);
   }
 }
 

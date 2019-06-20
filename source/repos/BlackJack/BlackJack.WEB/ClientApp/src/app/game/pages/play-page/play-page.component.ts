@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Status } from 'src/app/shared/enums/status-type.enum.view';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
-import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
-import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
-import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
+import { GetContinueGameView } from 'src/app/shared/entities/game/get-continue-game.view.';
+import { GetEndGameView } from 'src/app/shared/entities/game/get-end-game.view';
+import { GetPlayGameView } from 'src/app/shared/entities/game/get-play-game.view';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
@@ -25,12 +25,12 @@ export class PlayGameComponent extends BaseComponent {
   private readonly headBots = ['Bots'];
   private readonly headPlayerSteps = ['Player name', 'Player cards'];
   private readonly headElements = ['Number of bots', 'Status', 'Winner', ''];
-  private endSubject = new BehaviorSubject<EndGameView>(new EndGameView);
-  private endView: Observable<EndGameView> = this.endSubject.asObservable();
-  private continueSubject = new BehaviorSubject<ContinueGameView>(new ContinueGameView);
-  private continueView: Observable<ContinueGameView> = this.continueSubject.asObservable();
-  private playSubject = new BehaviorSubject<PlayGameView>(new PlayGameView);
-  private playView: Observable<PlayGameView> = this.playSubject.asObservable();
+  private endSubject = new BehaviorSubject<GetEndGameView>(new GetEndGameView);
+  private endView: Observable<GetEndGameView> = this.endSubject.asObservable();
+  private continueSubject = new BehaviorSubject<GetContinueGameView>(new GetContinueGameView);
+  private continueView: Observable<GetContinueGameView> = this.continueSubject.asObservable();
+  private playSubject = new BehaviorSubject<GetPlayGameView>(new GetPlayGameView);
+  private playView: Observable<GetPlayGameView> = this.playSubject.asObservable();
 
   constructor(private gameService: GameService, private router: Router) {
     super();
@@ -41,7 +41,7 @@ export class PlayGameComponent extends BaseComponent {
   private gameInit(): void {
     this.gameService.getActiveGame()
       .pipe(takeUntil(this.componetDestroyed))
-      .subscribe((x: PlayGameView) => {
+      .subscribe((x: GetPlayGameView) => {
         this.numberOfBots = x.numberOfBots;
         x.status = Status[x.status];
         this.game = true;
@@ -59,7 +59,7 @@ export class PlayGameComponent extends BaseComponent {
   private continue(): void {
     this.gameService.continue()
       .pipe(takeUntil(this.componetDestroyed))
-      .subscribe((x: ContinueGameView) => {
+      .subscribe((x: GetContinueGameView) => {
         x.status = Status[x['status']]
         this.game = true;
         if (x.winner !== 'No one') {
@@ -75,7 +75,7 @@ export class PlayGameComponent extends BaseComponent {
   private end(): void {
     this.gameService.end()
       .pipe(takeUntil(this.componetDestroyed))
-      .subscribe((x: EndGameView) => {
+      .subscribe((x: GetEndGameView) => {
         x.status = Status[x['status']]
         this.game = false;
         this.playStatus = false;
@@ -88,7 +88,7 @@ export class PlayGameComponent extends BaseComponent {
     const numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
-      .subscribe((x: PlayGameView) => {
+      .subscribe((x: GetPlayGameView) => {
         x.status = Status[x.status];
         this.game = true;
         this.haveActiveGame = true;
