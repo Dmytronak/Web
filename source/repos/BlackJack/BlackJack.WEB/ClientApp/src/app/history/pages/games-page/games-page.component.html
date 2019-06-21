@@ -5,34 +5,35 @@
   </div>
 </form>
 <div class="tableFixHead">
-        <table>
-            <thead>
-              <tr>
-                <th scope="col" *ngFor="let head of headElements" >{{head}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let game of games | async">
-                <td>
-                  <ngb-highlight [result]="game.numberOfBots | number" [term]="filter.value"></ngb-highlight>
-                </td>
-                <td>
-                  <ngb-highlight [result]="game.status" [term]="filter.value"></ngb-highlight>
-                </td>
-                <td>
-                  <ngb-highlight [result]="game.winner" [term]="filter.value"></ngb-highlight>
-                </td>
-                <td>
-                  <button class="btn btn-info" (click)="bot(game)">
-                    <i class="fas fa-robot"></i>
-                  </button>
-                  <button class="btn btn-success" (click)="player(game)">
-                    <i class="fas fa-user"></i>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <app-games-detail-page [botSteps]="botSteps" [playerSteps]="playerSteps" ></app-games-detail-page>
-          <ngb-pagination [collectionSize]="listCount | async" [(page)]="page" [pageSize]="pageSize" [maxSize]="4" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  <table>
+    <thead>
+      <tr>
+        <th scope="col" *ngFor="let head of headElements">{{head}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let game of games | async">
+        <td>
+          <ngb-highlight [result]="game.numberOfBots | number" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight [result]="game.status" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <ngb-highlight [result]="game.winner" [term]="filter.value"></ngb-highlight>
+        </td>
+        <td>
+          <button class="btn btn-info" (click)="bot(game)">
+            <i class="fas fa-robot"></i>
+          </button>
+          <button class="btn btn-success" (click)="player(game)">
+            <i class="fas fa-user"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-games-detail-page [botSteps]="botSteps" [playerSteps]="playerSteps"></app-games-detail-page>
+  <ngb-pagination [collectionSize]="listCount | async" [(page)]="page" [pageSize]="pageSize" [maxSize]="4"
+    [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 </div>

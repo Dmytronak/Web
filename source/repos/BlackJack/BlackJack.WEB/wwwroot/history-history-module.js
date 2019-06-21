@@ -144,7 +144,7 @@ var HistoryModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"playerSteps\">\n    <table class=\"table\">\n      <thead class=\"thead-dark\">\n        <tr>\n          <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <td>{{(playerSteps | async)?.name}}</td>\n        <td colspan=\"\" *ngFor=\"let step of (playerSteps | async)?.steps\">\n          <img [src]=\"getCardLink(step)\">\n        </td>\n      </tbody>\n      <button class=\"btn btn-danger\" (click)=\"hideTable()\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n    </table>\n  </div>\n  <div *ngIf=\"botSteps\">\n    <table class=\"table\">\n      <thead class=\"thead-dark\">\n        <tr>\n          <th *ngFor=\"let head of headBots\">{{head}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let botStep of (botSteps | async)?.bots\">\n          <td>{{botStep.name}}</td>\n          <td *ngFor=\"let step of botStep.steps\">\n              <img [src]=\"getCardLink(step)\">\n          </td>\n        </tr>\n      </tbody>\n      <button class=\"btn btn-danger\" (click)=\"hideTable()\">\n        <i class=\"fa fa-arrow-left\"></i>\n      </button>\n    </table>\n  </div>\n"
+module.exports = "<div *ngIf=\"playerSteps\">\n  <table class=\"table\">\n    <thead class=\"thead-dark\">\n      <tr>\n        <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\n      </tr>\n    </thead>\n    <tbody>\n      <td>{{(playerSteps | async)?.name}}</td>\n      <td colspan=\"\" *ngFor=\"let step of (playerSteps | async)?.steps\">\n        <img [src]=\"getCardLink(step)\">\n      </td>\n    </tbody>\n    <button class=\"btn btn-danger\" (click)=\"hideTable()\">\n      <i class=\"fa fa-arrow-left\"></i>\n    </button>\n  </table>\n</div>\n<div *ngIf=\"botSteps\">\n  <table class=\"table\">\n    <thead class=\"thead-dark\">\n      <tr>\n        <th *ngFor=\"let head of headBots\">{{head}}</th>\n      </tr>\n    </thead>\n    <tbody>\n      <tr *ngFor=\"let botStep of (botSteps | async)?.bots\">\n        <td>{{botStep.name}}</td>\n        <td *ngFor=\"let step of botStep.steps\">\n          <img [src]=\"getCardLink(step)\">\n        </td>\n      </tr>\n    </tbody>\n    <button class=\"btn btn-danger\" (click)=\"hideTable()\">\n      <i class=\"fa fa-arrow-left\"></i>\n    </button>\n  </table>\n</div>"
 
 /***/ }),
 
@@ -219,7 +219,7 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2> History of user games</h2>\r\n<form>\r\n  <div class=\"form-group form-inline\">\r\n    History search: <input class=\"form-control ml-2\" type=\"text\" [formControl]=\"filter\" />\r\n  </div>\r\n</form>\r\n<div class=\"tableFixHead\">\r\n        <table>\r\n            <thead>\r\n              <tr>\r\n                <th scope=\"col\" *ngFor=\"let head of headElements\" >{{head}}</th>\r\n              </tr>\r\n            </thead>\r\n            <tbody>\r\n              <tr *ngFor=\"let game of games | async\">\r\n                <td>\r\n                  <ngb-highlight [result]=\"game.numberOfBots | number\" [term]=\"filter.value\"></ngb-highlight>\r\n                </td>\r\n                <td>\r\n                  <ngb-highlight [result]=\"game.status\" [term]=\"filter.value\"></ngb-highlight>\r\n                </td>\r\n                <td>\r\n                  <ngb-highlight [result]=\"game.winner\" [term]=\"filter.value\"></ngb-highlight>\r\n                </td>\r\n                <td>\r\n                  <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n                    <i class=\"fas fa-robot\"></i>\r\n                  </button>\r\n                  <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n                    <i class=\"fas fa-user\"></i>\r\n                  </button>\r\n                </td>\r\n              </tr>\r\n            </tbody>\r\n          </table>\r\n          <app-games-detail-page [botSteps]=\"botSteps\" [playerSteps]=\"playerSteps\" ></app-games-detail-page>\r\n          <ngb-pagination [collectionSize]=\"listCount | async\" [(page)]=\"page\" [pageSize]=\"pageSize\" [maxSize]=\"4\" [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
+module.exports = "<h2> History of user games</h2>\r\n<form>\r\n  <div class=\"form-group form-inline\">\r\n    History search: <input class=\"form-control ml-2\" type=\"text\" [formControl]=\"filter\" />\r\n  </div>\r\n</form>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games | async\">\r\n        <td>\r\n          <ngb-highlight [result]=\"game.numberOfBots | number\" [term]=\"filter.value\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"game.status\" [term]=\"filter.value\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"game.winner\" [term]=\"filter.value\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <app-games-detail-page [botSteps]=\"botSteps\" [playerSteps]=\"playerSteps\"></app-games-detail-page>\r\n  <ngb-pagination [collectionSize]=\"listCount | async\" [(page)]=\"page\" [pageSize]=\"pageSize\" [maxSize]=\"4\"\r\n    [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
 
 /***/ }),
 
@@ -269,9 +269,6 @@ var UserGamesComponent = /** @class */ (function (_super) {
         _this.historyService = historyService;
         _this.pipe = pipe;
         _this.tableState = { page: 1, pageSize: 8 };
-        _this.showPlayerTable = false;
-        _this.showBotTable = false;
-        _this.showMainTable = true;
         _this.searchOnTable = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
         _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](0);
         _this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
@@ -325,21 +322,18 @@ var UserGamesComponent = /** @class */ (function (_super) {
         this.searchOnTable.next();
         this.games = this.filterOfTable();
     };
-    UserGamesComponent.prototype.bot = function (id) {
+    UserGamesComponent.prototype.bot = function (game) {
+        debugger;
+        var id = game.id;
         this.botSteps = this.historyService.getBotSteps(id)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));
         this.botSteps.subscribe();
-        this.showBotTable = true;
-        this.showPlayerTable = false;
-        this.showMainTable = false;
     };
-    UserGamesComponent.prototype.player = function (id) {
+    UserGamesComponent.prototype.player = function (game) {
+        var id = game.id;
         this.playerSteps = this.historyService.getPlayerSteps(id)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));
         this.playerSteps.subscribe();
-        this.showPlayerTable = true;
-        this.showBotTable = false;
-        this.showMainTable = false;
     };
     UserGamesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -384,12 +378,12 @@ var HistoryService = /** @class */ (function () {
     HistoryService.prototype.getGamesByUser = function () {
         return this.http.get(this.baseUrl + "/history/allUserGames");
     };
-    HistoryService.prototype.getPlayerSteps = function (game) {
-        var params = { gameId: game.id };
+    HistoryService.prototype.getPlayerSteps = function (id) {
+        var params = { gameId: id };
         return this.http.get(this.baseUrl + "/history/getPlayerSteps", { params: params });
     };
-    HistoryService.prototype.getBotSteps = function (game) {
-        var params = { gameId: game.id };
+    HistoryService.prototype.getBotSteps = function (id) {
+        var params = { gameId: id };
         return this.http.get(this.baseUrl + "/history/getBotSteps", { params: params });
     };
     HistoryService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([

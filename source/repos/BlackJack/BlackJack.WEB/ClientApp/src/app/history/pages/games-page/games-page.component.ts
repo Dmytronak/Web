@@ -73,12 +73,14 @@ export class UserGamesComponent extends BaseComponent {
     this.searchOnTable.next();
     this.games = this.filterOfTable();
   }
-  private bot(id):void {
+  private bot(game):void {
+    const id: string = game.id;
     this.botSteps = this.historyService.getBotSteps(id)
     .pipe(takeUntil(this.componetDestroyed));
     this.botSteps.subscribe();
   }
-  private player(id):void {
+  private player(game):void {
+   const id: string = game.id;
    this.playerSteps = this.historyService.getPlayerSteps(id)
    .pipe(takeUntil(this.componetDestroyed));
     this.playerSteps.subscribe();
