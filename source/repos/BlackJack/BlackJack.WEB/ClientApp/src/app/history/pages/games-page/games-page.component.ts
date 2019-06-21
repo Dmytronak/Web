@@ -25,8 +25,6 @@ export class UserGamesComponent extends BaseComponent {
   private statusEnum: Status;
   private searchOnTable = new Subject<void>();
   private games: Observable<GameGetAllGamesHistoryViewItem[]>;
-  private playerSteps: Observable<GetPlayerStepsHistoryView>;
-  private botSteps: Observable<GetBotStepsHistoryView>;
   private getAllGamesHistory: GetAllGamesHistoryView;
   private listCount = new BehaviorSubject<number>(0);
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
@@ -77,18 +75,18 @@ export class UserGamesComponent extends BaseComponent {
   }
   private bot(game):void {
     const id: string = game.id;
-    this.botSteps = this.historyService.getBotSteps(id)
+    const botSteps: Observable<GetBotStepsHistoryView> = this.historyService.getBotSteps(id)
     .pipe(takeUntil(this.componetDestroyed));
-    this.botSteps.subscribe();
+    botSteps.subscribe();
     const modalRef = this.modalService.open(GamesDetailPageComponent,{ size: 'lg' });
-    modalRef.componentInstance.botSteps = this.botSteps;
+    modalRef.componentInstance.botSteps = botSteps;
   }
   private player(game):void {
    const id: string = game.id;
-   this.playerSteps = this.historyService.getPlayerSteps(id)
+   const playerSteps: Observable<GetPlayerStepsHistoryView> = this.historyService.getPlayerSteps(id)
    .pipe(takeUntil(this.componetDestroyed));
-    this.playerSteps.subscribe();
+    playerSteps.subscribe();
     const modalRef = this.modalService.open(GamesDetailPageComponent,{ size: 'lg' });
-    modalRef.componentInstance.playerSteps = this.playerSteps;
+    modalRef.componentInstance.playerSteps = playerSteps;
   }
 }

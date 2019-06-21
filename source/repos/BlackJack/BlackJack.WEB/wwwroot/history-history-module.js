@@ -189,10 +189,6 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
         _this.headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
         return _this;
     }
-    GamesDetailPageComponent.prototype.hideTable = function () {
-        this.botSteps = null;
-        this.playerSteps = null;
-    };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
@@ -333,19 +329,19 @@ var UserGamesComponent = /** @class */ (function (_super) {
     };
     UserGamesComponent.prototype.bot = function (game) {
         var id = game.id;
-        this.botSteps = this.historyService.getBotSteps(id)
+        var botSteps = this.historyService.getBotSteps(id)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));
-        this.botSteps.subscribe();
+        botSteps.subscribe();
         var modalRef = this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_10__["GamesDetailPageComponent"], { size: 'lg' });
-        modalRef.componentInstance.botSteps = this.botSteps;
+        modalRef.componentInstance.botSteps = botSteps;
     };
     UserGamesComponent.prototype.player = function (game) {
         var id = game.id;
-        this.playerSteps = this.historyService.getPlayerSteps(id)
+        var playerSteps = this.historyService.getPlayerSteps(id)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));
-        this.playerSteps.subscribe();
+        playerSteps.subscribe();
         var modalRef = this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_10__["GamesDetailPageComponent"], { size: 'lg' });
-        modalRef.componentInstance.playerSteps = this.playerSteps;
+        modalRef.componentInstance.playerSteps = playerSteps;
     };
     UserGamesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
