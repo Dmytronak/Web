@@ -11,6 +11,8 @@ import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { map, startWith, takeUntil } from 'rxjs/operators';
 import { TableStateHistoryView } from 'src/app/shared/entities/history/table-state-history.view';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page.component';
 @Component({
   selector: 'app-games-page',
   templateUrl: './games-page.component.html',
@@ -34,7 +36,7 @@ export class UserGamesComponent extends BaseComponent {
   private set page(page: number) { this.pagination({ page }); }
   private set pageSize(pageSize: number) { this.pagination({ pageSize }); }
 
-  constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe) {
+  constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe,private modalService: NgbModal) {
     super();
     this.initTable();
   }
@@ -78,11 +80,15 @@ export class UserGamesComponent extends BaseComponent {
     this.botSteps = this.historyService.getBotSteps(id)
     .pipe(takeUntil(this.componetDestroyed));
     this.botSteps.subscribe();
+    const modalRef = this.modalService.open(GamesDetailPageComponent,{ size: 'lg' });
+    modalRef.componentInstance.botSteps = this.botSteps;
   }
   private player(game):void {
    const id: string = game.id;
    this.playerSteps = this.historyService.getPlayerSteps(id)
    .pipe(takeUntil(this.componetDestroyed));
     this.playerSteps.subscribe();
+    const modalRef = this.modalService.open(GamesDetailPageComponent,{ size: 'lg' });
+    modalRef.componentInstance.playerSteps = this.playerSteps;
   }
 }

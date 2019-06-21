@@ -3,6 +3,7 @@ import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-
 import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
 import { Observable } from 'rxjs';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-games-detail-page',
@@ -14,7 +15,7 @@ export class GamesDetailPageComponent extends BaseComponent {
   @Input() playerSteps: Observable<GetPlayerStepsHistoryView>;
   private readonly headBots = ['Bot name', 'Steps', '', '', '', '', '', ''];
   private readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
-  constructor() {
+  constructor(public activeModal: NgbActiveModal) {
     super();
    }
    private hideTable():void {

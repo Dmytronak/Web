@@ -1,38 +1,41 @@
-<div *ngIf="playerSteps">
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th *ngFor="let head of headPlayerSteps">{{head}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <td>{{(playerSteps | async)?.name}}</td>
-      <td colspan="" *ngFor="let step of (playerSteps | async)?.steps">
-        <img [src]="getCardLink(step)">
-      </td>
-    </tbody>
-    <button class="btn btn-danger" (click)="hideTable()">
-      <i class="fa fa-arrow-left"></i>
-    </button>
-  </table>
+<div class="modal-header">
+  <h4 class="modal-title">Details of game</h4>
 </div>
-<div *ngIf="botSteps">
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th *ngFor="let head of headBots">{{head}}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let botStep of (botSteps | async)?.bots">
-        <td>{{botStep.name}}</td>
-        <td *ngFor="let step of botStep.steps">
+<div class="modal-body">
+  <div *ngIf="playerSteps | async">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th *ngFor="let head of headPlayerSteps">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <td>{{(playerSteps | async)?.name}}</td>
+        <td colspan="" *ngFor="let step of (playerSteps | async)?.steps">
           <img [src]="getCardLink(step)">
         </td>
-      </tr>
-    </tbody>
-    <button class="btn btn-danger" (click)="hideTable()">
-      <i class="fa fa-arrow-left"></i>
-    </button>
-  </table>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="botSteps| async">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th *ngFor="let head of headBots">{{head}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let botStep of (botSteps | async)?.bots">
+          <td>{{botStep.name}}</td>
+          <td *ngFor="let step of botStep.steps">
+            <img [src]="getCardLink(step)">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
 </div>

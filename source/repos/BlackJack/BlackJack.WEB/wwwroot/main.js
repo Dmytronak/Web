@@ -692,7 +692,6 @@ var AuthService = /** @class */ (function () {
         this.baseUrl = '';
         this.loggedIn = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
         this.loggedIn.next(!!this.localStorageService.getItem('auth_token'));
-        debugger;
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseUrl;
     }
     AuthService.prototype.register = function (registerAccount) {

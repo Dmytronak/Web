@@ -17,7 +17,6 @@ export class AuthService {
 
   constructor(private readonly http: HttpClient, private readonly localStorageService: LocalStorageService) {
     this.loggedIn.next(!!this.localStorageService.getItem('auth_token'));
-    debugger
     this.baseUrl = environment.baseUrl;
   }
 
