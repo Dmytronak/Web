@@ -13,13 +13,11 @@ import { map, filter } from 'rxjs/operators';
 
 export class AuthService {
   private readonly baseUrl: string = '';
-  private readonly authNavStatusSource = new BehaviorSubject<boolean>(false);
-  private loggedIn = false;
-  authNavStatus = this.authNavStatusSource.asObservable();
+  private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private readonly http: HttpClient, private readonly localStorageService: LocalStorageService) {
-    this.loggedIn = !!this.localStorageService.getItem('auth_token');
-    this.authNavStatusSource.next(this.loggedIn);
+    this.loggedIn.next(!!this.localStorageService.getItem('auth_token'));
+    debugger
     this.baseUrl = environment.baseUrl;
   }
 
@@ -40,17 +38,15 @@ export class AuthService {
   public logout(): void {
     this.localStorageService.removeItem('auth_token');
     this.localStorageService.removeItem('email');
-    this.loggedIn = false;
-    this.authNavStatusSource.next(false);
+    this.loggedIn.next(false);
   }
   private completeAuthentication(token: string, email: string): void {
     this.localStorageService.setItem("auth_token", token);
     this.localStorageService.setItem("email", email);
-    this.loggedIn = true;
-    this.authNavStatusSource.next(true);
+    this.loggedIn.next(true);
   }
-  public isLoggedIn(): boolean {
-    return this.loggedIn;
+  get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 }
 

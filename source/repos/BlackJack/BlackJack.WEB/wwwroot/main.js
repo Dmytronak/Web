@@ -412,7 +412,7 @@ var LoggedOutHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-logged-out-header *ngIf=\"!status\"></app-logged-out-header>\r\n<app-logged-in-header *ngIf=\"status\"></app-logged-in-header>"
+module.exports = "<app-logged-out-header *ngIf=\"!(isLogged | async)\"></app-logged-out-header>\r\n<app-logged-in-header *ngIf=\"isLogged | async \"></app-logged-in-header>"
 
 /***/ }),
 
@@ -448,8 +448,7 @@ var MainHeaderComponent = /** @class */ (function () {
         this.authService = authService;
     }
     MainHeaderComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.authService.authNavStatus.subscribe(function (status) { return _this.status = status; });
+        this.isLogged = this.authService.isLoggedIn;
     };
     MainHeaderComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -480,6 +479,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/shared/services/auth.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
 
 
 
@@ -489,12 +490,15 @@ var OnlyLoggedIn = /** @class */ (function () {
         this.authService = authService;
         this.router = router;
     }
-    OnlyLoggedIn.prototype.canActivate = function () {
-        if (!this.authService.isLoggedIn()) {
-            this.router.navigate(['/home']);
-            return false;
-        }
-        return true;
+    OnlyLoggedIn.prototype.canActivate = function (next, state) {
+        var _this = this;
+        return this.authService.isLoggedIn.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (isLoggedIn) {
+            if (!isLoggedIn) {
+                _this.router.navigate(['/home']);
+                return false;
+            }
+            return true;
+        }));
     };
     OnlyLoggedIn = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
@@ -521,6 +525,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../services/auth.service */ "./src/app/shared/services/auth.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
 
 
 
@@ -530,12 +536,15 @@ var OnlyLoggedOut = /** @class */ (function () {
         this.authService = authService;
         this.router = router;
     }
-    OnlyLoggedOut.prototype.canActivate = function () {
-        if (this.authService.isLoggedIn()) {
-            this.router.navigate(['/game/home']);
-            return false;
-        }
-        return true;
+    OnlyLoggedOut.prototype.canActivate = function (next, state) {
+        var _this = this;
+        return this.authService.isLoggedIn.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["take"])(1), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (isLoggedIn) {
+            if (isLoggedIn) {
+                _this.router.navigate(['/game/home']);
+                return false;
+            }
+            return true;
+        }));
     };
     OnlyLoggedOut = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
@@ -631,7 +640,7 @@ var JwtInterceptor = /** @class */ (function () {
         this.localStorageService = localStorageService;
     }
     JwtInterceptor.prototype.intercept = function (request, next) {
-        if (this.authService.isLoggedIn()) {
+        if (this.authService.isLoggedIn) {
             var token = this.localStorageService.getItem('auth_token');
             request = request.clone({
                 setHeaders: {
@@ -681,11 +690,9 @@ var AuthService = /** @class */ (function () {
         this.http = http;
         this.localStorageService = localStorageService;
         this.baseUrl = '';
-        this.authNavStatusSource = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
-        this.loggedIn = false;
-        this.authNavStatus = this.authNavStatusSource.asObservable();
-        this.loggedIn = !!this.localStorageService.getItem('auth_token');
-        this.authNavStatusSource.next(this.loggedIn);
+        this.loggedIn = new rxjs__WEBPACK_IMPORTED_MODULE_3__["BehaviorSubject"](false);
+        this.loggedIn.next(!!this.localStorageService.getItem('auth_token'));
+        debugger;
         this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].baseUrl;
     }
     AuthService.prototype.register = function (registerAccount) {
@@ -705,18 +712,20 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.logout = function () {
         this.localStorageService.removeItem('auth_token');
         this.localStorageService.removeItem('email');
-        this.loggedIn = false;
-        this.authNavStatusSource.next(false);
+        this.loggedIn.next(false);
     };
     AuthService.prototype.completeAuthentication = function (token, email) {
         this.localStorageService.setItem("auth_token", token);
         this.localStorageService.setItem("email", email);
-        this.loggedIn = true;
-        this.authNavStatusSource.next(true);
+        this.loggedIn.next(true);
     };
-    AuthService.prototype.isLoggedIn = function () {
-        return this.loggedIn;
-    };
+    Object.defineProperty(AuthService.prototype, "isLoggedIn", {
+        get: function () {
+            return this.loggedIn.asObservable();
+        },
+        enumerable: true,
+        configurable: true
+    });
     AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"], _local_storage_service__WEBPACK_IMPORTED_MODULE_5__["LocalStorageService"]])

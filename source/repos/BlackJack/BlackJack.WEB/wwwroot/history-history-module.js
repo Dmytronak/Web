@@ -273,6 +273,7 @@ var UserGamesComponent = /** @class */ (function (_super) {
         _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](0);
         _this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
         _this.filter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
+        _this.initTable();
         return _this;
     }
     Object.defineProperty(UserGamesComponent.prototype, "page", {
@@ -288,7 +289,6 @@ var UserGamesComponent = /** @class */ (function (_super) {
         configurable: true
     });
     UserGamesComponent.prototype.ngOnInit = function () {
-        this.initTable();
     };
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
@@ -323,7 +323,6 @@ var UserGamesComponent = /** @class */ (function (_super) {
         this.games = this.filterOfTable();
     };
     UserGamesComponent.prototype.bot = function (game) {
-        debugger;
         var id = game.id;
         this.botSteps = this.historyService.getBotSteps(id)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));

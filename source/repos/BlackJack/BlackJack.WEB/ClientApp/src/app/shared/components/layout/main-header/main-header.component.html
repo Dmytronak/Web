@@ -1,2 +1,2 @@
-<app-logged-out-header *ngIf="!status"></app-logged-out-header>
-<app-logged-in-header *ngIf="status"></app-logged-in-header>
+<app-logged-out-header *ngIf="!(isLogged | async)"></app-logged-out-header>
+<app-logged-in-header *ngIf="isLogged | async "></app-logged-in-header>

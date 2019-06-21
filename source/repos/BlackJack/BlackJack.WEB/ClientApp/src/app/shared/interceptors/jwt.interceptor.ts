@@ -10,7 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
     constructor(private authService: AuthService, private localStorageService: LocalStorageService ) {
     }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (this.authService.isLoggedIn()) {
+        if (this.authService.isLoggedIn) {
             const token = this.localStorageService.getItem('auth_token');
             request = request.clone({
                 setHeaders: { 
