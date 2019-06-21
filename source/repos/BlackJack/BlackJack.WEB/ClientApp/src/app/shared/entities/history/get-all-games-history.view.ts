@@ -1,7 +1,7 @@
 export class GetAllGamesHistoryView {
-    games:GameGetAllGamesHistoryView[];
+    games:GameGetAllGamesHistoryViewItem[];
 }
-export class GameGetAllGamesHistoryView {
+export class GameGetAllGamesHistoryViewItem {
     id:string;
     numberOfBots:number;
     status:string;

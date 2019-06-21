@@ -564,8 +564,8 @@ var GameService = /** @class */ (function () {
         return this.http.get(this.baseUrl + "/game/getActive");
     };
     GameService.prototype.play = function (numberOfBots) {
-        var data = { numberOfBots: numberOfBots };
-        return this.http.get(this.baseUrl + "/game/getPlay", { params: data });
+        var params = { numberOfBots: numberOfBots };
+        return this.http.get(this.baseUrl + "/game/getPlay", { params: params });
     };
     GameService.prototype.continue = function () {
         return this.http.get(this.baseUrl + "/game/getContinue");

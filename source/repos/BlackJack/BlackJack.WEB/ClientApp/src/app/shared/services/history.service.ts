@@ -18,11 +18,11 @@ export class HistoryService {
      return this.http.get<GetAllGamesHistoryView>(`${this.baseUrl}/history/allUserGames`);
    }
    public getPlayerSteps(game): Observable<GetPlayerStepsHistoryView> {
-    const data = {gameId:game.id}; 
-    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/getPlayerSteps`, { params:data });
+    const params = {gameId:game.id}; 
+    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/getPlayerSteps`, { params:params });
    }
    public getBotSteps(game): Observable<GetBotStepsHistoryView>{
-    const data = {gameId:game.id};
-    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/getBotSteps`, { params:data });
+    const params = {gameId:game.id};
+    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/getBotSteps`, { params:params });
    }
 }

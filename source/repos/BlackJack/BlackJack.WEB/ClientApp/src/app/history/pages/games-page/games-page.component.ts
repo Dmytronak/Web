@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Status } from 'src/app/shared/enums/status-type.enum.view';
-import { GameGetAllGamesHistoryView, GetAllGamesHistoryView } from 'src/app/shared/entities/history/get-all-games-history.view';
+import { GameGetAllGamesHistoryViewItem, GetAllGamesHistoryView } from 'src/app/shared/entities/history/get-all-games-history.view';
 import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
 import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
 import { HistoryService } from 'src/app/shared/services/history.service';
@@ -20,19 +20,13 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
 export class UserGamesComponent extends BaseComponent {
   private tableState: TableStateHistoryView = {page: 1, pageSize: 8};
-  private showPlayerTable = false;
-  private showBotTable = false;
-  private showMainTable = true;
   private statusEnum: Status;
   private searchOnTable = new Subject<void>();
-  private games: Observable<GameGetAllGamesHistoryView[]>;
+  private games: Observable<GameGetAllGamesHistoryViewItem[]>;
   private playerSteps: Observable<GetPlayerStepsHistoryView>;
   private botSteps: Observable<GetBotStepsHistoryView>;
   private getAllGamesHistory: GetAllGamesHistoryView;
   private listCount = new BehaviorSubject<number>(0);
-  private readonly headBotSteps = ['Cards', '', '', '','', '', ''];
-  private readonly headBots = ['Bot name', 'Steps', '', '', '', '', '', ''];
-  private readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   private filter = new FormControl('');
   private get page() { return this.tableState.page; }
@@ -57,13 +51,13 @@ export class UserGamesComponent extends BaseComponent {
       this.games = this.filterOfTable();
     }); 
   }
-  private filterOfTable():Observable<GameGetAllGamesHistoryView[]>{
+  private filterOfTable():Observable<GameGetAllGamesHistoryViewItem[]>{
     return this.filter.valueChanges.pipe(
       startWith(this.filter.value),
       map(text => this.search(text, this.pipe))
     );
   }
-  private search(text: string, pipe: PipeTransform): GameGetAllGamesHistoryView[] {
+  private search(text: string, pipe: PipeTransform): GameGetAllGamesHistoryViewItem[] {
     const result = this.getAllGamesHistory.games.filter(x => {
       const term = text.toLowerCase();
       return x.status.toLowerCase().includes(term)
@@ -83,21 +77,10 @@ export class UserGamesComponent extends BaseComponent {
     this.botSteps = this.historyService.getBotSteps(id)
     .pipe(takeUntil(this.componetDestroyed));
     this.botSteps.subscribe();
-    this.showBotTable = true;
-    this.showPlayerTable = false;
-    this.showMainTable = false;
   }
   private player(id):void {
    this.playerSteps = this.historyService.getPlayerSteps(id)
    .pipe(takeUntil(this.componetDestroyed));
     this.playerSteps.subscribe();
-    this.showPlayerTable = true;
-    this.showBotTable = false;
-    this.showMainTable = false;
-  }
-  private hideTable():void {
-    this.showPlayerTable = false;
-    this.showBotTable = false;
-    this.showMainTable = true;
   }
 }
