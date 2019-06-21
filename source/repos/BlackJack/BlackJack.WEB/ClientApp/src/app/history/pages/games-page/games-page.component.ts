@@ -36,9 +36,9 @@ export class UserGamesComponent extends BaseComponent {
 
   constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe) {
     super();
+    this.initTable();
   }
   ngOnInit() {
-    this.initTable();
   }
   private initTable():void{
     this.historyService.getGamesByUser()
