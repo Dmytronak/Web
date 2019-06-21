@@ -18,8 +18,4 @@ export class GamesDetailPageComponent extends BaseComponent {
   constructor(public activeModal: NgbActiveModal) {
     super();
    }
-   private hideTable():void {
-    this.botSteps = null;
-    this.playerSteps = null;
-  }
 }
