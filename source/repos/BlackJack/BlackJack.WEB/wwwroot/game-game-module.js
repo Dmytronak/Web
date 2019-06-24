@@ -287,9 +287,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
 /* harmony import */ var src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/game.service */ "./src/app/shared/services/game.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_shared_entities_game_get_continue_game_view___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/entities/game/get-continue-game.view. */ "./src/app/shared/entities/game/get-continue-game.view..ts");
-/* harmony import */ var src_app_shared_entities_game_get_end_game_view__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/entities/game/get-end-game.view */ "./src/app/shared/entities/game/get-end-game.view.ts");
-/* harmony import */ var src_app_shared_entities_game_get_play_game_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/entities/game/get-play-game.view */ "./src/app/shared/entities/game/get-play-game.view.ts");
+/* harmony import */ var src_app_shared_entities_game_continue_game_view___WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/entities/game/continue-game.view. */ "./src/app/shared/entities/game/continue-game.view..ts");
+/* harmony import */ var src_app_shared_entities_game_end_game_view__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/entities/game/end-game.view */ "./src/app/shared/entities/game/end-game.view.ts");
+/* harmony import */ var src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/entities/game/play-game.view */ "./src/app/shared/entities/game/play-game.view.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
@@ -319,11 +319,11 @@ var PlayGameComponent = /** @class */ (function (_super) {
         _this.headBots = ['Bots'];
         _this.headPlayerSteps = ['Player name', 'Player cards'];
         _this.headElements = ['Number of bots', 'Status', 'Winner', ''];
-        _this.endSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_get_end_game_view__WEBPACK_IMPORTED_MODULE_6__["GetEndGameView"]);
+        _this.endSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_end_game_view__WEBPACK_IMPORTED_MODULE_6__["EndGameView"]);
         _this.endView = _this.endSubject.asObservable();
-        _this.continueSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_get_continue_game_view___WEBPACK_IMPORTED_MODULE_5__["GetContinueGameView"]);
+        _this.continueSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_continue_game_view___WEBPACK_IMPORTED_MODULE_5__["ContinueGameView"]);
         _this.continueView = _this.continueSubject.asObservable();
-        _this.playSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_get_play_game_view__WEBPACK_IMPORTED_MODULE_7__["GetPlayGameView"]);
+        _this.playSubject = new rxjs__WEBPACK_IMPORTED_MODULE_8__["BehaviorSubject"](new src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_7__["PlayGameView"]);
         _this.playView = _this.playSubject.asObservable();
         _this.gameInit();
         return _this;
@@ -413,123 +413,123 @@ var PlayGameComponent = /** @class */ (function (_super) {
 
 /***/ }),
 
-/***/ "./src/app/shared/entities/game/get-continue-game.view..ts":
-/*!*****************************************************************!*\
-  !*** ./src/app/shared/entities/game/get-continue-game.view..ts ***!
-  \*****************************************************************/
-/*! exports provided: GetContinueGameView, PlayerGetContinueGameView, BotGetContinueGameViewItem, CardGetContinueGameViewItem */
+/***/ "./src/app/shared/entities/game/continue-game.view..ts":
+/*!*************************************************************!*\
+  !*** ./src/app/shared/entities/game/continue-game.view..ts ***!
+  \*************************************************************/
+/*! exports provided: ContinueGameView, PlayerContinueGameView, BotContinueGameViewItem, CardContinueGameViewItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetContinueGameView", function() { return GetContinueGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerGetContinueGameView", function() { return PlayerGetContinueGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotGetContinueGameViewItem", function() { return BotGetContinueGameViewItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetContinueGameViewItem", function() { return CardGetContinueGameViewItem; });
-var GetContinueGameView = /** @class */ (function () {
-    function GetContinueGameView() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContinueGameView", function() { return ContinueGameView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerContinueGameView", function() { return PlayerContinueGameView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotContinueGameViewItem", function() { return BotContinueGameViewItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardContinueGameViewItem", function() { return CardContinueGameViewItem; });
+var ContinueGameView = /** @class */ (function () {
+    function ContinueGameView() {
     }
-    return GetContinueGameView;
+    return ContinueGameView;
 }());
 
-var PlayerGetContinueGameView = /** @class */ (function () {
-    function PlayerGetContinueGameView() {
+var PlayerContinueGameView = /** @class */ (function () {
+    function PlayerContinueGameView() {
     }
-    return PlayerGetContinueGameView;
+    return PlayerContinueGameView;
 }());
 
-var BotGetContinueGameViewItem = /** @class */ (function () {
-    function BotGetContinueGameViewItem() {
+var BotContinueGameViewItem = /** @class */ (function () {
+    function BotContinueGameViewItem() {
     }
-    return BotGetContinueGameViewItem;
+    return BotContinueGameViewItem;
 }());
 
-var CardGetContinueGameViewItem = /** @class */ (function () {
-    function CardGetContinueGameViewItem() {
+var CardContinueGameViewItem = /** @class */ (function () {
+    function CardContinueGameViewItem() {
     }
-    return CardGetContinueGameViewItem;
+    return CardContinueGameViewItem;
 }());
 
 
 
 /***/ }),
 
-/***/ "./src/app/shared/entities/game/get-end-game.view.ts":
-/*!***********************************************************!*\
-  !*** ./src/app/shared/entities/game/get-end-game.view.ts ***!
-  \***********************************************************/
-/*! exports provided: GetEndGameView, PlayerGetEndGameView, BotGetEndGameViewItem, CardGetEndGameViewItem */
+/***/ "./src/app/shared/entities/game/end-game.view.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/shared/entities/game/end-game.view.ts ***!
+  \*******************************************************/
+/*! exports provided: EndGameView, PlayerEndGameView, BotEndGameViewItem, CardEndGameViewItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetEndGameView", function() { return GetEndGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerGetEndGameView", function() { return PlayerGetEndGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotGetEndGameViewItem", function() { return BotGetEndGameViewItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetEndGameViewItem", function() { return CardGetEndGameViewItem; });
-var GetEndGameView = /** @class */ (function () {
-    function GetEndGameView() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EndGameView", function() { return EndGameView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerEndGameView", function() { return PlayerEndGameView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotEndGameViewItem", function() { return BotEndGameViewItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardEndGameViewItem", function() { return CardEndGameViewItem; });
+var EndGameView = /** @class */ (function () {
+    function EndGameView() {
     }
-    return GetEndGameView;
+    return EndGameView;
 }());
 
-var PlayerGetEndGameView = /** @class */ (function () {
-    function PlayerGetEndGameView() {
+var PlayerEndGameView = /** @class */ (function () {
+    function PlayerEndGameView() {
     }
-    return PlayerGetEndGameView;
+    return PlayerEndGameView;
 }());
 
-var BotGetEndGameViewItem = /** @class */ (function () {
-    function BotGetEndGameViewItem() {
+var BotEndGameViewItem = /** @class */ (function () {
+    function BotEndGameViewItem() {
     }
-    return BotGetEndGameViewItem;
+    return BotEndGameViewItem;
 }());
 
-var CardGetEndGameViewItem = /** @class */ (function () {
-    function CardGetEndGameViewItem() {
+var CardEndGameViewItem = /** @class */ (function () {
+    function CardEndGameViewItem() {
     }
-    return CardGetEndGameViewItem;
+    return CardEndGameViewItem;
 }());
 
 
 
 /***/ }),
 
-/***/ "./src/app/shared/entities/game/get-play-game.view.ts":
-/*!************************************************************!*\
-  !*** ./src/app/shared/entities/game/get-play-game.view.ts ***!
-  \************************************************************/
-/*! exports provided: GetPlayGameView, PlayerGetPlayGameView, BotGetPlayGameViewItem, CardGetPlayGameViewItem */
+/***/ "./src/app/shared/entities/game/play-game.view.ts":
+/*!********************************************************!*\
+  !*** ./src/app/shared/entities/game/play-game.view.ts ***!
+  \********************************************************/
+/*! exports provided: PlayGameView, PlayerPlayGameView, BotPlayGameViewItem, CardPlayGameViewItem */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetPlayGameView", function() { return GetPlayGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerGetPlayGameView", function() { return PlayerGetPlayGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotGetPlayGameViewItem", function() { return BotGetPlayGameViewItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetPlayGameViewItem", function() { return CardGetPlayGameViewItem; });
-var GetPlayGameView = /** @class */ (function () {
-    function GetPlayGameView() {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayGameView", function() { return PlayGameView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerPlayGameView", function() { return PlayerPlayGameView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotPlayGameViewItem", function() { return BotPlayGameViewItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardPlayGameViewItem", function() { return CardPlayGameViewItem; });
+var PlayGameView = /** @class */ (function () {
+    function PlayGameView() {
     }
-    return GetPlayGameView;
+    return PlayGameView;
 }());
 
-var PlayerGetPlayGameView = /** @class */ (function () {
-    function PlayerGetPlayGameView() {
+var PlayerPlayGameView = /** @class */ (function () {
+    function PlayerPlayGameView() {
     }
-    return PlayerGetPlayGameView;
+    return PlayerPlayGameView;
 }());
 
-var BotGetPlayGameViewItem = /** @class */ (function () {
-    function BotGetPlayGameViewItem() {
+var BotPlayGameViewItem = /** @class */ (function () {
+    function BotPlayGameViewItem() {
     }
-    return BotGetPlayGameViewItem;
+    return BotPlayGameViewItem;
 }());
 
-var CardGetPlayGameViewItem = /** @class */ (function () {
-    function CardGetPlayGameViewItem() {
+var CardPlayGameViewItem = /** @class */ (function () {
+    function CardPlayGameViewItem() {
     }
-    return CardGetPlayGameViewItem;
+    return CardPlayGameViewItem;
 }());
 
 
@@ -565,13 +565,13 @@ var GameService = /** @class */ (function () {
     };
     GameService.prototype.play = function (numberOfBots) {
         var params = { numberOfBots: numberOfBots };
-        return this.http.get(this.baseUrl + "/game/getPlay", { params: params });
+        return this.http.get(this.baseUrl + "/game/play", { params: params });
     };
     GameService.prototype.continue = function () {
-        return this.http.get(this.baseUrl + "/game/getContinue");
+        return this.http.get(this.baseUrl + "/game/continue");
     };
     GameService.prototype.end = function () {
-        return this.http.get(this.baseUrl + "/game/getEnd");
+        return this.http.get(this.baseUrl + "/game/end");
     };
     GameService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

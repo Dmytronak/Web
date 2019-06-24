@@ -39,7 +39,7 @@ namespace BlackJack.BusinessLogic.Services
             _playerInGameRepository = playerInGameRepository;
             _cardHelper = cardHelper;
         }
-        public async Task<GetPlayGameView> GetActive(string userId)
+        public async Task<PlayGameView> GetActive(string userId)
         {
             var activeGameOfUser = await _playerInGameRepository.GetActiveByUserId(userId);
             if (activeGameOfUser == null)
@@ -55,7 +55,7 @@ namespace BlackJack.BusinessLogic.Services
                .Distinct()
                .ToList();
             var groupedBotSteps = boSteps.GroupBy(x => x.BotId);
-            var botPlayGameViewItems = new List<BotGetPlayGameViewItem>();
+            var botPlayGameViewItems = new List<BotPlayGameViewItem>();
             foreach (var item in groupedBotSteps)
             {
                 var currentBotName = botList.FirstOrDefault(x => x.Id == item.Key).Name;
@@ -63,10 +63,10 @@ namespace BlackJack.BusinessLogic.Services
                 {
                     throw new CustomServiceException("Bot is doesn`t exist");
                 }
-                var botPlayGameViewItem = new BotGetPlayGameViewItem()
+                var botPlayGameViewItem = new BotPlayGameViewItem()
                 {
                     Name = currentBotName,
-                    Cards = item.Select(cardPlayGameViewItem => new CardGetPlayGameViewItem()
+                    Cards = item.Select(cardPlayGameViewItem => new CardPlayGameViewItem()
                     {
                         Rank = cardPlayGameViewItem.Rank,
                         Suit = cardPlayGameViewItem.Suit
@@ -75,18 +75,18 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 botPlayGameViewItems.Add(botPlayGameViewItem);
             }
-            var response = new GetPlayGameView()
+            var response = new PlayGameView()
             {
                 NumberOfBots = activeGame.NumberOfBots,
                 Status = activeGame.Status,
                 Winner = activeGame.Winner,
-                Player = new PlayerGetPlayGameView()
+                Player = new PlayerPlayGameView()
                 {
                     Name = playerInGame
                     .Select(x => x.Player.Name)
                     .FirstOrDefault(),
                     Cards = playerStep
-                    .Select(cardPlayGameViewItem => new CardGetPlayGameViewItem()
+                    .Select(cardPlayGameViewItem => new CardPlayGameViewItem()
                     {
                         Rank = cardPlayGameViewItem.Rank,
                         Suit = cardPlayGameViewItem.Suit
@@ -97,7 +97,7 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        public async Task<GetPlayGameView> GetPlay(int numberOfBots, string userId)
+        public async Task<PlayGameView> Play(int numberOfBots, string userId)
         {
             if (numberOfBots <= 0)
             {
@@ -154,22 +154,22 @@ namespace BlackJack.BusinessLogic.Services
                 })
                 .ToList();
 
-            var cardPlayGameViewItems = new List<CardGetPlayGameViewItem>();
-            cardPlayGameViewItems.Add(new CardGetPlayGameViewItem()
+            var cardPlayGameViewItems = new List<CardPlayGameViewItem>();
+            cardPlayGameViewItems.Add(new CardPlayGameViewItem()
             {
                 Rank = playerStep.Rank,
                 Suit = playerStep.Suit
             });
             var groupedBotsSteps = botsSteps.GroupBy(x => x.BotId);
-            var botPlayGameViewItems = new List<BotGetPlayGameViewItem>();
+            var botPlayGameViewItems = new List<BotPlayGameViewItem>();
             foreach (var item in groupedBotsSteps)
             {
                 var currentBotName = botList.FirstOrDefault(x => x.Id == item.Key).Name;
-                var botPlayGameViewItem = new BotGetPlayGameViewItem()
+                var botPlayGameViewItem = new BotPlayGameViewItem()
                 {
                     Name = currentBotName,
                     Cards = item
-                    .Select(cardPlayGameViewItem => new CardGetPlayGameViewItem()
+                    .Select(cardPlayGameViewItem => new CardPlayGameViewItem()
                     {
                         Rank = cardPlayGameViewItem.Rank,
                         Suit = cardPlayGameViewItem.Suit
@@ -178,12 +178,12 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 botPlayGameViewItems.Add(botPlayGameViewItem);
             }
-            var response = new GetPlayGameView()
+            var response = new PlayGameView()
             {
                 NumberOfBots = numberOfBots,
                 Status = StatusType.New,
                 Winner = winner,
-                Player = new PlayerGetPlayGameView()
+                Player = new PlayerPlayGameView()
                 {
                     Name = player.Name,
                     Cards = cardPlayGameViewItems
@@ -199,7 +199,7 @@ namespace BlackJack.BusinessLogic.Services
             await _cardRepository.CreateRange(deck);
             return response;
         }
-        public async Task<GetContinueGameView> GetContinue(string userId)
+        public async Task<ContinueGameView> Continue(string userId)
         {
             var activeGameOfUser = await _playerInGameRepository.GetActiveByUserId(userId);
             if (activeGameOfUser == null)
@@ -291,13 +291,13 @@ namespace BlackJack.BusinessLogic.Services
             playerStepExisted.Add(playerStep);
 
             var groupedBotSteps = botStepsExisted.GroupBy(x => x.BotId);
-            var botContinueGameViewItems = new List<BotGetContinueGameViewItem>();
+            var botContinueGameViewItems = new List<BotContinueGameViewItem>();
             foreach (var item in groupedBotSteps)
             {
-                var botContinueGameViewItem = new BotGetContinueGameViewItem();
+                var botContinueGameViewItem = new BotContinueGameViewItem();
                 var botName = botList.FirstOrDefault(x => x.Id == item.Key).Name;
                 botContinueGameViewItem.Name = botName;
-                botContinueGameViewItem.Cards = item.Select(cardContinueGameViewItem => new CardGetContinueGameViewItem()
+                botContinueGameViewItem.Cards = item.Select(cardContinueGameViewItem => new CardContinueGameViewItem()
                 {
                     Rank = cardContinueGameViewItem.Rank,
                     Suit = cardContinueGameViewItem.Suit
@@ -305,15 +305,15 @@ namespace BlackJack.BusinessLogic.Services
                 .ToList();
                 botContinueGameViewItems.Add(botContinueGameViewItem);
             }
-            var response = new GetContinueGameView()
+            var response = new ContinueGameView()
             {
                 Status = activeGame.Status,
                 Winner = activeGame.Winner,
-                Player = new PlayerGetContinueGameView()
+                Player = new PlayerContinueGameView()
                 {
                     Name = player.Name,
                     Cards = playerStepExisted
-                    .Select(cardContinueGameViewItem => new CardGetContinueGameViewItem()
+                    .Select(cardContinueGameViewItem => new CardContinueGameViewItem()
                     {
                         Rank = cardContinueGameViewItem.Rank,
                         Suit = cardContinueGameViewItem.Suit
@@ -332,7 +332,7 @@ namespace BlackJack.BusinessLogic.Services
             await _cardRepository.CreateRange(cardsOfGame);
             return response;
         }
-        public async Task<GetEndGameView> GetEnd(string userId)
+        public async Task<EndGameView> End(string userId)
         {
             var activeGameOfUser = await _playerInGameRepository.GetActiveByUserId(userId);
             if (activeGameOfUser == null)
@@ -417,14 +417,14 @@ namespace BlackJack.BusinessLogic.Services
             }
             GetWinner(botsScore, botList, status, winner, playerScore, player, activeGame, gameId);
             var groupedBotSteps = botStepExisted.GroupBy(x => x.BotId);
-            var botEndGameViewItems = new List<BotGetEndGameViewItem>();
+            var botEndGameViewItems = new List<BotEndGameViewItem>();
             foreach (var item in groupedBotSteps)
             {
                 var botName = botList.FirstOrDefault(x => x.Id == item.Key).Name;
-                var botEndGameViewItem = new BotGetEndGameViewItem()
+                var botEndGameViewItem = new BotEndGameViewItem()
                 {
                     Name = botName,
-                    Cards = item.Select(x => new CardGetEndGameViewItem()
+                    Cards = item.Select(x => new CardEndGameViewItem()
                     {
                         Rank = x.Rank,
                         Suit = x.Suit
@@ -433,15 +433,15 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 botEndGameViewItems.Add(botEndGameViewItem);
             }
-            var response = new GetEndGameView()
+            var response = new EndGameView()
             {
                 Status = activeGame.Status,
                 Winner = activeGame.Winner,
-                Player = new PlayerGetEndGameView()
+                Player = new PlayerEndGameView()
                 {
                     Name = player.Name,
                     Cards = playerStepExisted
-                    .Select(cardEndGameViewItem => new CardGetEndGameViewItem()
+                    .Select(cardEndGameViewItem => new CardEndGameViewItem()
                     {
                         Rank = cardEndGameViewItem.Rank,
                         Suit = cardEndGameViewItem.Suit
