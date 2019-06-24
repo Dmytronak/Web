@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using BlackJack.ViewModels.HistoryViews;
 using System;
-using Microsoft.AspNetCore.Http;
 
 namespace BlackJack.BusinessLogic.Services
 {
