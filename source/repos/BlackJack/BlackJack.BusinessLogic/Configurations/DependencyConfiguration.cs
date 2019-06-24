@@ -10,6 +10,7 @@ using dapper = BlackJack.DataAccess.Repositories.Dapper;
 using BlackJack.BusinessLogic.Helpers.Interfaces;
 using BlackJack.BusinessLogic.Helpers;
 
+
 namespace BlackJack.BusinessLogic.Configurations
 {
     public static class DependencyConfiguration
@@ -19,33 +20,97 @@ namespace BlackJack.BusinessLogic.Configurations
             var activeRepository = configuration.GetSection("ActiveRepository").Value;
             if (activeRepository == "Dapper")
             {
-                services.AddTransient<IBotRepository, dapper.BotRepository>();
-                services.AddTransient<IBotStepRepository, dapper.BotStepRepository>();
-                services.AddTransient<ICardRepository, dapper.CardRepository>();
-                services.AddTransient<IGameRepository, dapper.GameRepository>();
-                services.AddTransient<IPlayerRepository, dapper.PlayerRepository>();
-                services.AddTransient<IPlayerStepRepository, dapper.PlayerStepRepository>();
-                services.AddTransient<IBotInGameRepository, dapper.BotInGameRepository>();
-                services.AddTransient<IPlayerInGameRepository, dapper.PlayerInGameRepository>();
+                services.Scan(scan => scan
+                .FromAssemblyOf<IBotRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.BotRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<IBotStepRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.BotStepRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<ICardRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.CardRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<IGameRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.GameRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<IPlayerRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.PlayerRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<IPlayerStepRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.PlayerStepRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<IBotInGameRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.BotInGameRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime()
+                .FromAssemblyOf<IPlayerInGameRepository>()
+                .AddClasses(classes => classes.AssignableTo<dapper.PlayerInGameRepository>())
+                .AsImplementedInterfaces()
+                .WithTransientLifetime());
             }
             if (activeRepository == "Entity")
             {
-                services.AddTransient<IBotRepository, entity.BotRepository>();
-                services.AddTransient<IBotStepRepository, entity.BotStepRepository>();
-                services.AddTransient<ICardRepository, entity.CardRepository>();
-                services.AddTransient<IGameRepository, entity.GameRepository>();
-                services.AddTransient<IPlayerRepository, entity.PlayerRepository>();
-                services.AddTransient<IPlayerStepRepository, entity.PlayerStepRepository>();
-                services.AddTransient<IBotInGameRepository, entity.BotInGameRepository>();
-                services.AddTransient<IPlayerInGameRepository, entity.PlayerInGameRepository>();
+                services.Scan(scan => scan
+                 .FromAssemblyOf<IBotRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.BotRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<IBotStepRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.BotStepRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<ICardRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.CardRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<IGameRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.GameRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<IPlayerRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.PlayerRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<IPlayerStepRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.PlayerStepRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<IBotInGameRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.BotInGameRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime()
+                 .FromAssemblyOf<IPlayerInGameRepository>()
+                 .AddClasses(classes => classes.AssignableTo<entity.PlayerInGameRepository>())
+                 .AsImplementedInterfaces()
+                 .WithTransientLifetime());
             }
-
-            services.AddTransient<IAccountService, AccountService>();
-            services.AddTransient<IGameService, GameService>();
-            services.AddTransient<IHistoryService, HistoryService>();
-            services.AddTransient<IJwtProvider, JwtProvider>();
-            services.AddTransient<ICardHelper, CardHelper>();
-
+            services.Scan(scan => scan
+            .FromAssemblyOf<IAccountService>()
+            .AddClasses(classes => classes.AssignableTo<AccountService>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+            .FromAssemblyOf<IGameService>()
+            .AddClasses(classes => classes.AssignableTo<GameService>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+            .FromAssemblyOf<IHistoryService>()
+            .AddClasses(classes => classes.AssignableTo<HistoryService>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+            .FromAssemblyOf<IJwtProvider>()
+            .AddClasses(classes => classes.AssignableTo<JwtProvider>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+            .FromAssemblyOf<ICardHelper>()
+            .AddClasses(classes => classes.AssignableTo<CardHelper>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime());
         }
     }
 }
