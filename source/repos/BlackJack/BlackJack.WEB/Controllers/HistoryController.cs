@@ -3,10 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using System;
 using Microsoft.AspNetCore.Authorization;
-using BlackJack.WEB.Controllers;
 using BlackJack.ViewModels.HistoryViews;
 
-namespace BlackJack.Controllers
+namespace BlackJack.WEB.Controllers
 {
     [Route("api/history/[action]")]
     [Authorize]

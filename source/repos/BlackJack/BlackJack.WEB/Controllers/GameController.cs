@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.ViewModels.GameViews;
 using Microsoft.AspNetCore.Authorization;
-using BlackJack.WEB.Controllers;
 
-namespace BlackJack.Controllers
+namespace BlackJack.WEB.Controllers
 {
     [Route("api/game/[action]")]
     [Authorize]

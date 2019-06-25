@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace BlackJack
+namespace BlackJack.WEB
 {
     public class Program
     {

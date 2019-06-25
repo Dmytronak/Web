@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
-using System.Linq;
 
-namespace BlackJack.Filters
+namespace BlackJack.WEB.Filters
 {
     public class ModelStateActionFilter : Attribute, IActionFilter
     {

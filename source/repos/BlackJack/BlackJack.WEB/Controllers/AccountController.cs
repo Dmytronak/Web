@@ -2,9 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using BlackJack.BusinessLogic.Services.Interfaces;
 using BlackJack.ViewModels.AccountViews;
-using BlackJack.WEB.Controllers;
 
-namespace BlackJack.Controllers
+namespace BlackJack.WEB.Controllers
 {
     [Route("api/account/[action]")]
     public class AccountController : BaseController

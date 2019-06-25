@@ -1,5 +1,5 @@
-﻿using BlackJack.Middlewares;
-using BlackJack.Filters;
+﻿using BlackJack.WEB.Middlewares;
+using BlackJack.WEB.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace BlackJack
+namespace BlackJack.WEB
 {
     public class Startup
     {
@@ -30,8 +30,8 @@ namespace BlackJack
             });
             services.AddOptions();
             services.AddOptionsConfiguration(Configuration);
-            services.AddDatabaseContextConfiguration(Configuration);
             services.AddDependencyConfiguration(Configuration);
+            services.AddDatabaseContextConfiguration(Configuration);
             services.AddIdentityConfiguration();
             services.AddJwtConfiguration(Configuration);
 
