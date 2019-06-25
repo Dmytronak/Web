@@ -12,7 +12,6 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddDependencyConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             var activeRepository = configuration.GetSection("ActiveRepository").Value;
-
                 services.Scan(scan =>
                  scan.FromCallingAssembly()
                  .FromAssemblies(
@@ -23,8 +22,7 @@ namespace BlackJack.BusinessLogic.Configurations
                    typeof(IPlayerRepository).Assembly,
                    typeof(IPlayerStepRepository).Assembly,
                    typeof(IBotInGameRepository).Assembly,
-                   typeof(IPlayerInGameRepository).Assembly
-               )
+                   typeof(IPlayerInGameRepository).Assembly)
                .AddClasses(classes => classes.InNamespaces(activeRepository))
                .AsImplementedInterfaces()
                .WithTransientLifetime()
@@ -33,8 +31,7 @@ namespace BlackJack.BusinessLogic.Configurations
                   typeof(IGameService).Assembly,
                   typeof(IJwtProvider).Assembly,
                   typeof(IHistoryService).Assembly,
-                  typeof(ICardHelper).Assembly
-              )
+                  typeof(ICardHelper).Assembly)
               .AddClasses()
               .AsImplementedInterfaces()
               .WithTransientLifetime());
