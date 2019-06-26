@@ -465,7 +465,7 @@ namespace BlackJack.BusinessLogic.Services
         private void GetWinner(List<BotInGame> botsScore, List<Bot> botList, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
         {
             var calculatedBotScore = GetCalculatedScoreBotPoints(botsScore, gameId);
-            var notBustedBots = GetNotBustedBots(botsScore, calculatedBotScore);
+            var notBustedBots = GetNotBustedBots(calculatedBotScore);
             if (notBustedBots.Count > 0)
             {
                 var maxBotScore = notBustedBots.Max(x => x.Score);
@@ -519,19 +519,12 @@ namespace BlackJack.BusinessLogic.Services
             activeGame.Status = status;
             activeGame.Winner = winner;
         }
-        private List<BotInGame> GetNotBustedBots(List<BotInGame> botsScore, List<BotInGame> calculatedBotScore)
+        private List<BotInGame> GetNotBustedBots(List<BotInGame> calculatedBotScore)
         {
-            var groupedBotsScore = botsScore.GroupBy(x => x.BotId);
-            foreach (var item in groupedBotsScore)
-            {
-                var maxScore = calculatedBotScore.Max(x => x.Score);
-                if (maxScore > 21)
-                {
-                    var del = calculatedBotScore.FirstOrDefault(x => x.Score == maxScore);
-                    calculatedBotScore.Remove(del);
-                }
-            }
-            var result = calculatedBotScore;
+            var result = calculatedBotScore
+                .Select(botInGame => botInGame)
+                .Where(element => element.Score < 21)
+                .ToList();
             return result;
         }
         private List<Card> GetCardsOfBots(List<Bot> botList, List<Card> deck)
