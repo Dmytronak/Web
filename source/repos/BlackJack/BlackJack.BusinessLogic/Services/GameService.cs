@@ -529,13 +529,10 @@ namespace BlackJack.BusinessLogic.Services
         }
         private List<Card> GetCardsOfBots(List<Bot> botList, List<Card> deck)
         {
-            var result = new List<Card>();
-            for (var i = 0; i < botList.Count; i++)
-            {
-                var card = deck.ElementAt(0);
-                deck.RemoveAt(0);
-                result.Add(card);
-            }
+            var result = deck
+                .Take(botList.Count)
+                .ToList();
+            deck.RemoveRange(0, result.Count);
             return result;
         }
         private Card GetPlayerCard(List<Card> deck)
@@ -546,18 +543,15 @@ namespace BlackJack.BusinessLogic.Services
         }
         private List<BotStep> GetBotSteps(List<Bot> botList, List<Card> botsCards, Guid gameId)
         {
-            var result = new List<BotStep>();
-            for (var i = 0; i < botList.Count; i++)
-            {
-                var step = new BotStep()
-                {
-                    BotId = botList[i].Id,
-                    Rank = botsCards[i].Rank,
-                    Suit = botsCards[i].Suit,
-                    GameId = gameId
-                };
-                result.Add(step);
-            }
+            var result = botList.Zip(botsCards,
+             (bot, card) => new BotStep
+             {
+                 BotId = bot.Id,
+                 Rank = card.Rank,
+                 Suit = card.Suit,
+                 GameId = gameId
+             })
+             .ToList();
             return result;
         }
         private List<BotInGame> GetCalculatedScoreBotPoints(List<BotInGame> scoredBotExistedPoints, Guid gameId)
