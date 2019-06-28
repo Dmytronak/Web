@@ -154,12 +154,14 @@ namespace BlackJack.BusinessLogic.Services
                 })
                 .ToList();
 
-            var cardPlayGameViewItems = new List<CardPlayGameViewItem>();
-            cardPlayGameViewItems.Add(new CardPlayGameViewItem()
+            var cardPlayGameViewItems = new List<CardPlayGameViewItem>
             {
-                Rank = playerStep.Rank,
-                Suit = playerStep.Suit
-            });
+                new CardPlayGameViewItem()
+                {
+                    Rank = playerStep.Rank,
+                    Suit = playerStep.Suit
+                }
+            };
             var groupedBotsSteps = botsSteps.GroupBy(x => x.BotId);
             var botPlayGameViewItems = new List<BotPlayGameViewItem>();
             foreach (var item in groupedBotsSteps)
