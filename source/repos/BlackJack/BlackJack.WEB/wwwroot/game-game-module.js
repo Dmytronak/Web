@@ -966,7 +966,7 @@ var GameModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div style=\"width: 300px; margin-bottom: 20px;\">\r\n        <h3>Select number of bots</h3>\r\n        <ng-select \r\n        [items]=\"items\"\r\n        (data)=\"getNumberOfBots($event)\"\r\n         placeholder=\"Choose a number\">\r\n        </ng-select>\r\n      </div>\r\n    <div class=\"playGameForm\" *ngIf=\"playStatus\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"play()\">Play Game</button>\r\n    </div>\r\n    <div *ngIf=\"continueStatus\">\r\n            <button class=\"btn btn-success\" (click)=\"continueActiveGame()\">Continue active</button>\r\n        </div>\r\n</div>\r\n\r\n"
+module.exports = "<div>\r\n    <div style=\"width: 300px; margin-bottom: 20px;\">\r\n        <h3>Select number of bots</h3>\r\n        <ng-select \r\n        [items]=\"numberOfBots\"\r\n        (data)=\"getNumberOfBots($event)\"\r\n         placeholder=\"Choose a number\">\r\n        </ng-select>\r\n      </div>\r\n    <div class=\"playGameForm\" *ngIf=\"playStatus\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"play()\">Play Game</button>\r\n    </div>\r\n    <div *ngIf=\"continueStatus\">\r\n            <button class=\"btn btn-success\" (click)=\"continueActiveGame()\">Continue active</button>\r\n        </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1014,7 +1014,7 @@ var HomeGameComponent = /** @class */ (function (_super) {
         _this.toastrService = toastrService;
         _this.continueStatus = false;
         _this.playStatus = false;
-        _this.items = ['1', '2', '3', '4', '5'];
+        _this.numberOfBots = ['1', '2', '3', '4', '5'];
         _this.value = {};
         _this.checkActiveGame();
         return _this;

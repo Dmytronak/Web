@@ -15,7 +15,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
 export class HomeGameComponent extends BaseComponent {
   private continueStatus:boolean = false;
   private playStatus:boolean = false;
-  private items:Array<string> = ['1', '2', '3', '4','5'];
+  private numberOfBots:Array<string> = ['1', '2', '3', '4','5'];
   private value:any = {};
   constructor(private readonly gameService: GameService, private readonly router: Router,private readonly toastrService: ToastrMessagesService) {
       super();
