@@ -8,6 +8,7 @@ import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { BaseComponent } from './components/base/base.component';
 import { LoggedOutHeaderComponent } from './components/layout/logged-out-header/logged-out-header.component';
+import { SelectModule } from 'ng2-select';
 const sharedComponents = [BaseComponent, MainHeaderComponent];
 @NgModule({
   declarations: [LoggedInHeaderComponent,LoggedOutHeaderComponent,...sharedComponents],
@@ -20,6 +21,7 @@ const sharedComponents = [BaseComponent, MainHeaderComponent];
   exports:[
     ...sharedComponents,
     FormsModule,
+    SelectModule,
     ReactiveFormsModule,
     NgbModule,
   ]

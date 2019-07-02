@@ -8,43 +8,43 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  encapsulation:ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./home-page.component.scss'],
-  
+
 })
 export class HomeGameComponent extends BaseComponent {
-  private continueStatus:boolean = false;
-  private playStatus:boolean = false;
-  private numberOfBots:Array<string> = ['1', '2', '3', '4','5'];
-  private value:any = {};
-  constructor(private readonly gameService: GameService, private readonly router: Router,private readonly toastrService: ToastrMessagesService) {
-      super();
-      this.checkActiveGame();
+  private continueStatus: boolean = false;
+  private playStatus: boolean = false;
+  private numberOfBots: Array<string> = ['1', '2', '3', '4', '5'];
+  private value: any = {};
+  constructor(private readonly gameService: GameService, private readonly router: Router, private readonly toastrService: ToastrMessagesService) {
+    super();
+    this.checkActiveGame();
   }
   ngOnInit() {
   }
-  private getNumberOfBots(value):void {
+  private getNumberOfBots(value): void {
     this.value = value;
   }
-  private checkActiveGame():void{
+  private checkActiveGame(): void {
     this.gameService.getActiveGame()
-    .pipe(takeUntil(this.componetDestroyed))
-    .subscribe(x => {
-      this.toastrService.info('You have active game! Click continue to play');
+      .pipe(takeUntil(this.componetDestroyed))
+      .subscribe(x => {
+        this.toastrService.info('You have active game! Click continue to play');
         this.continueStatus = true;
-    },error=>{ 
-      this.playStatus = true;
-    });
-  }s
+      }, error => {
+        this.playStatus = true;
+      });
+  } s
   private continueActiveGame() {
     this.router.navigate(["/game/play"]);
   }
-  private play():void {
-    const numberOfBots:number = this.value.text;
-      this.gameService.play(numberOfBots)
+  private play(): void {
+    const numberOfBots: number = this.value.text;
+    this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe(x => {
-          this.router.navigate(['/game/play']);
+        this.router.navigate(['/game/play']);
       });
   }
 }

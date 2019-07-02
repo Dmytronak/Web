@@ -909,6 +909,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 /* harmony import */ var _components_base_base_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
 /* harmony import */ var _components_layout_logged_out_header_logged_out_header_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/layout/logged-out-header/logged-out-header.component */ "./src/app/shared/components/layout/logged-out-header/logged-out-header.component.ts");
+/* harmony import */ var ng2_select__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng2-select */ "./node_modules/ng2-select/index.js");
+/* harmony import */ var ng2_select__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(ng2_select__WEBPACK_IMPORTED_MODULE_11__);
+
 
 
 
@@ -935,6 +938,7 @@ var SharedModule = /** @class */ (function () {
             ],
             exports: sharedComponents.concat([
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
+                ng2_select__WEBPACK_IMPORTED_MODULE_11__["SelectModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
             ])

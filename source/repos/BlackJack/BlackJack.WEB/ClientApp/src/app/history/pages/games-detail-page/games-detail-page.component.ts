@@ -17,5 +17,5 @@ export class GamesDetailPageComponent extends BaseComponent {
   constructor(public activeModal: NgbActiveModal) {
     super();
     debugger
-   }
+  }
 }

@@ -5,7 +5,6 @@ import { HomeGameComponent } from './pages/home-page/home-page.component';
 import { PlayGameComponent } from './pages/play-page/play-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { GameComponent } from './game.component';
-import {SelectModule} from 'ng2-select';
 const gameComponents = [HomeGameComponent, PlayGameComponent, GameComponent];
 @NgModule({
   declarations: [...gameComponents],
@@ -13,7 +12,6 @@ const gameComponents = [HomeGameComponent, PlayGameComponent, GameComponent];
     CommonModule,
     GameRoutingModule,
     SharedModule,
-    SelectModule
   ],
 })
 export class GameModule { }

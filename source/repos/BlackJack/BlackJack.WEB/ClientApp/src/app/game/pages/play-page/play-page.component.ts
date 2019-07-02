@@ -78,7 +78,7 @@ export class PlayGameComponent extends BaseComponent {
         this.endSubject.next(x);
       });
   }
-  private playAgain():void {
+  private playAgain(): void {
     const numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
