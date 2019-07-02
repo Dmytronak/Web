@@ -31,10 +31,8 @@ export class LoginAuthComponent extends BaseComponent {
       return;
     }
     const loginAccount: LoginAccountView = Object.assign({
-      email: this.loginForm.controls['email'].value,
-      password: this.loginForm.controls['password'].value
+      ...this.loginForm.getRawValue()
     });
-
     this.authService.login(loginAccount)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((response: LoginAccountResponseView) => {

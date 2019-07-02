@@ -7,9 +7,10 @@
                 </tr>
                 <tr>
                     <th>
-                        <label *ngIf="playStatus">Game status : {{ (playView | async)?.status }}</label>
-                        <label *ngIf="continueStatus">Game status : {{ (continueView | async)?.status }}</label>
-                        <label *ngIf="endStatus">Game status : {{ (endView | async)?.status }}</label>
+                        <label *ngIf="playStatus">Game status : {{convertStatusToString((playView | async)?.status)}}</label>
+                        <label *ngIf="continueStatus">Game status : {{convertStatusToString((continueView | async)?.status)}}</label>
+                        <label *ngIf="endStatus">Game status : {{convertStatusToString((endView | async)?.status)}}
+                        </label>
                     </th>
                     <th>
                         <label *ngIf="playStatus">Winner : {{ (playView | async)?.winner }} </label>

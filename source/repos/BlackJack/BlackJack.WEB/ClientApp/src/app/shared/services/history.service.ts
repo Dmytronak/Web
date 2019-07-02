@@ -10,19 +10,25 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class HistoryService {
-  private baseUrl: string = '';
   constructor(private readonly http: HttpClient) {
-    this.baseUrl = environment.baseUrl;
    }
-   public getGamesByUser():Observable<GetAllGamesHistoryView>{
-     return this.http.get<GetAllGamesHistoryView>(`${this.baseUrl}/history/allUserGames`);
+   public getGamesByUser(page:string,searchValue:string):Observable<GetAllGamesHistoryView>{
+    const params = {
+      page:page,
+      searchString:searchValue
+    };
+     return this.http.get<GetAllGamesHistoryView>(`${environment.baseUrl}/history/allUserGames`,{params:params});
    }
    public getPlayerSteps(id:string): Observable<GetPlayerStepsHistoryView> {
-    const params = {gameId:id}; 
-    return this.http.get<GetPlayerStepsHistoryView>(`${this.baseUrl}/history/getPlayerSteps`, { params:params });
+    const params = {
+      gameId:id
+    }; 
+    return this.http.get<GetPlayerStepsHistoryView>(`${environment.baseUrl}/history/getPlayerSteps`, { params:params });
    }
    public getBotSteps(id:string): Observable<GetBotStepsHistoryView>{
-    const params = {gameId:id};
-    return this.http.get<GetBotStepsHistoryView>(`${this.baseUrl}/history/getBotSteps`, { params:params });
+    const params = {
+      gameId:id
+    };
+    return this.http.get<GetBotStepsHistoryView>(`${environment.baseUrl}/history/getBotSteps`, { params:params });
    }
 }

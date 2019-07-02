@@ -6,24 +6,22 @@ import { LoggedInHeaderComponent } from './components/layout/logged-in-header/lo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
-import { ValidatorComponent } from './validators/validator/validator.component';
 import { BaseComponent } from './components/base/base.component';
 import { LoggedOutHeaderComponent } from './components/layout/logged-out-header/logged-out-header.component';
+const sharedComponents = [BaseComponent, MainHeaderComponent];
 @NgModule({
-  declarations: [MainHeaderComponent, LoggedInHeaderComponent, ValidatorComponent, BaseComponent, LoggedOutHeaderComponent],
+  declarations: [LoggedInHeaderComponent,LoggedOutHeaderComponent,...sharedComponents],
   imports: [
     CommonModule,
     NgbModule,
     RouterModule,
     ToastrModule.forRoot()
   ],
-  exports:[ 
-    MainHeaderComponent,
+  exports:[
+    ...sharedComponents,
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
-    ValidatorComponent,
-    BaseComponent
   ]
 })
 export class SharedModule { }

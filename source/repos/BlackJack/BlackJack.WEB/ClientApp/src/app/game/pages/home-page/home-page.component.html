@@ -1,17 +1,17 @@
 <div>
-    <form [formGroup]="playGameForm" (ngSubmit)="play()">
-        <div>
-            <label for="numberOfBots">Numbers Of Bots: </label>
-            <select class="form-control" name="numberOfBots" formControlName="numberOfBots" placeholder="NumberOfBots">
-                <option value="" disabled>Choose a number</option>
-                <option *ngFor="let bot of botNumbers">{{bot}}</option>
-            </select>
-        </div>
-            <div class="playGameForm" *ngIf="playStatus">
-                <button type="submit" class="btn btn-primary">Play Game</button>
-            </div>
-    </form>
+    <div style="width: 300px; margin-bottom: 20px;">
+        <h3>Select number of bots</h3>
+        <ng-select 
+        [items]="items"
+        (data)="getNumberOfBots($event)"
+         placeholder="Choose a number">
+        </ng-select>
+      </div>
+    <div class="playGameForm" *ngIf="playStatus">
+        <button type="submit" class="btn btn-primary" (click)="play()">Play Game</button>
+    </div>
     <div *ngIf="continueStatus">
             <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
         </div>
 </div>
+

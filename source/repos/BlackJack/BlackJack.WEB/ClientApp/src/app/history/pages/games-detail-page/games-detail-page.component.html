@@ -2,7 +2,7 @@
   <h4 class="modal-title">Details of game</h4>
 </div>
 <div class="modal-body">
-  <div *ngIf="playerSteps | async">
+  <div *ngIf="playerSteps">
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -10,14 +10,14 @@
         </tr>
       </thead>
       <tbody>
-        <td>{{(playerSteps | async)?.name}}</td>
-        <td colspan="" *ngFor="let step of (playerSteps | async)?.steps">
+        <td>{{playerSteps.name}}</td>
+        <td colspan="" *ngFor="let step of playerSteps.steps">
           <img [src]="getCardLink(step)">
         </td>
       </tbody>
     </table>
   </div>
-  <div *ngIf="botSteps | async">
+  <div *ngIf="botSteps">
     <table class="table">
       <thead class="thead-dark">
         <tr>
@@ -25,7 +25,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let botStep of (botSteps | async)?.bots">
+        <tr *ngFor="let botStep of botSteps.bots">
           <td>{{botStep.name}}</td>
           <td *ngFor="let step of botStep.steps">
             <img [src]="getCardLink(step)">

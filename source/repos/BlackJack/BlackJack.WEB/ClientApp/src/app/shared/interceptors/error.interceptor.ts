@@ -17,14 +17,13 @@ export class ErrorInterceptor implements HttpInterceptor {
             if (err.status === 401) {
                 this.authService.logout();
                 this.router.navigate(['']);
-                this.toastr.warning(error,err.status); 
+                this.toastr.warning(error); 
             }   
             if (err.status === 400) {
-               console.clear();
-               this.toastr.info(error,"Info");  
+               this.toastr.info(error);  
                return throwError(error);
             }
-            this.toastr.error(error,err.status); 
+            this.toastr.error(error); 
             return throwError(error);
         }))
     }

@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
   })
-
 export class ToastrMessagesService {
     private options: GlobalConfig;
+    private title : string = 'Dear user';
     constructor(private readonly toastr:ToastrService) {
         this.options = this.toastr.toastrConfig;
         this.options.progressBar = true;
@@ -14,16 +14,16 @@ export class ToastrMessagesService {
         this.options.preventDuplicates = true;
         this.options.countDuplicates = true;
     }
-    public error(message:string,title:string) : ActiveToast<any>{
-        return this.toastr.error(message,title);
+    public error(message:string) : ActiveToast<any>{
+        return this.toastr.error(message,this.title);
     }
-    public info(message:string,title:string): ActiveToast<any>{
-        return this.toastr.info(message,title);
+    public info(message:string): ActiveToast<any>{
+        return this.toastr.info(message,this.title);
     }
-    public warning(message:string,title:string): ActiveToast<any>{
-      return this.toastr.warning(message,title);
+    public warning(message:string): ActiveToast<any>{
+      return this.toastr.warning(message,this.title);
     } 
-    public success(message:string,title:string): ActiveToast<any>{
-        return this.toastr.success(message,title);
+    public success(message:string): ActiveToast<any>{
+        return this.toastr.success(message,this.title);
       }
 }

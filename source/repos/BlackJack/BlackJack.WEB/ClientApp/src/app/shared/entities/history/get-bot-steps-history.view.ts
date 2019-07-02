@@ -1,12 +1,15 @@
+import { CardRankType } from '../../enums/card-rank-type.view';
+import { CardSuitType } from '../../enums/card-suit-type.view';
+
 export class GetBotStepsHistoryView{
     gameId:string;
-    bots:BotGetBotStepsHistoryViewItem[];
+    bots:BotGetBotStepsHistoryViewItem[] = [];
 }
 export class BotGetBotStepsHistoryViewItem{
     name:string;
-    steps:CardGetBotStepsHistoryViewItem[];
+    steps:CardGetBotStepsHistoryViewItem[] = [];
 }
 export class CardGetBotStepsHistoryViewItem{
-    rank:number;
-    suit:number;
+    rank:CardRankType;
+    suit:CardSuitType;
 }

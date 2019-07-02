@@ -12,11 +12,11 @@ export class OnlyLoggedOut implements CanActivate {
     return this.authService.isLoggedIn.pipe(
       take(1),
       map((isLoggedIn: boolean) => {
-        if (isLoggedIn) {
-          this.router.navigate(['/game/home']);
-          return false;
+        if (!isLoggedIn) {
+          return true;
         }
-        return true;
+        this.router.navigate(['/game/home']);
+        return false;
       })
     );
   }

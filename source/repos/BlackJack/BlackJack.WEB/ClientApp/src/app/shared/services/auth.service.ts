@@ -7,29 +7,27 @@ import { RegisterAccountView } from '../entities/auth/register-account.view';
 import { GetAllAccountView } from '../entities/auth/get-all-account.view';
 import { LoginAccountView } from '../entities/auth/login-account.view';
 import { LoginAccountResponseView } from '../entities/auth/login-account-response.view';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, tap } from 'rxjs/operators';
 
 @Injectable()
 
 export class AuthService {
-  private readonly baseUrl: string = '';
   private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(private readonly http: HttpClient, private readonly localStorageService: LocalStorageService) {
     this.loggedIn.next(!!this.localStorageService.getItem('auth_token'));
-    this.baseUrl = environment.baseUrl;
   }
 
   public register(registerAccount: RegisterAccountView): Observable<LoginAccountResponseView> {
-    return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/register`, registerAccount);
+    return this.http.post<LoginAccountResponseView>(`${environment.baseUrl}/account/register`, registerAccount);
   }
   public getAll(): Observable<GetAllAccountView> {
-    return this.http.get<GetAllAccountView>(`${this.baseUrl}/account/getall`);
+    return this.http.get<GetAllAccountView>(`${environment.baseUrl}/account/getall`);
   }
   public login(loginAccount: LoginAccountView): Observable<LoginAccountResponseView> {
-    return this.http.post<LoginAccountResponseView>(`${this.baseUrl}/account/login`, loginAccount)
-      .pipe(filter((response: LoginAccountResponseView)=>response.token !==''),
-      map((response: LoginAccountResponseView) => {
+    return this.http.post<LoginAccountResponseView>(`${environment.baseUrl}/account/login`, loginAccount)
+      .pipe(filter((response: LoginAccountResponseView)=>!!response.token),
+      tap((response: LoginAccountResponseView) => {
         this.completeAuthentication(response.token, loginAccount.email);
       return response;
     })); 

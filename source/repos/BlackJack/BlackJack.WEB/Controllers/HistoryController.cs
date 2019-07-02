@@ -18,9 +18,9 @@ namespace BlackJack.WEB.Controllers
             _historyService = historyService;
         }
         [HttpGet]
-        public async Task<GetAllGamesHistoryView> AllUserGames()
+        public async Task<GetAllGamesHistoryView> AllUserGames([FromQuery] int page, string searchString)
         {
-           var response = await _historyService.GetAllGames(UserId());
+           var response = await _historyService.GetAllGames(UserId(),page, searchString);
            return response;
         }
         [HttpGet]

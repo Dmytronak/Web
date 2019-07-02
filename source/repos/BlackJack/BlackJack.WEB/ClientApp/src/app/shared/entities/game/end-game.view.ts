@@ -1,18 +1,22 @@
+import { CardRankType } from '../../enums/card-rank-type.view';
+import { CardSuitType } from '../../enums/card-suit-type.view';
+import { StatusType } from '../../enums/status-type.enum.view';
+
 export class EndGameView {
-    status: string;
+    status: StatusType;
     winner: string;
     player:PlayerEndGameView;
-    bots:BotEndGameViewItem[];
+    bots:BotEndGameViewItem[] = [];
 }
 export class PlayerEndGameView{
     name:string;
-    cards:CardEndGameViewItem[];
+    cards:CardEndGameViewItem[] = [];
 }
 export class BotEndGameViewItem{
     name:string;
-    cards:CardEndGameViewItem[];
+    cards:CardEndGameViewItem[] = [];
 }
 export class CardEndGameViewItem{
-    rank:number;
-    suit:number;
+    rank:CardRankType;
+    suit:CardSuitType;
 }

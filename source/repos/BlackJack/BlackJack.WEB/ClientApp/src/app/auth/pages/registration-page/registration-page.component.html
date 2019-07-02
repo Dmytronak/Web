@@ -9,21 +9,21 @@
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
   <div>
-    <app-validator [control]="registerForm.get('email')"></app-validator>
+    <app-base [control]="registerForm.get('email')"></app-base>
   </div>
   <div class="formGroup">
     <label for="name">Name</label>
     <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
   </div>
   <div>
-    <app-validator [control]="registerForm.get('name')"></app-validator>
+    <app-base [control]="registerForm.get('name')"></app-base>
   </div>
   <div class="formGroup">
     <label for="year">Year</label>
     <input type="text" class="form-control" name="year" placeholder="Year" formControlName="year">
   </div>
   <div>
-    <app-validator [control]="registerForm.get('year')"></app-validator>
+    <app-base [control]="registerForm.get('year')"></app-base>
   </div>
   <div class="formGroup">
     <label for="password">Password</label>
@@ -31,7 +31,7 @@
       formControlName="password">
   </div>
   <div>
-    <app-validator [control]="registerForm.get('password')"></app-validator>
+    <app-base [control]="registerForm.get('password')"></app-base>
   </div>
   <div class="formGroup">
     <label for="confirmPassword">Confirm password</label>
@@ -39,7 +39,7 @@
       formControlName="confirmPassword">
   </div>
   <div>
-    <app-validator [control]="registerForm.get('confirmPassword')"></app-validator>
+    <app-base [control]="registerForm.get('confirmPassword')"></app-base>
   </div>
   <div class="formGroup">
     <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>

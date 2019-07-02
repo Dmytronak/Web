@@ -1,9 +1,8 @@
 <h2> History of user games</h2>
-<form>
-  <div class="form-group form-inline">
-    History search: <input class="form-control ml-2" type="text" [formControl]="filter" />
-  </div>
-</form>
+<label>
+  Searching
+  <input type="text" class="form-control" (input)="onSearchChange($event.target.value)">
+</label>
 <div class="tableFixHead">
   <table>
     <thead>
@@ -14,13 +13,13 @@
     <tbody>
       <tr *ngFor="let game of games | async">
         <td>
-          <ngb-highlight [result]="game.numberOfBots | number" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="game.numberOfBots | number"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="game.status" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="convertStatusToString(game.status)"></ngb-highlight>
         </td>
         <td>
-          <ngb-highlight [result]="game.winner" [term]="filter.value"></ngb-highlight>
+          <ngb-highlight [result]="game.winner"></ngb-highlight>
         </td>
         <td>
           <button class="btn btn-info" (click)="bot(game)">
@@ -33,6 +32,6 @@
       </tr>
     </tbody>
   </table>
-  <ngb-pagination [collectionSize]="listCount | async" [(page)]="page" [pageSize]="pageSize" [maxSize]="4"
+  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="listCount | async" [(page)]="pageNumber" [maxSize]="4"
     [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 </div>

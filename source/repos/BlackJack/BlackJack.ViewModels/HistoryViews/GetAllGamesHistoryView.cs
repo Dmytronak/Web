@@ -6,6 +6,7 @@ namespace BlackJack.ViewModels.HistoryViews
 {
     public class GetAllGamesHistoryView
     {
+        public int TotalGamesCount { get; set; }
         public List<GameGetAllGamesHistoryViewItem> Games { get; set; }
 
         public GetAllGamesHistoryView()

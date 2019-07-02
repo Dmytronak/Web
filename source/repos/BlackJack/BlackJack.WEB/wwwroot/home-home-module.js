@@ -112,12 +112,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var homeComponents = [_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"], _pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__["MainPageComponent"]];
 var HomeModule = /** @class */ (function () {
     function HomeModule() {
     }
     HomeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"], _pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__["MainPageComponent"]],
+            declarations: homeComponents.slice(),
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _home_routing_module__WEBPACK_IMPORTED_MODULE_3__["HomeRoutingModule"]

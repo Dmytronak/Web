@@ -94,7 +94,7 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        public async Task<GetAllGamesHistoryView> GetAllGames(string userId)
+        public async Task<GetAllGamesHistoryView> GetAllGames(string userId, int currentPage, string searchString)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -116,11 +116,40 @@ namespace BlackJack.BusinessLogic.Services
                 };
                 gameViewItems.Add(gameViewItem);
             }
+            var filteredGames = GetFilteredGames(gameViewItems, searchString);
             var response = new GetAllGamesHistoryView()
             {
-                Games = gameViewItems
+                TotalGamesCount = filteredGames.Count,
+                Games = GetPaginatedGames(filteredGames, currentPage)
             };
             return response;
         }
+        private List<GameGetAllGamesHistoryViewItem> GetFilteredGames(List<GameGetAllGamesHistoryViewItem> gameViewItems,string searchString)
+        {
+            var response = gameViewItems;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                response = gameViewItems
+                    .Where(game => game
+                    .Status.ToString()
+                    .Contains(searchString)
+                    || game.Winner
+                    .Contains(searchString)
+                    || game.NumberOfBots
+                    .ToString()
+                    .Contains(searchString))
+                    .ToList();
+            }
+            return response;
+        }
+        private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames (List<GameGetAllGamesHistoryViewItem> filteredGames, int currentPage)
+        {
+            var pageSize = 8;
+            return filteredGames.OrderBy(game => game.Id)
+                   .Skip((currentPage - 1) * pageSize)
+                   .Take(pageSize)
+                   .ToList();
+        }
     }
 }
+

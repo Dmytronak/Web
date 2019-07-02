@@ -4,7 +4,7 @@
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
   <div>
-    <app-validator [control]="loginForm.get('email')"></app-validator>
+    <app-base [control]="loginForm.get('email')"></app-base>
   </div>
 
   <div class="loginForm">
@@ -13,7 +13,7 @@
       formControlName="password">
   </div>
   <div>
-    <app-validator [control]="loginForm.get('password')"></app-validator>
+    <app-base [control]="loginForm.get('password')"></app-base>
   </div>
   <div class="loginForm">
     <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>

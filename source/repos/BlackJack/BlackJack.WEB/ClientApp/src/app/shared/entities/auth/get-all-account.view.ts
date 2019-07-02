@@ -1,5 +1,5 @@
 export class GetAllAccountView {
-    users: UserGetAllAccountViewItem[];
+    users: UserGetAllAccountViewItem[] = [];
 }
 export class UserGetAllAccountViewItem {
     email: string;

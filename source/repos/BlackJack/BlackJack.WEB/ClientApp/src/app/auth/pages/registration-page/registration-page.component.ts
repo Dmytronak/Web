@@ -58,16 +58,15 @@ export class RegistrationAuthComponent extends BaseComponent {
       .find((user: UserGetAllAccountViewItem) => user.email === registerAccount.email);
     if (isExistUser) {
       let errorMessage = { message: `Username ${registerAccount.email} is already taken` };
-      this.toastrService.warning(errorMessage.message,'Warning');
+      this.toastrService.warning(errorMessage.message);
+      return;
     }
-    if (!isExistUser) {
       this.authService.register(registerAccount)
         .pipe(takeUntil(this.componetDestroyed))
         .subscribe((response: LoginAccountResponseView) => {
-          this.toastrService.success(`Email ${registerAccount.email} is successfully register.`,'All set!');
+          this.toastrService.success(`Email ${registerAccount.email} is successfully register.`);
           this.router.navigate(['/auth/login']);
         });
     }
-  }
 }
 

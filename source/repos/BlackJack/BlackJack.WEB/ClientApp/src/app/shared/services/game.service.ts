@@ -10,22 +10,22 @@ import { EndGameView } from '../entities/game/end-game.view';
   providedIn: 'root'
 })
 export class GameService {
-  private baseUrl: string = '';
   constructor(private readonly http: HttpClient) {
-    this.baseUrl = environment.baseUrl;
   }
   public getActiveGame():Observable<PlayGameView> {
-    return this.http.get<PlayGameView>(`${this.baseUrl}/game/getActive`);
+    return this.http.get<PlayGameView>(`${environment.baseUrl}/game/getActive`);
   }
   public play(numberOfBots):Observable<PlayGameView> {
-    const params = {numberOfBots: numberOfBots};
-    return this.http.get<PlayGameView>(`${this.baseUrl}/game/play`,{params:params});
+    const params = {
+      numberOfBots: numberOfBots
+    };
+    return this.http.get<PlayGameView>(`${environment.baseUrl}/game/play`,{ params:params });
   }
   public continue():Observable<ContinueGameView> {
-    return this.http.get<ContinueGameView>(`${this.baseUrl}/game/continue`);
+    return this.http.get<ContinueGameView>(`${environment.baseUrl}/game/continue`);
   }
   public end():Observable<EndGameView> {
-    return this.http.get<EndGameView>(`${this.baseUrl}/game/end`);
+    return this.http.get<EndGameView>(`${environment.baseUrl}/game/end`);
   }
 }
 

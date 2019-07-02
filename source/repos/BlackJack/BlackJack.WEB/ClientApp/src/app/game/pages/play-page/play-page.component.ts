@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Status } from 'src/app/shared/enums/status-type.enum.view';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
 import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
 import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
 @Component({
@@ -31,7 +30,6 @@ export class PlayGameComponent extends BaseComponent {
   private continueView: Observable<ContinueGameView> = this.continueSubject.asObservable();
   private playSubject = new BehaviorSubject<PlayGameView>(new PlayGameView);
   private playView: Observable<PlayGameView> = this.playSubject.asObservable();
-
   constructor(private gameService: GameService, private router: Router) {
     super();
     this.gameInit();
@@ -43,7 +41,6 @@ export class PlayGameComponent extends BaseComponent {
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: PlayGameView) => {
         this.numberOfBots = x.numberOfBots;
-        x.status = Status[x.status];
         this.game = true;
         this.haveActiveGame = true;
         if (x.winner !== 'No one') {
@@ -60,7 +57,6 @@ export class PlayGameComponent extends BaseComponent {
     this.gameService.continue()
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: ContinueGameView) => {
-        x.status = Status[x['status']]
         this.game = true;
         if (x.winner !== 'No one') {
           this.game = false;
@@ -70,13 +66,11 @@ export class PlayGameComponent extends BaseComponent {
         this.endStatus = false;
         this.continueSubject.next(x);
       });
-
   }
   private end(): void {
     this.gameService.end()
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: EndGameView) => {
-        x.status = Status[x['status']]
         this.game = false;
         this.playStatus = false;
         this.continueStatus = false;
@@ -89,7 +83,6 @@ export class PlayGameComponent extends BaseComponent {
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: PlayGameView) => {
-        x.status = Status[x.status];
         this.game = true;
         this.haveActiveGame = true;
         if (x.winner !== 'No one') {

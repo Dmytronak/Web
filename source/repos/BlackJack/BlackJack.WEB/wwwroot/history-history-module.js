@@ -116,12 +116,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var historyComponents = [_pages_games_page_games_page_component__WEBPACK_IMPORTED_MODULE_4__["UserGamesComponent"], _history_component__WEBPACK_IMPORTED_MODULE_6__["HistoryComponent"], _pages_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__["GamesDetailPageComponent"]];
 var HistoryModule = /** @class */ (function () {
     function HistoryModule() {
     }
     HistoryModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_pages_games_page_games_page_component__WEBPACK_IMPORTED_MODULE_4__["UserGamesComponent"], _history_component__WEBPACK_IMPORTED_MODULE_6__["HistoryComponent"], _pages_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__["GamesDetailPageComponent"]],
+            declarations: historyComponents.slice(),
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _history_routing_module__WEBPACK_IMPORTED_MODULE_3__["HistoryRoutingModule"],
@@ -145,7 +146,7 @@ var HistoryModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Details of game</h4>\n</div>\n<div class=\"modal-body\">\n  <div *ngIf=\"playerSteps | async\">\n    <table class=\"table\">\n      <thead class=\"thead-dark\">\n        <tr>\n          <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <td>{{(playerSteps | async)?.name}}</td>\n        <td colspan=\"\" *ngFor=\"let step of (playerSteps | async)?.steps\">\n          <img [src]=\"getCardLink(step)\">\n        </td>\n      </tbody>\n    </table>\n  </div>\n  <div *ngIf=\"botSteps | async\">\n    <table class=\"table\">\n      <thead class=\"thead-dark\">\n        <tr>\n          <th *ngFor=\"let head of headBots\">{{head}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let botStep of (botSteps | async)?.bots\">\n          <td>{{botStep.name}}</td>\n          <td *ngFor=\"let step of botStep.steps\">\n            <img [src]=\"getCardLink(step)\">\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n  \n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click')\">Close</button>\n</div>"
+module.exports = "<div class=\"modal-header\">\n  <h4 class=\"modal-title\">Details of game</h4>\n</div>\n<div class=\"modal-body\">\n  <div *ngIf=\"playerSteps\">\n    <table class=\"table\">\n      <thead class=\"thead-dark\">\n        <tr>\n          <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <td>{{playerSteps.name}}</td>\n        <td colspan=\"\" *ngFor=\"let step of playerSteps.steps\">\n          <img [src]=\"getCardLink(step)\">\n        </td>\n      </tbody>\n    </table>\n  </div>\n  <div *ngIf=\"botSteps\">\n    <table class=\"table\">\n      <thead class=\"thead-dark\">\n        <tr>\n          <th *ngFor=\"let head of headBots\">{{head}}</th>\n        </tr>\n      </thead>\n      <tbody>\n        <tr *ngFor=\"let botStep of botSteps.bots\">\n          <td>{{botStep.name}}</td>\n          <td *ngFor=\"let step of botStep.steps\">\n            <img [src]=\"getCardLink(step)\">\n          </td>\n        </tr>\n      </tbody>\n    </table>\n  </div>\n  \n</div>\n<div class=\"modal-footer\">\n  <button type=\"button\" class=\"btn btn-outline-dark\" (click)=\"activeModal.close('Close click')\">Close</button>\n</div>"
 
 /***/ }),
 
@@ -172,9 +173,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GamesDetailPageComponent", function() { return GamesDetailPageComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var src_app_shared_entities_history_get_bot_steps_history_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/entities/history/get-bot-steps-history.view */ "./src/app/shared/entities/history/get-bot-steps-history.view.ts");
+/* harmony import */ var src_app_shared_entities_history_get_player_steps_history_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/entities/history/get-player-steps-history.view */ "./src/app/shared/entities/history/get-player-steps-history.view.ts");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+
 
 
 
@@ -187,15 +190,16 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
         _this.activeModal = activeModal;
         _this.headBots = ['Bot name', 'Steps', '', '', '', '', '', ''];
         _this.headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
+        debugger;
         return _this;
     }
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", src_app_shared_entities_history_get_bot_steps_history_view__WEBPACK_IMPORTED_MODULE_2__["GetBotStepsHistoryView"])
     ], GamesDetailPageComponent.prototype, "botSteps", void 0);
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", rxjs__WEBPACK_IMPORTED_MODULE_2__["Observable"])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", src_app_shared_entities_history_get_player_steps_history_view__WEBPACK_IMPORTED_MODULE_3__["GetPlayerStepsHistoryView"])
     ], GamesDetailPageComponent.prototype, "playerSteps", void 0);
     GamesDetailPageComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -203,10 +207,10 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
             template: __webpack_require__(/*! ./games-detail-page.component.html */ "./src/app/history/pages/games-detail-page/games-detail-page.component.html"),
             styles: [__webpack_require__(/*! ./games-detail-page.component.scss */ "./src/app/history/pages/games-detail-page/games-detail-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_4__["NgbActiveModal"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbActiveModal"]])
     ], GamesDetailPageComponent);
     return GamesDetailPageComponent;
-}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_3__["BaseComponent"]));
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_4__["BaseComponent"]));
 
 
 
@@ -219,7 +223,7 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2> History of user games</h2>\r\n<form>\r\n  <div class=\"form-group form-inline\">\r\n    History search: <input class=\"form-control ml-2\" type=\"text\" [formControl]=\"filter\" />\r\n  </div>\r\n</form>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games | async\">\r\n        <td>\r\n          <ngb-highlight [result]=\"game.numberOfBots | number\" [term]=\"filter.value\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"game.status\" [term]=\"filter.value\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"game.winner\" [term]=\"filter.value\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination [collectionSize]=\"listCount | async\" [(page)]=\"page\" [pageSize]=\"pageSize\" [maxSize]=\"4\"\r\n    [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
+module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games | async\">\r\n        <td>\r\n          <ngb-highlight [result]=\"game.numberOfBots | number\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"convertStatusToString(game.status)\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"game.winner\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"listCount | async\" [(page)]=\"pageNumber\" [maxSize]=\"4\"\r\n    [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
 
 /***/ }),
 
@@ -246,17 +250,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserGamesComponent", function() { return UserGamesComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
-/* harmony import */ var src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/services/history.service */ "./src/app/shared/services/history.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../games-detail-page/games-detail-page.component */ "./src/app/history/pages/games-detail-page/games-detail-page.component.ts");
-
-
+/* harmony import */ var src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/history.service */ "./src/app/shared/services/history.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../games-detail-page/games-detail-page.component */ "./src/app/history/pages/games-detail-page/games-detail-page.component.ts");
 
 
 
@@ -273,87 +273,127 @@ var UserGamesComponent = /** @class */ (function (_super) {
         _this.historyService = historyService;
         _this.pipe = pipe;
         _this.modalService = modalService;
-        _this.tableState = { page: 1, pageSize: 8 };
-        _this.searchOnTable = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
-        _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](0);
+        _this.pageNumber = 1;
+        _this.searchValue = '';
+        _this.gameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        _this.games = _this.gameSubject.asObservable();
+        _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](0);
         _this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-        _this.filter = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('');
+        _this.onPageChange = function (pageNumber) {
+            _this.pageNumber = pageNumber;
+            _this.initTable();
+        };
         _this.initTable();
         return _this;
     }
-    Object.defineProperty(UserGamesComponent.prototype, "page", {
-        get: function () { return this.tableState.page; },
-        set: function (page) { this.pagination({ page: page }); },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(UserGamesComponent.prototype, "pageSize", {
-        get: function () { return this.tableState.pageSize; },
-        set: function (pageSize) { this.pagination({ pageSize: pageSize }); },
-        enumerable: true,
-        configurable: true
-    });
     UserGamesComponent.prototype.ngOnInit = function () {
     };
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
-        this.historyService.getGamesByUser()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
+        this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchValue)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            x.games.forEach(function (x) {
-                x.status = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_2__["Status"][x.status];
-            });
-            _this.getAllGamesHistory = x;
-            _this.games = _this.filterOfTable();
+            _this.gameSubject.next(x.games);
+            _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](x.totalGamesCount);
         });
     };
-    UserGamesComponent.prototype.filterOfTable = function () {
-        var _this = this;
-        return this.filter.valueChanges.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["startWith"])(this.filter.value), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (text) { return _this.search(text, _this.pipe); }));
-    };
-    UserGamesComponent.prototype.search = function (text, pipe) {
-        var result = this.getAllGamesHistory.games.filter(function (x) {
-            var term = text.toLowerCase();
-            return x.status.toLowerCase().includes(term)
-                || pipe.transform(x.numberOfBots).includes(term)
-                || x.winner.toLowerCase().includes(term);
-        });
-        this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_6__["BehaviorSubject"](result.length);
-        var response = result.slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
-        return response;
-    };
-    UserGamesComponent.prototype.pagination = function (patch) {
-        Object.assign(this.tableState, patch);
-        this.searchOnTable.next();
-        this.games = this.filterOfTable();
+    UserGamesComponent.prototype.onSearchChange = function (searchValue) {
+        this.searchValue = searchValue;
+        this.initTable();
     };
     UserGamesComponent.prototype.bot = function (game) {
+        var _this = this;
         var id = game.id;
-        var botSteps = this.historyService.getBotSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));
-        botSteps.subscribe();
-        var modalRef = this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_10__["GamesDetailPageComponent"], { size: 'lg' });
-        modalRef.componentInstance.botSteps = botSteps;
+        this.historyService.getBotSteps(id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(function (botSteps) {
+            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_8__["GamesDetailPageComponent"], { size: 'lg' });
+            modalRef.componentInstance.botSteps = botSteps;
+        })).subscribe();
     };
     UserGamesComponent.prototype.player = function (game) {
+        var _this = this;
         var id = game.id;
-        var playerSteps = this.historyService.getPlayerSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed));
-        playerSteps.subscribe();
-        var modalRef = this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_10__["GamesDetailPageComponent"], { size: 'lg' });
-        modalRef.componentInstance.playerSteps = playerSteps;
+        this.historyService.getPlayerSteps(id)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(function (playerSteps) {
+            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_8__["GamesDetailPageComponent"], { size: 'lg' });
+            modalRef.componentInstance.playerSteps = playerSteps;
+        })).subscribe();
     };
     UserGamesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-games-page',
             template: __webpack_require__(/*! ./games-page.component.html */ "./src/app/history/pages/games-page/games-page.component.html"),
-            providers: [_angular_common__WEBPACK_IMPORTED_MODULE_4__["DecimalPipe"]],
+            providers: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"]],
             styles: [__webpack_require__(/*! ./games-page.component.scss */ "./src/app/history/pages/games-page/games-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_3__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_4__["DecimalPipe"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_9__["NgbModal"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModal"]])
     ], UserGamesComponent);
     return UserGamesComponent;
-}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_8__["BaseComponent"]));
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_6__["BaseComponent"]));
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/entities/history/get-bot-steps-history.view.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/shared/entities/history/get-bot-steps-history.view.ts ***!
+  \***********************************************************************/
+/*! exports provided: GetBotStepsHistoryView, BotGetBotStepsHistoryViewItem, CardGetBotStepsHistoryViewItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetBotStepsHistoryView", function() { return GetBotStepsHistoryView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotGetBotStepsHistoryViewItem", function() { return BotGetBotStepsHistoryViewItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetBotStepsHistoryViewItem", function() { return CardGetBotStepsHistoryViewItem; });
+var GetBotStepsHistoryView = /** @class */ (function () {
+    function GetBotStepsHistoryView() {
+        this.bots = [];
+    }
+    return GetBotStepsHistoryView;
+}());
+
+var BotGetBotStepsHistoryViewItem = /** @class */ (function () {
+    function BotGetBotStepsHistoryViewItem() {
+        this.steps = [];
+    }
+    return BotGetBotStepsHistoryViewItem;
+}());
+
+var CardGetBotStepsHistoryViewItem = /** @class */ (function () {
+    function CardGetBotStepsHistoryViewItem() {
+    }
+    return CardGetBotStepsHistoryViewItem;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/entities/history/get-player-steps-history.view.ts":
+/*!**************************************************************************!*\
+  !*** ./src/app/shared/entities/history/get-player-steps-history.view.ts ***!
+  \**************************************************************************/
+/*! exports provided: GetPlayerStepsHistoryView, CardGetPlayerStepsHistoryViewItem */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GetPlayerStepsHistoryView", function() { return GetPlayerStepsHistoryView; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardGetPlayerStepsHistoryViewItem", function() { return CardGetPlayerStepsHistoryViewItem; });
+var GetPlayerStepsHistoryView = /** @class */ (function () {
+    function GetPlayerStepsHistoryView() {
+        this.steps = [];
+    }
+    return GetPlayerStepsHistoryView;
+}());
+
+var CardGetPlayerStepsHistoryViewItem = /** @class */ (function () {
+    function CardGetPlayerStepsHistoryViewItem() {
+    }
+    return CardGetPlayerStepsHistoryViewItem;
+}());
 
 
 
@@ -380,19 +420,25 @@ __webpack_require__.r(__webpack_exports__);
 var HistoryService = /** @class */ (function () {
     function HistoryService(http) {
         this.http = http;
-        this.baseUrl = '';
-        this.baseUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl;
     }
-    HistoryService.prototype.getGamesByUser = function () {
-        return this.http.get(this.baseUrl + "/history/allUserGames");
+    HistoryService.prototype.getGamesByUser = function (page, searchValue) {
+        var params = {
+            page: page,
+            searchString: searchValue
+        };
+        return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + "/history/allUserGames", { params: params });
     };
     HistoryService.prototype.getPlayerSteps = function (id) {
-        var params = { gameId: id };
-        return this.http.get(this.baseUrl + "/history/getPlayerSteps", { params: params });
+        var params = {
+            gameId: id
+        };
+        return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + "/history/getPlayerSteps", { params: params });
     };
     HistoryService.prototype.getBotSteps = function (id) {
-        var params = { gameId: id };
-        return this.http.get(this.baseUrl + "/history/getBotSteps", { params: params });
+        var params = {
+            gameId: id
+        };
+        return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + "/history/getBotSteps", { params: params });
     };
     HistoryService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({

@@ -1,9 +1,12 @@
+import { CardRankType } from '../../enums/card-rank-type.view';
+import { CardSuitType } from '../../enums/card-suit-type.view';
+
 export class GetPlayerStepsHistoryView{
     gameId:string;
     name:string;
-    steps:CardGetPlayerStepsHistoryViewItem[];
+    steps:CardGetPlayerStepsHistoryViewItem[] = [];
 }
 export class CardGetPlayerStepsHistoryViewItem{
-    rank:number;
-    suit:number;
+    rank:CardRankType;
+    suit:CardSuitType;
 }

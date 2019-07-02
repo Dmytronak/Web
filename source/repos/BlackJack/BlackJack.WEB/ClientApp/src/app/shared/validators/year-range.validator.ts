@@ -1,7 +1,7 @@
 import { AbstractControl } from '@angular/forms';
 
 export function yearRange(control: AbstractControl): { [key: string]: boolean } | null {
-    let maxYear = 2019;
+    let maxYear = new Date().getFullYear();
     let minYear = 1920;
     if (control.value > maxYear || control.value < minYear) {
         return { 'ageRange': true };

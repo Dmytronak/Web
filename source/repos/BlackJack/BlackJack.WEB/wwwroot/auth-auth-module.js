@@ -124,12 +124,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var authComponents = [_pages_login_page_login_page_component__WEBPACK_IMPORTED_MODULE_4__["LoginAuthComponent"], _pages_registration_page_registration_page_component__WEBPACK_IMPORTED_MODULE_5__["RegistrationAuthComponent"], _auth_component__WEBPACK_IMPORTED_MODULE_7__["AuthComponent"]];
 var AuthModule = /** @class */ (function () {
     function AuthModule() {
     }
     AuthModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [_pages_login_page_login_page_component__WEBPACK_IMPORTED_MODULE_4__["LoginAuthComponent"], _pages_registration_page_registration_page_component__WEBPACK_IMPORTED_MODULE_5__["RegistrationAuthComponent"], _auth_component__WEBPACK_IMPORTED_MODULE_7__["AuthComponent"]],
+            declarations: authComponents.slice(),
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _auth_routing_module__WEBPACK_IMPORTED_MODULE_3__["AuthRoutingModule"],
@@ -151,7 +152,7 @@ var AuthModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<form [formGroup]=\"loginForm\" (ngSubmit)=\"login()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div>\n    <app-validator [control]=\"loginForm.get('email')\"></app-validator>\n  </div>\n\n  <div class=\"loginForm\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div>\n    <app-validator [control]=\"loginForm.get('password')\"></app-validator>\n  </div>\n  <div class=\"loginForm\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"loginForm.invalid\">Login</button>\n  </div>\n</form>"
+module.exports = "<form [formGroup]=\"loginForm\" (ngSubmit)=\"login()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div>\n    <app-base [control]=\"loginForm.get('email')\"></app-base>\n  </div>\n\n  <div class=\"loginForm\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div>\n    <app-base [control]=\"loginForm.get('password')\"></app-base>\n  </div>\n  <div class=\"loginForm\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"loginForm.invalid\">Login</button>\n  </div>\n</form>"
 
 /***/ }),
 
@@ -215,10 +216,7 @@ var LoginAuthComponent = /** @class */ (function (_super) {
         if (this.loginForm.invalid) {
             return;
         }
-        var loginAccount = Object.assign({
-            email: this.loginForm.controls['email'].value,
-            password: this.loginForm.controls['password'].value
-        });
+        var loginAccount = Object.assign(tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.loginForm.getRawValue()));
         this.authService.login(loginAccount)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (response) {
@@ -247,7 +245,7 @@ var LoginAuthComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Please enter your information</h2>\n  </div>\n</div>\n<form [formGroup]=\"registerForm\" (ngSubmit)=\"register()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('email')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"name\">Name</label>\n    <input type=\"text\" name=\"name\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('name')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"year\">Year</label>\n    <input type=\"text\" class=\"form-control\" name=\"year\" placeholder=\"Year\" formControlName=\"year\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('year')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('password')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"confirmPassword\">Confirm password</label>\n    <input type=\"password\" class=\"form-control\" name=\"confirmPassword\" placeholder=\"Confirm password\"\n      formControlName=\"confirmPassword\">\n  </div>\n  <div>\n    <app-validator [control]=\"registerForm.get('confirmPassword')\"></app-validator>\n  </div>\n  <div class=\"formGroup\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"registerForm.invalid\">Register</button>\n  </div>\n</form>"
+module.exports = "<div class=\"row\">\n  <div class=\"col-md-6\">\n    <h2>Please enter your information</h2>\n  </div>\n</div>\n<form [formGroup]=\"registerForm\" (ngSubmit)=\"register()\">\n  <div class=\"formGroup\">\n    <label for=\"email\">Email</label>\n    <input type=\"text\" name=\"email\" class=\"form-control\" placeholder=\"Email\" formControlName=\"email\">\n  </div>\n  <div>\n    <app-base [control]=\"registerForm.get('email')\"></app-base>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"name\">Name</label>\n    <input type=\"text\" name=\"name\" class=\"form-control\" placeholder=\"Name\" formControlName=\"name\">\n  </div>\n  <div>\n    <app-base [control]=\"registerForm.get('name')\"></app-base>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"year\">Year</label>\n    <input type=\"text\" class=\"form-control\" name=\"year\" placeholder=\"Year\" formControlName=\"year\">\n  </div>\n  <div>\n    <app-base [control]=\"registerForm.get('year')\"></app-base>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"password\">Password</label>\n    <input type=\"password\" class=\"form-control\" name=\"password\" placeholder=\"Password\"\n      formControlName=\"password\">\n  </div>\n  <div>\n    <app-base [control]=\"registerForm.get('password')\"></app-base>\n  </div>\n  <div class=\"formGroup\">\n    <label for=\"confirmPassword\">Confirm password</label>\n    <input type=\"password\" class=\"form-control\" name=\"confirmPassword\" placeholder=\"Confirm password\"\n      formControlName=\"confirmPassword\">\n  </div>\n  <div>\n    <app-base [control]=\"registerForm.get('confirmPassword')\"></app-base>\n  </div>\n  <div class=\"formGroup\">\n    <button type=\"submit\" class=\"btn btn-primary\" [disabled]=\"registerForm.invalid\">Register</button>\n  </div>\n</form>"
 
 /***/ }),
 
@@ -340,16 +338,15 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
             .find(function (user) { return user.email === registerAccount.email; });
         if (isExistUser) {
             var errorMessage = { message: "Username " + registerAccount.email + " is already taken" };
-            this.toastrService.warning(errorMessage.message, 'Warning');
+            this.toastrService.warning(errorMessage.message);
+            return;
         }
-        if (!isExistUser) {
-            this.authService.register(registerAccount)
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
-                .subscribe(function (response) {
-                _this.toastrService.success("Email " + registerAccount.email + " is successfully register.", 'All set!');
-                _this.router.navigate(['/auth/login']);
-            });
-        }
+        this.authService.register(registerAccount)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (response) {
+            _this.toastrService.success("Email " + registerAccount.email + " is successfully register.");
+            _this.router.navigate(['/auth/login']);
+        });
     };
     RegistrationAuthComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -428,7 +425,7 @@ function passwordValidation(control) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "yearRange", function() { return yearRange; });
 function yearRange(control) {
-    var maxYear = 2019;
+    var maxYear = new Date().getFullYear();
     var minYear = 1920;
     if (control.value > maxYear || control.value < minYear) {
         return { 'ageRange': true };
