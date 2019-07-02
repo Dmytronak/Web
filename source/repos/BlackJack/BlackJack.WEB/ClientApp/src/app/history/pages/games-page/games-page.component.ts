@@ -21,7 +21,6 @@ import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page
 export class UserGamesComponent extends BaseComponent {
   protected pageNumber: number = 1;
   protected searchValue = '';
-  private statusEnum: StatusType;
   private gameSubject = new Subject<GameGetAllGamesHistoryViewItem[]>();
   private games = this.gameSubject.asObservable();
   private listCount = new BehaviorSubject<number>(0);
