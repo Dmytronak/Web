@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
 import { GameGetAllGamesHistoryViewItem, GetAllGamesHistoryView } from 'src/app/shared/entities/history/get-all-games-history.view';
 import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
 import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
