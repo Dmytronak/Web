@@ -126,29 +126,31 @@ namespace BlackJack.BusinessLogic.Services
         }
         private List<GameGetAllGamesHistoryViewItem> GetFilteredGames(List<GameGetAllGamesHistoryViewItem> gameViewItems,string searchString)
         {
-            var response = gameViewItems;
-            if (!string.IsNullOrEmpty(searchString))
+            if (string.IsNullOrEmpty(searchString))
             {
-                response = gameViewItems
-                    .Where(game => game
-                    .Status.ToString()
-                    .Contains(searchString)
-                    || game.Winner
-                    .Contains(searchString)
-                    || game.NumberOfBots
-                    .ToString()
-                    .Contains(searchString))
-                    .ToList();
+                return gameViewItems;
             }
+            var response = gameViewItems
+                   .Where(game => game
+                   .Status.ToString()
+                   .Contains(searchString)
+                   || game.Winner
+                   .Contains(searchString)
+                   || game.NumberOfBots
+                   .ToString()
+                   .Contains(searchString))
+                   .ToList();
             return response;
         }
         private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames (List<GameGetAllGamesHistoryViewItem> filteredGames, int currentPage)
         {
             var pageSize = 8;
-            return filteredGames.OrderBy(game => game.Id)
-                   .Skip((currentPage - 1) * pageSize)
-                   .Take(pageSize)
-                   .ToList();
+            var response = filteredGames
+                .OrderBy(game => game.Id)
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            return response;
         }
     }
 }
