@@ -10,7 +10,7 @@ using System;
 
 namespace BlackJack.BusinessLogic.Services
 {
-    
+
     public class HistoryService : IHistoryService
     {
         private readonly UserManager<User> _userManager;
@@ -23,7 +23,7 @@ namespace BlackJack.BusinessLogic.Services
         private readonly IPlayerInGameRepository _playerInGameRepository;
 
         public HistoryService(UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
-            IBotStepRepository botStepRepository,IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
+            IBotStepRepository botStepRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
             _userManager = userManager;
             _gameRepository = gameRepository;
@@ -124,7 +124,7 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        private List<GameGetAllGamesHistoryViewItem> GetFilteredGames(List<GameGetAllGamesHistoryViewItem> gameViewItems,string searchString)
+        private List<GameGetAllGamesHistoryViewItem> GetFilteredGames(List<GameGetAllGamesHistoryViewItem> gameViewItems, string searchString)
         {
             if (string.IsNullOrEmpty(searchString))
             {
@@ -142,7 +142,7 @@ namespace BlackJack.BusinessLogic.Services
                    .ToList();
             return response;
         }
-        private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames (List<GameGetAllGamesHistoryViewItem> filteredGames, int currentPage)
+        private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames(List<GameGetAllGamesHistoryViewItem> filteredGames, int currentPage)
         {
             var pageSize = 8;
             var response = filteredGames
