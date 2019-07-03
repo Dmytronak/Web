@@ -94,7 +94,7 @@ namespace BlackJack.BusinessLogic.Services
             };
             return response;
         }
-        public async Task<GetAllGamesHistoryView> GetAllGames(string userId, int currentPage, string searchString)
+        public async Task<GetAllGamesHistoryView> GetAllGames(string userId, int page, string searchString)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
@@ -120,7 +120,7 @@ namespace BlackJack.BusinessLogic.Services
             var response = new GetAllGamesHistoryView()
             {
                 TotalGamesCount = filteredGames.Count,
-                Games = GetPaginatedGames(filteredGames, currentPage)
+                Games = GetPaginatedGames(filteredGames, page)
             };
             return response;
         }
@@ -142,12 +142,12 @@ namespace BlackJack.BusinessLogic.Services
                    .ToList();
             return response;
         }
-        private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames(List<GameGetAllGamesHistoryViewItem> filteredGames, int currentPage)
+        private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames(List<GameGetAllGamesHistoryViewItem> filteredGames, int page)
         {
             var pageSize = 8;
             var response = filteredGames
                 .OrderBy(game => game.Id)
-                .Skip((currentPage - 1) * pageSize)
+                .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
             return response;
