@@ -52,8 +52,7 @@ export class UserGamesComponent extends BaseComponent {
     const id: string = game.id;
     this.historyService.getBotSteps(id)
       .pipe(takeUntil(this.componetDestroyed),
-        tap(
-          (botSteps: GetBotStepsHistoryView) => {
+        tap((botSteps: GetBotStepsHistoryView) => {
             const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
             modalRef.componentInstance.botSteps = botSteps;
           })
@@ -63,8 +62,7 @@ export class UserGamesComponent extends BaseComponent {
     const id: string = game.id;
     this.historyService.getPlayerSteps(id)
       .pipe(takeUntil(this.componetDestroyed),
-        tap(
-          (playerSteps: GetPlayerStepsHistoryView) => {
+        tap((playerSteps: GetPlayerStepsHistoryView) => {
             const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
             modalRef.componentInstance.playerSteps = playerSteps;
           })
