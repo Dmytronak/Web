@@ -39,5 +39,44 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
                 .FirstOrDefaultAsync();
             return result;
         }
+        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString, int pageNumber)
+        {
+            var pageSize = 8;
+            var result = await _dbSet
+              .Where(x => x.Player.UserId == userId)
+              .Include(x => x.Game)
+              .Where(x => x.Game.Status
+                 .ToString()
+                 .Contains(searchString)
+                 || x.Game.Winner
+                 .Contains(searchString)
+                 || x.Game.NumberOfBots
+                 .ToString()
+                 .Contains(searchString))
+                 .OrderBy(game => game.Game.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            return result;
+        }
+
+        public async Task<int> GetCountByUserIdAsync(string userId, string searchString)
+        {
+            var result = await _dbSet
+               .Where(x => x.Player.UserId == userId)
+               .Include(d => d.Game)
+               .Select(x=>x.Game)
+               .Distinct()
+               .Where(x => x.Status
+                  .ToString()
+                  .Contains(searchString)
+                  || x.Winner
+                  .Contains(searchString)
+                  || x.NumberOfBots
+                  .ToString()
+                  .Contains(searchString))
+                  .CountAsync();
+            return result;
+        }
     }
 }

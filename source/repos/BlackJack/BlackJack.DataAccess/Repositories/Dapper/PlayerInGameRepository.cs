@@ -1,4 +1,5 @@
 ﻿using BlackJack.DataAccess.Entities;
+using BlackJack.DataAccess.Enums;
 using BlackJack.DataAccess.Repositories.Interfaces;
 using Dapper;
 using System;
@@ -51,6 +52,63 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 {
                     UserId = userId
                 })).ToList();
+            return result;
+        }
+        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString,int pageNumber)
+        {
+            searchString = $"%{searchString}%";
+            string sql = @"SELECT DISTINCT 
+                         G.Id,
+                         G.CreationAt,
+                         G.NumberOfBots,
+                         G.Status,
+                         G.Winner
+                         FROM PlayerInGames PIG 
+                         INNER JOIN Players P 
+                         ON PIG.PlayerId = P.Id 
+                         INNER JOIN Games G 
+                         ON PIG.GameId = G.Id 		
+                         WHERE P.UserId = @UserId
+						 AND G.Winner LIKE @Winner OR G.Winner IS NOT NULL
+						 AND G.Status LIKE @Status OR G.Status IS NULL 
+						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE @NumberOfBots
+						 ORDER BY G.Id  OFFSET (@PageNumber-1)*8 ROWS FETCH NEXT 8 ROWS ONLY";
+            var games = (await _connection.QueryAsync<Game>
+                (sql, new
+                {
+                    PageNumber = pageNumber,
+                    UserId = userId,
+                    Winner = searchString,
+                    Status = searchString,
+                    NumberOfBots = searchString
+                })).ToList();
+            var result = games
+                .Select(game => new PlayerInGame()
+                {
+                    Game = game,
+                }).ToList();
+            return result;
+        }
+        public async Task<int> GetCountByUserIdAsync(string userId, string searchString)
+        {
+            searchString = $"%{searchString}%";
+            string sql = @"SELECT COUNT(DISTINCT GameId) 
+                         FROM PlayerInGames PIG 
+                         INNER JOIN Players P 
+                         ON PIG.PlayerId = P.Id 
+                         INNER JOIN Games G 
+                         ON PIG.GameId = G.Id 
+                         WHERE P.UserId = @UserId
+						 AND G.Winner LIKE @Winner OR G.Winner IS NOT NULL
+						 AND G.Status LIKE @Status OR G.Status IS NULL 
+						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE @NumberOfBots";
+            var result = await _connection.ExecuteScalarAsync<int>(sql,new
+            {
+                Winner = searchString,
+                Status = searchString,
+                NumberOfBots = searchString,
+                UserId = userId
+            });
             return result;
         }
         public async Task<PlayerInGame> GetActiveByUserId(string userId)

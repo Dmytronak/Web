@@ -10,5 +10,7 @@ namespace BlackJack.DataAccess.Repositories.Interfaces
         Task<List<PlayerInGame>> GetByGameId(Guid gameId);
         Task<List<PlayerInGame>> GetByUserId(string userId);
         Task<PlayerInGame> GetActiveByUserId(string userId);
+        Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString, int pageNumber);
+        Task<int> GetCountByUserIdAsync(string userId, string searchString);
     }
 }

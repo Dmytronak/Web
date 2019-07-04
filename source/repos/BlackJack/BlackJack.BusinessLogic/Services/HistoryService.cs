@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using BlackJack.ViewModels.HistoryViews;
 using System;
+using BlackJack.DataAccess.Enums;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -101,55 +102,21 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new CustomServiceException("User doesn`t exist");
             }
-            var playerInGames = await _playerInGameRepository.GetByUserId(user.Id);
-            var groupedGames = playerInGames.GroupBy(x => x.Game.Id);
-            var gameViewItems = new List<GameGetAllGamesHistoryViewItem>();
-            foreach (var item in groupedGames)
-            {
-                var fromGame = playerInGames.Select(x => x.Game).FirstOrDefault(x => x.Id == item.Key);
-                var gameViewItem = new GameGetAllGamesHistoryViewItem()
-                {
-                    Id = fromGame.Id,
-                    NumberOfBots = fromGame.NumberOfBots,
-                    Status = fromGame.Status,
-                    Winner = fromGame.Winner,
-                };
-                gameViewItems.Add(gameViewItem);
-            }
-            var filteredGames = GetFilteredGames(gameViewItems, searchString);
+            var totalGamesCount = await _playerInGameRepository.GetCountByUserIdAsync(user.Id, searchString);
+            var playerInGames = await _playerInGameRepository.GetFilteredGameByUserId(user.Id, searchString, pageNumber);
             var response = new GetAllGamesHistoryView()
             {
-                TotalGamesCount = filteredGames.Count,
-                Games = GetPaginatedGames(filteredGames, pageNumber)
+                TotalGamesCount = totalGamesCount,
+                Games = playerInGames
+                .Select(games => new GameGetAllGamesHistoryViewItem()
+                {
+                    Id = games.Game.Id,
+                    NumberOfBots = games.Game.NumberOfBots,
+                    Status = games.Game.Status,
+                    Winner = games.Game.Winner
+
+                }).ToList()
             };
-            return response;
-        }
-        private List<GameGetAllGamesHistoryViewItem> GetFilteredGames(List<GameGetAllGamesHistoryViewItem> gameViewItems, string searchString)
-        {
-            if (string.IsNullOrEmpty(searchString))
-            {
-                return gameViewItems;
-            }
-            var response = gameViewItems
-                   .Where(game => game
-                   .Status.ToString()
-                   .Contains(searchString)
-                   || game.Winner
-                   .Contains(searchString)
-                   || game.NumberOfBots
-                   .ToString()
-                   .Contains(searchString))
-                   .ToList();
-            return response;
-        }
-        private List<GameGetAllGamesHistoryViewItem> GetPaginatedGames(List<GameGetAllGamesHistoryViewItem> filteredGames, int pageNumber)
-        {
-            var pageSize = 8;
-            var response = filteredGames
-                .OrderBy(game => game.Id)
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
             return response;
         }
     }
