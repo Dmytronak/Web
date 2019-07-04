@@ -12,10 +12,10 @@ import { Observable } from 'rxjs';
 export class HistoryService {
   constructor(private readonly http: HttpClient) {
    }
-   public getGamesByUser(pageNumber:string,searchValue:string):Observable<GetAllGamesHistoryView>{
+   public getGamesByUser(pageNumber:string,searchString:string):Observable<GetAllGamesHistoryView>{
     const params = {
       pageNumber:pageNumber,
-      searchString:searchValue
+      searchString:searchString
     };
      return this.http.get<GetAllGamesHistoryView>(`${environment.baseUrl}/history/allUserGames`,{params:params});
    }

@@ -19,7 +19,7 @@ import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page
 
 export class UserGamesComponent extends BaseComponent {
   protected pageNumber: number = 1;
-  protected searchValue = '';
+  protected searchString:string = '';
   private gameSubject = new Subject<GameGetAllGamesHistoryViewItem[]>();
   private games = this.gameSubject.asObservable();
   private listCount = new BehaviorSubject<number>(0);
@@ -32,15 +32,15 @@ export class UserGamesComponent extends BaseComponent {
   ngOnInit() {
   }
   private initTable(): void {
-    this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchValue)
+    this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchString)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: GetAllGamesHistoryView) => {
         this.gameSubject.next(x.games);
         this.listCount = new BehaviorSubject<number>(x.totalGamesCount);
       });
   }
-  private onSearchChange(searchValue: string) {
-    this.searchValue = searchValue;
+  private onSearchChange(searchString: string) {
+    this.searchString = searchString;
     this.initTable();
   }
   private onPageChange = (pageNumber: number) => {

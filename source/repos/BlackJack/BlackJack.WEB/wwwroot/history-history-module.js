@@ -274,7 +274,7 @@ var UserGamesComponent = /** @class */ (function (_super) {
         _this.pipe = pipe;
         _this.modalService = modalService;
         _this.pageNumber = 1;
-        _this.searchValue = '';
+        _this.searchString = '';
         _this.gameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         _this.games = _this.gameSubject.asObservable();
         _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](0);
@@ -290,15 +290,15 @@ var UserGamesComponent = /** @class */ (function (_super) {
     };
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
-        this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchValue)
+        this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchString)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.gameSubject.next(x.games);
             _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](x.totalGamesCount);
         });
     };
-    UserGamesComponent.prototype.onSearchChange = function (searchValue) {
-        this.searchValue = searchValue;
+    UserGamesComponent.prototype.onSearchChange = function (searchString) {
+        this.searchString = searchString;
         this.initTable();
     };
     UserGamesComponent.prototype.bot = function (game) {
@@ -421,10 +421,10 @@ var HistoryService = /** @class */ (function () {
     function HistoryService(http) {
         this.http = http;
     }
-    HistoryService.prototype.getGamesByUser = function (page, searchValue) {
+    HistoryService.prototype.getGamesByUser = function (pageNumber, searchString) {
         var params = {
-            page: page,
-            searchString: searchValue
+            pageNumber: pageNumber,
+            searchString: searchString
         };
         return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + "/history/allUserGames", { params: params });
     };
