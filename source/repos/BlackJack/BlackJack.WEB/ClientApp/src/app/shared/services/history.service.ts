@@ -12,9 +12,9 @@ import { Observable } from 'rxjs';
 export class HistoryService {
   constructor(private readonly http: HttpClient) {
    }
-   public getGamesByUser(page:string,searchValue:string):Observable<GetAllGamesHistoryView>{
+   public getGamesByUser(pageNumber:string,searchValue:string):Observable<GetAllGamesHistoryView>{
     const params = {
-      page:page,
+      pageNumber:pageNumber,
       searchString:searchValue
     };
      return this.http.get<GetAllGamesHistoryView>(`${environment.baseUrl}/history/allUserGames`,{params:params});
