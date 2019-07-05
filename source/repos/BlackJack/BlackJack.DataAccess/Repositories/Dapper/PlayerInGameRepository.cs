@@ -148,9 +148,9 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 .Contains(searchString, StringComparison.InvariantCulture) ? index : -1)
                 .Where(iElement => iElement >= 0)
                 .ToList();
-            if (filteredStatusList.Count > 1)
+            if (filteredStatusList.Count > 1 || filteredStatusList.Count==0)
             {
-                return "%%";
+                return "% %";
             }
             var response = $"%{filteredStatusList.FirstOrDefault()}%";
             return response;
