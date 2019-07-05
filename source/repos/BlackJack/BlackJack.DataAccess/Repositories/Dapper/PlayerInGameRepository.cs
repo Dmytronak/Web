@@ -58,22 +58,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         {
             var filteredStatusType = GetFilteredStatusType(searchString);
             searchString = $"%{searchString}%";
-            string sql = @"SELECT DISTINCT 
-                         G.Id,
-                         G.CreationAt,
-                         G.NumberOfBots,
-                         G.Status,
-                         G.Winner
-                         FROM PlayerInGames PIG 
-                         INNER JOIN Players P 
-                         ON PIG.PlayerId = P.Id 
-                         INNER JOIN Games G 
-                         ON PIG.GameId = G.Id 		
-                         WHERE P.UserId = @UserId
-						 AND G.Winner LIKE @Winner OR G.Winner IS NOT NULL
-						 AND G.Status LIKE @Status OR G.Status IS NULL 
-						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE @NumberOfBots
-						 ORDER BY G.Id  OFFSET (@PageNumber-1)*8 ROWS FETCH NEXT 8 ROWS ONLY";
+            string sql = "GetFilteredGames";
             var games = (await _connection.QueryAsync<Game>
                 (sql, new
                 {
@@ -82,7 +67,9 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                     Winner = searchString,
                     Status = filteredStatusType,
                     NumberOfBots = searchString
-                })).ToList();
+                },
+                commandType: CommandType.StoredProcedure))
+                .ToList();
             var result = games
                 .Select(game => new PlayerInGame()
                 {
@@ -102,7 +89,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                          ON PIG.GameId = G.Id 
                          WHERE P.UserId = @UserId
 						 AND G.Winner LIKE @Winner OR G.Winner IS NOT NULL
-						 AND G.Status LIKE @Status OR G.Status IS NULL 
+						 AND G.Status LIKE @Status OR G.Status IS NULL
 						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE @NumberOfBots";
             var result = await _connection.ExecuteScalarAsync<int>(sql,new
             {
