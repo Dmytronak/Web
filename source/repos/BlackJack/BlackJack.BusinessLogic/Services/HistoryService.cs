@@ -102,7 +102,7 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new CustomServiceException("User doesn`t exist");
             }
-            var totalGamesCount = await _playerInGameRepository.GetCountByUserIdAsync(user.Id, searchString);
+            var totalGamesCount = await _playerInGameRepository.GetCountByUserId(user.Id, searchString);
             var playerInGames = await _playerInGameRepository.GetFilteredGameByUserId(user.Id, searchString, pageNumber);
             var response = new GetAllGamesHistoryView()
             {

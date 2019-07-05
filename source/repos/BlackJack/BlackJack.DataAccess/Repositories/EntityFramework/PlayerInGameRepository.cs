@@ -60,7 +60,7 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
             return result;
         }
 
-        public async Task<int> GetCountByUserIdAsync(string userId, string searchString)
+        public async Task<int> GetCountByUserId(string userId, string searchString)
         {
             var result = await _dbSet
                .Where(x => x.Player.UserId == userId)

@@ -56,6 +56,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString,int pageNumber)
         {
+            var filteredStatusType = GetFilteredStatusType(searchString);
             searchString = $"%{searchString}%";
             string sql = @"SELECT DISTINCT 
                          G.Id,
@@ -79,7 +80,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                     PageNumber = pageNumber,
                     UserId = userId,
                     Winner = searchString,
-                    Status = searchString,
+                    Status = filteredStatusType,
                     NumberOfBots = searchString
                 })).ToList();
             var result = games
@@ -89,7 +90,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 }).ToList();
             return result;
         }
-        public async Task<int> GetCountByUserIdAsync(string userId, string searchString)
+        public async Task<int> GetCountByUserId(string userId, string searchString)
         {
             searchString = $"%{searchString}%";
             string sql = @"SELECT COUNT(DISTINCT GameId) 
@@ -136,6 +137,22 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                     Status2 = Enums.StatusType.Continue
                 })).FirstOrDefault();  
             return result;
+        }
+        private string GetFilteredStatusType(string searchString)
+        {
+            searchString = $"{searchString}";
+            var statusNames = Enum.GetNames(typeof(StatusType));
+            var filteredStatusList = statusNames
+                .Select((str, index) => str
+                .Contains(searchString, StringComparison.InvariantCulture) ? index : -1)
+                .Where(iElement => iElement >= 0)
+                .ToList();
+            if (filteredStatusList.Count > 1)
+            {
+                return "%%";
+            }
+            var response = $"%{filteredStatusList.FirstOrDefault()}%";
+            return response;
         }
     }
 }
