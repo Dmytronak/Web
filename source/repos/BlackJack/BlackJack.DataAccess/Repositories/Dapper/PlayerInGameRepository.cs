@@ -129,7 +129,8 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         private string GetConvertedStatusType(string searchString)
         {
             searchString = $"{searchString}";
-            var statusNames = Enum.GetNames(typeof(StatusType)).ToList();
+            var statusNames = Enum.GetNames(typeof(StatusType))
+                .ToList();
             var filteredStatusList = statusNames
                 .Select((str, index) => str
                 .Contains(searchString, StringComparison.InvariantCulture) ? index : -1)
