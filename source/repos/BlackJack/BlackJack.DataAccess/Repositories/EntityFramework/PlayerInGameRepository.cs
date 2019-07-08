@@ -64,7 +64,7 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
         {
             var result = await _dbSet
                .Where(x => x.Player.UserId == userId)
-               .Include(d => d.Game)
+               .Include(x => x.Game)
                .Select(x=>x.Game)
                .Distinct()
                .Where(x => x.Status
