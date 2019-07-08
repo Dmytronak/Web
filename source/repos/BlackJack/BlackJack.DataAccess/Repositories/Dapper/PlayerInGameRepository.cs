@@ -56,7 +56,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString,int pageNumber)
         {
-            var filteredStatusType = GetFilteredStatusType(searchString);
+            var convertedStatusType = GetConvertedStatusType(searchString);
             searchString = $"%{searchString}%";
             string sql = "GetFilteredGames";
             var games = (await _connection.QueryAsync<Game>
@@ -65,7 +65,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                     PageNumber = pageNumber,
                     UserId = userId,
                     Winner = searchString,
-                    Status = filteredStatusType,
+                    Status = convertedStatusType,
                     NumberOfBots = searchString
                 },
                 commandType: CommandType.StoredProcedure))
@@ -79,7 +79,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<int> GetCountByUserId(string userId, string searchString)
         {
-            var filteredStatusType = GetFilteredStatusType(searchString);
+            var filteredStatusType = GetConvertedStatusType(searchString);
             searchString = $"%{searchString}%";
             string sql = @"SELECT COUNT(DISTINCT GameId) 
                          FROM PlayerInGames PIG 
@@ -126,10 +126,10 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 })).FirstOrDefault();  
             return result;
         }
-        private string GetFilteredStatusType(string searchString)
+        private string GetConvertedStatusType(string searchString)
         {
             searchString = $"{searchString}";
-            var statusNames = Enum.GetNames(typeof(StatusType));
+            var statusNames = Enum.GetNames(typeof(StatusType)).ToList();
             var filteredStatusList = statusNames
                 .Select((str, index) => str
                 .Contains(searchString, StringComparison.InvariantCulture) ? index : -1)
