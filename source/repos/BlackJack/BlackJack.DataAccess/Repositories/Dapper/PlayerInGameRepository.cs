@@ -54,10 +54,9 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 })).ToList();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString,int pageNumber)
+        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString,int pageNumber,int pageSize)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
-            searchString = $"%{searchString}%";
             string sql = "GetFilteredGames";
             var games = (await _connection.QueryAsync<Game>
                 (sql, new
@@ -66,7 +65,8 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                     UserId = userId,
                     Winner = searchString,
                     Status = convertedStatusType,
-                    NumberOfBots = searchString
+                    NumberOfBots = searchString,
+                    PageSize = pageSize
                 },
                 commandType: CommandType.StoredProcedure))
                 .ToList();
@@ -77,10 +77,9 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 }).ToList();
             return result;
         }
-        public async Task<int> GetCountByUserId(string userId, string searchString)
+        public async Task<int> GetFilteredGameCountByUserId(string userId, string searchString)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
-            searchString = $"%{searchString}%";
             string sql = @"SELECT COUNT(DISTINCT GameId) 
                          FROM PlayerInGames PIG 
                          INNER JOIN Players P 
@@ -88,9 +87,9 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                          INNER JOIN Games G 
                          ON PIG.GameId = G.Id 
                          WHERE P.UserId = @UserId
-						 AND G.Winner LIKE @Winner OR G.Winner IS NOT NULL
-						 AND G.Status LIKE @Status OR G.Status IS NULL
-						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE @NumberOfBots";
+						 AND G.Winner LIKE CONCAT(@Winner,'%') OR G.Winner IS NOT NULL
+						 AND G.Status LIKE CONCAT(@Status,'%') OR G.Status IS NULL
+						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE CONCAT(@NumberOfBots,'%')";
             var result = await _connection.ExecuteScalarAsync<int>(sql,new
             {
                 Winner = searchString,
@@ -137,9 +136,9 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 .ToList();
             if (filteredStatusList.Count > 1 || filteredStatusList.Count==0)
             {
-                return "% %";
+                return " ";
             }
-            var response = $"%{filteredStatusList.FirstOrDefault()}%";
+            var response = $"{filteredStatusList.FirstOrDefault()}";
             return response;
         }
     }

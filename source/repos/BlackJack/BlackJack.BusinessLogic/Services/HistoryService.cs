@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Linq;
 using BlackJack.ViewModels.HistoryViews;
 using System;
-using BlackJack.DataAccess.Enums;
+using BlackJack.BusinessLogic.Options;
+using Microsoft.Extensions.Options;
 
 namespace BlackJack.BusinessLogic.Services
 {
@@ -22,8 +23,9 @@ namespace BlackJack.BusinessLogic.Services
         private readonly IBotStepRepository _botStepRepository;
         private readonly IBotInGameRepository _botInGameRepository;
         private readonly IPlayerInGameRepository _playerInGameRepository;
+        private readonly IOptions<PaginationOption> _options;
 
-        public HistoryService(UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
+        public HistoryService(IOptions<PaginationOption> options,UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
             _userManager = userManager;
@@ -34,6 +36,7 @@ namespace BlackJack.BusinessLogic.Services
             _botStepRepository = botStepRepository;
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
+            _options = options;
         }
         public async Task<GetBotStepsHistoryView> GetBotSteps(Guid gameId)
         {
@@ -102,11 +105,12 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new CustomServiceException("User doesn`t exist");
             }
-            var totalGamesCount = await _playerInGameRepository.GetCountByUserId(user.Id, searchString);
-            var playerInGames = await _playerInGameRepository.GetFilteredGameByUserId(user.Id, searchString, pageNumber);
+            var pageSize =  _options.Value.PageSize;
+            var filteredGamesCount = await _playerInGameRepository.GetFilteredGameCountByUserId(user.Id, searchString);
+            var playerInGames = await _playerInGameRepository.GetFilteredGameByUserId(user.Id, searchString, pageNumber, pageSize);
             var response = new GetAllGamesHistoryView()
             {
-                TotalGamesCount = totalGamesCount,
+                TotalGamesCount = filteredGamesCount,
                 Games = playerInGames
                 .Select(games => new GameGetAllGamesHistoryViewItem()
                 {

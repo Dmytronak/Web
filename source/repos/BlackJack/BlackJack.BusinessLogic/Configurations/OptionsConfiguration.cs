@@ -9,7 +9,8 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddOptionsConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services
-                .Configure<JwtOption>(configuration.GetSection("Jwt"));
+                .Configure<JwtOption>(configuration.GetSection("Jwt"))
+                .Configure<PaginationOption>(configuration.GetSection("Pagination"));
         }
     }
 }

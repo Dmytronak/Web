@@ -39,9 +39,9 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
                 .FirstOrDefaultAsync();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString, int pageNumber)
+        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString, int pageNumber, int pageSize)
         {
-            var pageSize = 8;
+            var offset = (pageNumber - 1) * pageSize;
             var result = await _dbSet
               .Where(x => x.Player.UserId == userId)
               .Include(x => x.Game)
@@ -54,13 +54,12 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
                  .ToString()
                  .Contains(searchString))
                  .OrderBy(game => game.Game.Id)
-                .Skip((pageNumber - 1) * pageSize)
+                .Skip(offset)
                 .Take(pageSize)
                 .ToListAsync();
             return result;
         }
-
-        public async Task<int> GetCountByUserId(string userId, string searchString)
+        public async Task<int> GetFilteredGameCountByUserId(string userId, string searchString)
         {
             var result = await _dbSet
                .Where(x => x.Player.UserId == userId)
