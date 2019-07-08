@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
 import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
 import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
 @Component({

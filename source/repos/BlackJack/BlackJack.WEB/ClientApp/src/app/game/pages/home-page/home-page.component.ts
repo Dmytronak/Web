@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { GameService } from 'src/app/shared/services/game.service';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';

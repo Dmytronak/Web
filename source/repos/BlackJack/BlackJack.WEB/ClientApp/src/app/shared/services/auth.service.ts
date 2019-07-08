@@ -7,7 +7,7 @@ import { RegisterAccountView } from '../entities/auth/register-account.view';
 import { GetAllAccountView } from '../entities/auth/get-all-account.view';
 import { LoginAccountView } from '../entities/auth/login-account.view';
 import { LoginAccountResponseView } from '../entities/auth/login-account-response.view';
-import { map, filter, tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 @Injectable()
 

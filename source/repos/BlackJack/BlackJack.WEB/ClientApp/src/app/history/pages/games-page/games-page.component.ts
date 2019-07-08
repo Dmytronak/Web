@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { GameGetAllGamesHistoryViewItem, GetAllGamesHistoryView } from 'src/app/shared/entities/history/get-all-games-history.view';
 import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
 import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
 import { HistoryService } from 'src/app/shared/services/history.service';
 import { DecimalPipe } from '@angular/common';
-import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page.component';

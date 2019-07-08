@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { CardPlayGameViewItem } from '../../entities/game/play-game.view';
-import { FormControl, ValidationErrors, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { StatusType } from '../../enums/status-type.enum.view';
 
 @Component({

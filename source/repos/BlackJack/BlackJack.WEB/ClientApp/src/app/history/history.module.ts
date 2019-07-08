@@ -1,4 +1,4 @@
-import { NgModule, Pipe } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { HistoryRoutingModule } from './history-routing.module';
 import { UserGamesComponent } from './pages/games-page/games-page.component';
