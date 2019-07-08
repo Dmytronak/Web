@@ -79,7 +79,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         public async Task<int> GetCountByUserId(string userId, string searchString)
         {
-            var filteredStatusType = GetConvertedStatusType(searchString);
+            var convertedStatusType = GetConvertedStatusType(searchString);
             searchString = $"%{searchString}%";
             string sql = @"SELECT COUNT(DISTINCT GameId) 
                          FROM PlayerInGames PIG 
@@ -94,7 +94,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
             var result = await _connection.ExecuteScalarAsync<int>(sql,new
             {
                 Winner = searchString,
-                Status = filteredStatusType,
+                Status = convertedStatusType,
                 NumberOfBots = searchString,
                 UserId = userId
             });
