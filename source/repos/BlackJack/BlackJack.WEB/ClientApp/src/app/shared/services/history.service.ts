@@ -17,7 +17,7 @@ export class HistoryService {
       pageNumber:pageNumber,
       searchString:searchString
     };
-     return this.http.get<GetAllGamesHistoryView>(`${environment.baseUrl}/history/allUserGames`,{params:params});
+     return this.http.get<GetAllGamesHistoryView>(`${environment.baseUrl}/history/getAllGames`,{params:params});
    }
    public getPlayerSteps(id:string): Observable<GetPlayerStepsHistoryView> {
     const params = {

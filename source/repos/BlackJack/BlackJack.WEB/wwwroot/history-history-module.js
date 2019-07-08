@@ -426,7 +426,7 @@ var HistoryService = /** @class */ (function () {
             pageNumber: pageNumber,
             searchString: searchString
         };
-        return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + "/history/allUserGames", { params: params });
+        return this.http.get(_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].baseUrl + "/history/getAllGames", { params: params });
     };
     HistoryService.prototype.getPlayerSteps = function (id) {
         var params = {

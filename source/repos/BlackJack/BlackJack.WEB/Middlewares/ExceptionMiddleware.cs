@@ -8,18 +8,18 @@ namespace BlackJack.WEB.Middlewares
     public class ExceptionMiddleware
     {
 
-        private readonly RequestDelegate next;
+        private readonly RequestDelegate _next;
 
         public ExceptionMiddleware(RequestDelegate next)
         {
-            this.next = next;
+            this._next = next;
         }
 
         public async Task Invoke(HttpContext context)
         {
             try
             {
-                await next(context);
+                await _next(context);
             }
             catch (CustomServiceException ex)
             {

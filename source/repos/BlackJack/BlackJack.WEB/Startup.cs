@@ -28,7 +28,7 @@ namespace BlackJack.WEB
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddOptions();
+
             services.AddOptionsConfiguration(Configuration);
             services.AddDependencyConfiguration(Configuration);
             services.AddDatabaseContextConfiguration(Configuration);

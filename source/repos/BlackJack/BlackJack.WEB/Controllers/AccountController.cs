@@ -5,11 +5,10 @@ using BlackJack.ViewModels.AccountViews;
 
 namespace BlackJack.WEB.Controllers
 {
-    [Route("api/account/[action]")]
+    [Route("api/[controller]/[action]")]
     public class AccountController : BaseController
     {
         private readonly IAccountService _accountService;
-
         public AccountController(IAccountService accountService)
         {
             _accountService = accountService;
@@ -22,10 +21,10 @@ namespace BlackJack.WEB.Controllers
             return Ok(response);
         }
         [HttpGet]
-        public async Task<GetAllAccountView> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             var response =  await _accountService.GetAll();
-            return response;
+            return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> Register([FromBody]RegisterAccountView model)

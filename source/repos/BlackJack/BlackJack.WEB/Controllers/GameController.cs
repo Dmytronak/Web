@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using BlackJack.BusinessLogic.Services.Interfaces;
-using BlackJack.ViewModels.GameViews;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BlackJack.WEB.Controllers
 {
-    [Route("api/game/[action]")]
+    [Route("api/[controller]/[action]")]
     [Authorize]
     public class GameController : BaseController
     {
@@ -18,28 +17,28 @@ namespace BlackJack.WEB.Controllers
           
         }
         [HttpGet]
-        public async Task<PlayGameView> Play([FromQuery] int numberOfBots)
+        public async Task<IActionResult> Play(int numberOfBots)
         {
-            var response =  await _gameService.Play(numberOfBots, UserId());
-            return response;
+            var response =  await _gameService.Play(numberOfBots, UserId);
+            return Ok(response);
         }
         [HttpGet]
-        public async Task<ContinueGameView> Continue()
+        public async Task<IActionResult> Continue()
         {
-            var response = await _gameService.Continue(UserId());
-            return response;
+            var response = await _gameService.Continue(UserId);
+            return Ok(response);
         }
         [HttpGet]
-        public async Task<PlayGameView> GetActive()
+        public async Task<IActionResult> GetActive()
         {
-            var response = await _gameService.GetActive(UserId());
-            return response;
+            var response = await _gameService.GetActive(UserId);
+            return Ok(response);
         }
         [HttpGet]
-        public async Task<EndGameView> End()
+        public async Task<IActionResult> End()
         {
-            var response = await _gameService.End(UserId());
-            return response;
+            var response = await _gameService.End(UserId);
+            return Ok(response);
         }
 
     }
