@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
 import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
 import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
-import { Observable, BehaviorSubject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 
@@ -88,7 +87,7 @@ export class PlayGameComponent extends BaseComponent {
         this.continueStatus = false;
         this.endStatus = false;
         this.playStatus = true;
-       this.playGameView =playGameView;
+        this.playGameView = playGameView;
       });
   }
   backToHome(): void {

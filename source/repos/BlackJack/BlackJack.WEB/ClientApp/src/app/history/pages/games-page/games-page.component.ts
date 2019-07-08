@@ -19,9 +19,9 @@ import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page
 
 export class UserGamesComponent extends BaseComponent {
   protected pageNumber: number = 1;
-  protected searchString:string = '';
-  private games:GameGetAllGamesHistoryViewItem[];
-  private totalGamesCount:number = 0;
+  protected searchString: string = '';
+  private games: GameGetAllGamesHistoryViewItem[];
+  private totalGamesCount: number = 0;
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
 
   constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe, private modalService: NgbModal) {
@@ -51,9 +51,9 @@ export class UserGamesComponent extends BaseComponent {
     this.historyService.getBotSteps(id)
       .pipe(takeUntil(this.componetDestroyed),
         tap((botSteps: GetBotStepsHistoryView) => {
-            const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
-            modalRef.componentInstance.botSteps = botSteps;
-          })
+          const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
+          modalRef.componentInstance.botSteps = botSteps;
+        })
       ).subscribe();
   }
   private player(game): void {
@@ -61,9 +61,9 @@ export class UserGamesComponent extends BaseComponent {
     this.historyService.getPlayerSteps(id)
       .pipe(takeUntil(this.componetDestroyed),
         tap((playerSteps: GetPlayerStepsHistoryView) => {
-            const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
-            modalRef.componentInstance.playerSteps = playerSteps;
-          })
+          const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
+          modalRef.componentInstance.playerSteps = playerSteps;
+        })
       ).subscribe();
   }
 }

@@ -16,10 +16,10 @@
           {{game.numberOfBots}}
         </td>
         <td>
-            {{convertStatusToString(game.status)}}
+          {{convertStatusToString(game.status)}}
         </td>
         <td>
-           {{ game.winner}}
+          {{ game.winner}}
         </td>
         <td>
           <button class="btn btn-info" (click)="bot(game)">
@@ -32,6 +32,6 @@
       </tr>
     </tbody>
   </table>
-  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="totalGamesCount" [(page)]="pageNumber" [maxSize]="4"
-    [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="totalGamesCount" [(page)]="pageNumber"
+    [maxSize]="4" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 </div>
