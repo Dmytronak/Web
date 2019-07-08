@@ -256,7 +256,7 @@ var HomeGameComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"haveActiveGame\">\r\n    <div class=\"row\">\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <tr>\r\n                    <th colspan=\"6\">New Game</th>\r\n                </tr>\r\n                <tr>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Game status : {{convertStatusToString((playView | async)?.status)}}</label>\r\n                        <label *ngIf=\"continueStatus\">Game status : {{convertStatusToString((continueView | async)?.status)}}</label>\r\n                        <label *ngIf=\"endStatus\">Game status : {{convertStatusToString((endView | async)?.status)}}\r\n                        </label>\r\n                    </th>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Winner : {{ (playView | async)?.winner }} </label>\r\n                        <label *ngIf=\"continueStatus\">Winner : {{ (continueView | async)?.winner }} </label>\r\n                        <label *ngIf=\"endStatus\">Winner : {{ (endView | async)?.winner }} </label>\r\n\r\n                    </th>\r\n                    <th>\r\n                        <div *ngIf=\"game\">\r\n                            <button class=\"btn btn-success\" (click)=\"continue()\"><i class=\"fas fa-plus\"></i></button>\r\n                            <button class=\"btn btn-danger\" (click)=\"end()\"><i class=\"fas fa-times\"></i></button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                        <div *ngIf=\"!game\">\r\n                            <button class=\"btn btn-primary\" (click)=\"playAgain()\">Play again with the same parametrs?</button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                    </th>\r\n                </tr>\r\n            </thead>\r\n        </table>\r\n        <div>\r\n        </div>\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\r\n                <th colspan=\"4\"></th>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <th *ngIf=\"playStatus\">{{ (playView | async)?.player.status }}</th>\r\n                    <th *ngIf=\"continueStatus\">{{ (continueView | async)?.player.status }}</th>\r\n                    <th *ngIf=\"endStatus\">{{ (endView | async)?.player.status }}</th>\r\n                    <td *ngIf=\"playStatus\">\r\n                <tr *ngFor=\"let step of (playView | async)?.player.cards\">\r\n                    <img [src]=\"getCardLink(step)\">\r\n                </tr>\r\n                </td>\r\n                <td *ngIf=\"continueStatus\">\r\n                    <tr *ngFor=\"let step of (continueView | async)?.player.cards\">\r\n                        <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n                <td *ngIf=\"endStatus\">\r\n                    <tr *ngFor=\"let step of (endView | async)?.player.cards\">\r\n                      <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n                </tr>\r\n            </tbody>\r\n            <thead class=\"thead-dark\">\r\n                <th colspan=\"8\" *ngFor=\"let head of headBots\">{{head}}</th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"playStatus\">\r\n                <th *ngFor=\"let bot of (playView | async)?.bots\">{{bot.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"continueStatus\">\r\n                <th *ngFor=\"let bot of (continueView | async)?.bots\">{{bot.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"endStatus\">\r\n                <th *ngFor=\"let bot of (endView | async)?.bots\">{{bot.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n\r\n            <tbody *ngIf=\"playStatus\">\r\n                <td *ngFor=\"let bot of (playView | async)?.bots\">\r\n                    <tr *ngFor=\"let step of bot.cards\">\r\n                      <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"continueStatus\">\r\n                <td *ngFor=\"let bot of (continueView | async)?.bots\">\r\n                    <tr *ngFor=\"let step of bot.cards\">\r\n                        <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"endStatus\">\r\n                <td *ngFor=\"let bot of (endView | async)?.bots\">\r\n                    <tr *ngFor=\"let step of bot.cards\">\r\n                        <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!haveActiveGame\">\r\n    <p><label>Back to home : </label></p>\r\n    <button class=\"btn btn-success\" (click)=\"backToHome()\"><i class=\"fa fa-arrow-left\"></i></button>\r\n</div>"
+module.exports = "<div *ngIf=\"haveActiveGame\">\r\n    <div class=\"row\">\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <tr>\r\n                    <th colspan=\"6\">New Game</th>\r\n                </tr>\r\n                <tr>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Game status : {{convertStatusToString(playGameView.status)}}</label>\r\n                        <label *ngIf=\"continueStatus\">Game status : {{convertStatusToString(continueGameView.status)}}</label>\r\n                        <label *ngIf=\"endStatus\">Game status : {{convertStatusToString(endGameView.status)}}\r\n                        </label>\r\n                    </th>\r\n                    <th>\r\n                        <label *ngIf=\"playStatus\">Winner : {{ playGameView.winner }} </label>\r\n                        <label *ngIf=\"continueStatus\">Winner : {{ continueGameView.winner }} </label>\r\n                        <label *ngIf=\"endStatus\">Winner : {{ endGameView.winner }} </label>\r\n\r\n                    </th>\r\n                    <th>\r\n                        <div *ngIf=\"game\">\r\n                            <button class=\"btn btn-success\" (click)=\"continue()\"><i class=\"fas fa-plus\"></i></button>\r\n                            <button class=\"btn btn-danger\" (click)=\"end()\"><i class=\"fas fa-times\"></i></button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                        <div *ngIf=\"!game\">\r\n                            <button class=\"btn btn-primary\" (click)=\"playAgain()\">Play again with the same parametrs?</button>\r\n                            <button class=\"btn btn-info\" (click)=\"backToHome()\"><i\r\n                                    class=\"fa fa-arrow-left\"></i></button>\r\n                        </div>\r\n                    </th>\r\n                </tr>\r\n            </thead>\r\n        </table>\r\n        <div>\r\n        </div>\r\n        <table class=\"table\">\r\n            <thead class=\"thead-dark\">\r\n                <th *ngFor=\"let head of headPlayerSteps\">{{head}}</th>\r\n                <th colspan=\"4\"></th>\r\n            </thead>\r\n            <tbody>\r\n                <tr>\r\n                    <th *ngIf=\"playStatus\">{{ playGameView.player.status }}</th>\r\n                    <th *ngIf=\"continueStatus\">{{ continueGameView.player.status }}</th>\r\n                    <th *ngIf=\"endStatus\">{{ endGameView.player.status }}</th>\r\n                    <td *ngIf=\"playStatus\">\r\n                <tr *ngFor=\"let step of playGameView.player.cards\">\r\n                    <img [src]=\"getCardLink(step)\">\r\n                </tr>\r\n                </td>\r\n                <td *ngIf=\"continueStatus\">\r\n                    <tr *ngFor=\"let step of continueGameView.player.cards\">\r\n                        <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n                <td *ngIf=\"endStatus\">\r\n                    <tr *ngFor=\"let step of endGameView.player.cards\">\r\n                      <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n                </tr>\r\n            </tbody>\r\n            <thead class=\"thead-dark\">\r\n                <th colspan=\"8\" *ngFor=\"let head of headBots\">{{head}}</th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"playStatus\">\r\n                <th *ngFor=\"let bot of playGameView.bots\">{{bot.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"continueStatus\">\r\n                <th *ngFor=\"let bot of continueGameView.bots\">{{bot.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n            <thead class=\"thead-dark\" *ngIf=\"endStatus\">\r\n                <th *ngFor=\"let bot of endGameView.bots\">{{bot.name}}</th>\r\n                <th colspan=\"8\"></th>\r\n            </thead>\r\n\r\n            <tbody *ngIf=\"playStatus\">\r\n                <td *ngFor=\"let bot of playGameView.bots\">\r\n                    <tr *ngFor=\"let step of bot.cards\">\r\n                      <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"continueStatus\">\r\n                <td *ngFor=\"let bot of continueGameView.bots\">\r\n                    <tr *ngFor=\"let step of bot.cards\">\r\n                        <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n            <tbody *ngIf=\"endStatus\">\r\n                <td *ngFor=\"let bot of endGameView.bots\">\r\n                    <tr *ngFor=\"let step of bot.cards\">\r\n                        <img [src]=\"getCardLink(step)\">\r\n                    </tr>\r\n                </td>\r\n            </tbody>\r\n        </table>\r\n    </div>\r\n</div>\r\n<div *ngIf=\"!haveActiveGame\">\r\n    <p><label>Back to home : </label></p>\r\n    <button class=\"btn btn-success\" (click)=\"backToHome()\"><i class=\"fa fa-arrow-left\"></i></button>\r\n</div>"
 
 /***/ }),
 
@@ -285,16 +285,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/game.service */ "./src/app/shared/services/game.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_shared_entities_game_continue_game_view___WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/entities/game/continue-game.view. */ "./src/app/shared/entities/game/continue-game.view..ts");
-/* harmony import */ var src_app_shared_entities_game_end_game_view__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/entities/game/end-game.view */ "./src/app/shared/entities/game/end-game.view.ts");
-/* harmony import */ var src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/entities/game/play-game.view */ "./src/app/shared/entities/game/play-game.view.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
-
-
-
-
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
 
 
 
@@ -316,12 +308,6 @@ var PlayGameComponent = /** @class */ (function (_super) {
         _this.headBots = ['Bots'];
         _this.headPlayerSteps = ['Player name', 'Player cards'];
         _this.headElements = ['Number of bots', 'Status', 'Winner', ''];
-        _this.endSubject = new rxjs__WEBPACK_IMPORTED_MODULE_7__["BehaviorSubject"](new src_app_shared_entities_game_end_game_view__WEBPACK_IMPORTED_MODULE_5__["EndGameView"]);
-        _this.endView = _this.endSubject.asObservable();
-        _this.continueSubject = new rxjs__WEBPACK_IMPORTED_MODULE_7__["BehaviorSubject"](new src_app_shared_entities_game_continue_game_view___WEBPACK_IMPORTED_MODULE_4__["ContinueGameView"]);
-        _this.continueView = _this.continueSubject.asObservable();
-        _this.playSubject = new rxjs__WEBPACK_IMPORTED_MODULE_7__["BehaviorSubject"](new src_app_shared_entities_game_play_game_view__WEBPACK_IMPORTED_MODULE_6__["PlayGameView"]);
-        _this.playView = _this.playSubject.asObservable();
         _this.gameInit();
         return _this;
     }
@@ -330,16 +316,16 @@ var PlayGameComponent = /** @class */ (function (_super) {
     PlayGameComponent.prototype.gameInit = function () {
         var _this = this;
         this.gameService.getActiveGame()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
-            _this.numberOfBots = x.numberOfBots;
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (playGameView) {
+            _this.numberOfBots = playGameView.numberOfBots;
             _this.game = true;
             _this.haveActiveGame = true;
-            if (x.winner !== 'No one') {
+            if (playGameView.winner !== 'No one') {
                 _this.game = false;
             }
             _this.playStatus = true;
-            _this.playSubject.next(x);
+            _this.playGameView = playGameView;
         }, function (errorForStatus) {
             _this.haveActiveGame = false;
         });
@@ -347,45 +333,45 @@ var PlayGameComponent = /** @class */ (function (_super) {
     PlayGameComponent.prototype.continue = function () {
         var _this = this;
         this.gameService.continue()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (continueGameView) {
             _this.game = true;
-            if (x.winner !== 'No one') {
+            if (continueGameView.winner !== 'No one') {
                 _this.game = false;
             }
             _this.playStatus = false;
             _this.continueStatus = true;
             _this.endStatus = false;
-            _this.continueSubject.next(x);
+            _this.continueGameView = continueGameView;
         });
     };
     PlayGameComponent.prototype.end = function () {
         var _this = this;
         this.gameService.end()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (endGameView) {
             _this.game = false;
             _this.playStatus = false;
             _this.continueStatus = false;
             _this.endStatus = true;
-            _this.endSubject.next(x);
+            _this.endGameView = endGameView;
         });
     };
     PlayGameComponent.prototype.playAgain = function () {
         var _this = this;
         var numberOfBots = this.numberOfBots;
         this.gameService.play(numberOfBots)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["takeUntil"])(this.componetDestroyed))
-            .subscribe(function (x) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (playGameView) {
             _this.game = true;
             _this.haveActiveGame = true;
-            if (x.winner !== 'No one') {
+            if (playGameView.winner !== 'No one') {
                 _this.game = false;
             }
             _this.continueStatus = false;
             _this.endStatus = false;
             _this.playStatus = true;
-            _this.playSubject.next(x);
+            _this.playGameView = playGameView;
         });
     };
     PlayGameComponent.prototype.backToHome = function () {
@@ -400,139 +386,7 @@ var PlayGameComponent = /** @class */ (function (_super) {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_game_service__WEBPACK_IMPORTED_MODULE_2__["GameService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], PlayGameComponent);
     return PlayGameComponent;
-}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_9__["BaseComponent"]));
-
-
-
-/***/ }),
-
-/***/ "./src/app/shared/entities/game/continue-game.view..ts":
-/*!*************************************************************!*\
-  !*** ./src/app/shared/entities/game/continue-game.view..ts ***!
-  \*************************************************************/
-/*! exports provided: ContinueGameView, PlayerContinueGameView, BotContinueGameViewItem, CardContinueGameViewItem */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContinueGameView", function() { return ContinueGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerContinueGameView", function() { return PlayerContinueGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotContinueGameViewItem", function() { return BotContinueGameViewItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardContinueGameViewItem", function() { return CardContinueGameViewItem; });
-var ContinueGameView = /** @class */ (function () {
-    function ContinueGameView() {
-        this.bots = [];
-    }
-    return ContinueGameView;
-}());
-
-var PlayerContinueGameView = /** @class */ (function () {
-    function PlayerContinueGameView() {
-        this.cards = [];
-    }
-    return PlayerContinueGameView;
-}());
-
-var BotContinueGameViewItem = /** @class */ (function () {
-    function BotContinueGameViewItem() {
-        this.cards = [];
-    }
-    return BotContinueGameViewItem;
-}());
-
-var CardContinueGameViewItem = /** @class */ (function () {
-    function CardContinueGameViewItem() {
-    }
-    return CardContinueGameViewItem;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/shared/entities/game/end-game.view.ts":
-/*!*******************************************************!*\
-  !*** ./src/app/shared/entities/game/end-game.view.ts ***!
-  \*******************************************************/
-/*! exports provided: EndGameView, PlayerEndGameView, BotEndGameViewItem, CardEndGameViewItem */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EndGameView", function() { return EndGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerEndGameView", function() { return PlayerEndGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotEndGameViewItem", function() { return BotEndGameViewItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardEndGameViewItem", function() { return CardEndGameViewItem; });
-var EndGameView = /** @class */ (function () {
-    function EndGameView() {
-        this.bots = [];
-    }
-    return EndGameView;
-}());
-
-var PlayerEndGameView = /** @class */ (function () {
-    function PlayerEndGameView() {
-        this.cards = [];
-    }
-    return PlayerEndGameView;
-}());
-
-var BotEndGameViewItem = /** @class */ (function () {
-    function BotEndGameViewItem() {
-        this.cards = [];
-    }
-    return BotEndGameViewItem;
-}());
-
-var CardEndGameViewItem = /** @class */ (function () {
-    function CardEndGameViewItem() {
-    }
-    return CardEndGameViewItem;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/shared/entities/game/play-game.view.ts":
-/*!********************************************************!*\
-  !*** ./src/app/shared/entities/game/play-game.view.ts ***!
-  \********************************************************/
-/*! exports provided: PlayGameView, PlayerPlayGameView, BotPlayGameViewItem, CardPlayGameViewItem */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayGameView", function() { return PlayGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PlayerPlayGameView", function() { return PlayerPlayGameView; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BotPlayGameViewItem", function() { return BotPlayGameViewItem; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CardPlayGameViewItem", function() { return CardPlayGameViewItem; });
-var PlayGameView = /** @class */ (function () {
-    function PlayGameView() {
-        this.bots = [];
-    }
-    return PlayGameView;
-}());
-
-var PlayerPlayGameView = /** @class */ (function () {
-    function PlayerPlayGameView() {
-        this.cards = [];
-    }
-    return PlayerPlayGameView;
-}());
-
-var BotPlayGameViewItem = /** @class */ (function () {
-    function BotPlayGameViewItem() {
-        this.cards = [];
-    }
-    return BotPlayGameViewItem;
-}());
-
-var CardPlayGameViewItem = /** @class */ (function () {
-    function CardPlayGameViewItem() {
-    }
-    return CardPlayGameViewItem;
-}());
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__["BaseComponent"]));
 
 
 

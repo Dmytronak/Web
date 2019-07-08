@@ -223,7 +223,7 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games | async\">\r\n        <td>\r\n          <ngb-highlight [result]=\"game.numberOfBots | number\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"convertStatusToString(game.status)\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <ngb-highlight [result]=\"game.winner\"></ngb-highlight>\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"listCount | async\" [(page)]=\"pageNumber\" [maxSize]=\"4\"\r\n    [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
+module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games\">\r\n        <td>\r\n          {{game.numberOfBots}}\r\n        </td>\r\n        <td>\r\n            {{convertStatusToString(game.status)}}\r\n        </td>\r\n        <td>\r\n           {{ game.winner}}\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"totalGamesCount\" [(page)]=\"pageNumber\" [maxSize]=\"4\"\r\n    [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
 
 /***/ }),
 
@@ -252,12 +252,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/history.service */ "./src/app/shared/services/history.service.ts");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../games-detail-page/games-detail-page.component */ "./src/app/history/pages/games-detail-page/games-detail-page.component.ts");
-
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../games-detail-page/games-detail-page.component */ "./src/app/history/pages/games-detail-page/games-detail-page.component.ts");
 
 
 
@@ -275,14 +273,8 @@ var UserGamesComponent = /** @class */ (function (_super) {
         _this.modalService = modalService;
         _this.pageNumber = 1;
         _this.searchString = '';
-        _this.gameSubject = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
-        _this.games = _this.gameSubject.asObservable();
-        _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](0);
+        _this.totalGamesCount = 0;
         _this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-        _this.onPageChange = function (pageNumber) {
-            _this.pageNumber = pageNumber;
-            _this.initTable();
-        };
         _this.initTable();
         return _this;
     }
@@ -291,22 +283,26 @@ var UserGamesComponent = /** @class */ (function (_super) {
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
         this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchString)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
-            _this.gameSubject.next(x.games);
-            _this.listCount = new rxjs__WEBPACK_IMPORTED_MODULE_4__["BehaviorSubject"](x.totalGamesCount);
+            _this.games = x.games;
+            _this.totalGamesCount = x.totalGamesCount;
         });
     };
     UserGamesComponent.prototype.onSearchChange = function (searchString) {
         this.searchString = searchString;
         this.initTable();
     };
+    UserGamesComponent.prototype.onPageChange = function (pageNumber) {
+        this.pageNumber = pageNumber;
+        this.initTable();
+    };
     UserGamesComponent.prototype.bot = function (game) {
         var _this = this;
         var id = game.id;
         this.historyService.getBotSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(function (botSteps) {
-            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_8__["GamesDetailPageComponent"], { size: 'lg' });
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (botSteps) {
+            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__["GamesDetailPageComponent"], { size: 'lg' });
             modalRef.componentInstance.botSteps = botSteps;
         })).subscribe();
     };
@@ -314,8 +310,8 @@ var UserGamesComponent = /** @class */ (function (_super) {
         var _this = this;
         var id = game.id;
         this.historyService.getPlayerSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["tap"])(function (playerSteps) {
-            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_8__["GamesDetailPageComponent"], { size: 'lg' });
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (playerSteps) {
+            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__["GamesDetailPageComponent"], { size: 'lg' });
             modalRef.componentInstance.playerSteps = playerSteps;
         })).subscribe();
     };
@@ -326,10 +322,10 @@ var UserGamesComponent = /** @class */ (function (_super) {
             providers: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"]],
             styles: [__webpack_require__(/*! ./games-page.component.scss */ "./src/app/history/pages/games-page/games-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_7__["NgbModal"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["NgbModal"]])
     ], UserGamesComponent);
     return UserGamesComponent;
-}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_6__["BaseComponent"]));
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__["BaseComponent"]));
 
 
 

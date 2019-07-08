@@ -11,15 +11,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let game of games | async">
+      <tr *ngFor="let game of games">
         <td>
-          <ngb-highlight [result]="game.numberOfBots | number"></ngb-highlight>
+          {{game.numberOfBots}}
         </td>
         <td>
-          <ngb-highlight [result]="convertStatusToString(game.status)"></ngb-highlight>
+            {{convertStatusToString(game.status)}}
         </td>
         <td>
-          <ngb-highlight [result]="game.winner"></ngb-highlight>
+           {{ game.winner}}
         </td>
         <td>
           <button class="btn btn-info" (click)="bot(game)">
@@ -32,6 +32,6 @@
       </tr>
     </tbody>
   </table>
-  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="listCount | async" [(page)]="pageNumber" [maxSize]="4"
+  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="totalGamesCount" [(page)]="pageNumber" [maxSize]="4"
     [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
 </div>

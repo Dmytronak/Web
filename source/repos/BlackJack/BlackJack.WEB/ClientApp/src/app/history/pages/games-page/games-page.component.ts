@@ -20,9 +20,8 @@ import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page
 export class UserGamesComponent extends BaseComponent {
   protected pageNumber: number = 1;
   protected searchString:string = '';
-  private gameSubject = new Subject<GameGetAllGamesHistoryViewItem[]>();
-  private games = this.gameSubject.asObservable();
-  private listCount = new BehaviorSubject<number>(0);
+  private games:GameGetAllGamesHistoryViewItem[];
+  private totalGamesCount:number = 0;
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
 
   constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe, private modalService: NgbModal) {
@@ -35,15 +34,15 @@ export class UserGamesComponent extends BaseComponent {
     this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchString)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: GetAllGamesHistoryView) => {
-        this.gameSubject.next(x.games);
-        this.listCount = new BehaviorSubject<number>(x.totalGamesCount);
+        this.games = x.games;
+        this.totalGamesCount = x.totalGamesCount;
       });
   }
   private onSearchChange(searchString: string) {
     this.searchString = searchString;
     this.initTable();
   }
-  private onPageChange = (pageNumber: number) => {
+  private onPageChange(pageNumber: number) {
     this.pageNumber = pageNumber;
     this.initTable();
   }
