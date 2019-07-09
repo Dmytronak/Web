@@ -9,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
 using Swashbuckle.AspNetCore.Swagger;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BlackJack.WEB
 {
@@ -43,6 +45,16 @@ namespace BlackJack.WEB
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "BlackJack API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                { "Bearer", Enumerable.Empty<string>() },
+                });
             });
             services.AddSpaStaticFiles(configuration =>
             {
@@ -55,7 +67,7 @@ namespace BlackJack.WEB
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlackJack API API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlackJack API V1");
             });
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
