@@ -36,26 +36,13 @@ namespace BlackJack.WEB
             services.AddDatabaseContextConfiguration(Configuration);
             services.AddIdentityConfiguration();
             services.AddJwtConfiguration(Configuration);
+            services.AddSwaggerConfiguration();
 
             services.AddMvc(options =>
             {
                 options.Filters.Add(typeof(ModelStateActionFilter));
 
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new Info { Title = "BlackJack API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
-                {
-                    In = "header",
-                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
-                    Name = "Authorization",
-                    Type = "apiKey"
-                });
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
-                { "Bearer", Enumerable.Empty<string>() },
-                });
-            });
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
