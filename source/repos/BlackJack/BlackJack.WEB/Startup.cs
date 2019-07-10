@@ -8,9 +8,6 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BlackJack.BusinessLogic.Configurations;
-using Swashbuckle.AspNetCore.Swagger;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace BlackJack.WEB
 {
