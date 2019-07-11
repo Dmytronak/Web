@@ -223,7 +223,7 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games\">\r\n        <td>\r\n          {{game.numberOfBots}}\r\n        </td>\r\n        <td>\r\n          {{convertStatusToString(game.status)}}\r\n        </td>\r\n        <td>\r\n          {{ game.winner}}\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"totalGamesCount\" [(page)]=\"pageNumber\"\r\n    [maxSize]=\"4\" [rotate]=\"true\" [boundaryLinks]=\"true\"></ngb-pagination>\r\n</div>"
+module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games\">\r\n        <td>\r\n          {{game.numberOfBots}}\r\n        </td>\r\n        <td>\r\n          {{convertStatusToString(game.status)}}\r\n        </td>\r\n        <td>\r\n          {{ game.winner}}\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"paginationConfig.paginationModel.collectionSize\" [(page)]=\"paginationConfig.paginationModel.page\"\r\n    [maxSize]=\"paginationConfig.paginationModel.maxSize\"></ngb-pagination>\r\n</div>"
 
 /***/ }),
 
@@ -251,11 +251,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/shared/services/history.service */ "./src/app/shared/services/history.service.ts");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
-/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
-/* harmony import */ var _games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../games-detail-page/games-detail-page.component */ "./src/app/history/pages/games-detail-page/games-detail-page.component.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../games-detail-page/games-detail-page.component */ "./src/app/history/pages/games-detail-page/games-detail-page.component.ts");
+/* harmony import */ var src_app_shared_configs_pagination_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/configs/pagination.config */ "./src/app/shared/configs/pagination.config.ts");
 
 
 
@@ -266,14 +266,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var UserGamesComponent = /** @class */ (function (_super) {
     tslib__WEBPACK_IMPORTED_MODULE_0__["__extends"](UserGamesComponent, _super);
-    function UserGamesComponent(historyService, pipe, modalService) {
+    function UserGamesComponent(historyService, modalService, paginationConfig) {
         var _this = _super.call(this) || this;
         _this.historyService = historyService;
-        _this.pipe = pipe;
         _this.modalService = modalService;
-        _this.pageNumber = 1;
+        _this.paginationConfig = paginationConfig;
         _this.searchString = '';
-        _this.totalGamesCount = 0;
+        _this.maxSize = _this.paginationConfig.paginationModel.maxSize;
         _this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
         _this.initTable();
         return _this;
@@ -282,11 +281,11 @@ var UserGamesComponent = /** @class */ (function (_super) {
     };
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
-        this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchString)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
+        this.historyService.getGamesByUser(this.paginationConfig.paginationModel.page.toString(), this.searchString)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.games = x.games;
-            _this.totalGamesCount = x.totalGamesCount;
+            _this.paginationConfig.paginationModel.collectionSize = x.totalGamesCount;
         });
     };
     UserGamesComponent.prototype.onSearchChange = function (searchString) {
@@ -294,38 +293,79 @@ var UserGamesComponent = /** @class */ (function (_super) {
         this.initTable();
     };
     UserGamesComponent.prototype.onPageChange = function (pageNumber) {
-        this.pageNumber = pageNumber;
+        this.paginationConfig.paginationModel.page = pageNumber;
         this.initTable();
     };
     UserGamesComponent.prototype.bot = function (game) {
         var _this = this;
         var id = game.id;
         this.historyService.getBotSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (botSteps) {
-            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__["GamesDetailPageComponent"], { size: 'lg' });
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (botSteps) {
+            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_6__["GamesDetailPageComponent"], { size: 'lg' });
             modalRef.componentInstance.botSteps = botSteps;
-        })).subscribe();
+        });
     };
     UserGamesComponent.prototype.player = function (game) {
         var _this = this;
         var id = game.id;
         this.historyService.getPlayerSteps(id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (playerSteps) {
-            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_7__["GamesDetailPageComponent"], { size: 'lg' });
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.componetDestroyed))
+            .subscribe(function (playerSteps) {
+            var modalRef = _this.modalService.open(_games_detail_page_games_detail_page_component__WEBPACK_IMPORTED_MODULE_6__["GamesDetailPageComponent"], { size: 'lg' });
             modalRef.componentInstance.playerSteps = playerSteps;
-        })).subscribe();
+        });
     };
     UserGamesComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-games-page',
             template: __webpack_require__(/*! ./games-page.component.html */ "./src/app/history/pages/games-page/games-page.component.html"),
-            providers: [_angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"]],
             styles: [__webpack_require__(/*! ./games-page.component.scss */ "./src/app/history/pages/games-page/games-page.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__["HistoryService"], _angular_common__WEBPACK_IMPORTED_MODULE_3__["DecimalPipe"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_6__["NgbModal"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [src_app_shared_services_history_service__WEBPACK_IMPORTED_MODULE_2__["HistoryService"], _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_5__["NgbModal"], src_app_shared_configs_pagination_config__WEBPACK_IMPORTED_MODULE_7__["PaginationConfig"]])
     ], UserGamesComponent);
     return UserGamesComponent;
-}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__["BaseComponent"]));
+}(src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_4__["BaseComponent"]));
+
+
+
+/***/ }),
+
+/***/ "./src/app/shared/configs/pagination.config.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/shared/configs/pagination.config.ts ***!
+  \*****************************************************/
+/*! exports provided: PaginationConfig */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PaginationConfig", function() { return PaginationConfig; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ng-bootstrap/ng-bootstrap */ "./node_modules/@ng-bootstrap/ng-bootstrap/fesm5/ng-bootstrap.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+
+
+
+var PaginationConfig = /** @class */ (function () {
+    function PaginationConfig(config) {
+        this.paginationModel = {
+            collectionSize: 0,
+            page: 1,
+            maxSize: 4
+        };
+        config.maxSize = this.paginationModel.maxSize;
+        config.rotate = true;
+        config.boundaryLinks = true;
+    }
+    PaginationConfig = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_1__["NgbPaginationConfig"]])
+    ], PaginationConfig);
+    return PaginationConfig;
+}());
 
 
 

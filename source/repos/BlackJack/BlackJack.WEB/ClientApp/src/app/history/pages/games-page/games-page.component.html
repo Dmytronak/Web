@@ -32,6 +32,6 @@
       </tr>
     </tbody>
   </table>
-  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="totalGamesCount" [(page)]="pageNumber"
-    [maxSize]="4" [rotate]="true" [boundaryLinks]="true"></ngb-pagination>
+  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="paginationConfig.paginationModel.collectionSize" [(page)]="paginationConfig.paginationModel.page"
+    [maxSize]="paginationConfig.paginationModel.maxSize"></ngb-pagination>
 </div>

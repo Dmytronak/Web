@@ -3,38 +3,35 @@ import { GameGetAllGamesHistoryViewItem, GetAllGamesHistoryView } from 'src/app/
 import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
 import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
 import { HistoryService } from 'src/app/shared/services/history.service';
-import { DecimalPipe } from '@angular/common';
 import { takeUntil, tap } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page.component';
+import { PaginationConfig } from 'src/app/shared/configs/pagination.config';
 
 @Component({
   selector: 'app-games-page',
   templateUrl: './games-page.component.html',
-  styleUrls: ['./games-page.component.scss'],
-  providers: [DecimalPipe]
+  styleUrls: ['./games-page.component.scss']
 })
 
 export class UserGamesComponent extends BaseComponent {
-  protected pageNumber: number = 1;
   protected searchString: string = '';
   private games: GameGetAllGamesHistoryViewItem[];
-  private totalGamesCount: number = 0;
+  private maxSize  = this.paginationConfig.paginationModel.maxSize;
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-
-  constructor(private readonly historyService: HistoryService, private readonly pipe: DecimalPipe, private modalService: NgbModal) {
+  constructor(private readonly historyService: HistoryService, private modalService: NgbModal, private paginationConfig:PaginationConfig) {
     super();
     this.initTable();
   }
   ngOnInit() {
   }
   private initTable(): void {
-    this.historyService.getGamesByUser(this.pageNumber.toString(), this.searchString)
+    this.historyService.getGamesByUser(this.paginationConfig.paginationModel.page.toString(), this.searchString)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: GetAllGamesHistoryView) => {
         this.games = x.games;
-        this.totalGamesCount = x.totalGamesCount;
+        this.paginationConfig.paginationModel.collectionSize = x.totalGamesCount;
       });
   }
   private onSearchChange(searchString: string) {
@@ -42,27 +39,25 @@ export class UserGamesComponent extends BaseComponent {
     this.initTable();
   }
   private onPageChange(pageNumber: number) {
-    this.pageNumber = pageNumber;
+    this.paginationConfig.paginationModel.page = pageNumber;
     this.initTable();
   }
   private bot(game): void {
     const id: string = game.id;
     this.historyService.getBotSteps(id)
-      .pipe(takeUntil(this.componetDestroyed),
-        tap((botSteps: GetBotStepsHistoryView) => {
-          const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
-          modalRef.componentInstance.botSteps = botSteps;
-        })
-      ).subscribe();
+      .pipe(takeUntil(this.componetDestroyed))
+      .subscribe((botSteps: GetBotStepsHistoryView) => {
+        const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
+        modalRef.componentInstance.botSteps = botSteps;
+      });
   }
   private player(game): void {
     const id: string = game.id;
     this.historyService.getPlayerSteps(id)
-      .pipe(takeUntil(this.componetDestroyed),
-        tap((playerSteps: GetPlayerStepsHistoryView) => {
-          const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
-          modalRef.componentInstance.playerSteps = playerSteps;
-        })
-      ).subscribe();
+      .pipe(takeUntil(this.componetDestroyed))
+      .subscribe((playerSteps: GetPlayerStepsHistoryView) => {
+        const modalRef = this.modalService.open(GamesDetailPageComponent, { size: 'lg' });
+        modalRef.componentInstance.playerSteps = playerSteps;
+      });
   }
 }
