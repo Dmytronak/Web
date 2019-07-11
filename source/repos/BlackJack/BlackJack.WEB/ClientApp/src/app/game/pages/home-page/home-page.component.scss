@@ -10,3 +10,17 @@ p{
 .text-muted {
     color: white !important;
 }
+.form-control:focus{
+    color: #495057;
+    background-color: #fff;
+    border-color: #343a40;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(109, 109, 109, 0.897);
+
+}
+.ui-select-choices-row.active >a {
+    color: #fff !important;
+    text-decoration: none;
+    outline: 0;
+    background-color: #343a40 !important;
+}
