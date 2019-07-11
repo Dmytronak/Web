@@ -1,5 +1,5 @@
 export class PaginationModel{
     collectionSize:number;
-    page:number;
+    pageNumber:number;
     maxSize:number;
 }

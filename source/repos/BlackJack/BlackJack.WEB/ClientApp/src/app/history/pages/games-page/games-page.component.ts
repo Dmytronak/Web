@@ -27,7 +27,7 @@ export class UserGamesComponent extends BaseComponent {
   ngOnInit() {
   }
   private initTable(): void {
-    this.historyService.getGamesByUser(this.paginationConfig.paginationModel.page.toString(), this.searchString)
+    this.historyService.getGamesByUser(this.paginationConfig.paginationModel.pageNumber.toString(), this.searchString)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: GetAllGamesHistoryView) => {
         this.games = x.games;
@@ -39,7 +39,7 @@ export class UserGamesComponent extends BaseComponent {
     this.initTable();
   }
   private onPageChange(pageNumber: number) {
-    this.paginationConfig.paginationModel.page = pageNumber;
+    this.paginationConfig.paginationModel.pageNumber = pageNumber;
     this.initTable();
   }
   private bot(game): void {

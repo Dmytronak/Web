@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class PaginationConfig {
     public paginationModel:PaginationModel={
         collectionSize:0,
-        page:1,
+        pageNumber:1,
         maxSize:4
     }
     constructor(config: NgbPaginationConfig) {
