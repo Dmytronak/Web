@@ -1,5 +1,5 @@
 import { PaginationModel } from '../../shared/models/pagination.model';
-import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationConfig, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { Injectable } from '@angular/core';
 
 @Injectable({

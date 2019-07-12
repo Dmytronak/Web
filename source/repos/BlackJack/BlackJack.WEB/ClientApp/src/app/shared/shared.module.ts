@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 import { MainHeaderComponent } from './components/layout/main-header/main-header.component';
 import { LoggedInHeaderComponent } from './components/layout/logged-in-header/logged-in-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,14 +16,14 @@ const sharedComponents = [BaseComponent, MainHeaderComponent];
     CommonModule,
     NgbModule,
     RouterModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
   exports:[
     ...sharedComponents,
     FormsModule,
     SelectModule,
     ReactiveFormsModule,
-    NgbModule,
+    NgbModule
   ]
 })
 export class SharedModule { }

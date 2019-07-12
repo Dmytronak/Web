@@ -3,7 +3,7 @@ import { GameGetAllGamesHistoryViewItem, GetAllGamesHistoryView } from 'src/app/
 import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
 import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
 import { HistoryService } from 'src/app/shared/services/history.service';
-import { takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page.component';

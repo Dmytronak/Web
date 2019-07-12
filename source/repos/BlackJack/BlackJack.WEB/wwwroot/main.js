@@ -934,13 +934,13 @@ var SharedModule = /** @class */ (function () {
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_7__["RouterModule"],
-                ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"].forRoot()
+                ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"].forRoot(),
             ],
             exports: sharedComponents.concat([
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormsModule"],
                 ng2_select__WEBPACK_IMPORTED_MODULE_11__["SelectModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
-                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"],
+                _ng_bootstrap_ng_bootstrap__WEBPACK_IMPORTED_MODULE_3__["NgbModule"]
             ])
         })
     ], SharedModule);
