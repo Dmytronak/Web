@@ -18,7 +18,6 @@ import { PaginationConfig } from 'src/app/shared/configs/pagination.config';
 export class UserGamesComponent extends BaseComponent {
   protected searchString: string = '';
   private games: GameGetAllGamesHistoryViewItem[];
-  private maxSize  = this.paginationConfig.paginationModel.maxSize;
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   constructor(private readonly historyService: HistoryService, private modalService: NgbModal, private paginationConfig:PaginationConfig) {
     super();

@@ -223,7 +223,7 @@ var GamesDetailPageComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games\">\r\n        <td>\r\n          {{game.numberOfBots}}\r\n        </td>\r\n        <td>\r\n          {{convertStatusToString(game.status)}}\r\n        </td>\r\n        <td>\r\n          {{ game.winner}}\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"paginationConfig.paginationModel.collectionSize\" [(page)]=\"paginationConfig.paginationModel.pageNumber\"\r\n    [maxSize]=\"paginationConfig.paginationModel.maxSize\"></ngb-pagination>\r\n</div>"
+module.exports = "<h2> History of user games</h2>\r\n<label>\r\n  Searching\r\n  <input type=\"text\" class=\"form-control\" (input)=\"onSearchChange($event.target.value)\">\r\n</label>\r\n<div class=\"tableFixHead\">\r\n  <table>\r\n    <thead>\r\n      <tr>\r\n        <th scope=\"col\" *ngFor=\"let head of headElements\">{{head}}</th>\r\n      </tr>\r\n    </thead>\r\n    <tbody>\r\n      <tr *ngFor=\"let game of games\">\r\n        <td>\r\n          {{game.numberOfBots}}\r\n        </td>\r\n        <td>\r\n          {{convertStatusToString(game.status)}}\r\n        </td>\r\n        <td>\r\n          {{ game.winner}}\r\n        </td>\r\n        <td>\r\n          <button class=\"btn btn-info\" (click)=\"bot(game)\">\r\n            <i class=\"fas fa-robot\"></i>\r\n          </button>\r\n          <button class=\"btn btn-success\" (click)=\"player(game)\">\r\n            <i class=\"fas fa-user\"></i>\r\n          </button>\r\n        </td>\r\n      </tr>\r\n    </tbody>\r\n  </table>\r\n  <ngb-pagination (pageChange)=\"onPageChange($event)\" [collectionSize]=\"paginationConfig.paginationModel.collectionSize\" [(page)]=\"paginationConfig.paginationModel.pageNumber\">\r\n  </ngb-pagination>\r\n</div>"
 
 /***/ }),
 
@@ -272,7 +272,6 @@ var UserGamesComponent = /** @class */ (function (_super) {
         _this.modalService = modalService;
         _this.paginationConfig = paginationConfig;
         _this.searchString = '';
-        _this.maxSize = _this.paginationConfig.paginationModel.maxSize;
         _this.headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
         _this.initTable();
         return _this;
