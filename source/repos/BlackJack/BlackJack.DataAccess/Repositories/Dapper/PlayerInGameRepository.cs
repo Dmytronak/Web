@@ -80,16 +80,22 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         public async Task<int> GetFilteredGameCountByUserId(string userId, string searchString)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
-            string sql = @"SELECT COUNT(DISTINCT GameId) 
+            string sql = @"SELECT COUNT(DISTINCT UserGames.Id)
+                         FROM (SELECT  
+                         G.Id,
+                         G.CreationAt,
+                         G.NumberOfBots,
+                         G.Status,
+                         G.Winner
                          FROM PlayerInGames PIG 
                          INNER JOIN Players P 
                          ON PIG.PlayerId = P.Id 
                          INNER JOIN Games G 
-                         ON PIG.GameId = G.Id 
-                         WHERE P.UserId = @UserId
-						 AND G.Winner LIKE CONCAT(@Winner,'%') OR G.Winner IS NOT NULL
-						 AND G.Status LIKE CONCAT(@Status,'%') OR G.Status IS NULL
-						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE CONCAT(@NumberOfBots,'%')";
+                         ON PIG.GameId = G.Id 		
+                         WHERE P.UserId = @UserId) AS UserGames
+						 WHERE UserGames.Winner LIKE CONCAT(@Winner,'%') OR UserGames.Winner IS NOT NULL
+						 AND UserGames.Status LIKE CONCAT(@Status,'%') OR UserGames.Status IS NULL
+						 AND UserGames.NumberOfBots IS NULL OR UserGames.NumberOfBots LIKE CONCAT(@NumberOfBots,'%')";
             var result = await _connection.ExecuteScalarAsync<int>(sql,new
             {
                 Winner = searchString,
