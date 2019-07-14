@@ -2,15 +2,15 @@
     <div style="width: fit-content; margin-bottom: 7px;">
         <h3>Select number of bots</h3>
         <ng-select 
-        [items]="numberOfBots"
+        [items]="itemsForSelect"
         (data)="getNumberOfBots($event)"
         placeholder="Choose a number">
         </ng-select>
       </div>
-    <div class="playGameForm" *ngIf="playStatus">
+    <div class="playGameForm" *ngIf="activeStatus===0">
         <button type="submit" class="btn btn-primary" (click)="play()">Play Game</button>
     </div>
-    <div *ngIf="continueStatus">
+    <div *ngIf="activeStatus===1">
             <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
         </div>
 </div>

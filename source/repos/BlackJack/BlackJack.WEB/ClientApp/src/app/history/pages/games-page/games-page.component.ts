@@ -6,8 +6,8 @@ import { HistoryService } from 'src/app/shared/services/history.service';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { GamesDetailPageComponent } from '../games-detail-page/games-detail-page.component';
-import { PaginationConfig } from 'src/app/shared/configs/pagination.config';
+import { GamesDetailPageComponent } from 'src/app/history/pages/games-detail-page/games-detail-page.component';
+import { PaginationModel } from 'src/app/shared/models/pagination.model';
 
 @Component({
   selector: 'app-games-page',
@@ -19,18 +19,18 @@ export class UserGamesComponent extends BaseComponent {
   protected searchString: string = '';
   private games: GameGetAllGamesHistoryViewItem[];
   private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-  constructor(private readonly historyService: HistoryService, private modalService: NgbModal, private paginationConfig: PaginationConfig) {
+  constructor(private readonly historyService: HistoryService, private modalService: NgbModal, private paginationModel: PaginationModel) {
     super();
     this.initTable();
   }
   ngOnInit() {
   }
   private initTable(): void {
-    this.historyService.getGamesByUser(this.paginationConfig.paginationModel.pageNumber.toString(), this.searchString)
+    this.historyService.getGamesByUser(this.paginationModel.pageNumber.toString(), this.searchString)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((x: GetAllGamesHistoryView) => {
         this.games = x.games;
-        this.paginationConfig.paginationModel.collectionSize = x.totalGamesCount;
+        this.paginationModel.collectionSize = x.totalGamesCount;
       });
   }
   private onSearchChange(searchString: string) {
@@ -38,10 +38,10 @@ export class UserGamesComponent extends BaseComponent {
     this.initTable();
   }
   private onPageChange(pageNumber: number) {
-    this.paginationConfig.paginationModel.pageNumber = pageNumber;
+    this.paginationModel.pageNumber = pageNumber;
     this.initTable();
   }
-  private bot(game): void {
+  private getBotSteps(game): void {
     const id: string = game.id;
     this.historyService.getBotSteps(id)
       .pipe(takeUntil(this.componetDestroyed))
@@ -50,7 +50,7 @@ export class UserGamesComponent extends BaseComponent {
         modalRef.componentInstance.botSteps = botSteps;
       });
   }
-  private player(game): void {
+  private getPlayerSteps(game): void {
     const id: string = game.id;
     this.historyService.getPlayerSteps(id)
       .pipe(takeUntil(this.componetDestroyed))

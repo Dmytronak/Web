@@ -1,15 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AuthService } from './shared/services/auth.service';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { AppComponent } from 'src/app/app.component';
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from './shared/shared.module';
-import { OnlyLoggedOut } from './shared/guards/only-logged-out-users.guard';
-import { OnlyLoggedIn } from './shared/guards/only-logged-in-users.guard';
-import { JwtInterceptor } from './shared/interceptors/jwt.interceptor';
-import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { OnlyLoggedOut } from 'src/app/shared/guards/only-logged-out-users.guard';
+import { OnlyLoggedIn } from 'src/app/shared/guards/only-logged-in-users.guard';
+import { JwtInterceptor } from 'src/app/shared/interceptors/jwt.interceptor';
+import { ErrorInterceptor } from 'src/app/shared/interceptors/error.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({

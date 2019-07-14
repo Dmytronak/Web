@@ -26,11 +26,14 @@ export class RegistrationAuthComponent extends BaseComponent {
     this.initForms();
   }
   ngOnInit() {
+    this.getAll();
+  }
+  private getAll(){
     this.authService.getAll()
-      .pipe(takeUntil(this.componetDestroyed))
-      .subscribe((response: GetAllAccountView) => {
-        this.accoutsModel = response;
-      });
+    .pipe(takeUntil(this.componetDestroyed))
+    .subscribe((response: GetAllAccountView) => {
+      this.accoutsModel = response;
+    });
   }
   private initForms(): void {
     this.registerForm = this.formBuilder.group({

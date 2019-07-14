@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { PlayGameView } from '../entities/game/play-game.view';
+import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
 import { Observable } from 'rxjs';
-import { ContinueGameView } from '../entities/game/continue-game.view.';
-import { EndGameView } from '../entities/game/end-game.view';
+import { ContinueGameView } from 'src/app/shared/entities/game/continue-game.view.';
+import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
 
 @Injectable({
   providedIn: 'root'

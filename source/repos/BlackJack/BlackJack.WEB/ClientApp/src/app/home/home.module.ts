@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
-import { MainPageComponent } from './pages/main-page/main-page.component';
-const homeComponents = [HomeComponent, MainPageComponent];
+import { HomeRoutingModule } from 'src/app/home/home-routing.module';
+import { HomeComponent } from 'src/app/home/home.component';
+import { MainPageComponent } from 'src/app/home/pages/main-page/main-page.component';
 @NgModule({
-  declarations: [...homeComponents],
+  declarations: [HomeComponent, MainPageComponent],
   imports: [
     CommonModule,
     HomeRoutingModule

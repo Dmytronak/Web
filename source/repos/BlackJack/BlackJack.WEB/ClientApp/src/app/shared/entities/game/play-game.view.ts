@@ -1,6 +1,6 @@
-import { CardRankType } from '../../enums/card-rank-type.view';
-import { CardSuitType } from '../../enums/card-suit-type.view';
-import { StatusType } from '../../enums/status-type.enum.view';
+import { CardRankType } from 'src/app/shared/enums/card-rank-type.view';
+import { CardSuitType } from 'src/app/shared/enums/card-suit-type.view';
+import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
 
 export class PlayGameView {
     numberOfBots: number;

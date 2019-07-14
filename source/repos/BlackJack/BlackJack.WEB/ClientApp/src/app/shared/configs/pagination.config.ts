@@ -1,19 +1,5 @@
-import { PaginationModel } from '../../shared/models/pagination.model';
-import { NgbPaginationConfig, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
-import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
-export class PaginationConfig {
-  public paginationModel: PaginationModel = {
+export const PaginationConfig = {
     collectionSize: 0,
     pageNumber: 1,
     maxSize: 4
   }
-  constructor(config: NgbPaginationConfig) {
-    config.maxSize = this.paginationModel.maxSize;
-    config.rotate = true;
-    config.boundaryLinks = true;
-  }
-}

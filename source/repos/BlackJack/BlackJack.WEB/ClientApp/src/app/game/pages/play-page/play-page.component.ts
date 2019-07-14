@@ -6,6 +6,7 @@ import { EndGameView } from 'src/app/shared/entities/game/end-game.view';
 import { PlayGameView } from 'src/app/shared/entities/game/play-game.view';
 import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
+import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
 
 @Component({
   selector: 'app-play-page',
@@ -14,9 +15,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
 })
 export class PlayGameComponent extends BaseComponent {
   private numberOfBots: number;
-  private playStatus: boolean = false;
-  private continueStatus: boolean = false;
-  private endStatus: boolean = false;
+  private activeStatus: StatusType;
   private game: boolean = false;
   private haveActiveGame: boolean = false;
   private readonly headBotSteps = ['Cards'];
@@ -42,10 +41,10 @@ export class PlayGameComponent extends BaseComponent {
         if (playGameView.winner !== 'No one') {
           this.game = false;
         }
-        this.playStatus = true;
+        this.activeStatus = 0;
         this.playGameView = playGameView;
       },
-        errorForStatus => {
+        error => {
           this.haveActiveGame = false;
         });
   }
@@ -57,9 +56,7 @@ export class PlayGameComponent extends BaseComponent {
         if (continueGameView.winner !== 'No one') {
           this.game = false;
         }
-        this.playStatus = false;
-        this.continueStatus = true;
-        this.endStatus = false;
+        this.activeStatus = 1;
         this.continueGameView = continueGameView;
       });
   }
@@ -68,9 +65,7 @@ export class PlayGameComponent extends BaseComponent {
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((endGameView: EndGameView) => {
         this.game = false;
-        this.playStatus = false;
-        this.continueStatus = false;
-        this.endStatus = true;
+        this.activeStatus = 3;
         this.endGameView = endGameView;
       });
   }
@@ -84,9 +79,7 @@ export class PlayGameComponent extends BaseComponent {
         if (playGameView.winner !== 'No one') {
           this.game = false;
         }
-        this.continueStatus = false;
-        this.endStatus = false;
-        this.playStatus = true;
+        this.activeStatus = 0;
         this.playGameView = playGameView;
       });
   }

@@ -266,7 +266,7 @@ namespace BlackJack.BusinessLogic.Services
                 .ToList();
             var scoredBotExistedPoints = GetCalculatedBotExistingPoint(botInGame, botInGameExisted, gameId);
             var botsScore = GetCalculatedScoreBotPoints(scoredBotExistedPoints, gameId);
-            GetWinner(botsScore, botList, status, winner, playerScore, player, activeGame, gameId);
+            activeGame = GetWinner(botsScore, botList, status, winner, playerScore, player, activeGame, gameId);
             await _cardRepository.RemoveRange(clearCards);
             var cardsOfGame = deck
                 .Select(x => new Card()
@@ -402,7 +402,7 @@ namespace BlackJack.BusinessLogic.Services
                 await _cardRepository.CreateRange(cardsOfGame);
                 await _botInGameRepository.CreateRange(botInGame);
             }
-            GetWinner(botsScore, botList, status, winner, playerScore, player, activeGame, gameId);
+            activeGame = GetWinner(botsScore, botList, status, winner, playerScore, player, activeGame, gameId);
             var groupedBotSteps = botStepExisted.GroupBy(x => x.BotId);
             var response = new EndGameView()
             {
@@ -445,7 +445,7 @@ namespace BlackJack.BusinessLogic.Services
             }
             return value;
         }
-        private void GetWinner(List<BotInGame> botsScore, List<Bot> botList, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
+        private Game GetWinner(List<BotInGame> botsScore, List<Bot> botList, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
         {
             var calculatedBotScore = GetCalculatedScoreBotPoints(botsScore, gameId);
             var notBustedBots = GetNotBustedBots(calculatedBotScore);
@@ -500,6 +500,8 @@ namespace BlackJack.BusinessLogic.Services
             }
             activeGame.Status = status;
             activeGame.Winner = winner;
+            var response = activeGame;
+            return response;
         }
         private List<BotInGame> GetNotBustedBots(List<BotInGame> calculatedBotScore)
         {

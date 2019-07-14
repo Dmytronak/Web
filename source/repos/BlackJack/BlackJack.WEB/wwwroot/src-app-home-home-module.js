@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["home-home-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["src-app-home-home-module"],{
 
 /***/ "./src/app/home/home-routing.module.ts":
 /*!*********************************************!*\
@@ -13,13 +13,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _home_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home.component */ "./src/app/home/home.component.ts");
+/* harmony import */ var src_app_home_home_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/home/home.component */ "./src/app/home/home.component.ts");
 
 
 
 
 var routes = [
-    { path: '', component: _home_component__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"] },
+    { path: '', component: src_app_home_home_component__WEBPACK_IMPORTED_MODULE_3__["HomeComponent"] },
 ];
 var HomeRoutingModule = /** @class */ (function () {
     function HomeRoutingModule() {
@@ -103,25 +103,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _home_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./home-routing.module */ "./src/app/home/home-routing.module.ts");
-/* harmony import */ var _home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./home.component */ "./src/app/home/home.component.ts");
-/* harmony import */ var _pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/main-page/main-page.component */ "./src/app/home/pages/main-page/main-page.component.ts");
+/* harmony import */ var src_app_home_home_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/home/home-routing.module */ "./src/app/home/home-routing.module.ts");
+/* harmony import */ var src_app_home_home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/home/home.component */ "./src/app/home/home.component.ts");
+/* harmony import */ var src_app_home_pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/home/pages/main-page/main-page.component */ "./src/app/home/pages/main-page/main-page.component.ts");
 
 
 
 
 
 
-var homeComponents = [_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"], _pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__["MainPageComponent"]];
 var HomeModule = /** @class */ (function () {
     function HomeModule() {
     }
     HomeModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: homeComponents.slice(),
+            declarations: [src_app_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"], src_app_home_pages_main_page_main_page_component__WEBPACK_IMPORTED_MODULE_5__["MainPageComponent"]],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _home_routing_module__WEBPACK_IMPORTED_MODULE_3__["HomeRoutingModule"]
+                src_app_home_home_routing_module__WEBPACK_IMPORTED_MODULE_3__["HomeRoutingModule"]
             ]
         })
     ], HomeModule);
@@ -186,4 +185,4 @@ var MainPageComponent = /** @class */ (function () {
 /***/ })
 
 }]);
-//# sourceMappingURL=home-home-module.js.map
+//# sourceMappingURL=src-app-home-home-module.js.map

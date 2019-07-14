@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GameRoutingModule } from './game-routing.module';
-import { HomeGameComponent } from './pages/home-page/home-page.component';
-import { PlayGameComponent } from './pages/play-page/play-page.component';
-import { SharedModule } from '../shared/shared.module';
-import { GameComponent } from './game.component';
-const gameComponents = [HomeGameComponent, PlayGameComponent, GameComponent];
+import { GameRoutingModule } from 'src/app/game/game-routing.module';
+import { HomeGameComponent } from 'src/app/game/pages/home-page/home-page.component';
+import { PlayGameComponent } from 'src/app/game/pages/play-page/play-page.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { GameComponent } from 'src/app/game/game.component';
 @NgModule({
-  declarations: [...gameComponents],
+  declarations: [HomeGameComponent, PlayGameComponent, GameComponent],
   imports: [
     CommonModule,
     GameRoutingModule,

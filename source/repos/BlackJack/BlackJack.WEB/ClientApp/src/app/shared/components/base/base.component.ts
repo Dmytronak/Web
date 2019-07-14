@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
-import { CardPlayGameViewItem } from '../../entities/game/play-game.view';
+import { CardPlayGameViewItem } from 'src/app/shared/entities/game/play-game.view';
 import { FormControl, FormGroup } from '@angular/forms';
-import { StatusType } from '../../enums/status-type.enum.view';
+import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
 
 @Component({
   selector: 'app-base',

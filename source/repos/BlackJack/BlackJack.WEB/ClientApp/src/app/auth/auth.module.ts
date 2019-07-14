@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthRoutingModule } from './auth-routing.module';
-import { LoginAuthComponent } from './pages/login-page/login-page.component';
-import { RegistrationAuthComponent } from './pages/registration-page/registration-page.component';
-import { SharedModule } from '../shared/shared.module';
-import { AuthComponent } from './auth.component';
-const authComponents = [LoginAuthComponent, RegistrationAuthComponent,AuthComponent];
+import { AuthRoutingModule } from 'src/app/auth/auth-routing.module';
+import { LoginAuthComponent } from 'src/app/auth/pages/login-page/login-page.component';
+import { RegistrationAuthComponent } from 'src/app/auth/pages/registration-page/registration-page.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { AuthComponent } from 'src/app/auth/auth.component';
 @NgModule({
-  declarations: [...authComponents],
+  declarations: [LoginAuthComponent, RegistrationAuthComponent,AuthComponent],
   imports: [
     CommonModule,
     AuthRoutingModule,

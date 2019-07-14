@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { GetAllGamesHistoryView } from '../entities/history/get-all-games-history.view';
-import { GetPlayerStepsHistoryView } from '../entities/history/get-player-steps-history.view';
-import { GetBotStepsHistoryView } from '../entities/history/get-bot-steps-history.view';
+import { environment } from 'src/environments/environment';
+import { GetAllGamesHistoryView } from 'src/app/shared/entities/history/get-all-games-history.view';
+import { GetPlayerStepsHistoryView } from 'src/app/shared/entities/history/get-player-steps-history.view';
+import { GetBotStepsHistoryView } from 'src/app/shared/entities/history/get-bot-steps-history.view';
 import { Observable } from 'rxjs';
 
 @Injectable({

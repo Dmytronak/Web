@@ -1,5 +1,5 @@
-import { CardRankType } from '../../enums/card-rank-type.view';
-import { CardSuitType } from '../../enums/card-suit-type.view';
+import { CardRankType } from 'src/app/shared/enums/card-rank-type.view';
+import { CardSuitType } from 'src/app/shared/enums/card-suit-type.view';
 
 export class GetPlayerStepsHistoryView{
     gameId:string;

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { LocalStorageService } from './local-storage.service';
-import { RegisterAccountView } from '../entities/auth/register-account.view';
-import { GetAllAccountView } from '../entities/auth/get-all-account.view';
-import { LoginAccountView } from '../entities/auth/login-account.view';
-import { LoginAccountResponseView } from '../entities/auth/login-account-response.view';
+import { environment } from 'src/environments/environment';
+import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
+import { RegisterAccountView } from 'src/app/shared/entities/auth/register-account.view';
+import { GetAllAccountView } from 'src/app/shared/entities/auth/get-all-account.view';
+import { LoginAccountView } from 'src/app/shared/entities/auth/login-account.view';
+import { LoginAccountResponseView } from 'src/app/shared/entities/auth/login-account-response.view';
 import { filter, tap } from 'rxjs/operators';
 
 @Injectable()
@@ -41,6 +41,9 @@ export class AuthService {
     this.localStorageService.setItem("auth_token", token);
     this.localStorageService.setItem("email", email);
     this.loggedIn.next(true);
+  }
+  public getEmail(): string {
+    return this.localStorageService.getItem('email');
   }
   get isLoggedIn() {
     return this.loggedIn.asObservable();

@@ -7,15 +7,15 @@
                 </tr>
                 <tr>
                     <th>
-                        <label *ngIf="playStatus">Game status : {{convertStatusToString(playGameView.status)}}</label>
-                        <label *ngIf="continueStatus">Game status : {{convertStatusToString(continueGameView.status)}}</label>
-                        <label *ngIf="endStatus">Game status : {{convertStatusToString(endGameView.status)}}
+                        <label *ngIf="activeStatus===0">Game status : {{convertStatusToString(playGameView.status)}}</label>
+                        <label *ngIf="activeStatus===1">Game status : {{convertStatusToString(continueGameView.status)}}</label>
+                        <label *ngIf="activeStatus===3">Game status : {{convertStatusToString(endGameView.status)}}
                         </label>
                     </th>
                     <th>
-                        <label *ngIf="playStatus">Winner : {{ playGameView.winner }} </label>
-                        <label *ngIf="continueStatus">Winner : {{ continueGameView.winner }} </label>
-                        <label *ngIf="endStatus">Winner : {{ endGameView.winner }} </label>
+                        <label *ngIf="activeStatus===0">Winner : {{ playGameView.winner }} </label>
+                        <label *ngIf="activeStatus===1">Winner : {{ continueGameView.winner }} </label>
+                        <label *ngIf="activeStatus===3">Winner : {{ endGameView.winner }} </label>
 
                     </th>
                     <th>
@@ -43,20 +43,20 @@
             </thead>
             <tbody>
                 <tr>
-                    <th *ngIf="playStatus">{{ playGameView.player.status }}</th>
-                    <th *ngIf="continueStatus">{{ continueGameView.player.status }}</th>
-                    <th *ngIf="endStatus">{{ endGameView.player.status }}</th>
-                    <td *ngIf="playStatus">
+                    <th *ngIf="activeStatus===0">{{ playGameView.player.status }}</th>
+                    <th *ngIf="activeStatus===1">{{ continueGameView.player.status }}</th>
+                    <th *ngIf="activeStatus===3">{{ endGameView.player.status }}</th>
+                    <td *ngIf="activeStatus===0">
                 <tr *ngFor="let step of playGameView.player.cards">
                     <img [src]="getCardLink(step)">
                 </tr>
                 </td>
-                <td *ngIf="continueStatus">
+                <td *ngIf="activeStatus===1">
                     <tr *ngFor="let step of continueGameView.player.cards">
                         <img [src]="getCardLink(step)">
                     </tr>
                 </td>
-                <td *ngIf="endStatus">
+                <td *ngIf="activeStatus===3">
                     <tr *ngFor="let step of endGameView.player.cards">
                       <img [src]="getCardLink(step)">
                     </tr>
@@ -66,34 +66,34 @@
             <thead class="thead-dark">
                 <th colspan="8" *ngFor="let head of headBots">{{head}}</th>
             </thead>
-            <thead class="thead-dark" *ngIf="playStatus">
+            <thead class="thead-dark" *ngIf="activeStatus===0">
                 <th *ngFor="let bot of playGameView.bots">{{bot.name}}</th>
                 <th colspan="8"></th>
             </thead>
-            <thead class="thead-dark" *ngIf="continueStatus">
+            <thead class="thead-dark" *ngIf="activeStatus===1">
                 <th *ngFor="let bot of continueGameView.bots">{{bot.name}}</th>
                 <th colspan="8"></th>
             </thead>
-            <thead class="thead-dark" *ngIf="endStatus">
+            <thead class="thead-dark" *ngIf="activeStatus===3">
                 <th *ngFor="let bot of endGameView.bots">{{bot.name}}</th>
                 <th colspan="8"></th>
             </thead>
 
-            <tbody *ngIf="playStatus">
+            <tbody *ngIf="activeStatus===0">
                 <td *ngFor="let bot of playGameView.bots">
                     <tr *ngFor="let step of bot.cards">
                       <img [src]="getCardLink(step)">
                     </tr>
                 </td>
             </tbody>
-            <tbody *ngIf="continueStatus">
+            <tbody *ngIf="activeStatus===1">
                 <td *ngFor="let bot of continueGameView.bots">
                     <tr *ngFor="let step of bot.cards">
                         <img [src]="getCardLink(step)">
                     </tr>
                 </td>
             </tbody>
-            <tbody *ngIf="endStatus">
+            <tbody *ngIf="activeStatus===3">
                 <td *ngFor="let bot of endGameView.bots">
                     <tr *ngFor="let step of bot.cards">
                         <img [src]="getCardLink(step)">

@@ -14,10 +14,10 @@ namespace BlackJack.BusinessLogic.Providers
 {
     public class JwtProvider : IJwtProvider
     {
-        private readonly IOptions<JwtOption> _options;
+        private readonly JwtOption _options;
         public JwtProvider(IOptions<JwtOption> options)
         {
-            _options = options;
+            _options = options.Value;
         }
         public async Task<string> GenerateJwtToken(User user)
         {
@@ -27,13 +27,13 @@ namespace BlackJack.BusinessLogic.Providers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.Name, user.Id)
             };
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Value.Key));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_options.Key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddHours(Convert.ToDouble(_options.Value.ExpireHours));
+            var expires = DateTime.Now.AddHours(Convert.ToDouble(_options.ExpireHours));
 
             var token = new JwtSecurityToken(
-                _options.Value.Issuer,
-                _options.Value.Issuer,
+                _options.Issuer,
+                _options.Issuer,
                 claims,
                 expires: expires,
                 signingCredentials: credentials

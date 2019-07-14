@@ -22,17 +22,17 @@
           {{ game.winner}}
         </td>
         <td>
-          <button class="btn btn-info" (click)="bot(game)">
+          <button class="btn btn-info" (click)="getBotSteps(game)">
             <i class="fas fa-robot"></i>
           </button>
-          <button class="btn btn-success" (click)="player(game)">
+          <button class="btn btn-success" (click)="getPlayerSteps(game)">
             <i class="fas fa-user"></i>
           </button>
         </td>
       </tr>
     </tbody>
   </table>
-  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="paginationConfig.paginationModel.collectionSize"
-    [(page)]="paginationConfig.paginationModel.pageNumber">
+  <ngb-pagination (pageChange)="onPageChange($event)" [collectionSize]="paginationModel.collectionSize"
+    [(page)]="paginationModel.pageNumber" [maxSize] = "paginationModel.maxSize" [boundaryLinks] = "true" [rotate]= "true">
   </ngb-pagination>
 </div>

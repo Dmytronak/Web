@@ -33,7 +33,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 })).ToList();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetByUserId(string userId)
+        public async Task<List<PlayerInGame>> GetByUserId(string userId, string searchString)
         {
             string sql = @"SELECT * 
                          FROM PlayerInGames PIG 
@@ -54,7 +54,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 })).ToList();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetFilteredGameByUserId(string userId, string searchString,int pageNumber,int pageSize)
+        public async Task<List<PlayerInGame>> GetFilteredByUserId(string userId, string searchString,int pageNumber,int pageSize)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
             string sql = "GetFilteredGames";
@@ -77,7 +77,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 }).ToList();
             return result;
         }
-        public async Task<int> GetFilteredGameCountByUserId(string userId, string searchString)
+        public async Task<int> GetFilteredCountByUserId(string userId, string searchString)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
             string sql = @"SELECT COUNT(DISTINCT UserGames.Id)
@@ -133,7 +133,6 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         private string GetConvertedStatusType(string searchString)
         {
-            searchString = $"{searchString}";
             var statusNames = Enum.GetNames(typeof(StatusType));
             var filteredStatusList = statusNames
                 .Select((str, index) => str

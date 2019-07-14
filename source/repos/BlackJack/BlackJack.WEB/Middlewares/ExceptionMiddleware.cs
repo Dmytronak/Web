@@ -12,7 +12,7 @@ namespace BlackJack.WEB.Middlewares
 
         public ExceptionMiddleware(RequestDelegate next)
         {
-            this._next = next;
+            _next = next;
         }
 
         public async Task Invoke(HttpContext context)

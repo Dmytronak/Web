@@ -23,9 +23,9 @@ namespace BlackJack.BusinessLogic.Services
         private readonly IBotStepRepository _botStepRepository;
         private readonly IBotInGameRepository _botInGameRepository;
         private readonly IPlayerInGameRepository _playerInGameRepository;
-        private readonly IOptions<PaginationOption> _options;
+        private readonly PaginationOption _paginationOptions;
 
-        public HistoryService(IOptions<PaginationOption> options,UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
+        public HistoryService(IOptions<PaginationOption> paginationOptions, UserManager<User> userManager, IGameRepository gameRepository, IPlayerRepository playerRepository, IBotRepository botRepository, IPlayerStepRepository playerStepRepository,
             IBotStepRepository botStepRepository, IPlayerInGameRepository playerInGameRepository, IBotInGameRepository botInGameRepository)
         {
             _userManager = userManager;
@@ -36,7 +36,7 @@ namespace BlackJack.BusinessLogic.Services
             _botStepRepository = botStepRepository;
             _botInGameRepository = botInGameRepository;
             _playerInGameRepository = playerInGameRepository;
-            _options = options;
+            _paginationOptions = paginationOptions.Value;
         }
         public async Task<GetBotStepsHistoryView> GetBotSteps(Guid gameId)
         {
@@ -46,9 +46,9 @@ namespace BlackJack.BusinessLogic.Services
                 throw new CustomServiceException("Game doesn`t exist");
             }
             var bots = botSteps.Select(x => x.Bot).ToList();
-            var gropedBotSteps = botSteps.GroupBy(x => x.BotId);
+            var groupedBotSteps = botSteps.GroupBy(x => x.BotId);
             var botStepViewItems = new List<BotGetBotStepsHistoryViewItem>();
-            foreach (var item in gropedBotSteps)
+            foreach (var item in groupedBotSteps)
             {
                 var botName = bots.FirstOrDefault(x => x.Id == item.Key).Name;
                 var botStepViewItem = new BotGetBotStepsHistoryViewItem()
@@ -105,9 +105,13 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new CustomServiceException("User doesn`t exist");
             }
-            var pageSize =  _options.Value.PageSize;
-            var filteredGamesCount = await _playerInGameRepository.GetFilteredGameCountByUserId(user.Id, searchString);
-            var playerInGames = await _playerInGameRepository.GetFilteredGameByUserId(user.Id, searchString, pageNumber, pageSize);
+            if (searchString == null)
+            {
+                searchString = "";
+            }
+            var pageSize = _paginationOptions.PageSize;
+            var filteredGamesCount = await _playerInGameRepository.GetFilteredCountByUserId(user.Id, searchString);
+            var playerInGames = await _playerInGameRepository.GetFilteredByUserId(user.Id, searchString, pageNumber, pageSize);
             var response = new GetAllGamesHistoryView()
             {
                 TotalGamesCount = filteredGamesCount,
