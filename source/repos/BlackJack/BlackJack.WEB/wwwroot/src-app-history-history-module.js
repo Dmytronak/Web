@@ -279,7 +279,6 @@ var UserGamesComponent = /** @class */ (function (_super) {
     };
     UserGamesComponent.prototype.initTable = function () {
         var _this = this;
-        debugger;
         this.historyService.getGamesByUser(this.paginationModel.pageNumber.toString(), this.searchString)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {

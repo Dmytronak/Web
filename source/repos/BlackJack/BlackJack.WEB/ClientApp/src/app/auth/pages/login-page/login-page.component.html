@@ -3,8 +3,14 @@
     <label for="email">Email</label>
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
-  <div>
-    <app-base [control]="loginForm.get('email')"></app-base>
+  <div
+    *ngIf="hasErrors('email')" class="alert alert-danger">
+    <div *ngIf="loginForm.get('email').errors.required">
+      Email is required.
+    </div>
+    <div *ngIf="loginForm.get('email').errors.email">
+      Email not validate
+    </div>
   </div>
 
   <div class="loginForm">
@@ -12,8 +18,18 @@
     <input type="password" class="form-control" name="password" placeholder="Password"
       formControlName="password">
   </div>
-  <div>
-    <app-base [control]="loginForm.get('password')"></app-base>
+  <div
+    *ngIf="hasErrors('password')"
+    class="alert alert-danger">
+    <div *ngIf="loginForm.get('password').errors.required">
+      Password is required.
+    </div>
+    <div *ngIf="loginForm.get('password').errors.minlength">
+      Password minLength 6
+    </div>
+    <div *ngIf="loginForm.get('password').errors.pattern">
+      Password not validate
+    </div>
   </div>
   <div class="loginForm">
     <button type="submit" class="btn btn-primary" [disabled]="loginForm.invalid">Login</button>

@@ -8,39 +8,95 @@
     <label for="email">Email</label>
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
-  <div>
-    <app-base [control]="registerForm.get('email')"></app-base>
+  <div *ngIf="hasErrors('email')" class="alert alert-danger">
+    <div *ngIf="registerForm.get('email').errors.required">
+      Email is required.
+    </div>
+    <div *ngIf="registerForm.get('email').errors.email">
+      Email not validate
+    </div>
   </div>
+
   <div class="formGroup">
     <label for="name">Name</label>
     <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
   </div>
-  <div>
-    <app-base [control]="registerForm.get('name')"></app-base>
+  <div *ngIf="hasErrors('name')"
+    class="alert alert-danger">
+    <div *ngIf="registerForm.get('name').errors.required">
+      Name is required.
+    </div>
+    <div *ngIf="registerForm.get('name').errors.maxlength">
+      Name max Length 15
+    </div>
   </div>
+
   <div class="formGroup">
     <label for="year">Year</label>
     <input type="text" class="form-control" name="year" placeholder="Year" formControlName="year">
   </div>
-  <div>
-    <app-base [control]="registerForm.get('year')"></app-base>
+  <div *ngIf="hasErrors('year')" class="alert alert-danger">
+   <div *ngIf="registerForm.get('year').errors.required">
+     year is required.
+   </div>
+   <div *ngIf="registerForm.get('year').errors.minlength">
+     year min min Length 4
+   </div>
+   <div *ngIf="registerForm.get('year').errors.maxlength">
+     year min max Length 4
+   </div>
+   <div *ngIf="registerForm.get('year').errors.pattern">
+     ONLY NUMB ERROR
+   </div>
+   <div *ngIf="registerForm.get('year').errors.ageRange">
+     Year range from 1920 to 2019
+   </div>
+   <div *ngIf="registerForm.get('year').errors.adultRange">
+     You don`t adult enough
+   </div>
   </div>
+
   <div class="formGroup">
     <label for="password">Password</label>
     <input type="password" class="form-control" name="password" placeholder="Password"
       formControlName="password">
   </div>
-  <div>
-    <app-base [control]="registerForm.get('password')"></app-base>
+
+  <div *ngIf="hasErrors('password')"
+    class="alert alert-danger">
+    <div *ngIf="registerForm.get('password').errors.required">
+      Password is required.
+    </div>
+    <div *ngIf="registerForm.get('password').errors.minlength">
+      Password minLength 6
+    </div>
+    <div *ngIf="registerForm.get('password').errors.passwordValidation">
+      Password not validate
+    </div>
   </div>
+
   <div class="formGroup">
     <label for="confirmPassword">Confirm password</label>
     <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm password"
       formControlName="confirmPassword">
   </div>
-  <div>
-    <app-base [control]="registerForm.get('confirmPassword')"></app-base>
+
+  <div
+  *ngIf="hasErrors('confirmPassword')" class="alert alert-danger">
+    <div *ngIf="registerForm.get('confirmPassword').errors.required">
+      Password is required.
+    </div>
+    <div *ngIf="registerForm.get('confirmPassword').errors.minlength">
+      Password min Length 6
+    </div>
+    <div *ngIf="registerForm.get('confirmPassword').errors.passwordValidation">
+      Password not validate
+    </div>
+    <div *ngIf="registerForm.get('confirmPassword').errors.mustMatch">
+      Passwords must match
+    </div>
   </div>
+
   <div class="formGroup">
     <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>
   </div>

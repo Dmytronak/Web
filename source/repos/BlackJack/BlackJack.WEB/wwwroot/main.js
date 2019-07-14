@@ -220,7 +220,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"hasErrors()\" class=\"validator\">\n  <ng-container *ngIf=\"getErrorMessage()\">\n    <p>{{getErrorMessage()}}</p>\n  </ng-container>\n</div>\n\n"
+module.exports = ""
 
 /***/ }),
 
@@ -248,9 +248,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
-
+/* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
 
 
 
@@ -264,43 +262,12 @@ var BaseComponent = /** @class */ (function () {
     BaseComponent.prototype.getCardLink = function (card) {
         return "assets/cards/" + card.rank + "_" + card.suit + ".svg";
     };
-    BaseComponent.prototype.hasErrors = function () {
-        return this.control.invalid && (this.control.dirty || this.control.touched);
-    };
-    BaseComponent.prototype.getControlName = function () {
-        var controlName = null;
-        var parent = this.control['parent'];
-        if (parent instanceof _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]) {
-            for (var name_1 in parent.controls) {
-                if (this.control === parent.controls[name_1]) {
-                    controlName = name_1;
-                }
-            }
-        }
-        return controlName;
-    };
     BaseComponent.prototype.convertStatusToString = function (type) {
-        return src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_4__["StatusType"][type];
-    };
-    BaseComponent.prototype.getErrorMessage = function () {
-        var errorMessage = this.control.errors.required ? this.getControlName() + " is required!" :
-            this.control.errors.email ? 'Email is not valid!' :
-                this.control.errors.minlength ? this.getControlName() + " min length not valid!" :
-                    this.control.errors.maxlength ? this.getControlName() + " max length not valid!" :
-                        this.control.errors.pattern ? this.getControlName() + " is not valid!" :
-                            this.control.errors.passwordValidation ? this.getControlName() + " is not valid!" :
-                                this.control.errors.mustMatch ? this.getControlName() + " must match!" :
-                                    this.control.errors.ageRange ? "Year range from 1920 to 2019!" :
-                                        this.control.errors.adultRange ? 'You don`t adult enough!' : '';
-        return errorMessage;
+        return src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_3__["StatusType"][type];
     };
     BaseComponent.prototype.ngOnDestroy = function () {
         this.componetDestroyed.next(true);
     };
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"])
-    ], BaseComponent.prototype, "control", void 0);
     BaseComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-base',

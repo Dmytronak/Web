@@ -26,10 +26,14 @@ export class LoginAuthComponent extends BaseComponent {
       'password': ['', [Validators.required, Validators.minLength(6), passwordValidation]],
     });
   }
+  private hasErrors(name:string): boolean {
+    return this.loginForm.get(name).invalid && (this.loginForm.get(name).dirty || this.loginForm.get(name).touched);
+  }
   private login(): void {
     if (this.loginForm.invalid) {
       return;
     }
+    
     const loginAccount: LoginAccountView = this.loginForm.getRawValue();
     this.authService.login(loginAccount)
       .pipe(takeUntil(this.componetDestroyed))
