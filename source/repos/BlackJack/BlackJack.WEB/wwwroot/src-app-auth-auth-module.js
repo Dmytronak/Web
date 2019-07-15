@@ -215,7 +215,7 @@ var LoginAuthComponent = /** @class */ (function (_super) {
         if (this.loginForm.invalid) {
             return;
         }
-        var loginAccount = this.loginForm.getRawValue();
+        var loginAccount = this.loginForm.value;
         this.authService.login(loginAccount)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (response) {
