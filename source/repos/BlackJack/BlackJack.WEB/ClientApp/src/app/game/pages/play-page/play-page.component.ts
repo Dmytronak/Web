@@ -41,7 +41,7 @@ export class PlayGameComponent extends BaseComponent {
         if (playGameView.winner !== 'No one') {
           this.game = false;
         }
-        this.activeStatus = 0;
+        this.activeStatus = StatusType.New;
         this.playGameView = playGameView;
       },
         error => {
@@ -56,7 +56,7 @@ export class PlayGameComponent extends BaseComponent {
         if (continueGameView.winner !== 'No one') {
           this.game = false;
         }
-        this.activeStatus = 1;
+        this.activeStatus = StatusType.Continue;
         this.continueGameView = continueGameView;
       });
   }
@@ -65,7 +65,7 @@ export class PlayGameComponent extends BaseComponent {
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((endGameView: EndGameView) => {
         this.game = false;
-        this.activeStatus = 3;
+        this.activeStatus = StatusType.End;
         this.endGameView = endGameView;
       });
   }
@@ -79,7 +79,7 @@ export class PlayGameComponent extends BaseComponent {
         if (playGameView.winner !== 'No one') {
           this.game = false;
         }
-        this.activeStatus = 0;
+        this.activeStatus = StatusType.New;
         this.playGameView = playGameView;
       });
   }

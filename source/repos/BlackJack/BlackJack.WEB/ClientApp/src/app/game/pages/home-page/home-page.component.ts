@@ -33,9 +33,9 @@ export class HomeGameComponent extends BaseComponent {
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe(x => {
         this.toastrService.info('You have active game! Click continue to play');
-        this.activeStatus = 1;
+        this.activeStatus = StatusType.Continue;
       }, error => {
-        this.activeStatus = 0;
+        this.activeStatus = StatusType.New;
       });
   } s
   private continueActiveGame() {

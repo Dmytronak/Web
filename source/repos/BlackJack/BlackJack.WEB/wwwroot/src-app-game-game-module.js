@@ -183,6 +183,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var src_app_shared_services_toastr_messages_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/services/toastr-messages.service */ "./src/app/shared/services/toastr-messages.service.ts");
 /* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+/* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
+
 
 
 
@@ -213,9 +215,9 @@ var HomeGameComponent = /** @class */ (function (_super) {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (x) {
             _this.toastrService.info('You have active game! Click continue to play');
-            _this.activeStatus = 1;
+            _this.activeStatus = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_7__["StatusType"].Continue;
         }, function (error) {
-            _this.activeStatus = 0;
+            _this.activeStatus = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_7__["StatusType"].New;
         });
     };
     HomeGameComponent.prototype.continueActiveGame = function () {
@@ -285,6 +287,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var src_app_shared_components_base_base_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/shared/components/base/base.component */ "./src/app/shared/components/base/base.component.ts");
+/* harmony import */ var src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/shared/enums/status-type.enum.view */ "./src/app/shared/enums/status-type.enum.view.ts");
+
 
 
 
@@ -319,7 +323,7 @@ var PlayGameComponent = /** @class */ (function (_super) {
             if (playGameView.winner !== 'No one') {
                 _this.game = false;
             }
-            _this.activeStatus = 0;
+            _this.activeStatus = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_6__["StatusType"].New;
             _this.playGameView = playGameView;
         }, function (error) {
             _this.haveActiveGame = false;
@@ -334,7 +338,7 @@ var PlayGameComponent = /** @class */ (function (_super) {
             if (continueGameView.winner !== 'No one') {
                 _this.game = false;
             }
-            _this.activeStatus = 1;
+            _this.activeStatus = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_6__["StatusType"].Continue;
             _this.continueGameView = continueGameView;
         });
     };
@@ -344,7 +348,7 @@ var PlayGameComponent = /** @class */ (function (_super) {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["takeUntil"])(this.componetDestroyed))
             .subscribe(function (endGameView) {
             _this.game = false;
-            _this.activeStatus = 3;
+            _this.activeStatus = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_6__["StatusType"].End;
             _this.endGameView = endGameView;
         });
     };
@@ -359,7 +363,7 @@ var PlayGameComponent = /** @class */ (function (_super) {
             if (playGameView.winner !== 'No one') {
                 _this.game = false;
             }
-            _this.activeStatus = 0;
+            _this.activeStatus = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_6__["StatusType"].New;
             _this.playGameView = playGameView;
         });
     };
