@@ -131,19 +131,11 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 })).FirstOrDefault();  
             return result;
         }
-        private string GetConvertedStatusType(string searchString)
+        private int GetConvertedStatusType(string searchString)
         {
-            var statusNames = Enum.GetNames(typeof(StatusType));
-            var filteredStatusList = statusNames
-                .Select((str, index) => str
-                .Contains(searchString, StringComparison.InvariantCulture) ? index : -1)
-                .Where(iElement => iElement >= 0)
-                .ToList();
-            if (filteredStatusList.Count > 1 || filteredStatusList.Count==0)
-            {
-                return " ";
-            }
-            var response = $"{filteredStatusList.FirstOrDefault()}";
+            var response = Enum.GetNames(typeof(StatusType))
+                .ToList()
+                .FindIndex(x => x.Contains(searchString));
             return response;
         }
     }
