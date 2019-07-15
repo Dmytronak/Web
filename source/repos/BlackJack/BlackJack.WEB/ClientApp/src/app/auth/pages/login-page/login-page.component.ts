@@ -30,7 +30,9 @@ export class LoginAuthComponent extends BaseComponent {
     if (this.loginForm.invalid) {
       return;
     } 
-    const loginAccount: LoginAccountView = this.loginForm.value;
+    const loginAccount: LoginAccountView = {
+      ...this.loginForm.value
+    };
     this.authService.login(loginAccount)
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((response: LoginAccountResponseView) => {
