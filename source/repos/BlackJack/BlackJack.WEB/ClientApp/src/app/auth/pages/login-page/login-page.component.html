@@ -4,7 +4,7 @@
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
   <div
-    *ngIf="hasErrors('email')" class="alert alert-danger">
+    *ngIf="hasErrors('email',loginForm)" class="alert alert-danger">
     <div *ngIf="loginForm.get('email').errors.required">
       Email is required.
     </div>
@@ -19,7 +19,7 @@
       formControlName="password">
   </div>
   <div
-    *ngIf="hasErrors('password')"
+    *ngIf="hasErrors('password',loginForm)"
     class="alert alert-danger">
     <div *ngIf="loginForm.get('password').errors.required">
       Password is required.

@@ -8,7 +8,7 @@
     <label for="email">Email</label>
     <input type="text" name="email" class="form-control" placeholder="Email" formControlName="email">
   </div>
-  <div *ngIf="hasErrors('email')" class="alert alert-danger">
+  <div *ngIf="hasErrors('email',registerForm)" class="alert alert-danger">
     <div *ngIf="registerForm.get('email').errors.required">
       Email is required.
     </div>
@@ -21,7 +21,7 @@
     <label for="name">Name</label>
     <input type="text" name="name" class="form-control" placeholder="Name" formControlName="name">
   </div>
-  <div *ngIf="hasErrors('name')"
+  <div *ngIf="hasErrors('name',registerForm)"
     class="alert alert-danger">
     <div *ngIf="registerForm.get('name').errors.required">
       Name is required.
@@ -35,7 +35,7 @@
     <label for="year">Year</label>
     <input type="text" class="form-control" name="year" placeholder="Year" formControlName="year">
   </div>
-  <div *ngIf="hasErrors('year')" class="alert alert-danger">
+  <div *ngIf="hasErrors('year',registerForm)" class="alert alert-danger">
    <div *ngIf="registerForm.get('year').errors.required">
      year is required.
    </div>
@@ -62,7 +62,7 @@
       formControlName="password">
   </div>
 
-  <div *ngIf="hasErrors('password')"
+  <div *ngIf="hasErrors('password',registerForm)"
     class="alert alert-danger">
     <div *ngIf="registerForm.get('password').errors.required">
       Password is required.
@@ -82,7 +82,7 @@
   </div>
 
   <div
-  *ngIf="hasErrors('confirmPassword')" class="alert alert-danger">
+  *ngIf="hasErrors('confirmPassword',registerForm)" class="alert alert-danger">
     <div *ngIf="registerForm.get('confirmPassword').errors.required">
       Password is required.
     </div>

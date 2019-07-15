@@ -231,7 +231,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "div.validator {\n  margin-top: 5px;\n  min-height: 18px; }\n  div.validator p {\n    color: #8b0000;\n    font-size: 16px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvYmFzZS9EOlxcV29ya1xcYW51aXRleFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcc2hhcmVkXFxjb21wb25lbnRzXFxiYXNlXFxiYXNlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBZTtFQUNmLGdCQUFnQixFQUFBO0VBRnBCO0lBS00sY0FBYztJQUNkLGVBQWUsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2Jhc2UvYmFzZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImRpdi52YWxpZGF0b3Ige1xuICAgIG1hcmdpbi10b3A6IDVweDtcbiAgICBtaW4taGVpZ2h0OiAxOHB4O1xuICBcbiAgICBwIHtcbiAgICAgIGNvbG9yOiAjOGIwMDAwO1xuICAgICAgZm9udC1zaXplOiAxNnB4O1xuICAgIH1cbiAgfSJdfQ== */"
+module.exports = "div.validator {\n  margin-top: 5px;\n  min-height: 18px; }\n  div.validator p {\n    color: #8b0000;\n    font-size: 16px; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvc2hhcmVkL2NvbXBvbmVudHMvYmFzZS9DOlxcVXNlcnNcXEFudWl0ZXgtODRcXGdpdFxcV2ViXFxzb3VyY2VcXHJlcG9zXFxCbGFja0phY2tcXEJsYWNrSmFjay5XRUJcXENsaWVudEFwcC9zcmNcXGFwcFxcc2hhcmVkXFxjb21wb25lbnRzXFxiYXNlXFxiYXNlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksZUFBZTtFQUNmLGdCQUFnQixFQUFBO0VBRnBCO0lBS00sY0FBYztJQUNkLGVBQWUsRUFBQSIsImZpbGUiOiJzcmMvYXBwL3NoYXJlZC9jb21wb25lbnRzL2Jhc2UvYmFzZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbImRpdi52YWxpZGF0b3Ige1xyXG4gICAgbWFyZ2luLXRvcDogNXB4O1xyXG4gICAgbWluLWhlaWdodDogMThweDtcclxuICBcclxuICAgIHAge1xyXG4gICAgICBjb2xvcjogIzhiMDAwMDtcclxuICAgICAgZm9udC1zaXplOiAxNnB4O1xyXG4gICAgfVxyXG4gIH0iXX0= */"
 
 /***/ }),
 
@@ -262,6 +262,9 @@ var BaseComponent = /** @class */ (function () {
     BaseComponent.prototype.getCardLink = function (card) {
         return "assets/cards/" + card.rank + "_" + card.suit + ".svg";
     };
+    BaseComponent.prototype.hasErrors = function (name, formGroup) {
+        return formGroup.get(name).invalid && (formGroup.get(name).dirty || formGroup.get(name).touched);
+    };
     BaseComponent.prototype.convertStatusToString = function (type) {
         return src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_3__["StatusType"][type];
     };
@@ -290,7 +293,7 @@ var BaseComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header>\n  <nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-dark\">\n    <a class=\"navbar-brand\" href=\"#\">BlackJackClient</a>\n    <button class=\"navbar-toggler\" type=\"button\" (click)=\"navbarCollapsed = !navbarCollapsed\" [attr.aria-expanded]=\"!navbarCollapsed\" aria-controls=\"navbarContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n        <span class=\"navbar-toggler-icon\"></span>\n      </button>\n      <div class=\"collapse navbar-collapse\" [ngbCollapse]=\"navbarCollapsed\" id=\"navbarSupportedContent\"> \n      <ul class=\"navbar-nav ml-auto\">\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"/game/home\">Game</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"/history\">History</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\">{{email}}</a>\n        </li>\n        <li class=\"nav-item\">\n          <a class=\"nav-link\" (click)=\"logout()\" routerLink=\"/home\">Logoff</a>\n        </li>\n      </ul>\n    </div>\n\n  </nav>\n</header>"
+module.exports = "<header>\r\n  <nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-dark\">\r\n    <a class=\"navbar-brand\" href=\"#\">BlackJackClient</a>\r\n    <button class=\"navbar-toggler\" type=\"button\" (click)=\"navbarCollapsed = !navbarCollapsed\" [attr.aria-expanded]=\"!navbarCollapsed\" aria-controls=\"navbarContent\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\r\n        <span class=\"navbar-toggler-icon\"></span>\r\n      </button>\r\n      <div class=\"collapse navbar-collapse\" [ngbCollapse]=\"navbarCollapsed\" id=\"navbarSupportedContent\"> \r\n      <ul class=\"navbar-nav ml-auto\">\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"/game/home\">Game</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"/history\">History</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\">{{email}}</a>\r\n        </li>\r\n        <li class=\"nav-item\">\r\n          <a class=\"nav-link\" (click)=\"logout()\" routerLink=\"/home\">Logoff</a>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n\r\n  </nav>\r\n</header>"
 
 /***/ }),
 
@@ -411,7 +414,7 @@ var LoggedOutHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-logged-out-header *ngIf=\"!(isLogged | async)\"></app-logged-out-header>\n<app-logged-in-header *ngIf=\"isLogged | async \"></app-logged-in-header>"
+module.exports = "<app-logged-out-header *ngIf=\"!(isLogged | async)\"></app-logged-out-header>\r\n<app-logged-in-header *ngIf=\"isLogged | async \"></app-logged-in-header>"
 
 /***/ }),
 
@@ -979,7 +982,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Work\anuitex\Web\source\repos\BlackJack\BlackJack.WEB\ClientApp\src\main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! C:\Users\Anuitex-84\git\Web\source\repos\BlackJack\BlackJack.WEB\ClientApp\src\main.ts */"./src/main.ts");
 
 
 /***/ })

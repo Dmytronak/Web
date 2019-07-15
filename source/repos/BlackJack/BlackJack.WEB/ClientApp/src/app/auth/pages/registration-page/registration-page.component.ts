@@ -46,9 +46,7 @@ export class RegistrationAuthComponent extends BaseComponent {
         validator: mustMatch('password', 'confirmPassword')
       });
   }
-  private hasErrors(name:string): boolean {
-    return this.registerForm.get(name).invalid && (this.registerForm.get(name).dirty || this.registerForm.get(name).touched);
-  }
+
   private register(): void {
     if (this.registerForm.invalid) {
       return;
