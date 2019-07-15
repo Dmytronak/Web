@@ -126,8 +126,8 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 }, new
                 {
                     UserId = userId,
-                    Status = Enums.StatusType.New,
-                    Status2 = Enums.StatusType.Continue
+                    Status = StatusType.New,
+                    Status2 = StatusType.Continue
                 })).FirstOrDefault();  
             return result;
         }
