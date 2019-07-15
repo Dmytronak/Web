@@ -18,7 +18,7 @@ export class BaseComponent implements OnInit, OnDestroy {
   public getCardLink(card: CardPlayGameViewItem): string {
     return `assets/cards/${card.rank}_${card.suit}.svg`
   }
-  public hasErrors(name:string,formGroup:FormGroup): boolean {
+  protected hasErrors(name:string,formGroup:FormGroup): boolean {
     return formGroup.get(name).invalid && (formGroup.get(name).dirty || formGroup.get(name).touched);
   }
   protected convertStatusToString(type: StatusType):string{
