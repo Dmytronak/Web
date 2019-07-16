@@ -133,10 +133,10 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         }
         private int GetConvertedStatusType(string searchString)
         {
-            var response = Enum.GetNames(typeof(StatusType))
+            var result = Enum.GetNames(typeof(StatusType))
                 .ToList()
                 .FindIndex(x => x.Contains(searchString));
-            return response;
+            return result;
         }
     }
 }
