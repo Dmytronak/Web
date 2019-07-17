@@ -21,22 +21,6 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
                 .ToListAsync();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetByUserId(string userId, string searchString)
-        {
-            var result = await _dbSet
-               .Where(x => x.Player.UserId == userId)
-               .Include(x => x.Game)
-               .Where(x => x.Game.Status
-                  .ToString()
-                  .Contains(searchString)
-                  || x.Game.Winner
-                  .Contains(searchString)
-                  || x.Game.NumberOfBots
-                  .ToString()
-                  .Contains(searchString))
-                  .ToListAsync();
-            return result;
-        }
         public async Task<PlayerInGame> GetActiveByUserId(string userId)
         {
             var result = await _dbSet
@@ -49,21 +33,37 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
         public async Task<List<PlayerInGame>> GetFilteredByUserId(string userId, string searchString, int pageNumber, int pageSize)
         {
             var offset = (pageNumber - 1) * pageSize;
-            var games = await GetByUserId(userId, searchString);
-            var result = games
-                .OrderBy(game => game.Game.Id)
+            var result = await GenerateFilteredQuery(userId,searchString)
+                .GroupBy(game => game.GameId)
+                .Select(groupGames => groupGames.First())
+                .OrderBy(game => game.GameId)
                 .Skip(offset)
                 .Take(pageSize)
-                .ToList();
+                .ToListAsync();
             return result;
         }
         public async Task<int> GetFilteredCountByUserId(string userId, string searchString)
         {
-            var games = await GetByUserId(userId, searchString);
-            var result = games
-               .Select(x=>x.Game)
+            var result = await GenerateFilteredQuery(userId, searchString)
+               .Select(x=>x.GameId)
                .Distinct()
-               .Count();
+               .CountAsync();
+            return result;
+        }
+        public IQueryable<PlayerInGame> GenerateFilteredQuery(string userId, string searchString)
+        {
+            var result = _dbSet
+                .AsQueryable()
+                .Include(x => x.Game)
+                .Where(x => x.Player.UserId == userId 
+                 && (x.Game.Status
+                 .ToString()
+                 .Contains(searchString)
+                 || x.Game.Winner
+                 .Contains(searchString)
+                 || x.Game.NumberOfBots
+                 .ToString()
+                 .Contains(searchString)));
             return result;
         }
     }

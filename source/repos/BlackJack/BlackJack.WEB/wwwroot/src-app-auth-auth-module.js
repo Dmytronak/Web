@@ -303,9 +303,9 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
         return _this;
     }
     RegistrationAuthComponent.prototype.ngOnInit = function () {
-        this.getAll();
+        this.initPage();
     };
-    RegistrationAuthComponent.prototype.getAll = function () {
+    RegistrationAuthComponent.prototype.initPage = function () {
         var _this = this;
         this.authService.getAll()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.componetDestroyed))

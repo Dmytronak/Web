@@ -6,6 +6,7 @@ import { ToastrMessagesService } from 'src/app/shared/services/toastr-messages.s
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { SelectModel } from 'src/app/shared/models/select.model';
 import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
+import { text } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-home-page',
@@ -15,9 +16,10 @@ import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
 
 })
 export class HomeGameComponent extends BaseComponent {
+  private StatusType = StatusType;
   private continueStatus: boolean = false;
+  private itemsForSelect : Array<string> = Array.from({length: 5}, (v, k) => `${k+1}`);
   private activeStatus: StatusType;
-  private itemsForSelect: Array<SelectModel> = [{id:1,text:'1'},{id:2,text:'2'},{id:3,text:'3'},{id:4,text:'4'},{id:5,text: '5'}];
   private numberOfBots:number;
   constructor(private readonly gameService: GameService, private readonly router: Router, private readonly toastrService: ToastrMessagesService) {
     super();
@@ -37,12 +39,11 @@ export class HomeGameComponent extends BaseComponent {
       }, error => {
         this.activeStatus = StatusType.New;
       });
-  } s
+  }
   private continueActiveGame() {
     this.router.navigate(["/game/play"]);
   }
   private play(): void {
-    debugger
     const numberOfBots: number = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))

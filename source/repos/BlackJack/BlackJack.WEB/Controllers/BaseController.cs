@@ -6,6 +6,6 @@ namespace BlackJack.WEB.Controllers
 {
     public class BaseController : Controller
     {
-        public string UserId { get {return HttpContext.User.Identity.IsAuthenticated ? HttpContext.User.Identity.Name : throw new UnauthorizedAccessException();}}
+        public string UserId { get {return HttpContext.User.Identity.IsAuthenticated ? HttpContext.User.Identity.Name : string.Empty;}}
     }
 }

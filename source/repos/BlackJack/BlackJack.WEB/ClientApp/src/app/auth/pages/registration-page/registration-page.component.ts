@@ -26,9 +26,9 @@ export class RegistrationAuthComponent extends BaseComponent {
     this.initForms();
   }
   ngOnInit() {
-    this.getAll();
+    this.initPage();
   }
-  private getAll(){
+  private initPage(){
     this.authService.getAll()
     .pipe(takeUntil(this.componetDestroyed))
     .subscribe((response: GetAllAccountView) => {

@@ -14,6 +14,7 @@ import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
   styleUrls: ['./play-page.component.scss']
 })
 export class PlayGameComponent extends BaseComponent {
+  private StatusType = StatusType;
   private numberOfBots: number;
   private activeStatus: StatusType;
   private game: boolean = false;

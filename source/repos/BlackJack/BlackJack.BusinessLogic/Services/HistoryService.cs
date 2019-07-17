@@ -105,10 +105,7 @@ namespace BlackJack.BusinessLogic.Services
             {
                 throw new CustomServiceException("User doesn`t exist");
             }
-            if (searchString == null)
-            {
-                searchString = "";
-            }
+            searchString = searchString ?? string.Empty;
             var pageSize = _paginationOptions.PageSize;
             var filteredGamesCount = await _playerInGameRepository.GetFilteredCountByUserId(user.Id, searchString);
             var playerInGames = await _playerInGameRepository.GetFilteredByUserId(user.Id, searchString, pageNumber, pageSize);

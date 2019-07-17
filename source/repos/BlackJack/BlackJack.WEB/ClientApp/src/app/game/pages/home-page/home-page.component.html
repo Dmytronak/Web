@@ -7,10 +7,10 @@
         placeholder="Choose a number">
         </ng-select>
       </div>
-    <div class="playGameForm" *ngIf="activeStatus===0">
+    <div class="playGameForm" *ngIf="activeStatus===StatusType.New">
         <button type="submit" class="btn btn-primary" (click)="play()">Play Game</button>
     </div>
-    <div *ngIf="activeStatus===1">
+    <div *ngIf="activeStatus===StatusType.Continue">
             <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
         </div>
 </div>

@@ -33,27 +33,6 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 })).ToList();
             return result;
         }
-        public async Task<List<PlayerInGame>> GetByUserId(string userId, string searchString)
-        {
-            string sql = @"SELECT * 
-                         FROM PlayerInGames PIG 
-                         INNER JOIN Players P 
-                         ON PIG.PlayerId = P.Id 
-                         INNER JOIN Games G 
-                         ON PIG.GameId = G.Id 
-                         WHERE P.UserId = @UserId";
-            var result = (await _connection.QueryAsync<PlayerInGame, Player, Game, PlayerInGame>
-                (sql, (pig, p, g) => 
-                {
-                    pig.Player = p;
-                    pig.Game = g;
-                    return pig;
-                }, new
-                {
-                    UserId = userId
-                })).ToList();
-            return result;
-        }
         public async Task<List<PlayerInGame>> GetFilteredByUserId(string userId, string searchString,int pageNumber,int pageSize)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
@@ -137,6 +116,10 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 .ToList()
                 .FindIndex(x => x.Contains(searchString));
             return result;
+        }
+        public IQueryable<PlayerInGame> GenerateFilteredQuery(string userId, string searchString)
+        {
+            throw new NotImplementedException();
         }
     }
 }
