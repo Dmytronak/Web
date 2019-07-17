@@ -329,13 +329,7 @@ var RegistrationAuthComponent = /** @class */ (function (_super) {
         if (this.registerForm.invalid) {
             return;
         }
-        var registerAccount = Object.assign({
-            email: this.registerForm.value['email'],
-            name: this.registerForm.value['name'],
-            year: this.registerForm.value['year'],
-            password: this.registerForm.value['password'],
-            confirmPassword: this.registerForm.value['confirmPassword'],
-        });
+        var registerAccount = tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({}, this.registerForm.value);
         var isExistUser = !!this.accoutsModel.users
             .find(function (user) { return user.email === registerAccount.email; });
         if (isExistUser) {

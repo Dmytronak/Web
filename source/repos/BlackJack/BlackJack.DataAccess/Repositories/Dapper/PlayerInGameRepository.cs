@@ -117,9 +117,5 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                 .FindIndex(x => x.Contains(searchString));
             return result;
         }
-        public IQueryable<PlayerInGame> GenerateFilteredQuery(string userId, string searchString)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

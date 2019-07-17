@@ -51,13 +51,9 @@ export class RegistrationAuthComponent extends BaseComponent {
     if (this.registerForm.invalid) {
       return;
     }
-    const registerAccount: RegisterAccountView = Object.assign({
-      email: this.registerForm.value['email'],
-      name: this.registerForm.value['name'],
-      year: this.registerForm.value['year'],
-      password: this.registerForm.value['password'],
-      confirmPassword: this.registerForm.value['confirmPassword'],
-    });
+    const registerAccount: RegisterAccountView = {
+      ...this.registerForm.value
+    };
     const isExistUser: boolean = !!this.accoutsModel.users
       .find((user: UserGetAllAccountViewItem) => user.email === registerAccount.email);
     if (isExistUser) {

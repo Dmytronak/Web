@@ -50,7 +50,7 @@ namespace BlackJack.DataAccess.Repositories.EntityFramework
                .CountAsync();
             return result;
         }
-        public IQueryable<PlayerInGame> GenerateFilteredQuery(string userId, string searchString)
+        private IQueryable<PlayerInGame> GenerateFilteredQuery(string userId, string searchString)
         {
             var result = _dbSet
                 .AsQueryable()
