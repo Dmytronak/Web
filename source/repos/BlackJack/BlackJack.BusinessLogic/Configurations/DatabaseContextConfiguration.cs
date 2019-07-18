@@ -14,12 +14,12 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddDatabaseContextConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<ConnectionStringInjector>();
-            var connect = services.BuildServiceProvider().GetService<ConnectionStringInjector>();
-            services.BuildServiceProvider().Dispose();
-            services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connect.GetConnectionString(configuration)));
-            services.AddTransient<IDbConnection>((sp) => new SqlConnection(connect.GetConnectionString(configuration)));
-
-        
+            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+            {
+                var connect = serviceProvider.GetService<ConnectionStringInjector>();
+                services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connect.GetConnectionString(configuration)));
+                services.AddTransient<IDbConnection>((sp) => new SqlConnection(connect.GetConnectionString(configuration)));
+            }
         }
     }
 }

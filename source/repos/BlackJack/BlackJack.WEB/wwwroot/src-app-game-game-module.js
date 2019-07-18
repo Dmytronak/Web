@@ -151,7 +151,7 @@ var GameModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div style=\"width: fit-content; margin-bottom: 7px;\">\r\n        <h3>Select number of bots</h3>\r\n        <ng-select \r\n        [items]=\"itemsForSelect\"\r\n        (data)=\"getNumberOfBots($event)\"\r\n        placeholder=\"Choose a number\">\r\n        </ng-select>\r\n      </div>\r\n    <div class=\"playGameForm\" *ngIf=\"activeStatus===StatusType.New\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"play()\">Play Game</button>\r\n    </div>\r\n    <div *ngIf=\"activeStatus===StatusType.Continue\">\r\n            <button class=\"btn btn-success\" (click)=\"continueActiveGame()\">Continue active</button>\r\n        </div>\r\n</div>\r\n\r\n"
+module.exports = "<div>\r\n    <div style=\"width: fit-content; margin-bottom: 7px;\">\r\n        <h3>Select number of bots</h3>\r\n        <ng-select \r\n        [items]=\"numbersOfBotsSelectItems\"\r\n        (data)=\"getNumberOfBots($event)\"\r\n        placeholder=\"Choose a number\">\r\n        </ng-select>\r\n      </div>\r\n    <div class=\"playGameForm\" *ngIf=\"activeStatus===StatusType.New\">\r\n        <button type=\"submit\" class=\"btn btn-primary\" (click)=\"play()\">Play Game</button>\r\n    </div>\r\n    <div *ngIf=\"activeStatus===StatusType.Continue\">\r\n            <button class=\"btn btn-success\" (click)=\"continueActiveGame()\">Continue active</button>\r\n        </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -200,8 +200,7 @@ var HomeGameComponent = /** @class */ (function (_super) {
         _this.router = router;
         _this.toastrService = toastrService;
         _this.StatusType = src_app_shared_enums_status_type_enum_view__WEBPACK_IMPORTED_MODULE_7__["StatusType"];
-        _this.continueStatus = false;
-        _this.itemsForSelect = Array.from({ length: 5 }, function (v, k) { return "" + (k + 1); });
+        _this.numbersOfBotsSelectItems = Array.from({ length: 5 }, function (v, k) { return "" + (k + 1); });
         _this.checkActiveGame();
         return _this;
     }

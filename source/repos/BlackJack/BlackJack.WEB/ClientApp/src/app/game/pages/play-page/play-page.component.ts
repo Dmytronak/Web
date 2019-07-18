@@ -14,18 +14,18 @@ import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
   styleUrls: ['./play-page.component.scss']
 })
 export class PlayGameComponent extends BaseComponent {
-  private StatusType = StatusType;
+  public StatusType: typeof StatusType = StatusType;
   private numberOfBots: number;
-  private activeStatus: StatusType;
-  private game: boolean = false;
-  private haveActiveGame: boolean = false;
-  private readonly headBotSteps = ['Cards'];
-  private readonly headBots = ['Bots'];
-  private readonly headPlayerSteps = ['Player name', 'Player cards'];
-  private readonly headElements = ['Number of bots', 'Status', 'Winner', ''];
-  private endGameView: EndGameView;
-  private continueGameView: ContinueGameView;
-  private playGameView: PlayGameView;
+  public activeStatus: StatusType;
+  public game: boolean = false;
+  public haveActiveGame: boolean = false;
+  public readonly headBotSteps = ['Cards'];
+  public readonly headBots = ['Bots'];
+  public readonly headPlayerSteps = ['Player name', 'Player cards'];
+  public readonly headElements = ['Number of bots', 'Status', 'Winner', ''];
+  public endGameView: EndGameView;
+  public continueGameView: ContinueGameView;
+  public playGameView: PlayGameView;
   constructor(private gameService: GameService, private router: Router) {
     super();
     this.gameInit();
@@ -84,7 +84,7 @@ export class PlayGameComponent extends BaseComponent {
         this.playGameView = playGameView;
       });
   }
-  backToHome(): void {
+  private backToHome(): void {
     this.router.navigate(['/game/home']);
   }
 }

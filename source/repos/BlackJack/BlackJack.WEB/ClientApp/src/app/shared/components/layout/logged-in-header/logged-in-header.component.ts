@@ -13,7 +13,7 @@ export class LoggedInHeaderComponent implements OnInit {
   constructor(private authService: AuthService,private localStorageService: LocalStorageService) {
 
   }
-  logout() {
+  private logout() {
     this.authService.logout();
   }
 

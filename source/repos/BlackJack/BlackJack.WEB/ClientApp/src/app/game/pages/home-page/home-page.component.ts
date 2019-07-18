@@ -6,7 +6,6 @@ import { ToastrMessagesService } from 'src/app/shared/services/toastr-messages.s
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { SelectModel } from 'src/app/shared/models/select.model';
 import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
-import { text } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-home-page',
@@ -16,11 +15,10 @@ import { text } from '@angular/core/src/render3';
 
 })
 export class HomeGameComponent extends BaseComponent {
-  private StatusType = StatusType;
-  private continueStatus: boolean = false;
-  private itemsForSelect : Array<string> = Array.from({length: 5}, (v, k) => `${k+1}`);
-  private activeStatus: StatusType;
-  private numberOfBots:number;
+  public StatusType: typeof StatusType = StatusType;
+  public numbersOfBotsSelectItems : Array<string> = Array.from({length: 5}, (v, k) => `${k+1}`);
+  public activeStatus: StatusType;
+  public numberOfBots:number;
   constructor(private readonly gameService: GameService, private readonly router: Router, private readonly toastrService: ToastrMessagesService) {
     super();
     this.checkActiveGame();

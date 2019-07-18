@@ -12,8 +12,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class GamesDetailPageComponent extends BaseComponent {
   @Input() botSteps: GetBotStepsHistoryView;
   @Input() playerSteps: GetPlayerStepsHistoryView;
-  private readonly headBots = ['Bot name', 'Steps', '', '', '', '', '', ''];
-  private readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
+  public readonly headBots = ['Bot name', 'Steps', '', '', '', '', '', ''];
+  public readonly headPlayerSteps = ['Player name', 'Player steps', '', '', '', ''];
   constructor(public activeModal: NgbActiveModal) {
     super();
     debugger

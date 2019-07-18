@@ -17,8 +17,8 @@ import { PaginationModel } from 'src/app/shared/models/pagination.model';
 
 export class UserGamesComponent extends BaseComponent {
   protected searchString: string = '';
-  private games: GameGetAllGamesHistoryViewItem[];
-  private readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
+  public games: GameGetAllGamesHistoryViewItem[];
+  public readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
   constructor(private readonly historyService: HistoryService, private modalService: NgbModal, private paginationModel: PaginationModel) {
     super();
     this.initTable();
