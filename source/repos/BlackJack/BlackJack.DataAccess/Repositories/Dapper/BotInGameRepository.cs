@@ -6,7 +6,6 @@ using System.Data;
 using System.Threading.Tasks;
 using System.Linq;
 using Dapper;
-using System.Data.SqlClient;
 
 namespace BlackJack.DataAccess.Repositories.Dapper
 {

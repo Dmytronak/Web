@@ -19,7 +19,6 @@ namespace BlackJack.DataAccess
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-            //Database.EnsureCreated();
         }
     }
 }

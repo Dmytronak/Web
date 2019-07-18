@@ -2,7 +2,6 @@
 using BlackJack.DataAccess.Repositories.Interfaces;
 using Dapper;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
 namespace BlackJack.DataAccess.Repositories.Dapper

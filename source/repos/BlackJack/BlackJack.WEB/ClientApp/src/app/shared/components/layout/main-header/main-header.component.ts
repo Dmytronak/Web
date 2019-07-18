@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./main-header.component.scss']
 })
 export class MainHeaderComponent implements OnInit {
-  private isLogged: Observable<boolean>;
+  public isLogged: Observable<boolean>;
   constructor(private authService:AuthService) { }
 
   ngOnInit() {

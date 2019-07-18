@@ -447,6 +447,7 @@ namespace BlackJack.BusinessLogic.Services
         }
         private Game GetWinner(List<BotInGame> botsScore, List<Bot> botList, StatusType status, string winner, int playerScore, Player player, Game activeGame, Guid gameId)
         {
+            var maxPoints = 21;
             var calculatedBotScore = GetCalculatedScoreBotPoints(botsScore, gameId);
             var notBustedBots = GetNotBustedBots(calculatedBotScore);
             if (notBustedBots.Count > 0)
@@ -454,12 +455,12 @@ namespace BlackJack.BusinessLogic.Services
                 var maxBotScore = notBustedBots.Max(x => x.Score);
                 var botWinner = notBustedBots.FirstOrDefault(x => x.Score == maxBotScore);
                 var bot = botList.FirstOrDefault(x => x.Id == botWinner.BotId);
-                if (playerScore == 21)
+                if (playerScore == maxPoints)
                 {
                     status = StatusType.Blackjack;
                     winner = player.Name;
                 }
-                if (playerScore == maxBotScore && status == StatusType.End || playerScore == 21 && maxBotScore == 21)
+                if (playerScore == maxBotScore && status == StatusType.End || playerScore == maxPoints && maxBotScore == maxPoints)
                 {
                     status = StatusType.End;
                     winner = StatusType.Draw.ToString();
@@ -469,12 +470,12 @@ namespace BlackJack.BusinessLogic.Services
                     status = StatusType.End;
                     winner = player.Name;
                 }
-                if (playerScore > 21 && status == StatusType.Continue || playerScore < maxBotScore && status == StatusType.End)
+                if (playerScore > maxPoints && status == StatusType.Continue || playerScore < maxBotScore && status == StatusType.End)
                 {
                     status = StatusType.End;
                     winner = bot.Name;
                 }
-                if (maxBotScore == 21 || playerScore > 21 && maxBotScore == 21)
+                if (maxBotScore == maxPoints || playerScore > maxPoints && maxBotScore == maxPoints)
                 {
                     status = StatusType.Blackjack;
                     winner = bot.Name;
@@ -482,17 +483,17 @@ namespace BlackJack.BusinessLogic.Services
             }
             if (notBustedBots.Count == 0)
             {
-                if (playerScore > 21)
+                if (playerScore > maxPoints)
                 {
                     status = StatusType.End;
                     winner = StatusType.LoseAll.ToString();
                 }
-                if (playerScore < 21)
+                if (playerScore < maxPoints)
                 {
                     status = StatusType.End;
                     winner = player.Name;
                 }
-                if (playerScore == 21)
+                if (playerScore == maxPoints)
                 {
                     status = StatusType.Blackjack;
                     winner = player.Name;

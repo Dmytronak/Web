@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace BlackJack.BusinessLogic.Common.Extensions

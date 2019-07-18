@@ -11,7 +11,7 @@
         <button type="submit" class="btn btn-primary" (click)="play()">Play Game</button>
     </div>
     <div *ngIf="activeStatus===StatusType.Continue">
-            <button class="btn btn-success" (click)="continueActiveGame()">Continue active</button>
+            <button class="btn btn-success" routerLink="/game/play">Continue active</button>
         </div>
 </div>
 

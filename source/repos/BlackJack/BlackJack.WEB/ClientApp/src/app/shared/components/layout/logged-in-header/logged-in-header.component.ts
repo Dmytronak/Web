@@ -8,15 +8,12 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
   styleUrls: ['./logged-in-header.component.scss']
 })
 export class LoggedInHeaderComponent implements OnInit {
-  email: string = '';
- 
+  public email: string = '';
   constructor(private authService: AuthService,private localStorageService: LocalStorageService) {
-
   }
-  private logout() {
+  public logout(): void {
     this.authService.logout();
   }
-
   ngOnInit() {
     this.email = this.authService.getEmail();
   }

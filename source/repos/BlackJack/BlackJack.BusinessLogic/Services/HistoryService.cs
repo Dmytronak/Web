@@ -12,7 +12,6 @@ using Microsoft.Extensions.Options;
 
 namespace BlackJack.BusinessLogic.Services
 {
-
     public class HistoryService : IHistoryService
     {
         private readonly UserManager<User> _userManager;

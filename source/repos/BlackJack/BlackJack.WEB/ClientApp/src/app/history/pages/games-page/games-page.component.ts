@@ -33,15 +33,15 @@ export class UserGamesComponent extends BaseComponent {
         this.paginationModel.collectionSize = x.totalGamesCount;
       });
   }
-  private onSearchChange(searchString: string) {
+  public onSearchChange(searchString: string): void {
     this.searchString = searchString;
     this.initTable();
   }
-  private onPageChange(pageNumber: number) {
+  public onPageChange(pageNumber: number): void {
     this.paginationModel.pageNumber = pageNumber;
     this.initTable();
   }
-  private getBotSteps(game): void {
+  public getBotSteps(game): void {
     const id: string = game.id;
     this.historyService.getBotSteps(id)
       .pipe(takeUntil(this.componetDestroyed))
@@ -50,7 +50,7 @@ export class UserGamesComponent extends BaseComponent {
         modalRef.componentInstance.botSteps = botSteps;
       });
   }
-  private getPlayerSteps(game): void {
+  public getPlayerSteps(game): void {
     const id: string = game.id;
     this.historyService.getPlayerSteps(id)
       .pipe(takeUntil(this.componetDestroyed))

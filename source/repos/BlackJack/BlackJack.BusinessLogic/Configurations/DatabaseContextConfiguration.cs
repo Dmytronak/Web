@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -14,11 +13,11 @@ namespace BlackJack.BusinessLogic.Configurations
         public static void AddDatabaseContextConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<ConnectionStringInjector>();
-            using (ServiceProvider serviceProvider = services.BuildServiceProvider())
+            using (var serviceProvider = services.BuildServiceProvider())
             {
-                var connect = serviceProvider.GetService<ConnectionStringInjector>();
-                services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connect.GetConnectionString(configuration)));
-                services.AddTransient<IDbConnection>((sp) => new SqlConnection(connect.GetConnectionString(configuration)));
+                var connectionStringInjector = serviceProvider.GetService<ConnectionStringInjector>();
+                services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connectionStringInjector.GetConnectionString(configuration)));
+                services.AddTransient<IDbConnection>((sp) => new SqlConnection(connectionStringInjector.GetConnectionString(configuration)));
             }
         }
     }

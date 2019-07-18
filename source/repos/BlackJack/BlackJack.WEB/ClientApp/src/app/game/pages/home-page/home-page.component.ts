@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { ToastrMessagesService } from 'src/app/shared/services/toastr-messages.service';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
-import { SelectModel } from 'src/app/shared/models/select.model';
 import { StatusType } from 'src/app/shared/enums/status-type.enum.view';
 
 @Component({
@@ -25,8 +24,8 @@ export class HomeGameComponent extends BaseComponent {
   }
   ngOnInit() {
   }
-  private getNumberOfBots(item:SelectModel): void {
-    this.numberOfBots = item.id;
+  public getNumberOfBots(item): void {
+    this.numberOfBots = item.text;
   }
   private checkActiveGame(): void {
     this.gameService.getActiveGame()
@@ -38,10 +37,7 @@ export class HomeGameComponent extends BaseComponent {
         this.activeStatus = StatusType.New;
       });
   }
-  private continueActiveGame() {
-    this.router.navigate(["/game/play"]);
-  }
-  private play(): void {
+  public play(): void {
     const numberOfBots: number = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))

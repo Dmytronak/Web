@@ -49,7 +49,7 @@ export class PlayGameComponent extends BaseComponent {
           this.haveActiveGame = false;
         });
   }
-  private continue(): void {
+  public continue(): void {
     this.gameService.continue()
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((continueGameView: ContinueGameView) => {
@@ -61,7 +61,7 @@ export class PlayGameComponent extends BaseComponent {
         this.continueGameView = continueGameView;
       });
   }
-  private end(): void {
+  public end(): void {
     this.gameService.end()
       .pipe(takeUntil(this.componetDestroyed))
       .subscribe((endGameView: EndGameView) => {
@@ -70,7 +70,7 @@ export class PlayGameComponent extends BaseComponent {
         this.endGameView = endGameView;
       });
   }
-  private playAgain(): void {
+  public playAgain(): void {
     const numberOfBots = this.numberOfBots;
     this.gameService.play(numberOfBots)
       .pipe(takeUntil(this.componetDestroyed))
@@ -83,8 +83,5 @@ export class PlayGameComponent extends BaseComponent {
         this.activeStatus = StatusType.New;
         this.playGameView = playGameView;
       });
-  }
-  private backToHome(): void {
-    this.router.navigate(['/game/home']);
   }
 }
