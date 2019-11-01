@@ -12,25 +12,25 @@ namespace Project.BusinessLogic.Services
     {
 
         private readonly IBookRepository _bookRepository;
-     
+
 
         public BookService(IBookRepository bookRepository)
         {
             _bookRepository = bookRepository;
-          
+
         }
 
         public async Task<GetBookByCategoryView> GetBookByCategory(Guid id)
         {
-           if(id == null)
+            if (id == null)
             {
-                throw new  ArgumentNullException("CATEGORY ID is Null");
+                throw new ArgumentNullException("CATEGORY ID is Null");
             }
 
             var book = await _bookRepository.GetByCategoryId(id);
 
             var model = new GetBookByCategoryView();
-           
+
             model.Books = book.Select(x => new BookGetByCategoryBookViewItem()
             {
                 Id = x.Id,
@@ -38,9 +38,9 @@ namespace Project.BusinessLogic.Services
                 Author = x.Author,
                 Price = x.Price,
                 NameCat = x.Category.Name
-                
+
             }).ToList();
-            
+
             return model;
         }
 
@@ -57,7 +57,7 @@ namespace Project.BusinessLogic.Services
                 Author = model.Author,
                 Price = model.Price,
                 CategoryId = model.CategoryId
-        };
+            };
 
             await _bookRepository.Create(book);
 
@@ -67,7 +67,7 @@ namespace Project.BusinessLogic.Services
         {
             var book = await _bookRepository.GetById(model.Id);
 
-            if(book==null)
+            if (book == null)
             {
                 throw new ArgumentNullException("Book received a null argument!");
             }
@@ -75,7 +75,7 @@ namespace Project.BusinessLogic.Services
             book.Name = model.Name;
             book.Price = model.Price;
             book.Author = model.Author;
-           
+
             await _bookRepository.Update(book);
 
         }
