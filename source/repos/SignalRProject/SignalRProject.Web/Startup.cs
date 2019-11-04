@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SignalRProject.BusinessLogic.Configurations;
 
 namespace SignalRProject.Web
 {
@@ -15,14 +16,14 @@ namespace SignalRProject.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
             services.AddSignalR();
+            services.AddDatabaseContextConfiguration(Configuration);
+            services.AddIdentityConfiguration();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -32,7 +33,6 @@ namespace SignalRProject.Web
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -46,7 +46,7 @@ namespace SignalRProject.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapHub<ChatHub>("/chatHub");
+                //endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

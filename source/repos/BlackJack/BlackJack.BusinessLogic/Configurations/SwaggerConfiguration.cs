@@ -20,7 +20,7 @@ namespace BlackJack.BusinessLogic.Configurations
                     Type = "apiKey"
                 });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
-                { "Bearer", Enumerable.Empty<string>() },
+                  { "Bearer", Enumerable.Empty<string>() },
                 });
             });
         }
