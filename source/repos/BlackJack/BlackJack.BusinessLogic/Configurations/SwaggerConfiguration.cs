@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
-using Swashbuckle.AspNetCore.Swagger;
-using System.Linq;
 
 namespace BlackJack.BusinessLogic.Configurations
 {
@@ -11,16 +10,29 @@ namespace BlackJack.BusinessLogic.Configurations
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new Info { Title = "BlackJack API", Version = "v1" });
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Regency.Api", Version = "v1" });
+                c.AddSecurityDefinition("JWT Authorization", new OpenApiSecurityScheme
                 {
-                    In = "header",
-                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
-                    Name = "Authorization",
-                    Type = "apiKey"
+                    Name = "Bearer",
+                    BearerFormat = "JWT",
+                    Scheme = "bearer",
+                    Description = "Specify the authorization token.",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http
                 });
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
-                  { "Bearer", Enumerable.Empty<string>() },
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Id = "JWT Authorization",
+                                Type = ReferenceType.SecurityScheme
+                            }
+                        },
+                        new List<string>()
+                    }
                 });
             });
         }

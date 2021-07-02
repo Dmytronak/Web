@@ -36,7 +36,22 @@ namespace BlackJack.DataAccess.Repositories.Dapper
         public async Task<List<PlayerInGame>> GetFilteredByUserId(string userId, string searchString,int pageNumber,int pageSize)
         {
             var convertedStatusType = GetConvertedStatusType(searchString);
-            string sql = "GetFilteredGames";
+            string sql = @"SELECT DISTINCT 
+                         G.Id,
+                         G.CreationAt,
+                         G.NumberOfBots,
+                         G.Status,
+                         G.Winner
+                         FROM PlayerInGames PIG 
+                         INNER JOIN Players P 
+                         ON PIG.PlayerId = P.Id 
+                         INNER JOIN Games G 
+                         ON PIG.GameId = G.Id 		
+                         WHERE P.UserId = @UserId
+						 AND G.Winner LIKE @Winner OR G.Winner IS NOT NULL
+						 AND G.Status LIKE @Status OR G.Status IS NULL 
+						 AND G.NumberOfBots IS NULL OR G.NumberOfBots LIKE @NumberOfBots
+						 ORDER BY G.Id  OFFSET (@PageNumber-1)*8 ROWS FETCH NEXT 8 ROWS ONLY";
             var games = (await _connection.QueryAsync<Game>
                 (sql, new
                 {
@@ -46,8 +61,7 @@ namespace BlackJack.DataAccess.Repositories.Dapper
                     Status = convertedStatusType,
                     NumberOfBots = searchString,
                     PageSize = pageSize
-                },
-                commandType: CommandType.StoredProcedure))
+                }))
                 .ToList();
             var result = games
                 .Select(game => new PlayerInGame()
