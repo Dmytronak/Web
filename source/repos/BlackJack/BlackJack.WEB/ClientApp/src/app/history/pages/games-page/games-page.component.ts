@@ -19,7 +19,7 @@ export class UserGamesComponent extends BaseComponent {
   protected searchString: string = '';
   public games: GameGetAllGamesHistoryViewItem[];
   public readonly headElements = ['Number of bots', 'Status', 'Winner', 'Steps of Bots and players'];
-  constructor(private readonly historyService: HistoryService, private modalService: NgbModal, private paginationModel: PaginationModel) {
+  constructor(private readonly historyService: HistoryService, private modalService: NgbModal, public paginationModel: PaginationModel) {
     super();
     this.initTable();
   }

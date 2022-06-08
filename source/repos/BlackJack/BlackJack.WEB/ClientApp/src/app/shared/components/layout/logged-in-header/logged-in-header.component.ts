@@ -9,6 +9,7 @@ import { LocalStorageService } from 'src/app/shared/services/local-storage.servi
 })
 export class LoggedInHeaderComponent implements OnInit {
   public email: string = '';
+  public navbarCollapsed = false;
   constructor(private authService: AuthService,private localStorageService: LocalStorageService) {
   }
   public logout(): void {

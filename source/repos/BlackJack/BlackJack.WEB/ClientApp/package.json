@@ -1,13 +1,14 @@
 {
   "name": "client-app",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:prod": "node ./scripts/build.js production"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +24,7 @@
     "@ng-bootstrap/ng-bootstrap": "^10.0.0",
     "bootstrap": "^4.6.0",
     "core-js": "^2.6.12",
-    "ng2-select": "^2.0.0",
+    "@ng-select/ng-select": "^7.4.0",
     "ngx-toastr": "^14.0.0",
     "rxjs": "~6.6.7",
     "toastr": "^2.1.4",

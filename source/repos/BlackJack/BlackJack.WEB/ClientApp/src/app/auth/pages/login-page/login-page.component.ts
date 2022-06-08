@@ -13,7 +13,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginAuthComponent extends BaseComponent {
-  private loginForm: FormGroup;
+  public loginForm: FormGroup;
   constructor(private readonly authService: AuthService, private readonly formBuilder: FormBuilder, private readonly router: Router) {
     super();
     this.initForms();
@@ -26,7 +26,7 @@ export class LoginAuthComponent extends BaseComponent {
       'password': ['', [Validators.required, Validators.minLength(6), passwordValidation]],
     });
   }
-  private login(): void {
+  public login(): void {
     if (this.loginForm.invalid) {
       return;
     } 

@@ -18,7 +18,7 @@ import { BaseComponent } from 'src/app/shared/components/base/base.component';
   styleUrls: ['./registration-page.component.scss']
 })
 export class RegistrationAuthComponent extends BaseComponent {
-  private registerForm: FormGroup;
+  public registerForm: FormGroup;
   private accoutsModel: GetAllAccountView;
   constructor(private readonly authService: AuthService, private readonly router: Router, private readonly formBuilder: FormBuilder,
     private readonly toastrService: ToastrMessagesService) {
@@ -47,7 +47,7 @@ export class RegistrationAuthComponent extends BaseComponent {
       });
   }
 
-  private register(): void {
+  public register(): void {
     if (this.registerForm.invalid) {
       return;
     }
